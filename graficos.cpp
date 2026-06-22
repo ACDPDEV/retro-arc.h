@@ -82,15 +82,24 @@ int main() {
         color(14);
         cout << "====================================================================" << endl;
         color(7);  // Blanco normal para las opciones
-
+        cout << "Tematica: Un programa de minijuegos retro" << endl;
+        cout << "Publico diigido: Fanaticos de los juegos retro (Mayores de 12), cualquier nivel educativo" << endl;
+        color(14); // Color Amarillo para el recuadro del menú
+        cout << "====================================================================" << endl;
+        color(15); // Blanco
+        cout << "GENERAL:" << endl;
         cout << " 1.  Mostrar Titulo Principal (Musica MP3 + Animacion colores)" << endl;
         cout << " 2.  Efecto de Victoria (Musica MP3 + Animacion Confeti)" << endl;
+        cout << "INVASIÓN ESPACIAL:" << endl;
         cout << " 3.  Animacion del Cohete (Interactivo - Dispara con ESPACIO)" << endl;
         cout << " 4.  Formacion OVNI (Movimiento - Salir con ESC)" << endl;
+        cout << "BATALLA NAVAL:" << endl;
         cout << " 5.  Dibujo de Buque de Guerra (Estatico)" << endl;
         cout << " 6.  Dibujo de Avion F15 (Estatico)" << endl;
+        cout << "TIC TAC TOE:" << endl;
         cout << " 7.  Menu Tic Tac Toe (Estatico)" << endl;
         cout << " 8.  Personaje Jugador (Estatico)" << endl;
+        cout << "POKEMON:" << endl;
         cout << " 9.  Dibujo de Eevee (Estatico)" << endl;
         cout << " 10. Dibujo de Pikachu (Estatico)" << endl;
 
@@ -444,13 +453,23 @@ void estrellaAzulTiritando(int x, int y) {
 
 void dibujarTitulo() {
     int random = 1 + rand() % 10;
-    color((random + 0) % 10); cout << "@@@@@@@  @@@@@@@    @@@@@  @@   @@ @@   @@ @@@@@@@ @@   @@  @@@@@  @@@@@@@ @@@@@@@ @@@@ @@   @@" << endl;
-    color((random + 1) % 10); cout << "@@       @@    @@  @@   @@ @@@  @@ @@  @@  @@      @@@  @@ @@        @@    @@      @@@@ @@@  @@" << endl;
-    color((random + 2) % 10); cout << "@@@@@    @@@@@@@  @@@@@@@@ @@@@ @@ @@@@@   @@@@@   @@@@ @@  @@@@@    @@    @@@@@    @@  @@@@ @@" << endl;
-    color((random + 3) % 10); cout << "@@       @@  @@   @@    @@ @@ @@@@ @@  @@  @@      @@ @@@@     @@    @@    @@       @@  @@ @@@@" << endl;
-    color((random + 4) % 10); cout << "@@       @@   @@  @@    @@ @@  @@@ @@   @@ @@      @@  @@@ @@  @@    @@    @@      @@@@ @@  @@@" << endl;
-    color((random + 5) % 10); cout << "@@       @@    @@ @@    @@ @@   @@ @@   @@ @@@@@@@ @@   @@  @@@@@    @@    @@@@@@@ @@@@ @@   @@" << endl;
+    // color((random + 0) % 10); cout << "@@@@@@  @@@@@@@  @@@@@@@  @@@@@@    @@@@@            @@@@@ @@@@@@   @@@@@       @@   @@ " << endl;
+    // color((random + 1) % 10); cout << "@@   @@ @@        @@      @@   @@ @@   @@          @@   @@ @@   @@ @@   @@      @@   @@ " << endl;
+    // color((random + 2) % 10); cout << "@@@@@@  @@@@@     @@      @@@@@@  @@   @@  @@@@@   @@@@@@@ @@@@@@  @@           @@@@@@@ " << endl;
+    // color((random + 3) % 10); cout << "@@ @@   @@        @@      @@ @@   @@   @@          @@   @@ @@ @@   @@           @@   @@ " << endl;
+    // color((random + 4) % 10); cout << "@@  @@  @@        @@      @@  @@  @@   @@          @@   @@ @@  @@  @@   @@      @@   @@ " << endl;
+    // color((random + 5) % 10); cout << "@@   @@ @@@@@@@   @@      @@   @@  @@@@@           @@   @@ @@   @@  @@@@@   @@  @@   @@ " << endl;
+
+    color((random + 0) % 10); cout << R"(/$$$$$$$  /$$$$$$$$ /$$$$$$$$ /$$$$$$$   /$$$$$$         /$$$$$$  /$$$$$$$   /$$$$$$     /$$   /$$)" << endl;
+    color((random + 1) % 10); cout << R"(| $$__  $$| $$_____/|__  $$__/| $$__  $$ /$$__  $$       /$$__  $$| $$__  $$ /$$__  $$   | $$  | $$)" << endl;
+    color((random + 2) % 10); cout << R"(| $$  \ $$| $$         | $$   | $$  \ $$| $$  \ $$      | $$  \ $$| $$  \ $$| $$  \__/   | $$  | $$)" << endl;
+    color((random + 3) % 10); cout << R"(| $$$$$$$/| $$$$$      | $$   | $$$$$$$/| $$  | $$      | $$$$$$$$| $$$$$$$/| $$         | $$$$$$$$)" << endl;
+    color((random + 4) % 10); cout << R"(| $$__  $$| $$__/      | $$   | $$__  $$| $$  | $$      | $$__  $$| $$__  $$| $$         | $$__  $$)" << endl;
+    color((random + 5) % 10); cout << R"(| $$  \ $$| $$         | $$   | $$  \ $$| $$  | $$      | $$  | $$| $$  \ $$| $$    $$   | $$  | $$)" << endl;
+    color((random + 6) % 10); cout << R"(| $$  | $$| $$$$$$$$   | $$   | $$  | $$|  $$$$$$/      | $$  | $$| $$  | $$|  $$$$$$//$$| $$  | $$)" << endl;
+    color((random + 7) % 10); cout << R"(|__/  |__/|________/   |__/   |__/  |__/ \______/       |__/  |__/|__/  |__/ \______/|__/|__/  |__/)" << endl;
 }
+
 
 
 // ========================================================================
@@ -636,7 +655,7 @@ void disparoLaser(int x,int y) {
 // Controla el movimiento autónomo de la nave y procesa disparos con ESPACIO.
 // ========================================================================
 void cohete() {
-    system("mode con: cols=120 lines=40");
+    system("mode con: cols=180 lines=120");
     system("cls");
 
     int x = 1;
@@ -744,7 +763,7 @@ void borrarFormacion(int x,int y) {
 // Mueve y redibuja una cuadrilla tridimensional de OVNIs por la pantalla.
 // ========================================================================
 void ovni() {
-    system("mode con: cols=120 lines=40");
+    system("mode con: cols=180 lines=120");
 
     int x = 1;
     int y = 2;
@@ -918,27 +937,60 @@ void jugador(int x, int y) {
 
 
 // ========================================================================
-// DESARROLLO DE LA OPCIÓN 9: Dibujo de Eevee (Braille Art)
-// Utiliza un patrón complejo de símbolos Braille para recrear la figura de Eevee.
+// DESARROLLO DE LA OPCIÓN 9: Dibujo de Eevee (True Color ANSI)
+// Genera un Eevee a color renderizado píxel por píxel con secuencias de el caracter ▀.
+// Aprovechando la mezcla de color de letra y color de fondo, para que parezca 2 pixeles.
 // ========================================================================
 void eevee(int x, int y) {
-    gotoxy(x, y+0);  cout << "⠀⠀⠀⠀⠀⠀⣀⣠⣤⡔⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡴⣧";
-    gotoxy(x, y+1);  cout << "⠀⠀⣀⣤⣶⣿⣿⣿⣿⣏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡾⠁⣼";
-    gotoxy(x, y+2);  cout << "⢠⣾⣿⣿⣿⣿⣿⣿⣿⣿⢷⣆⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⡟⠀⠀⣿";
-    gotoxy(x, y+3);  cout << "⣾⣿⣿⣟⢛⣛⣛⣛⣋⠭⠥⠿⣿⣿⣷⣤⠀⠀⠀⢀⣀⣀⣠⣀⡀⢿⡇⠀⣸⡇";
-    gotoxy(x, y+4);  cout << "⣿⣿⣿⠻⢧⠙⢯⡀⠈⠉⠙⠛⠳⢦⣝⢿⣷⢠⣾⣿⣿⣿⣿⣿⣯⣬⡥⢰⡟⠀";
-    gotoxy(x, y+5);  cout << "⢹⣯⣛⠯⢿⣾⣷⣍⡳⣤⣀⠀⠀⠀⠉⠳⣍⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡃⠀⠀";
-    gotoxy(x, y+6);  cout << "⠈⠹⣿⣿⣾⣿⣿⣿⣿⣷⣭⣛⠷⢦⣤⣤⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠀⠀";
-    gotoxy(x, y+7);  cout << "⠀⠀⠈⠛⠿⣿⣿⣿⣿⣿⢋⣵⡾⣣⣤⣦⢻⣿⣿⣿⣻⠻⣿⣿⣿⡏⠖⢻⠀⠀";
-    gotoxy(x, y+8);  cout << "⠀⠀⠀⠀⠀⠀⠈⠉⠉⣱⣿⡟⠼⣻⣿⣿⢸⣿⣿⡇⡛⠀⣿⣿⣿⣧⡠⣸⡇⠀";
-    gotoxy(x, y+9);  cout << "⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣷⢹⣿⣿⣿⣏⢿⣿⣷⣕⣧⣿⣿⣿⢿⣿⡿⠀⠀";
-    gotoxy(x, y+10); cout << "⠀⠀⠀⠀⠀⠀⠀⠀⠸⣿⣿⣿⣠⢿⣿⡟⣿⣷⣭⣻⠿⢿⠿⠷⢞⣫⣵⠿⠀⠀";
-    gotoxy(x, y+11); cout << "⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⡟⣎⢿⣧⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⠀";
-    gotoxy(x, y+12); cout << "⠀⠀⠀⠀⠀⠀⠀⠀⠸⣿⣿⣿⠁⠻⣷⡝⣩⣿⣿⣿⣿⣿⣿⣿⠿⠁⠀⠀⠀⠀";
-    gotoxy(x, y+13); cout << "⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⣿⣿⠀⠀⠀⠀⣿⣿⣿⠉⠙⢻⢟⣿⡇⠀⠀⠀⠀⠀";
-    gotoxy(x, y+14); cout << "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣿⡀⠀⠸⣿⣿⡇⠀⠀⠀⠀⠀";
-    gotoxy(x, y+15); cout << "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢿⢿⡧⠀⠀⠈⠉⠀⠀⠀";
-};
+    const string FG1 = "\033[38;2;0;0;0m";
+    const string FG2 = "\033[38;2;164;98;74m";
+    const string FG3 = "\033[38;2;115;74;74m";
+    const string FG4 = "\033[38;2;213;156;74m";
+    const string FG5 = "\033[38;2;82;49;32m";
+    const string FG6 = "\033[38;2;230;197;148m";
+    const string FG7 = "\033[38;2;189;156;123m";
+    const string FG8 = "\033[38;2;255;255;255m";
+    const string FG9 = "\033[38;2;255;230;172m";
+
+    const string BG1 = "\033[48;2;0;0;0m";
+    const string BG2 = "\033[48;2;164;98;74m";
+    const string BG3 = "\033[48;2;115;74;74m";
+    const string BG4 = "\033[48;2;213;156;74m";
+    const string BG5 = "\033[48;2;82;49;32m";
+    const string BG6 = "\033[48;2;230;197;148m";
+    const string BG7 = "\033[48;2;189;156;123m";
+    const string BG8 = "\033[48;2;255;255;255m";
+    const string BG9 = "\033[48;2;255;230;172m";
+
+    gotoxy (x, y + 0),cout << FG1 << BG1 << repeat_pixel(55);    cout << "\033[0m" << endl;
+    gotoxy (x, y + 1),cout << FG1 << BG1 << repeat_pixel(55);    cout << "\033[0m" << endl;
+    gotoxy (x, y + 2),cout << FG1 << BG1 << repeat_pixel(55);    cout << "\033[0m" << endl;
+    gotoxy (x, y + 3),cout << FG1 << BG1 << repeat_pixel(55);    cout << "\033[0m" << endl;
+    gotoxy (x, y + 4),cout << FG1 << BG1 << repeat_pixel(55);    cout << "\033[0m" << endl;
+    gotoxy (x, y + 5),cout << FG1 << BG1 << repeat_pixel(55);    cout << "\033[0m" << endl;
+    gotoxy (x, y + 6),cout << FG1 << BG1 << repeat_pixel(22);    cout << FG1 << BG2 << repeat_pixel(1);    cout << FG1 << BG3 << repeat_pixel(1);    cout << FG1 << BG1 << repeat_pixel(31);    cout << "\033[0m" << endl;
+    gotoxy (x, y + 7),cout << FG1 << BG1 << repeat_pixel(21);    cout << FG3 << BG3 << repeat_pixel(1);    cout << FG2 << BG1 << repeat_pixel(1);    cout << FG4 << BG4 << repeat_pixel(1);    cout << FG1 << BG1 << repeat_pixel(9);    cout << FG1 << BG2 << repeat_pixel(1);    cout << FG1 << BG1 << repeat_pixel(21);    cout << "\033[0m" << endl;
+    gotoxy (x, y + 8),cout << FG1 << BG1 << repeat_pixel(21);    cout << FG5 << BG2 << repeat_pixel(1);    cout << FG5 << BG1 << repeat_pixel(1);    cout << FG2 << BG1 << repeat_pixel(1);    cout << FG1 << BG1 << repeat_pixel(6);    cout << FG1 << BG4 << repeat_pixel(2);    cout << FG2 << BG1 << repeat_pixel(1);    cout << FG4 << BG2 << repeat_pixel(1);    cout << FG1 << BG1 << repeat_pixel(21);    cout << "\033[0m" << endl;
+    gotoxy (x, y + 9),cout << FG1 << BG1 << repeat_pixel(21);    cout << FG2 << BG5 << repeat_pixel(1);    cout << FG1 << BG3 << repeat_pixel(1);    cout << FG1 << BG1 << repeat_pixel(1);    cout << FG1 << BG5 << repeat_pixel(1);    cout << FG1 << BG1 << repeat_pixel(2);    cout << FG1 << BG2 << repeat_pixel(1);    cout << FG3 << BG4 << repeat_pixel(1);    cout << FG4 << BG1 << repeat_pixel(1);    cout << FG1 << BG5 << repeat_pixel(1);    cout << FG5 << BG5 << repeat_pixel(1);    cout << FG1 << BG2 << repeat_pixel(1);    cout << FG1 << BG1 << repeat_pixel(22);    cout << "\033[0m" << endl;
+    gotoxy (x, y + 10),cout << FG1 << BG1 << repeat_pixel(20);    cout << FG1 << BG3 << repeat_pixel(1);    cout << FG2 << BG4 << repeat_pixel(1);    cout << FG4 << BG4 << repeat_pixel(1);    cout << FG5 << BG4 << repeat_pixel(1);    cout << FG4 << BG2 << repeat_pixel(1);    cout << FG1 << BG4 << repeat_pixel(1);    cout << FG3 << BG4 << repeat_pixel(1);    cout << FG4 << BG4 << repeat_pixel(1);    cout << FG1 << BG1 << repeat_pixel(1);    cout << FG5 << BG1 << repeat_pixel(1);    cout << FG5 << BG2 << repeat_pixel(1);    cout << FG5 << BG1 << repeat_pixel(1);    cout << FG1 << BG1 << repeat_pixel(4);    cout << FG1 << BG3 << repeat_pixel(1);    cout << FG1 << BG1 << repeat_pixel(18);    cout << "\033[0m" << endl;
+    gotoxy (x, y + 11),cout << FG1 << BG1 << repeat_pixel(19);    cout << FG3 << BG5 << repeat_pixel(1);    cout << FG4 << BG4 << repeat_pixel(7);    cout << FG2 << BG2 << repeat_pixel(1);    cout << FG2 << BG1 << repeat_pixel(1);    cout << FG1 << BG1 << repeat_pixel(3);    cout << FG1 << BG6 << repeat_pixel(1);    cout << FG7 << BG6 << repeat_pixel(1);    cout << FG6 << BG6 << repeat_pixel(1);    cout << FG6 << BG7 << repeat_pixel(1);    cout << FG2 << BG1 << repeat_pixel(1);    cout << FG1 << BG1 << repeat_pixel(18);    cout << "\033[0m" << endl;
+    gotoxy (x, y + 12),cout << FG1 << BG1 << repeat_pixel(19);    cout << FG8 << BG5 << repeat_pixel(1);    cout << FG5 << BG1 << repeat_pixel(1);    cout << FG4 << BG4 << repeat_pixel(3);    cout << FG4 << BG5 << repeat_pixel(1);    cout << FG4 << BG1 << repeat_pixel(1);    cout << FG4 << BG4 << repeat_pixel(1);    cout << FG2 << BG2 << repeat_pixel(1);    cout << FG1 << BG1 << repeat_pixel(2);    cout << FG1 << BG3 << repeat_pixel(1);    cout << FG3 << BG7 << repeat_pixel(1);    cout << FG6 << BG6 << repeat_pixel(5);    cout << FG1 << BG1 << repeat_pixel(18);    cout << "\033[0m" << endl;
+    gotoxy (x, y + 13),cout << FG1 << BG1 << repeat_pixel(18);    cout << FG5 << BG1 << repeat_pixel(1);    cout << FG4 << BG4 << repeat_pixel(2);    cout << FG4 << BG2 << repeat_pixel(1);    cout << FG4 << BG4 << repeat_pixel(2);    cout << FG1 << BG4 << repeat_pixel(2);    cout << FG2 << BG2 << repeat_pixel(1);    cout << FG3 << BG6 << repeat_pixel(1);    cout << FG6 << BG6 << repeat_pixel(1);    cout << FG1 << BG6 << repeat_pixel(1);    cout << FG2 << BG2 << repeat_pixel(3);    cout << FG7 << BG2 << repeat_pixel(1);    cout << FG2 << BG2 << repeat_pixel(1);    cout << FG6 << BG2 << repeat_pixel(1);    cout << FG6 << BG7 << repeat_pixel(1);    cout << FG6 << BG2 << repeat_pixel(1);    cout << FG1 << BG1 << repeat_pixel(17);    cout << "\033[0m" << endl;
+    gotoxy (x, y + 14),cout << FG1 << BG1 << repeat_pixel(17);    cout << FG1 << BG7 << repeat_pixel(1);    cout << FG7 << BG6 << repeat_pixel(1);    cout << FG1 << BG6 << repeat_pixel(1);    cout << FG2 << BG7 << repeat_pixel(1);    cout << FG4 << BG6 << repeat_pixel(1);    cout << FG3 << BG3 << repeat_pixel(1);    cout << FG4 << BG3 << repeat_pixel(2);    cout << FG2 << BG3 << repeat_pixel(1);    cout << FG2 << BG6 << repeat_pixel(1);    cout << FG6 << BG6 << repeat_pixel(2);    cout << FG6 << BG7 << repeat_pixel(1);    cout << FG2 << BG3 << repeat_pixel(1);    cout << FG2 << BG2 << repeat_pixel(6);    cout << FG2 << BG3 << repeat_pixel(1);    cout << FG1 << BG1 << repeat_pixel(17);    cout << "\033[0m" << endl;
+    gotoxy (x, y + 15),cout << FG1 << BG1 << repeat_pixel(17);    cout << FG7 << BG1 << repeat_pixel(1);    cout << FG9 << BG6 << repeat_pixel(1);    cout << FG9 << BG9 << repeat_pixel(5);    cout << FG6 << BG9 << repeat_pixel(1);    cout << FG6 << BG7 << repeat_pixel(1);    cout << FG6 << BG6 << repeat_pixel(3);    cout << FG1 << BG1 << repeat_pixel(1);    cout << FG3 << BG3 << repeat_pixel(3);    cout << FG2 << BG3 << repeat_pixel(3);    cout << FG3 << BG3 << repeat_pixel(1);    cout << FG1 << BG1 << repeat_pixel(18);    cout << "\033[0m" << endl;
+    gotoxy (x, y + 16),cout << FG1 << BG1 << repeat_pixel(18);    cout << FG5 << BG1 << repeat_pixel(1);    cout << FG9 << BG5 << repeat_pixel(1);    cout << FG9 << BG7 << repeat_pixel(1);    cout << FG9 << BG6 << repeat_pixel(3);    cout << FG6 << BG6 << repeat_pixel(1);    cout << FG7 << BG3 << repeat_pixel(1);    cout << FG7 << BG1 << repeat_pixel(1);    cout << FG6 << BG2 << repeat_pixel(1);    cout << FG1 << BG2 << repeat_pixel(1);    cout << FG2 << BG2 << repeat_pixel(1);    cout << FG1 << BG2 << repeat_pixel(1);    cout << FG3 << BG1 << repeat_pixel(1);    cout << FG3 << BG3 << repeat_pixel(1);    cout << FG3 << BG2 << repeat_pixel(2);    cout << FG3 << BG1 << repeat_pixel(2);    cout << FG1 << BG1 << repeat_pixel(18);    cout << "\033[0m" << endl;
+    gotoxy (x, y + 17),cout << FG1 << BG1 << repeat_pixel(21);    cout << FG1 << BG2 << repeat_pixel(1);    cout << FG7 << BG1 << repeat_pixel(1);    cout << FG1 << BG5 << repeat_pixel(1);    cout << FG3 << BG3 << repeat_pixel(1);    cout << FG2 << BG2 << repeat_pixel(2);    cout << FG5 << BG3 << repeat_pixel(1);    cout << FG2 << BG3 << repeat_pixel(1);    cout << FG2 << BG2 << repeat_pixel(2);    cout << FG1 << BG1 << repeat_pixel(24);    cout << "\033[0m" << endl;
+    gotoxy (x, y + 18),cout << FG1 << BG1 << repeat_pixel(19);    cout << FG1 << BG5 << repeat_pixel(1);    cout << FG5 << BG2 << repeat_pixel(1);    cout << FG2 << BG2 << repeat_pixel(1);    cout << FG2 << BG1 << repeat_pixel(1);    cout << FG1 << BG1 << repeat_pixel(1);    cout << FG1 << BG4 << repeat_pixel(1);    cout << FG4 << BG4 << repeat_pixel(1);    cout << FG4 << BG2 << repeat_pixel(1);    cout << FG2 << BG1 << repeat_pixel(3);    cout << FG1 << BG1 << repeat_pixel(25);    cout << "\033[0m" << endl;
+    gotoxy (x, y + 19),cout << FG1 << BG1 << repeat_pixel(24);    cout << FG5 << BG1 << repeat_pixel(1);    cout << FG1 << BG1 << repeat_pixel(30);    cout << "\033[0m" << endl;
+    gotoxy (x, y + 20),cout << FG1 << BG1 << repeat_pixel(55);    cout << "\033[0m" << endl;
+    gotoxy (x, y + 21),cout << FG1 << BG1 << repeat_pixel(55);    cout << "\033[0m" << endl;
+    gotoxy (x, y + 22),cout << FG1 << BG1 << repeat_pixel(55);    cout << "\033[0m" << endl;
+    gotoxy (x, y + 23),cout << FG1 << BG1 << repeat_pixel(55);    cout << "\033[0m" << endl;
+    gotoxy (x, y + 24),cout << FG1 << BG1 << repeat_pixel(55);    cout << "\033[0m" << endl;
+    gotoxy (x, y + 25),cout << FG1 << BG1 << repeat_pixel(55);    cout << "\033[0m" << endl;
+    gotoxy (x, y + 26),cout << FG1 << BG1 << repeat_pixel(55);    cout << "\033[0m" << endl;
+    gotoxy (x, y + 27),cout << FG1 << BG1 << repeat_pixel(55);    cout << "\033[0m" << endl;
+}
 
 
 // ========================================================================
