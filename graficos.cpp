@@ -61,8 +61,10 @@ void eevee(int x, int y);
 void pikachu(int x, int y);
 
 int main() {
-    // 1. Activamos los colores ANSI TrueColor para dibujos como Pikachu y Eevee
+    // Activamos los colores ANSI TrueColor para dibujos como Pikachu
     activar_truecolor();
+    // Semilla random para los numeros aleatorios
+    srand(time(NULL));
 
     int opcion;
 
@@ -452,15 +454,15 @@ void dibujarTitulo() {
 
 
 // ========================================================================
-// DESARROLLO DE LA OPCIÓN 1: Mostrar Título Principal (Estático)
+// DESARROLLO DE LA OPCIÓN 1: Mostrar Título Principal (Musica MP3 + Animacion colores)
 // Reproduce música retro e imprime cíclicamente el logo con colores dinámicos.
 // ========================================================================
 void titulo() {
     reproducirMusica("retro.mp3");
-    for (int i = 1; i <= 10 ; i++) {
+    for (int i = 1; i <= 30 ; i++) {
         system("cls");
         dibujarTitulo();
-        Sleep(500);
+        Sleep(100);
     }
 };
 
@@ -489,7 +491,6 @@ void borrarTitulo(int posx, int posy,int largoTitulo, int altoTitulo){
 }
 //Función para mostrar confeti
 void mostrarConfeti(int x, int y, int largoTitulo, int altoTitulo, int duracionMs) {
-    srand(time(NULL));
     char simbolos[] = { '*', '.', 'o', '+', 'x' };
     const int N = 10;      // partículas en pantalla a la vez
     int px[N], py[N];
