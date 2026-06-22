@@ -146,6 +146,7 @@ int main() {
                 titulo();
                 break;
             case 2:
+                color(14); // Color por si no funciona system color
                 victoria();
                 break;
             case 3:
