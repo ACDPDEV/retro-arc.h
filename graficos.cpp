@@ -1,11 +1,30 @@
+// IMPORTANTE!
+// Para que funcione el formateador R, se debe activar
+// 1. Ir a:
+//    Herramientas -> Opciones del compilador
+//
+// 2. Buscar la opcion:
+//    "Anadir estos comandos al linker" o "Comandos del enlazador"
+//
+// 3. Escribir:
+//    -std=c++14 o -std=c++17
+
 #include <conio.h>
 #include <iostream>
 #include <stdio.h>
 #include <synchapi.h>
 #include <windows.h>
+
+// Dependiendo de la version de Windows, se define la constante ENABLE_VIRTUAL_TERMINAL_PROCESSING
+#ifndef ENABLE_VIRTUAL_TERMINAL_PROCESSING
+#define ENABLE_VIRTUAL_TERMINAL_PROCESSING 0x0004
+#endif
+
 #include <mmsystem.h> // Libreria necesaria para reproducir musica MP3
 #include <time.h>
 #include <stdlib.h>
+
+
 
 using namespace std;
 
@@ -266,13 +285,20 @@ void detenerMusica() {
 /// códigos CP437 (necesaria para que el byte 223 se vea como '▀').
 /// Requiere Windows 10 build 1909+. Fuente: https://learn.microsoft.com/en-us/windows/console/console-virtual-terminal-sequences
 void activar_truecolor() {
-    SetConsoleOutputCP(437);
-    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    HANDLE hOut;
     DWORD mode = 0;
-    GetConsoleMode(hOut, &mode);
+
+    SetConsoleOutputCP(437);
+
+    hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    if (hOut == INVALID_HANDLE_VALUE) return;
+
+    if (!GetConsoleMode(hOut, &mode)) return;
+
     SetConsoleMode(hOut, mode | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
 }
 
+// Genera una cadena de caracteres repetidos (usado para dibujar gráficos)
 string repeat_pixel(int numero, char simbolo = (char)223) {
     string result;
     for (int i = 0; i < numero; i++) {
@@ -453,16 +479,10 @@ void estrellaAzulTiritando(int x, int y) {
 
 void dibujarTitulo() {
     int random = 1 + rand() % 10;
-    // color((random + 0) % 10); cout << "@@@@@@  @@@@@@@  @@@@@@@  @@@@@@    @@@@@            @@@@@ @@@@@@   @@@@@       @@   @@ " << endl;
-    // color((random + 1) % 10); cout << "@@   @@ @@        @@      @@   @@ @@   @@          @@   @@ @@   @@ @@   @@      @@   @@ " << endl;
-    // color((random + 2) % 10); cout << "@@@@@@  @@@@@     @@      @@@@@@  @@   @@  @@@@@   @@@@@@@ @@@@@@  @@           @@@@@@@ " << endl;
-    // color((random + 3) % 10); cout << "@@ @@   @@        @@      @@ @@   @@   @@          @@   @@ @@ @@   @@           @@   @@ " << endl;
-    // color((random + 4) % 10); cout << "@@  @@  @@        @@      @@  @@  @@   @@          @@   @@ @@  @@  @@   @@      @@   @@ " << endl;
-    // color((random + 5) % 10); cout << "@@   @@ @@@@@@@   @@      @@   @@  @@@@@           @@   @@ @@   @@  @@@@@   @@  @@   @@ " << endl;
 
-    color((random + 0) % 10); cout << R"(/$$$$$$$  /$$$$$$$$ /$$$$$$$$ /$$$$$$$   /$$$$$$         /$$$$$$  /$$$$$$$   /$$$$$$     /$$   /$$)" << endl;
-    color((random + 1) % 10); cout << R"(| $$__  $$| $$_____/|__  $$__/| $$__  $$ /$$__  $$       /$$__  $$| $$__  $$ /$$__  $$   | $$  | $$)" << endl;
-    color((random + 2) % 10); cout << R"(| $$  \ $$| $$         | $$   | $$  \ $$| $$  \ $$      | $$  \ $$| $$  \ $$| $$  \__/   | $$  | $$)" << endl;
+    color((random + 0) % 10); cout << R"( /$$$$$$$  /$$$$$$$$ /$$$$$$$$ /$$$$$$$   /$$$$$$         /$$$$$$  /$$$$$$$   /$$$$$$     /$$)" << endl;
+    color((random + 1) % 10); cout << R"(| $$__  $$| $$_____/|__  $$__/| $$__  $$ /$$__  $$       /$$__  $$| $$__  $$ /$$__  $$   | $$)" << endl;
+    color((random + 2) % 10); cout << R"(| $$  \ $$| $$         | $$   | $$  \ $$| $$  \ $$      | $$  \ $$| $$  \ $$| $$  \__/   | $$)" << endl;
     color((random + 3) % 10); cout << R"(| $$$$$$$/| $$$$$      | $$   | $$$$$$$/| $$  | $$      | $$$$$$$$| $$$$$$$/| $$         | $$$$$$$$)" << endl;
     color((random + 4) % 10); cout << R"(| $$__  $$| $$__/      | $$   | $$__  $$| $$  | $$      | $$__  $$| $$__  $$| $$         | $$__  $$)" << endl;
     color((random + 5) % 10); cout << R"(| $$  \ $$| $$         | $$   | $$  \ $$| $$  | $$      | $$  | $$| $$  \ $$| $$    $$   | $$  | $$)" << endl;
