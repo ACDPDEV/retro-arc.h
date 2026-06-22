@@ -4,6 +4,8 @@
 #include <synchapi.h>
 #include <windows.h>
 #include <mmsystem.h> // Libreria necesaria para reproducir musica MP3
+#include <time.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -27,6 +29,7 @@ IMPORTANTE PARA USAR MP3 EN DEV-C++:
 // ------------------------------------------------------------------------
 void color(int c);
 void gotoxy(int x, int y);
+void musicaCampeon();
 void reproducirMusica(string archivo);
 void detenerMusica();
 void activar_truecolor();
@@ -36,7 +39,6 @@ void dibujarTitulo();
 // ------------------------------------------------------------------------
 // EJEMPLOS DE LA PROFESORA
 // ------------------------------------------------------------------------
-void musicaCampeon();
 void bienvenido();
 void snoopy();
 void caritafeliz(int x, int y);
@@ -79,24 +81,24 @@ int main() {
         cout << "====================================================================" << endl;
         color(7);  // Blanco normal para las opciones
 
-        cout << " 1.  Mostrar Titulo Principal (Estatico)" << endl;
+        cout << " 1.  Mostrar Titulo Principal (Musica MP3 + Animacion colores)" << endl;
         cout << " 2.  Efecto de Victoria (Musica MP3 + Animacion Confeti)" << endl;
         cout << " 3.  Animacion del Cohete (Interactivo - Dispara con ESPACIO)" << endl;
         cout << " 4.  Formacion OVNI (Movimiento - Salir con ESC)" << endl;
         cout << " 5.  Dibujo de Buque de Guerra (Estatico)" << endl;
         cout << " 6.  Dibujo de Avion F15 (Estatico)" << endl;
-        cout << " 7.  Menu Tic Tac Toe (ASCII Art)" << endl;
-        cout << " 8.  Personaje Jugador (ASCII Art)" << endl;
-        cout << " 9.  Dibujo de Eevee (Braille Art)" << endl;
-        cout << " 10. Dibujo de Pikachu (True Color ANSI)" << endl;
+        cout << " 7.  Menu Tic Tac Toe (Estatico)" << endl;
+        cout << " 8.  Personaje Jugador (Estatico)" << endl;
+        cout << " 9.  Dibujo de Eevee (Estatico)" << endl;
+        cout << " 10. Dibujo de Pikachu (Estatico)" << endl;
 
         color(11); // Celeste para los ejemplos de la profesora
         cout << " ------------------------------------------------------------------" << endl;
-        cout << " 11. [Ejemplo Profe] Snoopy en Movimiento" << endl;
-        cout << " 12. [Ejemplo Profe] Carita Feliz" << endl;
-        cout << " 13. [Ejemplo Profe] Estrella con Sonido Beep" << endl;
-        cout << " 14. [Ejemplo Profe] Estrella con Musica MP3" << endl;
-        cout << " 15. [Ejemplo Profe] Estrella Azul Tiritando" << endl;
+        cout << " 11. [Ejemplo Profesora] Snoopy en Movimiento" << endl;
+        cout << " 12. [Ejemplo Profesora] Carita Feliz" << endl;
+        cout << " 13. [Ejemplo Profesora] Estrella con Sonido Beep" << endl;
+        cout << " 14. [Ejemplo Profesora] Estrella con Musica MP3" << endl;
+        cout << " 15. [Ejemplo Profesora] Estrella Azul Tiritando" << endl;
 
         color(12); // Rojo para la opción de salida
         cout << " ------------------------------------------------------------------" << endl;
@@ -162,7 +164,7 @@ int main() {
                 break;
             case 0:
                 color(10);
-                cout << "\n\n\t¡Gracias por usar nuestro programa de graficos!\n\tSaliendo con exito...\n\n" << endl;
+                cout << "\n\n\tGracias por usar nuestro programa de graficos!\n\tSaliendo con exito...\n\n" << endl;
                 break;
             default:
                 color(12);
@@ -172,6 +174,9 @@ int main() {
             color(7); // Restaurar blanco
             cout << "\n\n\n Presione cualquier tecla para regresar al Menu Principal...";
             getch();
+            // Si habia musica, pausarla
+            if (opcion == 1 || opcion == 2)
+                detenerMusica();
         }
 
     } while(opcion != 0);
@@ -273,6 +278,11 @@ void bienvenido() {
     cout << "\t `------'`--'`----`--''--' `--'  `----`--''--`--'`---' `---' " << endl;
 }
 
+
+// ========================================================================
+// DESARROLLO DE LA OPCIÓN 12: [Ejemplo Profe] Carita Feliz
+// Muestra una carita sonriente simple usando caracteres ASCII estándar.
+// ========================================================================
 void caritafeliz(int x, int y) {
     gotoxy(x, y);     cout << "     #######     ";
     gotoxy(x, y + 1); cout << "   ##       ##   ";
@@ -286,6 +296,11 @@ void caritafeliz(int x, int y) {
     gotoxy(x, y + 9); cout << "FELICITACIONES !!!!";
 }
 
+
+// ========================================================================
+// DESARROLLO DE LA OPCIÓN 11: [Ejemplo Profe] Snoopy en Movimiento
+// Animación por bucle que hace desplazar a Snoopy lateralmente por la pantalla.
+// ========================================================================
 void snoopy() {
     int mov = 50;
 
@@ -311,19 +326,23 @@ void snoopy() {
     }
 }
 
-// Funcion estrella roja con musica usando Beep()
+
+// ========================================================================
+// DESARROLLO DE LA OPCIÓN 13: [Ejemplo Profe] Estrella con Sonido Beep
+// Dibuja una estrella roja y ejecuta una melodía monofónica mediante Beep().
+// ========================================================================
 void estrellabeep(int x, int y) {
     color(12); // rojo claro
 
-    gotoxy(x, y);      cout << "        *        ";
-    gotoxy(x, y + 1);  cout << "       ***       ";
-    gotoxy(x, y + 2);  cout << "      *****      ";
-    gotoxy(x, y + 3);  cout << "  *************  ";
-    gotoxy(x, y + 4);  cout << "    *********    ";
-    gotoxy(x, y + 5);  cout << "     *******     ";
-    gotoxy(x, y + 6);  cout << "    *********    ";
-    gotoxy(x, y + 7);  cout << "   ****   ****   ";
-    gotoxy(x, y + 8);  cout << "  ***       ***  ";
+    gotoxy(x, y);      cout << "        * ";
+    gotoxy(x, y + 1);  cout << "       *** ";
+    gotoxy(x, y + 2);  cout << "      ***** ";
+    gotoxy(x, y + 3);  cout << "  ************* ";
+    gotoxy(x, y + 4);  cout << "    ********* ";
+    gotoxy(x, y + 5);  cout << "     ******* ";
+    gotoxy(x, y + 6);  cout << "    ********* ";
+    gotoxy(x, y + 7);  cout << "   **** **** ";
+    gotoxy(x, y + 8);  cout << "  *** *** ";
 
     color(7); // vuelve al color blanco normal
 
@@ -333,19 +352,23 @@ void estrellabeep(int x, int y) {
     musicaCampeon(); // reproduce musica con Beep
 }
 
-// Funcion estrella verde con musica MP3
+
+// ========================================================================
+// DESARROLLO DE LA OPCIÓN 14: [Ejemplo Profe] Estrella con Música MP3
+// Muestra una estrella verde e inicia la reproducción en paralelo de "happy.mp3".
+// ========================================================================
 void estrellamp3(int x, int y) {
     color(10); // verde
 
-    gotoxy(x, y);      cout << "        *        ";
-    gotoxy(x, y + 1);  cout << "       ***       ";
-    gotoxy(x, y + 2);  cout << "      *****      ";
-    gotoxy(x, y + 3);  cout << "  *************  ";
-    gotoxy(x, y + 4);  cout << "    *********    ";
-    gotoxy(x, y + 5);  cout << "     *******     ";
-    gotoxy(x, y + 6);  cout << "    *********    ";
-    gotoxy(x, y + 7);  cout << "   ****   ****   ";
-    gotoxy(x, y + 8);  cout << "  ***       ***  ";
+    gotoxy(x, y);      cout << "        * ";
+    gotoxy(x, y + 1);  cout << "       *** ";
+    gotoxy(x, y + 2);  cout << "      ***** ";
+    gotoxy(x, y + 3);  cout << "  ************* ";
+    gotoxy(x, y + 4);  cout << "    ********* ";
+    gotoxy(x, y + 5);  cout << "     ******* ";
+    gotoxy(x, y + 6);  cout << "    ********* ";
+    gotoxy(x, y + 7);  cout << "   **** **** ";
+    gotoxy(x, y + 8);  cout << "  *** *** ";
 
     color(7); // vuelve al color blanco normal
 
@@ -361,6 +384,11 @@ void estrellamp3(int x, int y) {
     detenerMusica(); // detiene la musica MP3
 }
 
+
+// ========================================================================
+// DESARROLLO DE LA OPCIÓN 15: [Ejemplo Profe] Estrella Azul Tiritando
+// Provoca un efecto de temblor en una estrella azul reproduciendo "shake.mp3".
+// ========================================================================
 void estrellaAzulTiritando(int x, int y) {
     // Inicia la musica MP3
     reproducirMusica("shake.mp3");
@@ -380,15 +408,15 @@ void estrellaAzulTiritando(int x, int y) {
         color(9);
 
         // Dibujar estrella
-        gotoxy(x + movimiento, y);      cout << "        *        ";
-        gotoxy(x + movimiento, y + 1);  cout << "       ***       ";
-        gotoxy(x + movimiento, y + 2);  cout << "      *****      ";
-        gotoxy(x + movimiento, y + 3);  cout << "  *************  ";
-        gotoxy(x + movimiento, y + 4);  cout << "    *********    ";
-        gotoxy(x + movimiento, y + 5);  cout << "     *******     ";
-        gotoxy(x + movimiento, y + 6);  cout << "    *********    ";
-        gotoxy(x + movimiento, y + 7);  cout << "   ****   ****   ";
-        gotoxy(x + movimiento, y + 8);  cout << "  ***       ***  ";
+        gotoxy(x + movimiento, y);      cout << "        * ";
+        gotoxy(x + movimiento, y + 1);  cout << "       *** ";
+        gotoxy(x + movimiento, y + 2);  cout << "      ***** ";
+        gotoxy(x + movimiento, y + 3);  cout << "  ************* ";
+        gotoxy(x + movimiento, y + 4);  cout << "    ********* ";
+        gotoxy(x + movimiento, y + 5);  cout << "     ******* ";
+        gotoxy(x + movimiento, y + 6);  cout << "    ********* ";
+        gotoxy(x + movimiento, y + 7);  cout << "   **** **** ";
+        gotoxy(x + movimiento, y + 8);  cout << "  *** *** ";
 
         color(7);
 
@@ -408,13 +436,10 @@ void estrellaAzulTiritando(int x, int y) {
         Sleep(150); // tiempo invisible
     }
 
-    // Detiene la musica al terminar el efecto
+    // Detiene la musica al terminar el effecto
     detenerMusica();
 }
 
-// ------------------------------------------------------------------------
-// NUESTROS DIBUJOS
-// ------------------------------------------------------------------------
 void dibujarTitulo() {
     int random = 1 + rand() % 10;
     color((random + 0) % 10); cout << "@@@@@@@  @@@@@@@    @@@@@  @@   @@ @@   @@ @@@@@@@ @@   @@  @@@@@  @@@@@@@ @@@@@@@ @@@@ @@   @@" << endl;
@@ -424,6 +449,12 @@ void dibujarTitulo() {
     color((random + 4) % 10); cout << "@@       @@   @@  @@    @@ @@  @@@ @@   @@ @@      @@  @@@ @@  @@    @@    @@      @@@@ @@  @@@" << endl;
     color((random + 5) % 10); cout << "@@       @@    @@ @@    @@ @@   @@ @@   @@ @@@@@@@ @@   @@  @@@@@    @@    @@@@@@@ @@@@ @@   @@" << endl;
 }
+
+
+// ========================================================================
+// DESARROLLO DE LA OPCIÓN 1: Mostrar Título Principal (Estático)
+// Reproduce música retro e imprime cíclicamente el logo con colores dinámicos.
+// ========================================================================
 void titulo() {
     reproducirMusica("retro.mp3");
     for (int i = 1; i <= 10 ; i++) {
@@ -432,7 +463,6 @@ void titulo() {
         Sleep(500);
     }
 };
-
 
 // Función para imprimir el título "VICTORIA"
 void tituloVictoria(int x){
@@ -514,6 +544,12 @@ void mostrarConfeti(int x, int y, int largoTitulo, int altoTitulo, int duracionM
 
     system("color 0F"); // dejamos la consola en blanco sobre negro al terminar
 }
+
+
+// ========================================================================
+// DESARROLLO DE LA OPCIÓN 2: Efecto de Victoria (Música MP3 + Confeti)
+// Lanza una animación de celebración con un gran letrero y confeti de colores.
+// ========================================================================
 void victoria() {
 
     reproducirMusica("victoria.mp3");
@@ -592,6 +628,12 @@ void disparoLaser(int x,int y) {
         cout<<" ";
     }
 }
+
+
+// ========================================================================
+// DESARROLLO DE LA OPCIÓN 3: Animación del Cohete (Interactivo)
+// Controla el movimiento autónomo de la nave y procesa disparos con ESPACIO.
+// ========================================================================
 void cohete() {
     system("mode con: cols=120 lines=40");
     system("cls");
@@ -695,6 +737,11 @@ void borrarFormacion(int x,int y) {
     borrarOvni(x+40,y+10);
 }
 
+
+// ========================================================================
+// DESARROLLO DE LA OPCIÓN 4: Formación OVNI (Movimiento - Salir con ESC)
+// Mueve y redibuja una cuadrilla tridimensional de OVNIs por la pantalla.
+// ========================================================================
 void ovni() {
     system("mode con: cols=120 lines=40");
 
@@ -733,6 +780,11 @@ void ovni() {
     system("cls");
 }
 
+
+// ========================================================================
+// DESARROLLO DE LA OPCIÓN 5: Dibujo de Buque de Guerra (Estático)
+// Renderiza el arte ASCII detallado de un imponente navío militar blindado.
+// ========================================================================
 void buque(int x, int y) {
     gotoxy(x, y + 0);  cout << "                                     |__";
     gotoxy(x, y + 1);  cout << "                                     |\\\\/";
@@ -749,6 +801,11 @@ void buque(int x, int y) {
     gotoxy(x, y + 12); cout << " \\_______________________________________________________________________|";
 };
 
+
+// ========================================================================
+// DESARROLLO DE LA OPCIÓN 6: Dibujo de Avión F15 (Estático)
+// Imprime en pantalla la silueta de un avión caza supersónico F15.
+// ========================================================================
 void avion(int x, int y) {
     gotoxy(x, y + 0);  cout << "  ______";
     gotoxy(x, y + 1);  cout << "  L,.   ',";
@@ -765,8 +822,11 @@ void avion(int x, int y) {
     gotoxy(x, y + 12); cout << "                    |__   /    |---,--'\"---+------+- '\"";
 };
 
-//inicio es lo que imprime el programa cuando seleccionas el jueg "tictactoe" en el menú de minijuegos
 
+// ========================================================================
+// DESARROLLO DE LA OPCIÓN 7: Menú Tic Tac Toe (ASCII Art)
+// Dibuja el banner del famoso juego tres en línea junto a un asistente animado.
+// ========================================================================
 void tictactoe_menu(int x, int y) {
     gotoxy(x, y);cout      << "   ,-----. ,--. ,----.  ,-----.  ,----. ,----.  ,-----. ,---. ,---.,     ";
     gotoxy(x, y + 1);cout  << "   |_    _| |  | |  __| |_    _| |     | |  __| |_    _| |   | |  __|    ";
@@ -795,8 +855,12 @@ void tictactoe_menu(int x, int y) {
     gotoxy(x, y + 24);cout << "       |_|_|          ";
     gotoxy(x, y + 25);cout << "     _~__~__\\        ";
 }
-//jugador es el personaje del juego, que te observa mientras juegas y puede mostrar comentarios de la jugada
 
+
+// ========================================================================
+// DESARROLLO DE LA OPCIÓN 8: Personaje Jugador (ASCII Art)
+// Genera un retrato masivo en arte ASCII del avatar o jugador espectador.
+// ========================================================================
 void jugador(int x, int y) {
 	color(10);
 
@@ -850,6 +914,12 @@ void jugador(int x, int y) {
     gotoxy(x, y + 47);     cout << "               ''$$oooooooooooooo''' ooo$$'''             ";
     gotoxy(x, y + 48);     cout << "                      ''''''''                            ";
 }
+
+
+// ========================================================================
+// DESARROLLO DE LA OPCIÓN 9: Dibujo de Eevee (Braille Art)
+// Utiliza un patrón complejo de símbolos Braille para recrear la figura de Eevee.
+// ========================================================================
 void eevee(int x, int y) {
     gotoxy(x, y+0);  cout << "⠀⠀⠀⠀⠀⠀⣀⣠⣤⡔⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡴⣧";
     gotoxy(x, y+1);  cout << "⠀⠀⣀⣤⣶⣿⣿⣿⣿⣏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡾⠁⣼";
@@ -868,6 +938,13 @@ void eevee(int x, int y) {
     gotoxy(x, y+14); cout << "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣿⡀⠀⠸⣿⣿⡇⠀⠀⠀⠀⠀";
     gotoxy(x, y+15); cout << "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢿⢿⡧⠀⠀⠈⠉⠀⠀⠀";
 };
+
+
+// ========================================================================
+// DESARROLLO DE LA OPCIÓN 10: Dibujo de Pikachu (True Color ANSI)
+// Genera un Pikachu a color renderizado píxel por píxel con secuencias de el caracter ▀.
+// Aprovechando la mezcla de color de letra y color de fondo, para que parezca 2 pixeles.
+// ========================================================================
 void pikachu(int x, int y) {
     const string FG1 = "\033[38;2;0;0;0m";
     const string FG2 = "\033[38;2;41;41;41m";
