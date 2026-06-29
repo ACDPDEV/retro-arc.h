@@ -3,7 +3,7 @@
 #include <string>
 using namespace std;
 
-string color(array<int, 3> foreground, int background[]) {
+inline string color(array<int, 3> foreground, int background[]) {
     return
         "\033[38;2;"
         + to_string(foreground[0]) + ";"
