@@ -1,3 +1,8 @@
+
+#include "figuras/figuritas.h"
+
 int main() {
-  return 0;
+    pikachu();
+    charmander();
+    return 0;
 }
