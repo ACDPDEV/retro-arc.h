@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 #include <conio.h>
+#include <iostream>
+using namespace std;
 
 /**
  * @brief Valida si una entrada coincide con un tipo esperado.
@@ -8,15 +10,15 @@
  * @param type Tipo esperado: "int", "float", "string", "char", "bool".
  * @return true si la entrada es válida para el tipo, false en caso contrario.
  */
-inline bool Validate(const std::string& input, const std::string& type) {
+bool Validate(string input, string type) {
     if (type == "int") {
-        return std::isdigit(input[0]);
+        return isdigit(input[0]);
     } else if (type == "float") {
-        return std::isdigit(input[0]) || input[0] == '.';
+        return isdigit(input[0]) || input[0] == '.';
     } else if (type == "string") {
         return true;
     } else if (type == "char") {
-        return std::isalpha(input[0]);
+        return isalpha(input[0]);
     } else if (type == "bool") {
         return input == "true" || input == "false";
     }
@@ -28,8 +30,8 @@ inline bool Validate(const std::string& input, const std::string& type) {
  * @param str String a convertir.
  * @return Valor entero.
  */
-inline int parseInt(const std::string& str) {
-    return std::stoi(str);
+int parseInt(string str) {
+    return stoi(str);
 }
 
 /**
@@ -37,8 +39,8 @@ inline int parseInt(const std::string& str) {
  * @param str String a convertir.
  * @return Valor flotante.
  */
-inline float parseFloat(const std::string& str) {
-    return std::stof(str);
+float parseFloat(string str) {
+    return stof(str);
 }
 
 /**
@@ -46,7 +48,7 @@ inline float parseFloat(const std::string& str) {
  * @param str String a convertir.
  * @return Primer carácter.
  */
-inline char parseChar(const std::string& str) {
+char parseChar(string str) {
     return str[0];
 }
 
@@ -55,7 +57,7 @@ inline char parseChar(const std::string& str) {
  * @param str String a convertir ("true"/"false").
  * @return Valor booleano.
  */
-inline bool parseBool(const std::string& str) {
+bool parseBool(string str) {
     return str == "true";
 }
 
@@ -64,10 +66,10 @@ inline bool parseBool(const std::string& str) {
  * @param prompt Mensaje opcional a mostrar antes de leer.
  * @return Línea leída (sin newline final).
  */
-inline std::string Input(const std::string& prompt = "") {
-    if (!prompt.empty()) std::cout << prompt;
-    std::string line;
-    std::getline(std::cin, line);
+string Input(string prompt = "") {
+    if (!prompt.empty()) cout << prompt;
+    string line;
+    getline(cin, line);
     return line;
 }
 
@@ -79,14 +81,14 @@ inline std::string Input(const std::string& prompt = "") {
  * @param maxRetries Máximo de intentos antes de fallar (default 3).
  * @return true si se obtuvo entrada válida, false si se agotaron reintentos.
  */
-inline bool TryInput(const std::string& prompt, const std::string& type, std::string& out, int maxRetries = 3) {
+bool TryInput(string prompt, string type, string out, int maxRetries = 3) {
     for (int i = 0; i < maxRetries; ++i) {
-        std::string input = Input(prompt);
+        string input = Input(prompt);
         if (Validate(input, type)) {
             out = input;
             return true;
         }
-        std::cout << "Entrada inválida. Intente de nuevo (" << (maxRetries - i - 1) << " intentos restantes).\n";
+        cout << "Entrada inválida. Intente de nuevo (" << (maxRetries - i - 1) << " intentos restantes).\n";
     }
     return false;
 }
