@@ -1,18 +1,18 @@
+# Ignorar archivos sin extensión
+*
+
+# No ignorar directorios
+!*/
+
+# No ignorar archivos con punto (extensión o dotfiles)
+!*.*
+
+# Ignorar ejecutables de Windows
+*.exe
+
+# Ignorar archivo específico
+/Juegos/Buscaminas/notas.md
 .clangd
 .atl
 requirements.pdf
-
 .vscode
-# Ejecutables de Windows
-*.exe
-
-# Archivos sin extensión
-# *
-# !*/
-
-# notas de juego Buscaminas
-/Juegos/Buscaminas/notas.md
-*
-!*/
-!Common/
-!Common/**
