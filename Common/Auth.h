@@ -1,6 +1,8 @@
 #include "Input.h"
 #include "Consts.h"
 
+using namespace std;
+
 /// @brief Verifica la clave permitiendo hasta MAX_ATTEMPTS intentos
 /// @return true si la clave es correcta dentro de los intentos permitidos, false si se agotan
 /// @details En cada intento fallido, vuelve a leer entrada. Usa CLAVE y MAX_ATTEMPTS de Consts.h
