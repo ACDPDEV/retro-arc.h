@@ -1,6 +1,6 @@
 // Matte Black Theme desde Omarchy
 // https://omarchytheme.com/themes/matte-black/
-
+#pragma once
 #include <array>
 
 using namespace std;
