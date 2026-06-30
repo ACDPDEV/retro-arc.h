@@ -1,5 +1,7 @@
 #pragma once
 #include <windows.h>
+#include <iostream>
+using namespace std;
 
 void EnableTrueColor() {
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -13,6 +15,13 @@ void DisableTrueColor() {
     DWORD mode = 0;
     GetConsoleMode(hOut, &mode);
     SetConsoleMode(hOut, mode & ~ENABLE_VIRTUAL_TERMINAL_PROCESSING);
+}
+
+bool IsAnsiEnabled() {
+    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    DWORD mode = 0;
+    GetConsoleMode(hOut, &mode);
+    return (mode & ENABLE_VIRTUAL_TERMINAL_PROCESSING) != 0;
 }
 
 void EnableUTF8() {
@@ -39,4 +48,21 @@ void ShowCursor() {
 
 void HideCursor() {
     SetCursorVisible(false);
+}
+
+void MoveTo(int x, int y) {
+    HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
+    COORD dwPos;
+    dwPos.X = x;
+    dwPos.Y = y;
+    SetConsoleCursorPosition(hcon, dwPos);
+}
+
+void Clear() {
+    if (IsAnsiEnabled()) {
+        cout << "\x1b[2J\x1b[H";
+    } else {
+        system("cls");
+        MoveTo(0, 0);
+    }
 }
