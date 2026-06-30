@@ -1,5 +1,9 @@
+#pragma once
 #include "Input.h"
 #include "Consts.h"
+#include <string>
+
+using namespace std;
 
 /// @brief Verifica la clave permitiendo hasta MAX_ATTEMPTS intentos
 /// @return true si la clave es correcta dentro de los intentos permitidos, false si se agotan
