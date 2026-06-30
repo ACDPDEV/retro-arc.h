@@ -81,7 +81,7 @@ string Input(string prompt = "") {
  * @param maxRetries Máximo de intentos antes de fallar (default 3).
  * @return true si se obtuvo entrada válida, false si se agotaron reintentos.
  */
-bool TryInput(string prompt, string type, string out, int maxRetries = 3) {
+bool TryInput(string prompt, string type, string& out, int maxRetries = 3) {
     for (int i = 0; i < maxRetries; ++i) {
         string input = Input(prompt);
         if (Validate(input, type)) {

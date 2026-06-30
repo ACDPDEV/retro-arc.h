@@ -1,8 +1,11 @@
+// Matte Black Theme desde Omarchy
+// https://omarchytheme.com/themes/matte-black/
+
 // Base
-int BACKGROUND[3]           = {18, 18, 18};      // #121212
-int FOREGROUND[3]           = {190, 190, 190};    // #bebebe
-int ACCENT[3]               = {230, 142, 13};     // #e68e0d
-int CURSOR[3]               = {234, 234, 234};    // #eaeaea
+int BACKGROUND[3] = {18, 18, 18};      // #121212
+int FOREGROUND[3] = {190, 190, 190};    // #bebebe
+int ACCENT[3] = {230, 142, 13};     // #e68e0d
+int CURSOR[3] = {234, 234, 234};    // #eaeaea
 
 // Selection
 int SELECTION_BACKGROUND[3] = {81, 81, 81};       // #515151

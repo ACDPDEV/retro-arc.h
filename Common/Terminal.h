@@ -127,7 +127,7 @@ int GetConsoleHeight() {
 
 /**
  * @brief Obtiene el tamaño actual de la consola.
- * @return pair{width, height} en caracteres.
+ * @return array{width, height} en caracteres.
  */
 array<int, 2> GetConsoleSize() {
     return {GetConsoleWidth(), GetConsoleHeight()};
