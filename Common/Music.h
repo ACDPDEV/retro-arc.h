@@ -1,17 +1,18 @@
 #pragma once
 #include <string>
 #include <windows.h>
+
 using namespace std;
 
 /// @brief Reproduce un archivo de audio MP3/WAV (detiene cualquier reproducción anterior)
 /// @param file Ruta al archivo de audio (soporta rutas con espacios)
 /// @details Usa MCI (Media Control Interface). Alias interno: "audio".
 ///          No bloquea: la reproducción continúa en background.
-void PlayAudio(const std::string& file) {
+void PlayAudio(const string& file) {
     mciSendString("stop audio", NULL, 0, NULL);
     mciSendString("close audio", NULL, 0, NULL);
 
-    std::string command = "open \"" + file + "\" type mpegvideo alias audio";
+    string command = "open \"" + file + "\" type mpegvideo alias audio";
     mciSendString(command.c_str(), NULL, 0, NULL);
 
     mciSendString("play audio", NULL, 0, NULL);
@@ -21,11 +22,11 @@ void PlayAudio(const std::string& file) {
 /// @param file Ruta al archivo de audio
 /// @details Igual que PlayAudio pero con flag "repeat". Para detener: StopAudio().
 /// @warning Mismo alias "audio" que PlayAudio: no se pueden superponer sonidos.
-void PlayAudioLoop(const std::string& file) {
+void PlayAudioLoop(const string& file) {
     mciSendString("stop audio", NULL, 0, NULL);
     mciSendString("close audio", NULL, 0, NULL);
 
-    std::string command = "open \"" + file + "\" type mpegvideo alias audio";
+    string command = "open \"" + file + "\" type mpegvideo alias audio";
     mciSendString(command.c_str(), NULL, 0, NULL);
 
     mciSendString("play audio repeat", NULL, 0, NULL);
