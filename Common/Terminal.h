@@ -1,40 +1,59 @@
 #pragma once
 #include <windows.h>
 #include <iostream>
-using namespace std;
 
-void EnableTrueColor() {
+/**
+ * @brief Habilita el procesamiento de terminal virtual (ANSI/VT100) para True Color.
+ */
+inline void EnableTrueColor() {
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
     DWORD mode = 0;
     GetConsoleMode(hOut, &mode);
     SetConsoleMode(hOut, mode | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
 }
 
-void DisableTrueColor() {
+/**
+ * @brief Deshabilita el procesamiento de terminal virtual.
+ */
+inline void DisableTrueColor() {
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
     DWORD mode = 0;
     GetConsoleMode(hOut, &mode);
     SetConsoleMode(hOut, mode & ~ENABLE_VIRTUAL_TERMINAL_PROCESSING);
 }
 
-bool IsAnsiEnabled() {
+/**
+ * @brief Verifica si el procesamiento de terminal virtual (ANSI) está habilitado.
+ * @return true si ANSI/VT processing está activo, false en caso contrario.
+ */
+inline bool IsAnsiEnabled() {
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
     DWORD mode = 0;
     GetConsoleMode(hOut, &mode);
     return (mode & ENABLE_VIRTUAL_TERMINAL_PROCESSING) != 0;
 }
 
-void EnableUTF8() {
+/**
+ * @brief Establece la página de códigos de entrada/salida a UTF-8 (65001).
+ */
+inline void EnableUTF8() {
     SetConsoleCP(CP_UTF8);
     SetConsoleOutputCP(CP_UTF8);
 }
 
-void DisableUTF8() {
+/**
+ * @brief Restaura la página de códigos por defecto del sistema (ANSI/ACP).
+ */
+inline void DisableUTF8() {
     SetConsoleCP(CP_ACP);
     SetConsoleOutputCP(CP_ACP);
 }
 
-void SetCursorVisible(bool visible) {
+/**
+ * @brief Establece la visibilidad del cursor de consola.
+ * @param visible true para mostrar, false para ocultar.
+ */
+inline void SetCursorVisible(bool visible) {
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_CURSOR_INFO info;
     GetConsoleCursorInfo(hOut, &info);
@@ -42,27 +61,72 @@ void SetCursorVisible(bool visible) {
     SetConsoleCursorInfo(hOut, &info);
 }
 
-void ShowCursor() {
+/**
+ * @brief Muestra el cursor de consola.
+ */
+inline void ShowCursor() {
     SetCursorVisible(true);
 }
 
-void HideCursor() {
+/**
+ * @brief Oculta el cursor de consola.
+ */
+inline void HideCursor() {
     SetCursorVisible(false);
 }
 
-void MoveTo(int x, int y) {
-    HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
+/**
+ * @brief Mueve el cursor a una posición específica (0-indexed).
+ * @param x Columna (0 = izquierda).
+ * @param y Fila (0 = arriba).
+ */
+inline void MoveTo(int x, int y) {
+    HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
     COORD dwPos;
-    dwPos.X = x;
-    dwPos.Y = y;
-    SetConsoleCursorPosition(hcon, dwPos);
+    dwPos.X = static_cast<short>(x);
+    dwPos.Y = static_cast<short>(y);
+    SetConsoleCursorPosition(hCon, dwPos);
 }
 
-void Clear() {
+/**
+ * @brief Limpia la pantalla y mueve el cursor al inicio.
+ * Usa escape ANSI si está habilitado, sino system("cls").
+ */
+inline void Clear() {
     if (IsAnsiEnabled()) {
-        cout << "\x1b[2J\x1b[H";
+        std::cout << "\x1b[2J\x1b[H";
     } else {
         system("cls");
         MoveTo(0, 0);
     }
+}
+
+/**
+ * @brief Obtiene el ancho actual del buffer de consola en columnas.
+ * @return Ancho en caracteres.
+ */
+inline int GetConsoleWidth() {
+    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO info;
+    GetConsoleScreenBufferInfo(hOut, &info);
+    return info.srWindow.Right - info.srWindow.Left + 1;
+}
+
+/**
+ * @brief Obtiene el alto actual del buffer de consola en filas.
+ * @return Alto en caracteres.
+ */
+inline int GetConsoleHeight() {
+    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO info;
+    GetConsoleScreenBufferInfo(hOut, &info);
+    return info.srWindow.Bottom - info.srWindow.Top + 1;
+}
+
+/**
+ * @brief Obtiene el tamaño actual de la consola.
+ * @return pair{width, height} en caracteres.
+ */
+inline std::pair<int, int> GetConsoleSize() {
+    return {GetConsoleWidth(), GetConsoleHeight()};
 }
