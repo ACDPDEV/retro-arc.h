@@ -1,9 +1,11 @@
+.clangd
+.atl
 requirements.pdf
-main
+
 .vscode
 # Ejecutables de Windows
 *.exe
 
 # Archivos sin extensión
 *
-!*/
+*!*/
