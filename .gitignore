@@ -5,5 +5,5 @@ main
 *.exe
 
 # Archivos sin extensión
-*
-!*/
+# *
+# !*/
