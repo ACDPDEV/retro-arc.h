@@ -1,9 +1,9 @@
-#pragma once
 #include <iostream>
+#include <array>
 #include <vector>
 #include <ctime>
 #include <cstdlib>
-#include <BuscaminasFunctions.h>
+#include "BuscaminasFunctions.h"
 
 using namespace std;
 
@@ -106,14 +106,50 @@ void CountAdjacentMines(vector<vector<int>>& board)
         2: Celda con bandera (Flagged).
 */
 
+/**
+ * @brief valida que la entrada del usuario sea una opción válida
+ * @param option la opción ingresada por el usuario
+ * @param validOptions el conjunto de opciones válidas para el programa
+ */
+bool BuscaminasIsValidOption(int option, vector<int>& validOptions)
+{
+    bool isValid = false;
+    for(int i = 0; i < validOptions.size(); i++)
+    {
+        if(validOptions[i] == option)
+        {
+            isValid = true;
+            break;
+        }
+    }
+    return isValid;
+}
 
 /**
  * Crea e inicializa el tablero de estados con puros ceros (todas las celdas ocultas).
+ * @param rows cantidad de filas del tablero
+ * @param cols cantidad de columnas del tablero
+ * @return Un tablero (Board) inicializado.
  */
 vector<vector<int>> CreatePageStateBoard(int rows, int cols) 
 {
     vector<vector<int>> stateBoard(rows, vector<int>(cols, 0));
     return stateBoard;
+}
+
+/**
+ * Determina la posicion inicial del jugador.
+ * @param rows cantidad de filas del tablero
+ * @param cols cantidad de columnas del tablero
+ * @return posición inicial {fila, columna}
+ */
+array<int, 2> GetInitialPosition(int rows, int cols)
+{
+    array<int, 2> position;
+    position[0] = rows / 2;
+    position[1] = cols / 2;
+
+    return position;
 }
 
 /**
@@ -151,7 +187,7 @@ void ExecuteAction(vector<vector<int>>& stateBoard, int r, int c, int action)
 
 
 // ======================================================================
-// VISTA
+// VISTA --- 200 x 60
 // ======================================================================
 
 /**

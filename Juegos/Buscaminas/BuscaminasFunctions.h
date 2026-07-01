@@ -1,8 +1,8 @@
-#ifndef BUSCAMINAS_FUNCTIONS_H
-#define BUSCAMINAS_FUNCTIONS_H
-
 #pragma once
+#include <iostream>
+#include <array>
 #include <vector>
+using namespace std;
 
 // ======================================================================
 // DATABASE
@@ -19,8 +19,10 @@ void CountAdjacentMines(vector<vector<int>>& board);
 // LOGICA
 // ======================================================================
 
+bool BuscaminasIsValidOption(int option, vector<int> validOptions);
+
 vector<vector<int>> CreatePageStateBoard(int rows, int cols);
 
-void ExecuteAction(vector<vector<int>>& stateBoard, int r, int c, int action);
+array<int, 2> GetInitialPosition(int rows, int cols);
 
-#endif
+void ExecuteAction(vector<vector<int>>& stateBoard, int r, int c, int action);
