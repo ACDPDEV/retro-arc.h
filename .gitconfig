@@ -1,8 +1,10 @@
 # .gitconfig shared - colócalo en la raíz del repo
 [alias]
-    prechange = !git checkout main && git pull --ff-only
+    prechange = !git switch main && git pull --ff-only
     fresh = !git fetch origin main && git rebase origin/main
-    cleanup = !git checkout main && git pull --ff-only && git fetch -p && git branch -d $(git branch --merged | grep -v "^*")
+    cleanup = !git switch main && git pull --ff-only && git fetch -p && git branch --merged | grep -v "^*" | xargs -r git branch -d
     fixup = !git commit --fixup
     pushf = push --force-with-lease
     lg = log --oneline --graph --decorate -20
+    create = "!f() { git switch -c \"$1\"; }; f"
+    upload = "!f() { git add . && git commit -m \"$1\" && git push -u origin HEAD && gh pr create --fill; }; f"
