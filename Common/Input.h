@@ -1,7 +1,9 @@
 #pragma once
+
 #include <string>
-#include <conio.h>
 #include <iostream>
+
+#include "Terminal.h"
 
 using namespace std;
 
@@ -82,8 +84,8 @@ string Input() {
 bool TryInput(string& line) {
     static string buffer;
 
-    while (_kbhit()) {
-        char c = _getch();
+    while (Kbhit()) {
+        char c = Getch();
 
         switch (c) {
             case '\r': // Enter
