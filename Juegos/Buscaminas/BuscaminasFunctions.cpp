@@ -1,4 +1,5 @@
 #include <iostream>
+#include <conio.h>
 #include <array>
 #include <vector>
 #include <ctime>
@@ -106,6 +107,105 @@ void CountAdjacentMines(vector<vector<int>>& board)
         2: Celda con bandera (Flagged).
 */
 
+
+/**
+ * @brief Obtiene la tecla válida presionada por el usuario (flecha, ENTER o ESPACIO)
+ * @param feedbackMessage Mensaje de retroalimentación en caso de errores de input
+ * @returns el int que representa la tecla presionada por el usuario
+ */
+int GetUserKey(string& feedbackMessage)
+{
+    vector<int> validUserKeys = 
+    {
+        72,   // arriba
+        75,   // izquierda
+        80,   // abajo
+        77,   // derecha
+        13,   // Enter
+        32    // Espacio
+    };
+    int userKey;
+    userKey = getch(); // ---------------------------- USA FUNCION PORTABLE PORQUE SOLO FUNCIONA EN WINDOWS
+    if(userKey == 0 || userKey == 224)
+    {
+        userKey = getch();
+    }
+    while(!BuscaminasIsValidOption(userKey, validUserKeys))
+    {
+        feedbackMessage = "Presiona las flechas y selecciona con ENTER o ESPACIO";
+        userKey = getch();
+        if(userKey == 0 || userKey == 224)
+        {
+            userKey = getch();
+        }
+    }
+
+    return userKey;
+}
+
+/**
+ * @brief Devuelve la nueva opción seleccionada según la tecla direccional que se presionó
+ * @param option El valor previo de la opción
+ * @param minOption El mínimo valor que puede tener la opción
+ * @param maxOption El máximo valor que puede tener la opción
+ * @param userKey la tecla que presionó el usuario
+ */
+int SetOption(int& option, int minOption, int maxOption, int userKey)
+{
+    int newOption = option;
+    vector<int> validUserKeys = 
+    {
+        72,   // arriba
+        75,   // izquierda
+        80,   // abajo
+        77,   // derecha
+        13,   // Enter
+        32    // Espacio
+    };
+
+    if(userKey == validUserKeys[0] || userKey == validUserKeys[1])
+    {
+        if(newOption > minOption)
+            --newOption;
+        else
+            newOption = maxOption;
+    }
+    if(userKey == validUserKeys[2] || userKey == validUserKeys[3])
+    {
+        if(newOption < maxOption)
+            ++newOption;
+        else
+            newOption == minOption;
+    }
+
+    return newOption;
+}
+
+/**
+ * @brief Determina si la opción seleccionada se va a ejecutar o no
+ * @param userKey Tecla presionada por el usuario
+ * @returns true cuando la tecla es ESPACIO o ENTER
+ */
+bool CanExcecuteOption(int userKey)
+{
+    bool canExcecuteOption = false;
+    vector<int> validUserKeys = 
+    {
+        72,   // arriba
+        75,   // izquierda
+        80,   // abajo
+        77,   // derecha
+        13,   // Enter
+        32    // Espacio
+    };
+
+    if(userKey == validUserKeys[4] || userKey == validUserKeys[5])
+    {
+        canExcecuteOption = true;
+    }
+    return canExcecuteOption;
+}
+
 /**
  * @brief valida que la entrada del usuario sea una opción válida
  * @param option la opción ingresada por el usuario
@@ -138,7 +238,7 @@ vector<vector<int>> CreatePageStateBoard(int rows, int cols)
 }
 
 /**
- * Determina la posicion inicial del jugador.
+ * @brief Determina la posicion inicial del jugador.
  * @param rows cantidad de filas del tablero
  * @param cols cantidad de columnas del tablero
  * @return posición inicial {fila, columna}
@@ -153,34 +253,37 @@ array<int, 2> GetInitialPosition(int rows, int cols)
 }
 
 /**
- * Procesa la jugada del usuario modificando el tablero de estados.
+ * @brief Procesa la jugada del usuario modificando el tablero de estados.
  * @param stateBoard Referencia al tablero lógico de estados.
- * @param r Fila seleccionada.
- * @param c Columna seleccionada.
+ * @param row Fila seleccionada.
+ * @param col Columna seleccionada.
  * @param action Tipo de acción (1 = Revelar, 2 = Bandera).
  */
-void ExecuteAction(vector<vector<int>>& stateBoard, int r, int c, int action) 
+void ExecuteAction(vector<vector<int>>& stateBoard, int row, int col, int action, string& feedbackMessage) 
 {
     // Validar que las coordenadas estén dentro del tablero
-    if (r < 0 || r >= stateBoard.size() || c < 0 || c >= stateBoard[0].size()) {
-        cout << "¡Coordenadas fuera de rango! Intenta de nuevo.\n";
+    if (row < 0 || row >= stateBoard.size() || col < 0 || col >= stateBoard[0].size()) {
+        feedbackMessage = "¡Coordenadas fuera de rango! Intenta de nuevo.\n";
         return;
     }
 
     if (action == 1) { // REVELAR
-        if (stateBoard[r][c] == 0) {
-            stateBoard[r][c] = 1; // Cambia a estado Revelado
+        if (stateBoard[row][col] == 0) {
+            stateBoard[row][col] = 1; // Cambia a estado Revelado
+            feedbackMessage = "";
         } else {
-            cout << "Esa celda ya no se puede revelar.\n";
+            feedbackMessage = "Esa celda ya no se puede revelar.\n";
         }
     } 
     else if (action == 2) { // BANDERA
-        if (stateBoard[r][c] == 0) {
-            stateBoard[r][c] = 2; // Pone bandera
-        } else if (stateBoard[r][c] == 2) {
-            stateBoard[r][c] = 0; // Si ya tenía bandera, la quita (regresa a oculto)
+        if (stateBoard[row][col] == 0) {
+            stateBoard[row][col] = 2; // Pone bandera
+            feedbackMessage = "";
+        } else if (stateBoard[row][col] == 2) {
+            stateBoard[row][col] = 0; // Si ya tenía bandera, la quita (regresa a oculto)
+            feedbackMessage = "";
         } else {
-            cout << "No puedes poner bandera en una celda revelada.\n";
+            feedbackMessage = "No puedes poner bandera en una celda revelada.\n";
         }
     }
 }
