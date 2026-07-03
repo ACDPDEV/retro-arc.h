@@ -18,5 +18,4 @@
     #pragma once
 
     #include "Linux/Terminal.h"
-    InitTerminalRawMode();
 #endif

@@ -15,10 +15,9 @@ using namespace std;
 /// @brief Dibuja un sprite (vector de strings, una línea por fila) en la posición actual del cursor.
 /// @param sprite Vector de strings, cada string = una línea del sprite.
 /// @details No posiciona el cursor; imprime línea a línea con endl. El llamador debe usar GoToXY() antes si necesita posición específica.
-inline void DrawSprite(vector<string> sprite) {
-    for (int i = 0; i < sprite.size(); i++) {
-        cout << sprite[i] << endl;
-    }
+inline void DrawSprite(int x, int y, string sprite) {
+    GoToXY(x, y);
+    cout << sprite;
 }
 
 /// @brief Animación simple: dibuja secuencia de sprites (frames) con delay entre frames.
@@ -27,9 +26,9 @@ inline void DrawSprite(vector<string> sprite) {
 /// @details Usa Sleep() de Linux/Terminal.h (usleep en Linux, Sleep en Windows).
 ///          Comentado: intento de paralelismo con this_thread::sleep_for (no implementado).
 ///          No limpia frames anteriores; el llamador debe manejar Clear() o posicionamiento.
-inline void DrawSprites(vector<vector<string>> sprites, int gapTime) {
+inline void DrawSprites(int x, int y, vector<string> sprites, int gapTime) {
     for (int i = 0; i < sprites.size(); i++) {
-        DrawSprite(sprites[i]);
+        DrawSprite(x, y, sprites[i]);
         // Necesita paralelismo a veces (no implementado)
         /* if (i < sprites.size() - 1) {
             this_thread::sleep_for(chrono::milliseconds(gapTime));
