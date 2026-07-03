@@ -27,6 +27,8 @@ bool CanExcecuteOption(int userKey);
 
 bool BuscaminasIsValidOption(int option, vector<int>& validOptions);
 
+int SetMinesQuantity(int rows, int cols, int levelOption);
+
 int SetRowsByLevel(int levelOption);
 
 int SetColsByLevel(int levelOption);
