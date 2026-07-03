@@ -37,6 +37,31 @@ vector<vector<int>> CreatePageStateBoard(int rows, int cols);
 
 array<int, 2> GetInitialPosition(int rows, int cols);
 
+bool StateValueIsHidden(int stateValue);
+bool StateValueIsFlagged(int stateValue);
+bool StateValueIsRevealed(int stateValue);
+
+bool BackgroundValueIsSafe(int backgroundValue);
+
+bool VectorContainsTuple(vector<tuple<int, int>>& vec, tuple<int, int> tup);
+
+void RevealSafeRegionCommand(
+    vector<vector<int>> backgroundBoard, 
+    vector<vector<int>>& stateBoard, 
+    int row, 
+    int col, 
+    string& feedbackMessage
+);
+
+void RevealCommand(
+    vector<vector<int>> backgroundBoard, 
+    vector<vector<int>>& stateBoard, 
+    int row, 
+    int col, 
+    string& feedbackMessage);
+
+bool MineIsRevealed(vector<vector<int>> backgroundBoard, int row, int col, string& feedbackMessage);
+
 void ExecuteAction(vector<vector<int>>& stateBoard, int r, int c, int action,string& feedbackMessage);
 
 // TODO definir la función
