@@ -1,3 +1,8 @@
+/// @file Windows/Music.h
+/// @brief Implementación Windows de reproducción de audio via MCI.
+/// @details Usa mciSendString con alias "audio". Una sola instancia a la vez.
+///          Funciones marcadas `inline` para uso header-only.
+///          API idéntica a Linux/Music.h.
 #pragma once
 #include <string>
 #include <windows.h>
@@ -8,7 +13,7 @@ using namespace std;
 /// @param file Ruta al archivo de audio (soporta rutas con espacios)
 /// @details Usa MCI (Media Control Interface). Alias interno: "audio".
 ///          No bloquea: la reproducción continúa en background.
-void PlayAudio(const string& file) {
+inline void PlayAudio(const string& file) {
     mciSendString("stop audio", NULL, 0, NULL);
     mciSendString("close audio", NULL, 0, NULL);
 
@@ -22,7 +27,7 @@ void PlayAudio(const string& file) {
 /// @param file Ruta al archivo de audio
 /// @details Igual que PlayAudio pero con flag "repeat". Para detener: StopAudio().
 /// @warning Mismo alias "audio" que PlayAudio: no se pueden superponer sonidos.
-void PlayAudioLoop(const string& file) {
+inline void PlayAudioLoop(const string& file) {
     mciSendString("stop audio", NULL, 0, NULL);
     mciSendString("close audio", NULL, 0, NULL);
 
@@ -34,7 +39,7 @@ void PlayAudioLoop(const string& file) {
 
 /// @brief Detiene y cierra la reproducción de audio actual
 /// @details Libera el alias "audio". Seguro llamar aunque no haya nada reproduciéndose.
-void StopAudio() {
+inline void StopAudio() {
     mciSendString("stop audio", NULL, 0, NULL);
     mciSendString("close audio", NULL, 0, NULL);
 }
@@ -42,12 +47,12 @@ void StopAudio() {
 /// @brief Pausa la reproducción de audio actual (mantiene posición)
 /// @details Equivalente a "pause" en reproductor. Reanudar con ResumeAudio().
 ///          Si no hay audio reproduciéndose, no hace nada visible.
-void PauseAudio() {
+inline void PauseAudio() {
     mciSendString("pause audio", NULL, 0, NULL);
 }
 
 /// @brief Reanuda la reproducción desde la posición pausada
 /// @details Solo funciona si se llamó PauseAudio() antes. Si no estaba pausado, no hace nada.
-void ResumeAudio() {
+inline void ResumeAudio() {
     mciSendString("resume audio", NULL, 0, NULL);
 }
