@@ -5,17 +5,9 @@
 
 #include "../Common/Color.h"
 #include "../Common/UnicodeGlyphs.h"
-
+#include "../Common/Sprite.h"
 
 using namespace std;
-
-inline string repeat_pixel(int count, string c = QUADRANTS[12]) {
-    string result;
-    for (int i = 0; i < count; i++) {
-        result += c;
-    }
-    return result;
-}
 
 inline string RayquazaShiny() {
     string sprite;
