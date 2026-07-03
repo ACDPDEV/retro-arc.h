@@ -164,5 +164,5 @@ inline array<int, 2> GetConsoleSize() {
 }
 
 inline void Sleep(int ms) {
-    usleep(ms / 1000);
+    usleep(ms * 1000);
 }

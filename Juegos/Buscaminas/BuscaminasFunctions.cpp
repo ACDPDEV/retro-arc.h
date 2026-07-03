@@ -226,6 +226,77 @@ bool BuscaminasIsValidOption(int option, vector<int>& validOptions)
 }
 
 /**
+ * @brief Determina la cantidad de minas según la cantidad de celdas y el nivel
+ * @param rows Cantidad de filas que tiene el tablero
+ * @param cols Cantidad de columnas que tiene el tablero
+ * @returns La cantidad de minas a ubicar en el tablero
+ */
+int SetMinesQuantity(int rows, int cols, int levelOption)
+{
+    vector<double> factors = {0.125, 0.168, 0.208};
+
+    if(levelOption >= factors.size())
+        levelOption = factors.size() - 1;
+
+    int minesQuantity = rows * cols * factors[levelOption];
+    return minesQuantity;
+}
+
+/**
+ * @brief Determina la cantidad de filas de acuerdo al nivel
+ * @param levelOption Nivel seleccionado
+ * @returns La cantidad de filas del tablero para ese nivel
+ */
+int SetRowsByLevel(int levelOption)
+{
+    int rows;
+    switch (levelOption)
+    {
+    case 0:
+        rows = 9;
+        break;
+    case 1:
+        rows = 16;
+        break;
+    case 2:
+        rows = 16;
+        break;
+    
+    default:
+        rows = 16;
+        break;
+    }
+    return rows;
+}
+
+/**
+ * @brief Determina la cantidad de columnas de acuerdo al nivel
+ * @param levelOption Nivel seleccionado
+ * @returns La cantidad de columnas del tablero para ese nivel
+ */
+int SetColsByLevel(int levelOption)
+{
+    int cols;
+    switch (levelOption)
+    {
+    case 0:
+        cols = 9;
+        break;
+    case 1:
+        cols = 16;
+        break;
+    case 2:
+        cols = 30;
+        break;
+    
+    default:
+        cols = 30;
+        break;
+    }
+    return cols;
+}
+
+/**
  * Crea e inicializa el tablero de estados con puros ceros (todas las celdas ocultas).
  * @param rows cantidad de filas del tablero
  * @param cols cantidad de columnas del tablero

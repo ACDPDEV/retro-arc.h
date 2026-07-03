@@ -81,6 +81,7 @@ int main()
 
                     rows = SetRowsByLevel(levelOption);
                     cols = SetColsByLevel(levelOption);
+                    minesQuantity = SetMinesQuantity(rows, cols, levelOption);
 
                     vector<vector<int>> backgroundBoard = CreateBackgroundBoard(rows, cols);
                     PlaceMines(backgroundBoard, minesQuantity);
