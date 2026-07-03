@@ -5,7 +5,8 @@
 ///          TODO: paralelismo opcional entre frames (comentado).
 #pragma once
 
-#include "Linux/Terminal.h"
+#include "Terminal.h"
+#include "UnicodeGlyphs.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -26,7 +27,7 @@ inline void DrawSprite(int x, int y, string sprite) {
 /// @details Usa Sleep() de Linux/Terminal.h (usleep en Linux, Sleep en Windows).
 ///          Comentado: intento de paralelismo con this_thread::sleep_for (no implementado).
 ///          No limpia frames anteriores; el llamador debe manejar Clear() o posicionamiento.
-inline void DrawSprites(int x, int y, vector<string> sprites, int gapTime) {
+inline void DrawAnimatedSprite(int x, int y, vector<string> sprites, int gapTime) {
     for (int i = 0; i < sprites.size(); i++) {
         DrawSprite(x, y, sprites[i]);
         // Necesita paralelismo a veces (no implementado)
@@ -35,4 +36,12 @@ inline void DrawSprites(int x, int y, vector<string> sprites, int gapTime) {
         } */
         Sleep(gapTime);
     }
+}
+
+inline string repeat_pixel(int count, string c = QUADRANTS[12]) {
+    string result;
+    for (int i = 0; i < count; i++) {
+        result += c;
+    }
+    return result;
 }
