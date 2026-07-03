@@ -1,8 +1,13 @@
+/// @file Input.h
+/// @brief Utilidades de entrada y parsing cross-platform.
+/// @details Usa Terminal.h (Kbhit/Getch) para abstracción Windows/Linux.
+///          Prove: Validate, ParseInt, ParseIntStrict, ParseFloat, ParseChar, ParseBool,
+///          Input (cin >>), TryInput (no bloqueante con backspace/echo).
+///          Funciones marcadas `inline` para uso header-only.
 #pragma once
 
 #include <string>
-#include <iostream>
-
+#include
 #include "Terminal.h"
 
 using namespace std;
@@ -11,7 +16,7 @@ using namespace std;
 /// @param input String a validar
 /// @param type Tipo esperado: "int", "float", "string", "char", "bool"
 /// @return true si la entrada es válida para el tipo, false en caso contrario
-bool Validate(string input, string type) {
+inline bool Validate(string input, string type) {
     if (type == "int") {
         return isdigit(input[0]);
     } else if (type == "float") {
@@ -29,7 +34,7 @@ bool Validate(string input, string type) {
 /// @brief Convierte string a int
 /// @param str String a convertir
 /// @return Valor entero (lanza excepción si no es válido)
-int ParseInt(string str) {
+inline int ParseInt(string str) {
     return stoi(str);
 }
 
@@ -38,7 +43,7 @@ int ParseInt(string str) {
 /// @return Valor entero
 /// @throws invalid_argument si contiene '.', ',', 'e', 'E' o no es un entero válido
 /// @details A diferencia de ParseInt(), rechaza "1.5", "1,000", "1e3", "1E3", "10."
-int ParseIntStrict(string str) {
+inline int ParseIntStrict(string str) {
     for (int i = 0; i < str.length(); ++i) {
         if (str[i] == '.' || str[i] == ',' || str[i] == 'e' || str[i] == 'E') throw invalid_argument("No es un entero válido");
     }
@@ -48,14 +53,14 @@ int ParseIntStrict(string str) {
 /// @brief Convierte string a float
 /// @param str String a convertir
 /// @return Valor flotante (lanza excepción si no es válido)
-float ParseFloat(string str) {
+inline float ParseFloat(string str) {
     return stof(str);
 }
 
 /// @brief Convierte string a char (primer carácter)
 /// @param str String a convertir
 /// @return Primer carácter
-char ParseChar(string str) {
+inline char ParseChar(string str) {
     return str[0];
 }
 
@@ -63,7 +68,7 @@ char ParseChar(string str) {
 /// @param str String a convertir: "true"/"false" o "1"/"0"
 /// @return true si "true" o "1", false si "false" o "0"
 /// @throws invalid_argument si el string no es un bool válido
-bool ParseBool(string str) {
+inline bool ParseBool(string str) {
     if (str == "true" || str == "1") return true;
     if (str == "false" || str == "0") return false;
     throw invalid_argument("Invalid bool string");
@@ -71,7 +76,7 @@ bool ParseBool(string str) {
 
 /// @brief Lee una palabra desde stdin (hasta espacio o salto de línea)
 /// @return Palabra leída
-string Input() {
+inline string Input() {
     string line;
     cin >> line;
     return line;
@@ -81,7 +86,7 @@ string Input() {
 /// @param[out] line Línea completa leída al presionar Enter
 /// @return true si se completó la línea (se presionó Enter), false si no hay entrada lista
 /// @details Maneja backspace y eco en pantalla. Usar en bucle para input interactivo.
-bool TryInput(string& line) {
+inline bool TryInput(string& line) {
     static string buffer;
 
     while (Kbhit()) {

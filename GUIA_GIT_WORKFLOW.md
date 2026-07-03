@@ -1,4 +1,4 @@
-# Git Workflow 
+# Git Workflow
 
 ## Ramas
 
@@ -9,7 +9,7 @@ main                 ← protegida, siempre deployable
   └── release/vX.Y   ← solo si freeze/QA prolongado
 ```
 
-**Nombres:** `feature/login-oauth`, `fix/login-loop` (kebab-case, 2-4 palabras).
+**Nombres:** `feature/login-oauth`, `fix/login-loop` (kebab-case, 2–4 palabras).
 
 ---
 
@@ -20,43 +20,58 @@ main                 ← protegida, siempre deployable
 git prechange                    # main limpio + actualizado
 
 # 1. CREAR RAMA
-git checkout -b feature/login-oauth
+git create feature/login-oauth
 
-# 2. TRABAJO (commits convencionales)
-git add -A && git commit -m "feat(auth): add Google OAuth callback"
+# 2. PRIMER COMMIT + PUBLICAR PR
+git publish "feat(auth): add Google OAuth callback"
 
-# 3. ANTES DE PUSH
+# Con descripción (opcional)
+git publish \
+  "feat(auth): add Google OAuth callback" \
+  "Implementa el callback de OAuth.
+Agrega validaciones.
+Añade pruebas."
+
+# 3. CONTINUAR DESARROLLO
 git fresh                        # rebase sobre origin/main
 
-# 4. PUSH + PR
-git push -u origin HEAD
-# → Abrir PR en GitHub, asignar 1 reviewer
+# Nuevos commits para la misma PR
+git upload "fix(auth): handle expired tokens"
 
-# 5. REVIEW (SLA 4h) — **en GitHub**
+# Con descripción (opcional)
+git upload \
+  "fix(auth): handle expired tokens" \
+  "Corrige la validación de tokens expirados.
+Añade pruebas."
+
+# 4. REVIEW (SLA 4h) — GitHub
 #   Arreglos → git fixup + git pushf
 
-# 6. MERGE (CI verde + 1 approve) — **botón en GitHub**
+# 5. MERGE (CI verde + 1 approve) — GitHub
 #   "Squash and merge" + "Delete branch"
 
-# 7. LIMPIEZA
-git cleanup                      # main actualizado, ramas locales borradas
+# 6. LIMPIEZA
+git cleanup
 
-# 8. SIGUIENTE → git prechange
+# 7. SIGUIENTE
+git prechange
 ```
 
-> **Reviews y merges se hacen en GitHub** por simplicidad: UI nativa, notificaciones, historial de review, squash merge automático, branch deletion automático.
+> **La PR solo se crea una vez** mediante `git publish`.
+> Los commits posteriores se envían con `git upload`, actualizando automáticamente la PR existente.
 
 ---
 
 ## Reglas Clave
 
 | Regla | Por qué |
-|-------|---------|
+|--------|----------|
 | 1 PR = 1 tarea, ≤2 días | Evita merge hell |
-| `git fresh` antes de push | Conflictos los resuelves tú |
-| Commits `feat:`, `fix:`, `refactor:` | Historial limpio, changelog auto |
+| `git fresh` antes de publicar cambios | Resuelves conflictos antes del review |
+| Commits `feat:`, `fix:`, `refactor:` | Historial limpio y changelog automático |
 | Review cruzado (no el autor) | Bus factor ↑ |
-| Rama se borra al mergear | Config: "Delete branch on merge" = ON |
+| Squash Merge | Un commit limpio por funcionalidad |
+| Rama se borra al mergear | Mantiene el repositorio limpio |
 
 ---
 
@@ -85,17 +100,31 @@ git config --global include.path "$(Get-Location)\.gitconfig"
 git config --global include.path "%cd%\.gitconfig"
 ```
 
-> **Nota**: Usa ruta absoluta para que el alias `git prechange` funcione desde cualquier directorio dentro del repo.
+> **Nota:** Usa una ruta absoluta para que los aliases funcionen desde cualquier directorio del repositorio.
 
-**Aliases disponibles:** `prechange`, `fresh`, `cleanup`, `fixup`, `pushf`, `lg`
+### Aliases disponibles
+
+| Alias | Descripción |
+|--------|-------------|
+| `git prechange` | Cambia a `main` y la actualiza |
+| `git fresh` | Rebase de la rama actual sobre `origin/main` |
+| `git cleanup` | Actualiza `main` y elimina ramas locales ya mergeadas |
+| `git create <rama>` | Crea una rama y cambia a ella |
+| `git publish <título> [descripción]` | Add + Commit + Push + Crea la PR |
+| `git upload <título> [descripción]` | Add + Commit + Push |
+| `git fixup <commit>` | Crea un commit `--fixup` |
+| `git pushf` | `push --force-with-lease` |
+| `git lg` | Log compacto con grafo |
 
 ---
 
-## Protección `main` (GitHub/GitLab)
+## Protección de `main`
 
-- Require PR + 1 approval
+- Require Pull Request
+- Require 1 approval
 - Require CI pass
-- Require linear history (squash merge)
+- Require linear history
+- Enable Squash Merge
 - Delete branch on merge
 - Block force pushes
 
@@ -105,10 +134,13 @@ git config --global include.path "%cd%\.gitconfig"
 
 ```bash
 git prechange
-git checkout -b fix/critical-bug
-# ... fix mínimo ...
-git fresh && git push -u origin HEAD
-# PR urgente → merge → tag v1.2.1
+git create fix/critical-bug
+
+git publish \
+  "fix(core): resolve critical crash" \
+  "Corrige un acceso inválido a memoria."
+
+# PR urgente → Merge → Tag v1.2.1
 ```
 
 ---
@@ -116,8 +148,14 @@ git fresh && git push -u origin HEAD
 ## Stacked PRs (si B depende de A)
 
 ```bash
-git checkout feature/auth-base
-git checkout -b feature/oauth-ui
+git create feature/auth-base
+# ...
+
+git create feature/oauth-ui
 # PR B con base: feature/auth-base
-# Merge orden: A → main, luego B rebase → merge
+
+# Merge: A → main
+git fresh
+
+# Merge: B → main
 ```
