@@ -9,7 +9,6 @@
 #include <iostream>
 #include <string>
 
-#include "Linux/Terminal.h"
 #include "Terminal.h"
 #include "UnicodeGlyphs.h"
 #include "Color.h"
