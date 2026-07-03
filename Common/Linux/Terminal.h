@@ -1,3 +1,11 @@
+/// @file Linux/Terminal.h
+/// @brief Implementación Linux/POSIX de la API de terminal cross-platform.
+/// @details Usa termios para modo raw (ICANON/ECHO off), ioctl(TIOCGWINSZ) para tamaño,
+///          códigos escape ANSI para cursor/color/clear, setlocale para UTF-8,
+///          atexit + SIGINT handler para restauración automática.
+///          Requiere llamar InitTerminalRawMode() una vez al inicio de main() para Kbhit/Getch.
+///          Funciones marcadas `inline` para uso header-only.
+///          API idéntica a Windows/Terminal.h.
 #pragma once
 
 #include <unistd.h>
@@ -15,18 +23,18 @@ using namespace std;
 
 /// @brief Guarda el estado original de la terminal (modo canónico, con eco)
 /// @details Se usa para restaurar la terminal a su estado normal al salir del programa
-termios g_oldTermios;
+inline termios g_oldTermios;
 
 /// @brief Restaura la terminal a su estado original (modo canónico, con eco)
 /// @details Debe ejecutarse siempre antes de que el programa termine, sea cual sea el motivo
 ///          (return normal, exit(), Ctrl+C). Se registra automáticamente en InitTerminalRawMode().
-void RestoreTerminalMode() {
+inline void RestoreTerminalMode() {
     tcsetattr(STDIN_FILENO, TCSANOW, &g_oldTermios);
 }
 
 /// @brief Handler de SIGINT (Ctrl+C): restaura la terminal antes de terminar el programa
 /// @param signum Número de señal recibida (no se usa, requerido por la firma de signal())
-void HandleSigint(int signum) {
+inline void HandleSigint(int signum) {
     RestoreTerminalMode();
     exit(0);
 }
@@ -35,7 +43,7 @@ void HandleSigint(int signum) {
 /// @details Necesario para que _kbhit()/_getch() funcionen tecla por tecla sin esperar Enter.
 ///          Registra la restauración automática al salir (atexit) y ante Ctrl+C (SIGINT).
 ///          Llamar una sola vez, al inicio de main().
-void InitTerminalRawMode() {
+inline void InitTerminalRawMode() {
     tcgetattr(STDIN_FILENO, &g_oldTermios);
     termios newt = g_oldTermios;
     newt.c_lflag &= ~(ICANON | ECHO);
@@ -48,7 +56,7 @@ void InitTerminalRawMode() {
 /// @brief Verifica si hay una tecla presionada esperando en el buffer, sin bloquear
 /// @return true si hay input disponible para leer con _getch()
 /// @details Equivalente a _kbhit() de conio.h. Requiere que InitTerminalRawMode() se haya llamado antes.
-bool Kbhit() {
+inline bool Kbhit() {
     timeval tv{0, 0};
     fd_set fds;
     FD_ZERO(&fds);
@@ -59,7 +67,7 @@ bool Kbhit() {
 /// @brief Lee un carácter sin esperar Enter y sin hacer eco automático
 /// @return El carácter leído
 /// @details Equivalente a _getch() de conio.h. Requiere que InitTerminalRawMode() se haya llamado antes.
-char Getch() {
+inline char Getch() {
     return getchar();
 }
 
@@ -68,20 +76,20 @@ char Getch() {
 ///          No existe un "modo" que activar como en Windows: los códigos de escape
 ///          \x1b[38;2;R;G;Bm funcionan siempre que el terminal los soporte.
 ///          Esta función existe solo por compatibilidad de interfaz con la versión Windows.
-void EnableTrueColor() {
+inline void EnableTrueColor() {
     // No-op en Linux: el soporte ANSI/True Color es intrínseco al terminal.
     // Se deja vacío para mantener la misma firma de función en ambos SO.
 }
 
 /// @brief Deshabilita el procesamiento de terminal virtual
 /// @details No-op en Linux, se mantiene por compatibilidad de interfaz.
-void DisableTrueColor() {
+inline void DisableTrueColor() {
     // No-op en Linux
 }
 
 /// @brief Verifica si el terminal soporta color verdadero (True Color)
 /// @return true si la variable de entorno COLORTERM indica soporte 24-bit
-bool IsAnsiEnabled() {
+inline bool IsAnsiEnabled() {
     if (!isatty(STDOUT_FILENO)) return false;
     const char* colorterm = getenv("COLORTERM");
     if (colorterm && (string(colorterm) == "truecolor" || string(colorterm) == "24bit"))
@@ -94,47 +102,48 @@ bool IsAnsiEnabled() {
 /// @details En Linux la mayoría de terminales ya usan UTF-8 por defecto,
 ///          pero esto asegura que cin/cout y las funciones de ancho de caracteres
 ///          se comporten correctamente con Unicode/emojis.
-void EnableUTF8() {
+inline void EnableUTF8() {
     setlocale(LC_ALL, "en_US.UTF-8");
 }
 
 /// @brief Restaura la configuración regional por defecto ("C")
-void DisableUTF8() {
+inline void DisableUTF8() {
     setlocale(LC_ALL, "C");
 }
 
 /// @brief Establece la visibilidad del cursor de terminal
 /// @param visible true para mostrar, false para ocultar
-void SetCursorVisible(bool visible) {
+inline void SetCursorVisible(bool visible) {
     cout << (visible ? "\x1b[?25h" : "\x1b[?25l") << flush;
 }
 
 /// @brief Muestra el cursor de terminal
-void ShowCursor() {
+inline void ShowCursor() {
     SetCursorVisible(true);
 }
 
 /// @brief Oculta el cursor de terminal
-void HideCursor() {
+inline void HideCursor() {
     SetCursorVisible(false);
 }
 
 /// @brief Mueve el cursor a una posición específica (0-indexed)
 /// @param x Columna (0 = izquierda)
 /// @param y Fila (0 = arriba)
-void GoToXY(int x, int y) {
+inline void GoToXY(int x, int y) {
     // ANSI usa coordenadas 1-indexed: fila;columna
     cout << "\x1b[" << (y + 1) << ";" << (x + 1) << "H";
 }
 
 /// @brief Limpia la pantalla y mueve el cursor al inicio
-void Clear() {
-    cout << "\x1b[2J\x1b[H" << flush;
+inline void Clear() {
+    system("clear");
+    GoToXY(0, 0);
 }
 
 /// @brief Obtiene el ancho actual del terminal en columnas
 /// @return Ancho en caracteres
-int GetConsoleWidth() {
+inline int GetConsoleWidth() {
     struct winsize w;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
     return w.ws_col;
@@ -142,7 +151,7 @@ int GetConsoleWidth() {
 
 /// @brief Obtiene el alto actual del terminal en filas
 /// @return Alto en caracteres
-int GetConsoleHeight() {
+inline int GetConsoleHeight() {
     struct winsize w;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
     return w.ws_row;
@@ -150,6 +159,10 @@ int GetConsoleHeight() {
 
 /// @brief Obtiene el tamaño actual del terminal
 /// @return array{width, height} en caracteres
-array<int, 2> GetConsoleSize() {
+inline array<int, 2> GetConsoleSize() {
     return {GetConsoleWidth(), GetConsoleHeight()};
+}
+
+inline void Sleep(int ms) {
+    usleep(ms / 1000);
 }
