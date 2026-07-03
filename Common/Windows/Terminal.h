@@ -1,5 +1,12 @@
+/// @file Windows/Terminal.h
+/// @brief Implementación Windows de la API de terminal cross-platform.
+/// @details Usa Win32 Console API: GetStdHandle, SetConsoleMode, SetConsoleCursorPosition,
+///          GetConsoleScreenBufferInfo, _kbhit/_getch (conio.h), CP_UTF8/CP_ACP.
+///          Funciones marcadas `inline` para uso header-only.
+///          API idéntica a Linux/Terminal.h.
 #pragma once
 
+#include <synchapi.h>
 #include <windows.h>
 #include <conio.h>
 #include <iostream>
@@ -9,7 +16,7 @@ using namespace std;
 
 /// @brief Habilita el procesamiento de terminal virtual (ANSI/VT100) para True Color
 /// @details Permite usar códigos de escape como \x1b[38;2;R;G;Bm para colores RGB reales
-void EnableTrueColor() {
+inline void EnableTrueColor() {
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
     DWORD mode = 0;
     GetConsoleMode(hOut, &mode);
@@ -18,7 +25,7 @@ void EnableTrueColor() {
 
 /// @brief Deshabilita el procesamiento de terminal virtual
 /// @details Restaura el modo de consola anterior sin ENABLE_VIRTUAL_TERMINAL_PROCESSING
-void DisableTrueColor() {
+inline void DisableTrueColor() {
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
     DWORD mode = 0;
     GetConsoleMode(hOut, &mode);
@@ -27,7 +34,7 @@ void DisableTrueColor() {
 
 /// @brief Verifica si el procesamiento de terminal virtual (ANSI) está habilitado
 /// @return true si ANSI/VT processing está activo, false en caso contrario
-bool IsAnsiEnabled() {
+inline bool IsAnsiEnabled() {
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
     DWORD mode = 0;
     GetConsoleMode(hOut, &mode);
@@ -36,20 +43,20 @@ bool IsAnsiEnabled() {
 
 /// @brief Establece la página de códigos de entrada/salida a UTF-8 (65001)
 /// @details Necesario para mostrar correctamente caracteres Unicode/emojis
-void EnableUTF8() {
+inline void EnableUTF8() {
     SetConsoleCP(CP_UTF8);
     SetConsoleOutputCP(CP_UTF8);
 }
 
 /// @brief Restaura la página de códigos por defecto del sistema (ANSI/ACP)
-void DisableUTF8() {
+inline void DisableUTF8() {
     SetConsoleCP(CP_ACP);
     SetConsoleOutputCP(CP_ACP);
 }
 
 /// @brief Establece la visibilidad del cursor de consola
 /// @param visible true para mostrar, false para ocultar
-void SetCursorVisible(bool visible) {
+inline void SetCursorVisible(bool visible) {
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_CURSOR_INFO info;
     GetConsoleCursorInfo(hOut, &info);
@@ -58,19 +65,19 @@ void SetCursorVisible(bool visible) {
 }
 
 /// @brief Muestra el cursor de consola
-void ShowCursor() {
+inline void ShowCursor() {
     SetCursorVisible(true);
 }
 
 /// @brief Oculta el cursor de consola
-void HideCursor() {
+inline void HideCursor() {
     SetCursorVisible(false);
 }
 
 /// @brief Mueve el cursor a una posición específica (0-indexed)
 /// @param x Columna (0 = izquierda)
 /// @param y Fila (0 = arriba)
-void GoToXY (int x, int y) {
+inline void GoToXY (int x, int y) {
     HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
     COORD dwPos;
     dwPos.X = static_cast<short>(x);
@@ -80,18 +87,14 @@ void GoToXY (int x, int y) {
 
 /// @brief Limpia la pantalla y mueve el cursor al inicio
 /// @details Usa escape ANSI si está habilitado, sino system("cls")
-void Clear() {
-    if (IsAnsiEnabled()) {
-        cout << "\x1b[2J\x1b[H";
-    } else {
-        system("cls");
-        GoToXY(0, 0);
-    }
+inline void Clear() {
+    system("cls");
+    GoToXY(0, 0);
 }
 
 /// @brief Obtiene el ancho actual del buffer de consola en columnas
 /// @return Ancho en caracteres
-int GetConsoleWidth() {
+inline int GetConsoleWidth() {
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_SCREEN_BUFFER_INFO info;
     GetConsoleScreenBufferInfo(hOut, &info);
@@ -100,7 +103,7 @@ int GetConsoleWidth() {
 
 /// @brief Obtiene el alto actual del buffer de consola en filas
 /// @return Alto en caracteres
-int GetConsoleHeight() {
+inline int GetConsoleHeight() {
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_SCREEN_BUFFER_INFO info;
     GetConsoleScreenBufferInfo(hOut, &info);
@@ -109,14 +112,22 @@ int GetConsoleHeight() {
 
 /// @brief Obtiene el tamaño actual de la consola
 /// @return array{width, height} en caracteres
-array<int, 2> GetConsoleSize() {
+inline array<int, 2> GetConsoleSize() {
     return {GetConsoleWidth(), GetConsoleHeight()};
 }
 
-bool Kbhit() {
+/// @brief Verifica si hay una tecla presionada
+/// @return true si hay una tecla, false si no
+inline bool Kbhit() {
     return _kbhit();
 }
 
-char Getch() {
+/// @brief Obtiene el carácter presionado
+/// @return Carácter presionado
+inline char Getch() {
     return _getch();
+}
+
+inline void Sleep(int ms) {
+    ::Sleep(static_cast<DWORD>(ms));
 }
