@@ -9,8 +9,10 @@
 #include <iostream>
 #include <string>
 
+#include "Linux/Terminal.h"
 #include "Terminal.h"
 #include "UnicodeGlyphs.h"
+#include "Color.h"
 
 using namespace std;
 
@@ -30,7 +32,7 @@ using namespace std;
 /// @details Usa GoToXY() de Terminal.h para posicionar el cursor y escribe a cout.
 ///          No valida límites de pantalla; el llamador debe asegurar que quepa.
 /// @note El orden de parámetros es: top, right, bottom, left (sentido horario desde arriba).
-void DrawRawBox(
+inline void DrawRawBox(
     int x, int y, int width, int height,
     string topBorder,
     string rightBorder,
@@ -71,7 +73,7 @@ void DrawRawBox(
 ///        0=vacío, 1=simple, 2=grueso, 3=doble, 4=redondeado, 5=cuadrantes.
 /// @details Delega en DrawRawBox() resolviendo strings desde BORDERS y CORNERS.
 ///          Nota: el orden de esquinas en corners[] es TL, TR, BR, BL (horario desde arriba-izq).
-void DrawBox(
+inline void DrawBox(
     int x, int y, int width, int height,
     array<unsigned, 4> borders,
     array<unsigned, 4> corners
@@ -86,4 +88,72 @@ void DrawBox(
         CORNERS[corners[2]][2],
         CORNERS[corners[3]][3]
     );
+}
+
+inline void DrawRawHorizontalLine(
+    int x, int y, int length,
+    string left,
+    string center,
+    string right
+) {
+    /// @brief Dibuja una línea horizontal con extremos y centro personalizados.
+    /// @param x Coordenada X inicial.
+    /// @param y Coordenada Y.
+    /// @param length Longitud total en caracteres (incluye extremos).
+    /// @param left Carácter para el extremo izquierdo.
+    /// @param center Carácter para el relleno central (repetido length-2 veces).
+    /// @param right Carácter para el extremo derecho.
+    /// @details Construye la línea completa y la imprime en una sola llamada a cout.
+    string line = left;
+    for (int i = 1; i < length; i++) {
+        line += center;
+    }
+    line += right;
+    GoToXY(x, y); cout << line;
+}
+
+inline void DrawRawVerticalLine(
+    int x, int y, int length,
+    string top,
+    string center,
+    string bottom
+) {
+    /// @brief Dibuja una línea vertical con extremos y centro personalizados.
+    /// @param x Coordenada X.
+    /// @param y Coordenada Y inicial.
+    /// @param length Longitud total en líneas (incluye extremos).
+    /// @param top Carácter para el extremo superior.
+    /// @param center Carácter para el relleno central (repetido length-2 veces).
+    /// @param bottom Carácter para el extremo inferior.
+    /// @details Imprime carácter a carácter moviendo el cursor con GoToXY().
+    GoToXY(x, y); cout << top;
+    for (int i = 1; i < length; i++) {
+        GoToXY(x, y + i); cout << center;
+    }
+    GoToXY(x, y + length); cout << bottom;
+}
+
+inline void DrawFillRectangle(
+    int x, int y, int width, int height,
+    string fill,
+    array<int, 3> foreground,
+    array<int, 3> background
+) {
+    /// @brief Dibuja un rectángulo relleno con color.
+    /// @param x Coordenada X de la esquina superior izquierda.
+    /// @param y Coordenada Y de la esquina superior izquierda.
+    /// @param width Ancho en caracteres.
+    /// @param height Alto en líneas.
+    /// @param fill Carácter/string de relleno (ej: "█", "░", " ").
+    /// @param foreground Color de texto {R,G,B} 0-255 o TRANSPARENT (-1,-1,-1).
+    /// @param background Color de fondo {R,G,B} 0-255 o TRANSPARENT (-1,-1,-1).
+    /// @details Usa Color.h para generar escape ANSI. Imprime línea por línea con GoToXY().
+    ///          No borra contenido previo fuera del rectángulo.
+    string line = fill;
+    for (int i = 1; i < width; i++) {
+        line += fill;
+    }
+    for (int i = 0; i < height; i++) {
+        GoToXY(x, y + i); cout << Color(foreground, background) << line;
+    }
 }
