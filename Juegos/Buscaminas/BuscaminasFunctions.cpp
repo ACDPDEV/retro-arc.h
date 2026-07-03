@@ -2,6 +2,7 @@
 #include <conio.h>
 #include <array>
 #include <vector>
+#include <tuple>
 #include <ctime>
 #include <cstdlib>
 #include "BuscaminasFunctions.h"
@@ -100,11 +101,21 @@ void CountAdjacentMines(vector<vector<int>>& board)
 /*
     VALORES DE CADA ESTADO:
 
+    Previos: (EN DESUSO, VERIFICAR SI NO EXISTE CODIGO QUE USA ESTOS VALORES)
         0: Celda oculta (Hidden).
 
         1: Celda descubierta (Revealed).
 
         2: Celda con bandera (Flagged).
+
+    Actuales:
+        -2:   Celda con bandera (Flagged)
+        -1:   Celda oculta (Hidden)
+        0:    Celda segura (Valor 0)
+        1-8:  Celda adyacente a una mina
+        9:    Celda con una mina 
+
+
 */
 
 
@@ -304,7 +315,7 @@ int SetColsByLevel(int levelOption)
  */
 vector<vector<int>> CreatePageStateBoard(int rows, int cols) 
 {
-    vector<vector<int>> stateBoard(rows, vector<int>(cols, 0));
+    vector<vector<int>> stateBoard(rows, vector<int>(cols, -1));
     return stateBoard;
 }
 
@@ -322,6 +333,176 @@ array<int, 2> GetInitialPosition(int rows, int cols)
 
     return position;
 }
+
+/**
+ * @brief Determina si el valor es equivalente a "oculto" dentro del State Board
+ * @param value El valor a evaluar
+ * @return true si el valor es equivalente a "oculto"
+ */
+bool StateValueIsHidden(int stateValue)
+{
+    return stateValue == -1;
+}
+
+/**
+ * @brief Determina si el valor es equivalente a "con bandera" dentro del State Board
+ * @param value El valor a evaluar
+ * @return true si el valor es equivalente a "con bandera"
+ */
+bool StateValueIsFlagged(int value)
+{
+    return value = -2;
+}
+
+/**
+ * @brief Determina si el valor es equivalente a un valor revelado (SEGURO o ADYACENTE) dentro del State Board
+ * @param value El valor a evaluar
+ * @return true si el valor es equivalente a revelado (SEGURO o ADYACENTE)
+ */
+bool StateValueIsRevealed(int stateValue)
+{
+    return -1 < stateValue && stateValue < 9;
+}
+
+/**
+ * @brief Determina si el valor es equivalente a un valor "SEGURO" dentro del State Board
+ * @param value El valor a evaluar
+ * @return true si el valor es equivalente a "SEGURO"
+ */
+bool BackgroundValueIsSafe(int backgroundValue)
+{
+    return backgroundValue == 0;
+}
+
+/**
+ * @brief Verifica si una tupla específica ya existe dentro de un vector.
+ * @param vec El vector de tuplas donde se realizará la búsqueda (pasado por referencia).
+ * @param tup La tupla con las coordenadas (int, int) que se desea buscar.
+ * @return true Si la tupla se encuentra en el vector.
+ * @return false Si la tupla no existe en el vector.
+ */
+bool VectorContainsTuple(vector<tuple<int, int>>& vec, tuple<int, int> tup)
+{
+    for(const auto& element : vec)
+    {
+        if(tup == element)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * @brief Ejecuta la acción de revelar según el estado de la celda (oculto, con bandera o mostrado)
+ * @param backgroundBoard Tablero que contiene a las minas
+ * @param stateBoard Tablero que mantiene los estados de visualización del tablero
+ * @param row Fila en la que se encuentra el jugador
+ * @param col Columna en la que se encuenta el jugador
+ */
+void RevealSafeRegionCommand(
+    vector<vector<int>> backgroundBoard, 
+    vector<vector<int>>& stateBoard, 
+    int playerRow, 
+    int PlayerCol, 
+    string& feedbackMessage)
+{
+    int maxRow = backgroundBoard.size() - 1;
+    int maxCol = backgroundBoard[0].size() -1;
+    vector<tuple<int, int>> safeCords = {{playerRow, PlayerCol}};
+
+    while(!safeCords.empty())
+    {
+        // Obtiene y elmina las coordenadas de uno de los ceros adyacentes
+        int row, col;
+        tie(row, col) = safeCords.back();
+        safeCords.pop_back();
+
+        for (int i = -1; i < 2; i++)
+        {
+            for (int j = -1; i < 2; j++)
+            {
+                int scanRow = row + i;
+                int scanCol = col + j;
+                // Validar que los índices de la celda existan dentro del tablero
+                if(0 <= scanRow && scanRow <= maxRow
+                    && 0 <= scanCol && scanCol <= maxCol)
+                {
+                    // Si la celda está oculta y es segura
+                    if(stateBoard[scanRow][scanCol] == -1
+                        && backgroundBoard[scanRow][scanCol] == 0)
+                    {
+                        stateBoard[scanRow][scanCol] = 0; // Mostrar que la celda es segura
+                        
+                        tuple<int, int> scanCords = {scanRow, scanCol};
+                        if(! VectorContainsTuple(safeCords, scanCords))
+                        {
+                            safeCords.push_back(scanCords);
+                        }
+                    }
+                    else // Es adayacente a una mina
+                    {
+                        stateBoard[scanRow][scanCol] = backgroundBoard[scanRow][scanCol];
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+/**
+ * @brief Ejecuta la acción de revelar según el estado de la celda (oculto, con bandera o mostrado)
+ * @param backgroundBoard Tablero que contiene a las minas
+ * @param stateBoard Tablero que mantiene los estados de visualización del tablero
+ * @param row Fila en la que se encuentra el jugador
+ * @param col Columna en la que se encuenta el jugador
+ */
+void RevealCommand(
+    vector<vector<int>> backgroundBoard, 
+    vector<vector<int>>& stateBoard, 
+    int row, 
+    int col, 
+    string& feedbackMessage)
+{
+    int backgroundValue = backgroundBoard[row][col];
+    int stateValue = stateBoard[row][col];
+
+    if(stateValue < -2 || 9 < stateValue)
+    {
+        feedbackMessage = "Error al revelar (RevealCommand)";
+        return;
+    }
+    
+    if(StateValueIsRevealed(stateValue))
+    {
+        feedbackMessage = "Esa celda ya está revelada";
+    }
+    else if(StateValueIsFlagged(stateValue))
+    {
+        feedbackMessage = "Quita la bandera para revelar";
+    }
+
+    if(BackgroundValueIsSafe(backgroundValue))
+    {
+        RevealSafeRegionCommand(backgroundBoard, stateBoard, row, col, feedbackMessage);
+    }
+    else
+    {
+        stateBoard[row][col] = backgroundBoard[row][col];
+    }
+
+    feedbackMessage = "";
+
+
+}
+
+bool MineIsRevealed(vector<vector<int>> backgroundBoard, int row, int col, string& feedbackMessage)
+{
+    return backgroundBoard[row][col] == 9;
+}
+
+// TODO Crear FLAG COMMAND 
 
 /**
  * @brief Procesa la jugada del usuario modificando el tablero de estados.

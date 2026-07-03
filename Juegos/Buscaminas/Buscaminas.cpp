@@ -27,7 +27,6 @@ int main()
     bool inGame = true;
     string playerName = "Player 1";
 
-    // TODO encontrar los códigos que obtiene getch al presionar las teclas arriba, izquierda, abajo, derecha
     const vector<int> validUserKeys = 
     {
         72,   // arriba
@@ -130,10 +129,12 @@ int main()
                             break;
                         case 'r':
                         case 'R':
-                            // El jugador decide revelar la celda donde está parado
-                            ExecuteAction(playerStateBoard, playerRow, playerCol, 1, feedbackMessage);
+                            RevealCommand(backgroundBoard, playerStateBoard, playerRow, playerCol, feedbackMessage);
     
-                            // TODO : si bgBoard[playerRow][playerCol] == 9 -> gameOver = true;
+                            if(MineIsRevealed(backgroundBoard, playerRow, playerCol, feedbackMessage))
+                            {
+                                gameOver = true;
+                            }
                             break;
                         case 'b':
                         case 'B':
