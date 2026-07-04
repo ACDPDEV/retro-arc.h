@@ -131,3 +131,17 @@ inline char Getch() {
 inline void Sleep(int ms) {
     ::Sleep(static_cast<DWORD>(ms));
 }
+
+/**
+ * @brief Limpia una línea de la consola imprimiendo una cantidad determinada de espacios en blanco.
+ * * @param lineLength Número de espacios en blanco que se van a generar e imprimir para limpiar la línea.
+ */
+inline void ClearConsoleLine(int lineLength)
+{
+    string blankSpace = "";
+    for(int i = 0; i < lineLength; i++)
+    {
+        blankSpace += " ";
+    }
+    cout << blankSpace;
+}

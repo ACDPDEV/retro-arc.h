@@ -287,3 +287,4 @@ inline bool IsNavigationKey(vector<int>& byteChar)
     }
     return false;
 }
+
