@@ -146,11 +146,11 @@ inline bool IsValidChar(vector<tuple<int, int>>& validCharRanges, int character)
  * @param character El número del caracter que se quiere evaluar
  * @returns true si el caracter está permitido
  */
-inline bool IsValidChar(vector<vector<int>>& validChars, vector<int> character)
+inline bool IsValidChar(vector<vector<int>>& validChars, vector<int>& character)
 {
-    for (int i = 0; i < validChars.size(); i++)
+    for (auto& validChar : validChars)
     {
-        if(validChars[i] == character)
+        if(validChar == character)
         {
             return true;
         }
@@ -187,32 +187,47 @@ inline int ReadConsoleChar(vector<tuple<int, int>>& validCharRanges)
 
 /**
  * @brief Lee una tecla presionada por el usuario y devuelve el código de caracter que representa
- * @param validCharRanges Rango de caracteres permitidos para lectura
- * @returns El código UTF-8 del caracter o `{}` si es un caracter no permitido
+ * @returns La secuencia de bytes del caracter
  */
-inline vector<int> ReadConsoleChar(vector<vector<int>>& validChars)
+inline vector<int> ReadConsoleChar()
 {
-    vector<int> utfKey = {};
+    vector<int> byteChar = {};
     int key;
 
     key = getch();
-    utfKey.push_back(key);
+    byteChar.push_back(key);
 
-    // Compara con AND lógico bit a bit para validar si es un caracter de 2 bytes
-    if((key & 0b11100000) == 0b11000000)
+    if (key == 0 || key == 224)
     {
-        key = getch();
-        utfKey.push_back(key);
-    }
-
-    if (IsValidChar(validChars, utfKey))
-    {
-        return utfKey;
+        // Tecla especial
+        byteChar.push_back(getch());
     }
     else
     {
-        return utfKey = {};
+        // Compara con AND lógico bit a bit para validar si es un caracter con cada cantidad de bytes
+        if ((key & 0b11100000) == 0b11000000) // Para 2 bytes
+            byteChar.push_back(getch());
+        else if ((key & 0b11110000) == 0b11100000) // Para 3 bytes
+            byteChar.push_back(getch()), byteChar.push_back(getch());
+        else if ((key & 0b11111000) == 0b11110000) // Para 4 bytes
+            byteChar.push_back(getch()), byteChar.push_back(getch()), byteChar.push_back(getch());
     }
 
-    return utfKey;
+    return byteChar;
+}
+
+/**
+ * @brief Convierte un byteChar en un Caracter imprimible
+ * @param byteChar bytes de la tecla presionada
+ */
+inline string CastKeyToChar(vector<int>& byteChar)
+{
+    string character;
+
+    for (int& byte : byteChar)
+    {
+        character += static_cast<char>(byte);
+    }
+
+    return character;
 }
