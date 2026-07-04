@@ -139,7 +139,7 @@ inline void Sleep(int ms) {
 inline void ClearConsoleLine(int lineLength)
 {
     string blankSpace = "";
-    for(int i = 0; i < lineLength; i++)
+    for(int i = 0; i <= lineLength; i++)
     {
         blankSpace += " ";
     }
