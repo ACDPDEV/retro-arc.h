@@ -222,7 +222,7 @@ inline vector<int> ReadConsoleChar()
  * @brief Convierte un byteChar en un Caracter imprimible
  * @param byteChar bytes de la tecla presionada
  */
-inline string CastKeyToChar(vector<int>& byteChar)
+inline string CastKeyToString(vector<int>& byteChar)
 {
     string character;
 
