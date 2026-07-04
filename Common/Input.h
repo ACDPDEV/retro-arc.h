@@ -115,3 +115,104 @@ inline bool TryInput(string& line) {
 
     return false;
 }
+
+
+/**
+ * @brief Valida que un caracter de 1 Byte esté entre al menos uno de los rangos permitidos
+ * @param validCharRanges Rangos de caracteres válidos tuple<minimo, maximo>
+ * @param character El número del caracter que se quiere evaluar
+ * @returns true si el caracter está entre al menos uno de los rangos permitidos (inclusivo)
+ */
+inline bool IsValidChar(vector<tuple<int, int>>& validCharRanges, int character)
+{
+    bool isValid = false;
+    int min;
+    int max;
+    for (const auto& range : validCharRanges)
+    {
+        tie(min, max) = range;
+        if(min <= character && character <= max)
+        {
+            isValid = true;
+            break;
+        }
+    }
+    return isValid;
+}
+
+/**
+ * @brief Verficia que el caracter de 1 o 2 bytes esté permitido
+ * @param validCharRanges Secuencias UTF-8 de los caracteres permitidos
+ * @param character El número del caracter que se quiere evaluar
+ * @returns true si el caracter está permitido
+ */
+inline bool IsValidChar(vector<vector<int>>& validChars, vector<int> character)
+{
+    for (int i = 0; i < validChars.size(); i++)
+    {
+        if(validChars[i] == character)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * @brief Lee una tecla presionada por el usuario y devuelve el código de caracter que representa
+ * @param validCharRanges Rango de caracteres permitidos para lectura
+ * @returns El código del último byte del caracter o -1 si es un caracter no permitido
+ */
+inline int ReadConsoleChar(vector<tuple<int, int>>& validCharRanges)
+{
+    int key;
+
+    key = getch();
+
+    // Compara con AND lógico bit a bit para validar si es un caracter de 2 bytes
+    if((key & 0b11100000) == 0b11000000)
+    {
+        key = getch();
+    }
+
+    if (IsValidChar(validCharRanges, key))
+    {
+        return key;
+    }
+    else 
+    {
+        return -1;
+    }
+}
+
+/**
+ * @brief Lee una tecla presionada por el usuario y devuelve el código de caracter que representa
+ * @param validCharRanges Rango de caracteres permitidos para lectura
+ * @returns El código UTF-8 del caracter o `{}` si es un caracter no permitido
+ */
+inline vector<int> ReadConsoleChar(vector<vector<int>>& validChars)
+{
+    vector<int> utfKey = {};
+    int key;
+
+    key = getch();
+    utfKey.push_back(key);
+
+    // Compara con AND lógico bit a bit para validar si es un caracter de 2 bytes
+    if((key & 0b11100000) == 0b11000000)
+    {
+        key = getch();
+        utfKey.push_back(key);
+    }
+
+    if (IsValidChar(validChars, utfKey))
+    {
+        return utfKey;
+    }
+    else
+    {
+        return utfKey = {};
+    }
+
+    return utfKey;
+}
