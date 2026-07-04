@@ -6,7 +6,7 @@ using namespace std;
 
 const string CLAVE = "1234";
 const int MAX_ATTEMPTS = 3;
-const int MAX_FEEDBACK_MESSAGE_LEGTH = 30;
+const int MAX_FEEDBACK_MESSAGE_LEGTH = 80;
 
 // ACTION KEYS
 const vector<int> KEY_ENTER = {13};
