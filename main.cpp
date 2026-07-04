@@ -20,42 +20,72 @@ int main() {
      * 
      */
 
-    const int MAX_PASSWORD_LENGTH = 15;
-    const int cursorInitialRow = 4;
-    const int cursorInitialCol = 5;
+    const int MAX_PASSWORD_LENGTH = 15;  // MODIFICAR SEGÚN VISTA    ==============================
+    const int cursorInitialRow = 4;   // MODIFICAR SEGÚN VISTA    ==============================
+    const int cursorInitialCol = 5;   // MODIFICAR SEGÚN VISTA    ==============================
     string password = "";
     string passwordInView = "";
+    
+    string feedbackMessage = "";
+    int rowFeedbackMessage = cursorInitialRow + 4;   // MODIFICAR SEGÚN VISTA    ==============================
+    int colFeedbackMessage = cursorInitialCol + 0;     // MODIFICAR SEGÚN VISTA    ==============================
 
     vector<int> key;
     string character;
     
+    int countAttempts = 0;
 
-    do
+    while (countAttempts < ::MAX_ATTEMPTS)
     {
-        GoToXY(cursorInitialCol, cursorInitialRow);
-        cout <<  "                      ";
-        GoToXY(cursorInitialCol, cursorInitialRow);
-        cout << passwordInView;
-        key = ReadConsoleChar();
-        if(IsAlphaNumChar(key))
+        do
         {
-            if(passwordInView.length() <= MAX_PASSWORD_LENGTH)
+            GoToXY(cursorInitialCol, cursorInitialRow);
+            ClearConsoleLine(MAX_PASSWORD_LENGTH);
+            GoToXY(cursorInitialCol, cursorInitialRow);
+            cout << passwordInView;
+            key = ReadConsoleChar();
+            if(IsAlphaNumChar(key))
             {
-                character = CastKeyToString(key);
-                password += character;
-                passwordInView += "*";
+                if(passwordInView.length() <= MAX_PASSWORD_LENGTH)
+                {
+                    character = CastKeyToString(key);
+                    password += character;
+                    passwordInView += "*";
+                }
             }
-        }
-        else if(key == KEY_BACKSPACE)
+            else if(key == KEY_BACKSPACE)
+            {
+                if(passwordInView.length() > 0)
+                {
+                    password.pop_back();
+                    passwordInView.pop_back();
+                }
+            }
+            
+        } while (key != ::KEY_ENTER);
+
+        ++countAttempts;
+
+        if(password == ::CLAVE)
         {
-            if(passwordInView.length() > 0)
-            {
-                password.pop_back();
-                passwordInView.pop_back();
-            }
+            GoToXY(colFeedbackMessage, rowFeedbackMessage);
+            ClearConsoleLine(MAX_FEEDBACK_MESSAGE_LEGTH);
+            feedbackMessage = "";
+            break;
         }
-        
-    } while (key != ::KEY_ENTER);
+        else
+        {
+            int difference = ::MAX_ATTEMPTS - countAttempts;
+            string remainingAttempts = to_string(difference);
+            feedbackMessage = "Te quedan " + remainingAttempts + " intentos";
+
+            // MOSTRAR EL MENSAJE DE ADVERTENCIA
+            GoToXY(colFeedbackMessage, rowFeedbackMessage);
+            ClearConsoleLine(MAX_FEEDBACK_MESSAGE_LEGTH);
+            GoToXY(colFeedbackMessage, rowFeedbackMessage);
+            cout << feedbackMessage;
+        }
+    }
     
     // PANTALLA DE CARGA
 
