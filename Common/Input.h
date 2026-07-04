@@ -8,6 +8,7 @@
 
 #include <string>
 #include "Terminal.h"
+#include "Consts.h"
 
 using namespace std;
 
@@ -141,10 +142,11 @@ inline bool IsValidChar(vector<tuple<int, int>>& validCharRanges, int character)
 }
 
 /**
- * @brief Verficia que el caracter de 1 o 2 bytes esté permitido
- * @param validCharRanges Secuencias UTF-8 de los caracteres permitidos
- * @param character El número del caracter que se quiere evaluar
- * @returns true si el caracter está permitido
+ * @brief Verifica si un carácter específico se encuentra dentro de una lista de caracteres válidos.
+ * * @param validChars Referencia a una vector que contiene los caracteres permitidos.
+ * @param character Referencia al vector de enteros que representa el carácter en bytes que se desea validar.
+ * @return true Si el carácter coincide con alguno de la lista de caracteres válidos.
+ * @return false Si el carácter no es válido.
  */
 inline bool IsValidChar(vector<vector<int>>& validChars, vector<int>& character)
 {
@@ -230,4 +232,58 @@ inline string CastKeyToChar(vector<int>& byteChar)
     }
 
     return character;
+}
+
+/**
+ * @brief Verifica si un carácter de bytes es alfanumérico.
+ * * @param byteChar Vector de enteros que representa el carácter en bytes a evaluar.
+ * @return true Si el carácter se encuentra en la lista de alfanuméricos.
+ * @return false Si el carácter no es alfanumérico.
+ */
+inline bool IsAlphaNumChar(vector<int>& byteChar)
+{
+    for (auto& ch : ::ALPHA_NUM_CHARS)
+    {
+        if(ch == byteChar)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * @brief Verifica si un carácter de bytes corresponde a una tecla de acción.
+ * * @param byteChar Vector de enteros que representa el carácter en bytes a evaluar.
+ * @return true Si el carácter coincide con una tecla de acción.
+ * @return false En caso contrario.
+ */
+inline bool IsActionKey(vector<int>& byteChar)
+{
+    for (auto& ch : ::ACTION_KEYS)
+    {
+        if(ch == byteChar)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * @brief Verifica si un carácter de bytes corresponde a una tecla de navegación.
+ * * @param byteChar Vector de enteros que representa el carácter en bytes a evaluar.
+ * @return true Si el carácter coincide con una tecla de navegación.
+ * @return false En caso contrario.
+ */
+inline bool IsNavigationKey(vector<int>& byteChar)
+{
+    for (auto& ch : ::NAVIGATION_KEYS)
+    {
+        if(ch == byteChar)
+        {
+            return true;
+        }
+    }
+    return false;
 }
