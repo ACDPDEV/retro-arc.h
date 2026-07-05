@@ -19,12 +19,6 @@ void CountAdjacentMines(vector<vector<int>>& board);
 // LOGICA
 // ======================================================================
 
-int GetUserKey(string& feedbackMessage);
-
-int SetOption(int& option, int minOption, int maxOption, int userKey);
-
-bool CanExcecuteOption(int userKey);
-
 bool BuscaminasIsValidOption(int option, vector<int>& validOptions);
 
 int SetMinesQuantity(int rows, int cols, int levelOption);
@@ -62,7 +56,13 @@ void RevealCommand(
 
 bool MineIsRevealed(vector<vector<int>> backgroundBoard, int row, int col, string& feedbackMessage);
 
-void ExecuteAction(vector<vector<int>>& stateBoard, int r, int c, int action,string& feedbackMessage);
+bool IsMoveKey(vector<int>& key);
+bool IsRevealKey(vector<int>& key);
+bool IsFlagKey(vector<int>& key);
+bool IsExitMatchKey(vector<int>& key);
+
+
+void MoveCommand(int& playerRow, int& playerCol, int rows, int cols, vector<int>& key);
 
 // TODO definir la función
 bool IsWonGameState();

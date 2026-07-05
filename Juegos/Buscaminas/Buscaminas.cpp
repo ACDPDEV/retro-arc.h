@@ -144,52 +144,39 @@ int main()
                      * TABLERO,
                      * FEEDBACK MESSAGGE,
                      * BANDERAS,
-                     * POSICION ACTUAL DEL JUGADOR
+                     * POSICION ACTUAL DEL JUGADOR (ROW, COL)
                      * 
                      */
 
                     // 2. Pedir la acción
-                    actionKey = getch();
+                    ::key = ReadConsoleChar();
 
-                    // 3. Procesar la entrada con un switch básico
-                    switch (actionKey)
+                    if(IsMoveKey(::key))
                     {
-                    case 'w':
-                    case 'W':
-                        if (playerRow > 0)
-                            playerRow--; // Sube
-                        break;
-                    case 's':
-                    case 'S':
-                        if (playerRow < rows - 1)
-                            playerRow++; // Baja
-                        break;
-                    case 'a':
-                    case 'A':
-                        if (playerCol > 0)
-                            playerCol--; // Izquierda
-                        break;
-                    case 'd':
-                    case 'D':
-                        if (playerCol < cols - 1)
-                            playerCol++; // Derecha
-                        break;
-                    case 'r':
-                    case 'R':
+                        MoveCommand(playerRow, playerCol, rows, cols, ::key);
+                    }
+                    else if(IsRevealKey(::key))
+                    {
                         RevealCommand(backgroundBoard, playerStateBoard, playerRow, playerCol, ::feedbackMessage);
-
                         if(MineIsRevealed(backgroundBoard, playerRow, playerCol, ::feedbackMessage))
                         {
                             gameOver = true;
                         }
-                        break;
-                    case 'b':
-                    case 'B':
-                        // El jugador decide poner/quitar bandera donde está parado
-                        ExecuteAction(playerStateBoard, playerRow, playerCol, 2, ::feedbackMessage);
-                        break;
-                    case 'q':
-                    case 'Q':
+                        else if(IsWonGameState())
+                        {
+                            /**
+                             * TODO: VALIDAR SI CUMPLE CON LA CONDICIÓN PARA GANAR
+                             */
+                            wonGame = true;
+                            gameOver = true;
+                        }
+                    }
+                    else if(IsFlagKey(::key))
+                    {
+
+                    }
+                    else if(IsExitMatchKey(::key))
+                    {
                         const string messageBoxOptions[]
                         {
                             "SÍ",
@@ -213,22 +200,28 @@ int main()
                             {
                                 SetOption(mbOption, minMessageBoxOption, maxMessageBoxOption, ::key);
                             }
+                            
                         }while( ! IsActionKey(::key));
                         
                         if(messageBoxOptions[mbOption] == "Sí")
                         {
                             gameOver = true;
                         }
-                        break;
+                    }
+                    else
+                    {
+                        /**
+                         * 
+                         * TODO:
+                         * GESTIONAR TECLA EQUIVOCADA
+                         * 
+                         */
                     }
 
-                    // TODO validar si cumple con la condición para ganar
-                    wonGame = IsWonGameState();
-                    if(wonGame)
-                        gameOver = true;
+                    
                 }
 
-                if(actionKey != 'q' || actionKey != 'Q')
+                if(! IsExitMatchKey(::key))
                 {
                     // TODO mostrar la pantalla de victoria o resultado
 

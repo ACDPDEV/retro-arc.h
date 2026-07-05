@@ -6,6 +6,8 @@
 #include <ctime>
 #include <cstdlib>
 #include "BuscaminasFunctions.h"
+#include "../../Common/Navigation.h"
+#include "../../Common/Consts.h"
 
 using namespace std;
 
@@ -404,41 +406,59 @@ bool MineIsRevealed(vector<vector<int>> backgroundBoard, int row, int col, strin
     return backgroundBoard[row][col] == 9;
 }
 
-// TODO Crear FLAG COMMAND 
+/**
+ * 
+ * TODO Crear FLAG COMMAND 
+ * 
+ */
+
+bool IsMoveKey(vector<int>& key)
+{
+    if(IsNavigationKey(key))
+    {
+        return true;
+    }
+    return false;
+}
 
 /**
- * @brief Procesa la jugada del usuario modificando el tablero de estados.
- * @param stateBoard Referencia al tablero lógico de estados.
- * @param row Fila seleccionada.
- * @param col Columna seleccionada.
- * @param action Tipo de acción (1 = Revelar, 2 = Bandera).
+ * @brief Actualiza la posición del jugador (fila y columna) en el tablero según la flecha de dirección presionada.
+ * * Maneja los límites de la matriz permitiendo un efecto de "bucle" o "envoltura" (vuelve al extremo opuesto al salir de los bordes).
+ * @param playerRow Referencia a la fila actual del jugador (se modifica internamente).
+ * @param playerCol Referencia a la columna actual del jugador (se modifica internamente).
+ * @param rows Número total de filas del tablero.
+ * @param cols Número total de columnas del tablero.
+ * @param key Referencia al vector que contiene los bytes de la tecla presionada.
  */
-void ExecuteAction(vector<vector<int>>& stateBoard, int row, int col, int action, string& feedbackMessage) 
+void MoveCommand(int& playerRow, int& playerCol, int rows, int cols, vector<int>& key)
 {
-    // Validar que las coordenadas estén dentro del tablero
-    if (row < 0 || row >= stateBoard.size() || col < 0 || col >= stateBoard[0].size()) {
-        feedbackMessage = "¡Coordenadas fuera de rango! Intenta de nuevo";
-        return;
+    if(key == KEY_ARROW_TOP)
+    {
+        if(playerRow > 0)
+            --playerRow;
+        else
+            playerRow = rows;
     }
-
-    if (action == 1) { // REVELAR
-        if (stateBoard[row][col] == 0) {
-            stateBoard[row][col] = 1; // Cambia a estado Revelado
-            feedbackMessage = "";
-        } else {
-            feedbackMessage = "Esa celda ya no se puede revelar";
-        }
-    } 
-    else if (action == 2) { // BANDERA
-        if (stateBoard[row][col] == 0) {
-            stateBoard[row][col] = 2; // Pone bandera
-            feedbackMessage = "";
-        } else if (stateBoard[row][col] == 2) {
-            stateBoard[row][col] = 0; // Si ya tenía bandera, la quita (regresa a oculto)
-            feedbackMessage = "";
-        } else {
-            feedbackMessage = "No puedes poner bandera en una celda revelada";
-        }
+    else if(key == KEY_ARROW_LEFT)
+    {
+        if(playerCol > 0)
+            --playerCol;
+        else
+            playerCol = cols;
+    }
+    else if(key == KEY_ARROW_BOTTOM)
+    {
+        if(playerRow < rows -1)
+            ++playerRow;
+        else
+            playerRow = 0;
+    }
+    else if(key == KEY_ARROW_RIGHT)
+    {
+        if(playerCol < cols-1)
+            ++playerCol;
+        else
+            playerCol = 0;
     }
 }
 
