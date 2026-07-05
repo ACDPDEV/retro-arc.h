@@ -1,17 +1,12 @@
 #include <iostream>
 #include <vector>
+#include "common/Variables.h"
 #include "common/Navigation.h"
 #include "common/Input.h"
 #include "common/Consts.h"
 #include <conio.h>
 
 using namespace std;
-
-vector<int> key;
-string character;
-string feedbackMessage = "";
-int rowFeedbackMessage = 0;
-int colFeedbackMessage = 0;
 
 int main() {
     // =========================================
