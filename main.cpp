@@ -1,21 +1,26 @@
 #include <iostream>
 #include <vector>
+#include "common/Navigation.h"
 #include "common/Input.h"
 #include "common/Consts.h"
 #include <conio.h>
 
 using namespace std;
 
-int main() {
-    cout << "Se ejecuta el programa" << endl;
+vector<int> key;
+string character;
+string feedbackMessage = "";
+int rowFeedbackMessage = 0;
+int colFeedbackMessage = 0;
 
+int main() {
     // =========================================
     // INICIO DE SESION
     // =========================================
     
     /**
      * 
-     * CARGAR PANTALLA DE INICIO DE SESION
+     * PANTALLA DE INICIO DE SESION
      * (EL CURSOR SE MOVERÁ EN LA LÓGICA)
      * 
      */
@@ -26,12 +31,10 @@ int main() {
     string password = "";
     string passwordInView = "";
     
-    string feedbackMessage = "";
-    int rowFeedbackMessage = cursorInitialRow + 4;   // MODIFICAR SEGÚN VISTA    ==============================
-    int colFeedbackMessage = cursorInitialCol + 0;     // MODIFICAR SEGÚN VISTA    ==============================
+    ::feedbackMessage = "";
+    ::rowFeedbackMessage = cursorInitialRow + 4;   // MODIFICAR SEGÚN VISTA    ==============================
+    ::colFeedbackMessage = cursorInitialCol + 0;     // MODIFICAR SEGÚN VISTA    ==============================
 
-    vector<int> key;
-    string character;
     
     int countAttempts = 0;
 
@@ -43,17 +46,17 @@ int main() {
             ClearConsoleLine(MAX_PASSWORD_LENGTH);
             GoToXY(cursorInitialCol, cursorInitialRow);
             cout << passwordInView;
-            key = ReadConsoleChar();
-            if(IsAlphaNumChar(key))
+            ::key = ReadConsoleChar();
+            if(IsAlphaNumChar(::key))
             {
                 if(passwordInView.length() <= MAX_PASSWORD_LENGTH)
                 {
-                    character = CastKeyToString(key);
-                    password += character;
+                    ::character = CastKeyToString(::key);
+                    password += ::character;
                     passwordInView += "*";
                 }
             }
-            else if(key == KEY_BACKSPACE)
+            else if(::key == KEY_BACKSPACE)
             {
                 if(passwordInView.length() > 0)
                 {
@@ -62,70 +65,157 @@ int main() {
                 }
             }
             
-        } while (key != ::KEY_ENTER);
+        } while (::key != ::KEY_ENTER);
 
         ++countAttempts;
 
         if(password == ::CLAVE)
         {
-            GoToXY(colFeedbackMessage, rowFeedbackMessage);
-            ClearConsoleLine(MAX_FEEDBACK_MESSAGE_LEGTH);
-            feedbackMessage = "";
+            GoToXY(::colFeedbackMessage, ::rowFeedbackMessage);
+            ClearConsoleLine(::MAX_FEEDBACK_MESSAGE_LENGTH);
+            ::feedbackMessage = "";
             break;
         }
         else
         {
             int difference = ::MAX_ATTEMPTS - countAttempts;
             string remainingAttempts = to_string(difference);
-            feedbackMessage = "Te quedan " + remainingAttempts + " intentos";
+            ::feedbackMessage = "Te quedan " + remainingAttempts + " intentos";
 
             // MOSTRAR EL MENSAJE DE ADVERTENCIA
-            GoToXY(colFeedbackMessage, rowFeedbackMessage);
-            ClearConsoleLine(MAX_FEEDBACK_MESSAGE_LEGTH);
-            GoToXY(colFeedbackMessage, rowFeedbackMessage);
-            cout << feedbackMessage;
+            GoToXY(::colFeedbackMessage, ::rowFeedbackMessage);
+            ClearConsoleLine(::MAX_FEEDBACK_MESSAGE_LENGTH);
+            GoToXY(::colFeedbackMessage, ::rowFeedbackMessage);
+            cout << ::feedbackMessage;
+            if(countAttempts == MAX_ATTEMPTS)
+            {
+                /**
+                 * 
+                 * 
+                 * TODO Pantalla de cierre de programa por contraseña errónea
+                 * 
+                 * 
+                 */
+
+                exit(1);
+            }
         }
     }
     
+    // =========================================
     // PANTALLA DE CARGA
+    // =========================================
 
-    // PANTALLA DE INICIO
+    /**
+     * 
+     * TODO
+     * LA PANTALLA DE CARGA DEBE TENER UN CONTEO DE TIEMPO (CREO xD)
+     * 
+     */
 
-    // SELECCIONAR OPCIÓN
+    bool isRunning = true;
+
+
+    // =========================================
+    // MENU PRINCIPAL
+    // =========================================
+
+    string menu_options[] = {
+        "POKEMON", 
+        "BUSCAMINAS", 
+        "BATALLA NAVAL", 
+        "TIC-TAC-TOE", 
+        "BATALLA NAVAL", 
+        "CRÉDITOS", 
+        "SALIR", 
+        "CONFIG"
+    };
+
+    const int menu_minOpt = 0;
+    const int menu_maxOpt = menu_options->size();
+    int menu_option = menu_minOpt;
+
+    do{
+        /**
+         * 
+         * 
+         * 
+         * 
+         * TODO 
+         * PANTALLA DE MENU DE OPCIONES RESALTANDO LA OPCIÓN SELECCIONADA
+         * 
+         * 
+         * 
+         * 
+         */
+
+        ::key = ReadConsoleChar();
+
+        if(IsNavigationKey(::key))
+        {
+            SetOption(menu_option, menu_minOpt, menu_maxOpt, ::key);
+        }
+        else
+        {
+            GoToXY(::colFeedbackMessage, ::rowFeedbackMessage);
+            ClearConsoleLine(::MAX_FEEDBACK_MESSAGE_LENGTH);
+            GoToXY(::colFeedbackMessage, ::rowFeedbackMessage);
+            feedbackMessage = "Presiona las flechas y selecciona con ENTER o ESPACIO";
+        }
+    }while(::key != KEY_ENTER && ::key != KEY_SPACE);
 
     // SWITCH HACIA LA OPCION
+    switch(menu_option)
+    {
 
-    // =========================================
-    // JUEGOS
-    // =========================================
-    /**
-     * JUEGOS :
-     * 0: POKEMON
-     * 1: BUSCAMINAS
-     * 2: BATALLA NAVAL
-     * 3: TIC-TAC-TOE
-     * 4: SPACE-INVADERS
-     */
-    
-    // =========================================
-    // CONFIGURACIONES
-    // =========================================
-    
-    // Configurar nombre de jugador
-    
-    // =========================================
-    // CRÉDITOS
-    // =========================================
-    /**
-     * Universidad
-     * Curso
-     * Docente
-     * Autores
-     * Año
-     */
-    
-    // =========================================
-    // SALIR
-    // =========================================
+        // POKEMON
+
+        case 0:
+            break;
+
+        // BUSCAMINAS
+
+        case 1:
+            break;
+
+        // BATALLA NAVAL
+        case 2:
+            break;
+
+        // TIC-TAC-TOE
+        case 3:
+            break;
+
+        // SPACE INVADERS
+        case 4:
+            break;
+
+        // =========================================
+        // CRÉDITOS
+        // =========================================
+        /**
+         * Universidad
+         * Curso
+         * Docente
+         * Autores
+         * Año
+         */
+        case 5:
+            break;
+
+        // =========================================
+        // SALIR
+        // =========================================
+        case 6:
+            break;
+
+        // =========================================
+        // CONFIGURACIONES
+        // =========================================
+        
+        // Configurar nombre de jugador
+        case 7:
+            break;
+    }
 
 }
