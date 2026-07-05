@@ -115,107 +115,130 @@ int main() {
 
     bool isRunning = true;
 
-
-    // =========================================
-    // MENU PRINCIPAL
-    // =========================================
-
-    string menu_options[] = {
-        "POKEMON", 
-        "BUSCAMINAS", 
-        "BATALLA NAVAL", 
-        "TIC-TAC-TOE", 
-        "BATALLA NAVAL", 
-        "CRÉDITOS", 
-        "SALIR", 
-        "CONFIG"
-    };
-
-    const int menu_minOpt = 0;
-    const int menu_maxOpt = menu_options->size();
-    int menu_option = menu_minOpt;
-
-    do{
-        /**
-         * 
-         * 
-         * 
-         * 
-         * TODO 
-         * PANTALLA DE MENU DE OPCIONES RESALTANDO LA OPCIÓN SELECCIONADA
-         * 
-         * 
-         * 
-         * 
-         */
-
-        ::key = ReadConsoleChar();
-
-        if(IsNavigationKey(::key))
-        {
-            SetOption(menu_option, menu_minOpt, menu_maxOpt, ::key);
-        }
-        else
-        {
-            GoToXY(::colFeedbackMessage, ::rowFeedbackMessage);
-            ClearConsoleLine(::MAX_FEEDBACK_MESSAGE_LENGTH);
-            GoToXY(::colFeedbackMessage, ::rowFeedbackMessage);
-            feedbackMessage = "Presiona las flechas y selecciona con ENTER o ESPACIO";
-        }
-    }while(::key != KEY_ENTER && ::key != KEY_SPACE);
-
-    // SWITCH HACIA LA OPCION
-    switch(menu_option)
+    while(isRunning)
     {
 
-        // POKEMON
-
-        case 0:
-            break;
-
-        // BUSCAMINAS
-
-        case 1:
-            break;
-
-        // BATALLA NAVAL
-        case 2:
-            break;
-
-        // TIC-TAC-TOE
-        case 3:
-            break;
-
-        // SPACE INVADERS
-        case 4:
-            break;
-
         // =========================================
-        // CRÉDITOS
+        // MENU PRINCIPAL
         // =========================================
-        /**
-         * Universidad
-         * Curso
-         * Docente
-         * Autores
-         * Año
-         */
-        case 5:
-            break;
+    
+        const string menu_options[] = {
+            "POKEMON", 
+            "BUSCAMINAS", 
+            "BATALLA NAVAL", 
+            "TIC-TAC-TOE", 
+            "BATALLA NAVAL", 
+            "CRÉDITOS", 
+            "SALIR", 
+            "CONFIG"
+        };
+    
+        const int menu_minOpt = 0;
+        const int menu_maxOpt = menu_options->size();
+        int menu_option = menu_minOpt;
+    
+        do{
+            /**
+             * 
+             * 
+             * 
+             * 
+             * TODO 
+             * PANTALLA DE MENU DE OPCIONES RESALTANDO LA OPCIÓN SELECCIONADA
+             * 
+             * 
+             * 
+             * 
+             */
+    
+            ::key = ReadConsoleChar();
+    
+            if(IsNavigationKey(::key))
+            {
+                SetOption(menu_option, menu_minOpt, menu_maxOpt, ::key);
+            }
+            else if(::key != KEY_ENTER && ::key != KEY_SPACE)
+            {
+                GoToXY(::colFeedbackMessage, ::rowFeedbackMessage);
+                ClearConsoleLine(::MAX_FEEDBACK_MESSAGE_LENGTH);
+                GoToXY(::colFeedbackMessage, ::rowFeedbackMessage);
+                feedbackMessage = "Presiona las flechas y selecciona con ENTER o ESPACIO";
+            }
+        }while(::key != KEY_ENTER && ::key != KEY_SPACE);
+    
+        // SWITCH HACIA LA OPCION
+        switch(menu_option)
+        {
+    
+            // POKEMON
+            case 0:
+                break;
+    
+            // BUSCAMINAS
+            case 1:
+                break;
+    
+            // BATALLA NAVAL
+            case 2:
+                break;
+    
+            // TIC-TAC-TOE
+            case 3:
+                break;
+    
+            // SPACE INVADERS
+            case 4:
+                break;
+    
+            // =========================================
+            // CRÉDITOS
+            // =========================================
+            case 5:
+                /**
+                 * 
+                 * TODO
+                 * MOSTRAR PANTALLA DE CRÉDITOS DEBE CONTENER :
+                 * MENSAJE "Presione 'Q' para regresar"
+                 * Universidad
+                 * Curso
+                 * Docente
+                 * Autores
+                 * Año
+                 * 
+                 * 
+                 */
 
-        // =========================================
-        // SALIR
-        // =========================================
-        case 6:
-            break;
+                do{
+                    ::key = ReadConsoleChar();
+                }while(::key != ::KEY_Q && ::key != ::KEY_Q_LOWER);
+                break;
+    
+            // =========================================
+            // SALIR
+            // =========================================
+            case 6:
 
-        // =========================================
-        // CONFIGURACIONES
-        // =========================================
-        
-        // Configurar nombre de jugador
-        case 7:
-            break;
+                /**
+                 * 
+                 * 
+                 * TODO
+                 * PANTALLA DE CIERRE DE PROGRAMA POR OPCIÓN "SALIR"
+                 * 
+                 * 
+                 * 
+                 */
+                isRunning = false;
+                break;
+    
+            // =========================================
+            // CONFIGURACIONES
+            // =========================================
+            
+            // Configurar nombre de jugador
+            case 7:
+
+                break;
+        }
     }
 
 }
