@@ -21,6 +21,8 @@ void CountAdjacentMines(vector<vector<int>>& board);
 
 int SetMinesQuantity(int rows, int cols, int levelOption);
 
+int SetInitialFlagCount(int minesQuantity);
+
 int SetRowsByLevel(int levelOption);
 
 int SetColsByLevel(int levelOption);

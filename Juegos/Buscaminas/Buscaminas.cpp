@@ -111,6 +111,7 @@ int main()
                 rows = SetRowsByLevel(levelOption);
                 cols = SetColsByLevel(levelOption);
                 minesQuantity = SetMinesQuantity(rows, cols, levelOption);
+                int flagCount = SetInitialFlagCount(minesQuantity);
 
                 vector<vector<int>> backgroundBoard = CreateBackgroundBoard(rows, cols);
                 PlaceMines(backgroundBoard, minesQuantity);
@@ -173,7 +174,7 @@ int main()
                     }
                     else if(IsFlagKey(::key))
                     {
-                        
+                        FlagCommand(flagCount, playerStateBoard, playerRow, playerCol, ::feedbackMessage);
                     }
                     else if(IsExitMatchKey(::key))
                     {

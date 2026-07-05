@@ -8,6 +8,7 @@
 #include "BuscaminasFunctions.h"
 #include "../../Common/Navigation.h"
 #include "../../Common/Consts.h"
+#include "../../Common/Output.h"
 
 using namespace std;
 
@@ -135,6 +136,18 @@ int SetMinesQuantity(int rows, int cols, int levelOption)
 
     int minesQuantity = rows * cols * factors[levelOption];
     return minesQuantity;
+}
+
+int SetInitialFlagCount(int minesQuantity)
+{
+    if(minesQuantity > 10)
+    {
+        return 10;
+    }
+    else
+    {
+        minesQuantity;
+    }
 }
 
 /**
@@ -388,12 +401,6 @@ bool MineIsRevealed(vector<vector<int>> backgroundBoard, int row, int col, strin
 }
 
 /**
- * 
- * TODO Crear FLAG COMMAND 
- * 
- */
-
-/**
  * @brief Verifica si la tecla presionada corresponde a una tecla de movimiento (navegación).
  * * @param key Referencia al vector que contiene los bytes de la tecla presionada.
  * @return true Si la tecla es una tecla de navegación válida.
@@ -506,9 +513,27 @@ void FlagCommand(
 )
 {
     int stateValue = stateBoard[row][col];
-    if (StateValueIsFlagged(stateValue))
+    if(!StateValueIsHidden(stateValue))
     {
-
+        feedbackMessage = "No puedes poner una bandera allí";
+        PrintFeedBackMessage();
+    }
+    else if (StateValueIsFlagged(stateValue))
+    {
+        stateBoard[row][col] = GetStateValueHidden();
+        ++flagCount;
+    }
+    else
+    {
+        if(flagCount >0)
+        {
+            stateBoard[row][col] = GetStateValueFlagged();
+        }
+        else
+        {
+            feedbackMessage = "¡Ya no tienes banderas!";
+            PrintFeedBackMessage();
+        }
     }
     
 }
