@@ -119,7 +119,6 @@ void CountAdjacentMines(vector<vector<int>>& board)
 */
 
 
-
 /**
  * @brief valida que la entrada del usuario sea una opción válida
  * @param option la opción ingresada por el usuario
@@ -418,7 +417,7 @@ void ExecuteAction(vector<vector<int>>& stateBoard, int row, int col, int action
 {
     // Validar que las coordenadas estén dentro del tablero
     if (row < 0 || row >= stateBoard.size() || col < 0 || col >= stateBoard[0].size()) {
-        feedbackMessage = "¡Coordenadas fuera de rango! Intenta de nuevo.\n";
+        feedbackMessage = "¡Coordenadas fuera de rango! Intenta de nuevo";
         return;
     }
 
@@ -427,7 +426,7 @@ void ExecuteAction(vector<vector<int>>& stateBoard, int row, int col, int action
             stateBoard[row][col] = 1; // Cambia a estado Revelado
             feedbackMessage = "";
         } else {
-            feedbackMessage = "Esa celda ya no se puede revelar.\n";
+            feedbackMessage = "Esa celda ya no se puede revelar";
         }
     } 
     else if (action == 2) { // BANDERA
@@ -438,7 +437,7 @@ void ExecuteAction(vector<vector<int>>& stateBoard, int row, int col, int action
             stateBoard[row][col] = 0; // Si ya tenía bandera, la quita (regresa a oculto)
             feedbackMessage = "";
         } else {
-            feedbackMessage = "No puedes poner bandera en una celda revelada.\n";
+            feedbackMessage = "No puedes poner bandera en una celda revelada";
         }
     }
 }
