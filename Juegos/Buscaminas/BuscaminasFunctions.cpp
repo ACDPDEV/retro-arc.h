@@ -412,9 +412,63 @@ bool MineIsRevealed(vector<vector<int>> backgroundBoard, int row, int col, strin
  * 
  */
 
+/**
+ * @brief Verifica si la tecla presionada corresponde a una tecla de movimiento (navegación).
+ * * @param key Referencia al vector que contiene los bytes de la tecla presionada.
+ * @return true Si la tecla es una tecla de navegación válida.
+ * @return false En caso contrario.
+ */
 bool IsMoveKey(vector<int>& key)
 {
     if(IsNavigationKey(key))
+    {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * @brief Verifica si la tecla presionada corresponde a la acción de revelar una casilla.
+ * * Detecta tanto la 'R' mayúscula como la 'r' minúscula.
+ * * @param key Referencia al vector que contiene los bytes de la tecla presionada.
+ * @return true Si la tecla es 'R' o 'r'.
+ * @return false En caso contrario.
+ */
+bool IsRevealKey(vector<int>& key)
+{
+    if(key == KEY_R || key == KEY_R_LOWER)
+    {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * @brief Verifica si la tecla presionada corresponde a la acción de colocar/quitar una bandera (flag).
+ * * Detecta tanto la 'B' mayúscula como la 'b' minúscula.
+ * * @param key Referencia al vector que contiene los bytes de la tecla presionada.
+ * @return true Si la tecla es 'B' o 'b'.
+ * @return false En caso contrario.
+ */
+bool IsFlagKey(vector<int>& key)
+{
+    if(key == KEY_B || key == KEY_B_LOWER)
+    {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * @brief Verifica si la tecla presionada corresponde a la acción de salir de la partida actual.
+ * * Detecta la tecla Escape (ESC), así como 'Q' mayúscula o 'q' minúscula (Quit).
+ * * @param key Referencia al vector que contiene los bytes de la tecla presionada.
+ * @return true Si la tecla es ESC, 'Q' o 'q'.
+ * @return false En caso contrario.
+ */
+bool IsExitMatchKey(vector<int>& key)
+{
+    if(key == KEY_ESCAPE || key == KEY_Q || key == KEY_Q_LOWER)
     {
         return true;
     }
