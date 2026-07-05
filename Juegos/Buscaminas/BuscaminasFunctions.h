@@ -19,8 +19,6 @@ void CountAdjacentMines(vector<vector<int>>& board);
 // LOGICA
 // ======================================================================
 
-bool BuscaminasIsValidOption(int option, vector<int>& validOptions);
-
 int SetMinesQuantity(int rows, int cols, int levelOption);
 
 int SetRowsByLevel(int levelOption);
@@ -31,11 +29,22 @@ vector<vector<int>> CreatePageStateBoard(int rows, int cols);
 
 array<int, 2> GetInitialPosition(int rows, int cols);
 
+// ----------------------------
+// STATE BOARD - getters setters validators
+// ----------------------------
+int GetStateValueSafe();
+int GetStateValueFlagged();
+int GetStateValueHidden();
 bool StateValueIsHidden(int stateValue);
 bool StateValueIsFlagged(int stateValue);
 bool StateValueIsRevealed(int stateValue);
 
+// ----------------------------
+// BACKGROUND BOARD - getters setters validators
+// ----------------------------
 bool BackgroundValueIsSafe(int backgroundValue);
+bool BackGroundValueIsAdjacent(int backgroundValue);
+int GetBackGroundValueSafe();
 
 bool VectorContainsTuple(vector<tuple<int, int>>& vec, tuple<int, int> tup);
 
@@ -61,8 +70,14 @@ bool IsRevealKey(vector<int>& key);
 bool IsFlagKey(vector<int>& key);
 bool IsExitMatchKey(vector<int>& key);
 
-
 void MoveCommand(int& playerRow, int& playerCol, int rows, int cols, vector<int>& key);
+
+void FlagCommand(
+    int& flagCount,
+    vector<vector<int>>& stateBoard, 
+    int row, 
+    int col, 
+    string& feedbackMessage);
 
 // TODO definir la función
 bool IsWonGameState();

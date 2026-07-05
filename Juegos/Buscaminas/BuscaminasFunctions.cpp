@@ -120,26 +120,6 @@ void CountAdjacentMines(vector<vector<int>>& board)
 
 */
 
-
-/**
- * @brief valida que la entrada del usuario sea una opción válida
- * @param option la opción ingresada por el usuario
- * @param validOptions el conjunto de opciones válidas para el programa
- */
-bool BuscaminasIsValidOption(int option, vector<int>& validOptions)
-{
-    bool isValid = false;
-    for(int i = 0; i < validOptions.size(); i++)
-    {
-        if(validOptions[i] == option)
-        {
-            isValid = true;
-            break;
-        }
-    }
-    return isValid;
-}
-
 /**
  * @brief Determina la cantidad de minas según la cantidad de celdas y el nivel
  * @param rows Cantidad de filas que tiene el tablero
@@ -238,34 +218,54 @@ array<int, 2> GetInitialPosition(int rows, int cols)
     return position;
 }
 
+int GetStateValueSafe()
+{
+    return 0;
+}
+
+int GetStateValueFlagged()
+{
+    return -2;
+}
+
+int GetStateValueHidden()
+{
+    return -1;
+}
+
 /**
  * @brief Determina si el valor es equivalente a "oculto" dentro del State Board
- * @param value El valor a evaluar
+ * @param stateValue El valor a evaluar
  * @return true si el valor es equivalente a "oculto"
  */
 bool StateValueIsHidden(int stateValue)
 {
-    return stateValue == -1;
+    return stateValue == GetStateValueHidden();
 }
 
 /**
  * @brief Determina si el valor es equivalente a "con bandera" dentro del State Board
- * @param value El valor a evaluar
+ * @param stateValue El valor a evaluar
  * @return true si el valor es equivalente a "con bandera"
  */
 bool StateValueIsFlagged(int stateValue)
 {
-    return stateValue = -2;
+    return stateValue == GetStateValueFlagged();
 }
 
 /**
  * @brief Determina si el valor es equivalente a un valor revelado (SEGURO o ADYACENTE) dentro del State Board
- * @param value El valor a evaluar
+ * @param stateValue El valor a evaluar
  * @return true si el valor es equivalente a revelado (SEGURO o ADYACENTE)
  */
 bool StateValueIsRevealed(int stateValue)
 {
     return -1 < stateValue && stateValue < 9;
+}
+
+int GetBackGroundValueSafe()
+{
+    return 0;
 }
 
 /**
@@ -278,23 +278,9 @@ bool BackgroundValueIsSafe(int backgroundValue)
     return backgroundValue == 0;
 }
 
-/**
- * @brief Verifica si una tupla específica ya existe dentro de un vector.
- * @param vec El vector de tuplas donde se realizará la búsqueda (pasado por referencia).
- * @param tup La tupla con las coordenadas (int, int) que se desea buscar.
- * @return true Si la tupla se encuentra en el vector.
- * @return false Si la tupla no existe en el vector.
- */
-bool VectorContainsTuple(vector<tuple<int, int>>& vec, tuple<int, int> tup)
+bool BackGroundValueIsAdjacent(int backgroundValue)
 {
-    for(const auto& element : vec)
-    {
-        if(tup == element)
-        {
-            return true;
-        }
-    }
-    return false;
+    return 0 < backgroundValue && backgroundValue < 9;
 }
 
 /**
@@ -308,47 +294,45 @@ void RevealSafeRegionCommand(
     vector<vector<int>> backgroundBoard, 
     vector<vector<int>>& stateBoard, 
     int playerRow, 
-    int PlayerCol, 
+    int playerCol, 
     string& feedbackMessage)
 {
     int maxRow = backgroundBoard.size() - 1;
-    int maxCol = backgroundBoard[0].size() -1;
-    vector<tuple<int, int>> safeCords = {{playerRow, PlayerCol}};
+    int maxCol = backgroundBoard[0].size() - 1;
+    vector<tuple<int, int>> safeCords = {{playerRow, playerCol}};
 
     while(!safeCords.empty())
     {
-        // Obtiene y elmina las coordenadas de uno de los ceros adyacentes
         int row, col;
         tie(row, col) = safeCords.back();
         safeCords.pop_back();
 
-        for (int i = -1; i < 2; i++)
+        // Escaneamos el cuadrante de 3x3 alrededor de la celda vacía actual
+        for (int i = -1; i <= 1; i++)
         {
-            for (int j = -1; i < 2; j++)
+            for (int j = -1; j <= 1; j++)
             {
                 int scanRow = row + i;
                 int scanCol = col + j;
-                // Validar que los índices de la celda existan dentro del tablero
-                if(0 <= scanRow && scanRow <= maxRow
-                    && 0 <= scanCol && scanCol <= maxCol)
+                
+                // Validar límites del tablero
+                if(0 <= scanRow && scanRow <= maxRow && 0 <= scanCol && scanCol <= maxCol)
                 {
-                    // Si la celda está oculta y es segura
-                    if(stateBoard[scanRow][scanCol] == -1
-                        && backgroundBoard[scanRow][scanCol] == 0)
+                    // Solo interactuamos con celdas que estén estrictamente ocultas
+                    if(StateValueIsHidden(stateBoard[scanRow][scanCol]))
                     {
-                        stateBoard[scanRow][scanCol] = 0; // Mostrar que la celda es segura
-                        
-                        tuple<int, int> scanCords = {scanRow, scanCol};
-                        if(! VectorContainsTuple(safeCords, scanCords))
+                        // Caso A: El vecino es un '0' (Safe) -> Se revela y se sigue expandiendo
+                        if(backgroundBoard[scanRow][scanCol] == GetBackGroundValueSafe())
                         {
-                            safeCords.push_back(scanCords);
+                            stateBoard[scanRow][scanCol] = GetStateValueSafe(); 
+                            safeCords.push_back({scanRow, scanCol});
+                        }
+                        // Caso B: El vecino es un número (1-8) -> Se revela su número, pero NO se expande
+                        else if(BackGroundValueIsAdjacent(backgroundBoard[scanRow][scanCol]))
+                        {
+                            stateBoard[scanRow][scanCol] = backgroundBoard[scanRow][scanCol];
                         }
                     }
-                    else // Es adayacente a una mina
-                    {
-                        stateBoard[scanRow][scanCol] = backgroundBoard[scanRow][scanCol];
-                    }
-
                 }
             }
         }
@@ -386,19 +370,16 @@ void RevealCommand(
     {
         feedbackMessage = "Quita la bandera para revelar";
     }
-
-    if(BackgroundValueIsSafe(backgroundValue))
+    else if(BackgroundValueIsSafe(backgroundValue))
     {
         RevealSafeRegionCommand(backgroundBoard, stateBoard, row, col, feedbackMessage);
+        feedbackMessage = "";
     }
     else
     {
         stateBoard[row][col] = backgroundBoard[row][col];
+        feedbackMessage = "";
     }
-
-    feedbackMessage = "";
-
-
 }
 
 bool MineIsRevealed(vector<vector<int>> backgroundBoard, int row, int col, string& feedbackMessage)
@@ -516,6 +497,21 @@ void MoveCommand(int& playerRow, int& playerCol, int rows, int cols, vector<int>
     }
 }
 
+void FlagCommand(
+    int& flagCount,
+    vector<vector<int>>& stateBoard, 
+    int row, 
+    int col, 
+    string& feedbackMessage
+)
+{
+    int stateValue = stateBoard[row][col];
+    if (StateValueIsFlagged(stateValue))
+    {
+
+    }
+    
+}
 
 // ======================================================================
 // VISTA --- 200 x 60
