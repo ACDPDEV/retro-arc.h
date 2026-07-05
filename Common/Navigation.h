@@ -15,7 +15,7 @@ using namespace std;
  * @param userKey Referencia al vector que contiene los bytes de la tecla presionada por el usuario.
  * @return void No retorna ningún valor (los cambios se reflejan directamente en el parámetro 'option').
  */
-inline void SetOption(int& option, int& minOption, int& maxOption, vector<int>& userKey)
+inline void SetOption(int& option, const int& minOption, const int& maxOption, vector<int>& userKey)
 {
 
     if(userKey == KEY_ARROW_TOP || userKey == KEY_ARROW_LEFT)
