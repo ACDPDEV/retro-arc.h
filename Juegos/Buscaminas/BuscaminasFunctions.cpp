@@ -119,103 +119,6 @@ void CountAdjacentMines(vector<vector<int>>& board)
 */
 
 
-/**
- * @brief Obtiene la tecla válida presionada por el usuario (flecha, ENTER o ESPACIO)
- * @param feedbackMessage Mensaje de retroalimentación en caso de errores de input
- * @returns el int que representa la tecla presionada por el usuario
- */
-int GetUserKey(string& feedbackMessage)
-{
-    vector<int> validUserKeys = 
-    {
-        72,   // arriba
-        75,   // izquierda
-        80,   // abajo
-        77,   // derecha
-        13,   // Enter
-        32    // Espacio
-    };
-    int userKey;
-    userKey = getch(); // ---------------------------- USA FUNCION PORTABLE PORQUE SOLO FUNCIONA EN WINDOWS
-    if(userKey == 0 || userKey == 224)
-    {
-        userKey = getch();
-    }
-    while(!BuscaminasIsValidOption(userKey, validUserKeys))
-    {
-        feedbackMessage = "Presiona las flechas y selecciona con ENTER o ESPACIO";
-        userKey = getch();
-        if(userKey == 0 || userKey == 224)
-        {
-            userKey = getch();
-        }
-    }
-
-    return userKey;
-}
-
-/**
- * @brief Devuelve la nueva opción seleccionada según la tecla direccional que se presionó
- * @param option El valor previo de la opción
- * @param minOption El mínimo valor que puede tener la opción
- * @param maxOption El máximo valor que puede tener la opción
- * @param userKey la tecla que presionó el usuario
- */
-int SetOption(int& option, int minOption, int maxOption, int userKey)
-{
-    int newOption = option;
-    vector<int> validUserKeys = 
-    {
-        72,   // arriba
-        75,   // izquierda
-        80,   // abajo
-        77,   // derecha
-        13,   // Enter
-        32    // Espacio
-    };
-
-    if(userKey == validUserKeys[0] || userKey == validUserKeys[1])
-    {
-        if(newOption > minOption)
-            --newOption;
-        else
-            newOption = maxOption;
-    }
-    if(userKey == validUserKeys[2] || userKey == validUserKeys[3])
-    {
-        if(newOption < maxOption)
-            ++newOption;
-        else
-            newOption == minOption;
-    }
-
-    return newOption;
-}
-
-/**
- * @brief Determina si la opción seleccionada se va a ejecutar o no
- * @param userKey Tecla presionada por el usuario
- * @returns true cuando la tecla es ESPACIO o ENTER
- */
-bool CanExcecuteOption(int userKey)
-{
-    bool canExcecuteOption = false;
-    vector<int> validUserKeys = 
-    {
-        72,   // arriba
-        75,   // izquierda
-        80,   // abajo
-        77,   // derecha
-        13,   // Enter
-        32    // Espacio
-    };
-
-    if(userKey == validUserKeys[4] || userKey == validUserKeys[5])
-    {
-        canExcecuteOption = true;
-    }
-    return canExcecuteOption;
-}
 
 /**
  * @brief valida que la entrada del usuario sea una opción válida
@@ -349,9 +252,9 @@ bool StateValueIsHidden(int stateValue)
  * @param value El valor a evaluar
  * @return true si el valor es equivalente a "con bandera"
  */
-bool StateValueIsFlagged(int value)
+bool StateValueIsFlagged(int stateValue)
 {
-    return value = -2;
+    return stateValue = -2;
 }
 
 /**

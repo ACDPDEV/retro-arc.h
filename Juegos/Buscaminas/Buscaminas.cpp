@@ -3,12 +3,14 @@
 #include <array>
 #include <vector>
 #include <algorithm>
+#include "../../Common/Variables.h"
+#include "../../Common/Input.h"
+#include "../../Common/Navigation.h"
+#include "../../Common/Output.h"
 #include "Buscaminas.h"
 #include "BuscaminasFunctions.h"
 
 using namespace std;
-
-string feedbackMessage = "";
 
 int main()
 {
@@ -20,40 +22,53 @@ int main()
     int cols = 10;
     int minesQuantity = 8;
     
+    const string gameOptions[] = 
+    {
+        "JUGAR",
+        "CRÉDITOS",
+        "VOLVER AL MENÚ",
+        "CONFIGURACIONES"  
+    };
+
     const int minGameOption = 0;
-    const int maxGameOption = 3;
+    const int maxGameOption = gameOptions->size();
     int gameOption = minGameOption;
 
     bool inGame = true;
-    string playerName = "Player 1";
+    string playerName = "Player 1";  // TODO ----------- REFERENCIAR A VARIABLE GLOBAL
 
-    const vector<int> validUserKeys = 
-    {
-        72,   // arriba
-        75,   // izquierda
-        80,   // abajo
-        77,   // derecha
-        13,   // Enter
-        32    // Espacio
-    };
-
-    int userKey;
 
     while (inGame)
     {
-        /*
+        ::feedbackMessage = "";
+        
+        do
+        {
+            /**
+             * 
+             * TODO
+             * MOSTRAR PANTALLA CON LAS OPCIONES Y TÍTULO. DEBE INCLUIR LA VARIABLE feebbackMessage
+             * 
+             * 
+             */
 
-        MOSTRAR PANTALLA CON LAS OPCIONES Y TÍTULO. DEBE INCLUIR LA VARIABLE feebbackMessage
-
-        */
-        cout<<"Seleccione un opción";
-        userKey = GetUserKey(feedbackMessage);
-
-        // Determina movimiento de las flechas direccionales
-        gameOption = SetOption(gameOption, minGameOption, maxGameOption, userKey);
+            ::key = ReadConsoleChar();
+            if(IsNavigationKey(::key))
+            {
+                ::feedbackMessage = "";
+                PrintFeedBackMessage();
+                SetOption(gameOption, minGameOption, maxGameOption, ::key);
+            }
+            if(!IsActionKey(::key))
+            {
+                ::feedbackMessage = "Presiona las flechas y selecciona con ENTER o ESPACIO";
+                PrintFeedBackMessage();
+            }
+        } while (!IsActionKey(::key));
+        
 
         // ejecuta la acción solo si se presiona la tecla enter o espacio
-        if(CanExcecuteOption(userKey))
+        if(true)
         {
 
             switch (gameOption)
@@ -61,22 +76,41 @@ int main()
                 // OPCIÓN: JUGAR
                 case 0:
                 {
+                    
+                    const string levels[] =
+                    {
+                        "FÁCIL",
+                        "INTERMEDIO",
+                        "DIFÍCIL"
+                    };
                     // SELECCIONAR NIVEL
-                    /* TODO
-
-                    PANTALLA PARA SELECCIONAR NIVEL
-
-                    */
 
                     const int minLevelOption = 0;
-                    const int maxLevelOption = 2;
+                    const int maxLevelOption = levels->size();
                     int levelOption = minLevelOption;
-
+                    
                     do{
-                        userKey = GetUserKey(feedbackMessage);
-                        levelOption = SetOption(levelOption, minLevelOption, maxLevelOption, userKey);
+                        /**
+                         * TODO
+                         * 
+                         * PANTALLA PARA SELECCIONAR NIVEL
+                         * 
+                         * 
+                         */
+                        ::key = ReadConsoleChar();
+                        if(IsNavigationKey(::key))
+                        {
+                            ::feedbackMessage = "";
+                            PrintFeedBackMessage();
+                            SetOption(levelOption, minLevelOption, maxLevelOption, ::key);
+                        }
+                        else if(! IsActionKey(::key))
+                        {
+                            ::feedbackMessage = "Presiona las flechas y selecciona con ENTER o ESPACIO";
+                            PrintFeedBackMessage();
+                        }
                     }
-                    while(!CanExcecuteOption(userKey));
+                    while(! IsActionKey(::key));
 
                     rows = SetRowsByLevel(levelOption);
                     cols = SetColsByLevel(levelOption);
@@ -94,13 +128,30 @@ int main()
                     char actionKey;
                     bool gameOver = false;
                     bool wonGame = false;
+
+                    /**
+                     * 
+                     * 
+                     * TODO:
+                     * MOSTRAR IU
+                     * 
+                     * 
+                     */
     
                     while (!gameOver)
                     {
-                        feedbackMessage = "Moverse: (W/A/S/D) | Revelar: (R) | Bandera: (B) | Salir: (Q): ";
-                        // 1. Mostrar el tablero con la posición actual del cursor
-                        // DisplayGame(backgroundBoard, playerStateBoard, playerRow, playerCol);   <<<<<<<<<<<<<<<< EVALUAR ESTA FUNCÓN <<<<<<<<<<<<<<<<<<<
-    
+                        ::feedbackMessage = "Moverse: (W/A/S/D) | Revelar: (R) | Bandera: (B) | Salir: (Q)";
+                        /**
+                         * 
+                         * TODO:
+                         * MOSTRAR
+                         * TABLERO,
+                         * FEEDBACK MESSAGGE,
+                         * BANDERAS,
+                         * POSICION ACTUAL DEL JUGADOR
+                         * 
+                         */
+
                         // 2. Pedir la acción
                         actionKey = getch();
     
@@ -129,9 +180,9 @@ int main()
                             break;
                         case 'r':
                         case 'R':
-                            RevealCommand(backgroundBoard, playerStateBoard, playerRow, playerCol, feedbackMessage);
+                            RevealCommand(backgroundBoard, playerStateBoard, playerRow, playerCol, ::feedbackMessage);
     
-                            if(MineIsRevealed(backgroundBoard, playerRow, playerCol, feedbackMessage))
+                            if(MineIsRevealed(backgroundBoard, playerRow, playerCol, ::feedbackMessage))
                             {
                                 gameOver = true;
                             }
@@ -139,7 +190,7 @@ int main()
                         case 'b':
                         case 'B':
                             // El jugador decide poner/quitar bandera donde está parado
-                            ExecuteAction(playerStateBoard, playerRow, playerCol, 2, feedbackMessage);
+                            ExecuteAction(playerStateBoard, playerRow, playerCol, 2, ::feedbackMessage);
                             break;
                         case 'q':
                         case 'Q':
@@ -161,20 +212,20 @@ int main()
                     break;
                 }
     
-                // OPCIÓN: CONFIGURACIONES
-                case 1:
-                    // TODO: CONFIGURAR NOMBRE DEL JUGADOR
-                    break;
-    
-                // OPCIÓN: CRÉDITOS
-                case 2:
-                    // TODO: CRÉDITOS DE BUSCAMINAS
-                    break;
                 
-        
+                // OPCIÓN: CRÉDITOS
+                case 1:
+                // TODO: CRÉDITOS DE BUSCAMINAS
+                break;
+                
                 // OPCIÓN: SALIR
+                case 2:
+                inGame = false;
+                break;
+                
+                // OPCIÓN: CONFIGURACIONES
                 case 3:
-                    inGame = false;
+                    // TODO: CONFIGURAR NOMBRE DEL JUGADOR
                     break;
                 
                 default:
