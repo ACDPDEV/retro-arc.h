@@ -1,10 +1,10 @@
 #include <iostream>
 #include <vector>
-#include "common/Variables.h"
-#include "common/Navigation.h"
-#include "common/Input.h"
-#include "common/Consts.h"
 #include <conio.h>
+#include "Common/Variables.h"
+#include "Common/Navigation.h"
+#include "Common/Input.h"
+#include "Common/Consts.h"
 
 using namespace std;
 
