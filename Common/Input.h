@@ -252,39 +252,4 @@ inline bool IsAlphaNumChar(vector<int>& byteChar)
     return false;
 }
 
-/**
- * @brief Verifica si un carácter de bytes corresponde a una tecla de acción.
- * * @param byteChar Vector de enteros que representa el carácter en bytes a evaluar.
- * @return true Si el carácter coincide con una tecla de acción.
- * @return false En caso contrario.
- */
-inline bool IsActionKey(vector<int>& byteChar)
-{
-    for (auto& ch : ::ACTION_KEYS)
-    {
-        if(ch == byteChar)
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
-/**
- * @brief Verifica si un carácter de bytes corresponde a una tecla de navegación.
- * * @param byteChar Vector de enteros que representa el carácter en bytes a evaluar.
- * @return true Si el carácter coincide con una tecla de navegación.
- * @return false En caso contrario.
- */
-inline bool IsNavigationKey(vector<int>& byteChar)
-{
-    for (auto& ch : ::NAVIGATION_KEYS)
-    {
-        if(ch == byteChar)
-        {
-            return true;
-        }
-    }
-    return false;
-}
 
