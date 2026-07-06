@@ -5,10 +5,6 @@
 
 using namespace std;
 
-#include <array>
-
-using namespace std;
-
 // Base
 /// @brief Color de fondo base (#121212)
 const array<int, 3> BACKGROUND = {18, 18, 18};
