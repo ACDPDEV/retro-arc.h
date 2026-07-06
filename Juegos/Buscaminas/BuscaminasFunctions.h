@@ -48,8 +48,6 @@ bool BackgroundValueIsSafe(int backgroundValue);
 bool BackGroundValueIsAdjacent(int backgroundValue);
 int GetBackGroundValueSafe();
 
-bool VectorContainsTuple(vector<tuple<int, int>>& vec, tuple<int, int> tup);
-
 void RevealSafeRegionCommand(
     vector<vector<int>> backgroundBoard, 
     vector<vector<int>>& stateBoard, 
@@ -82,4 +80,4 @@ void FlagCommand(
     string& feedbackMessage);
 
 // TODO definir la función
-bool IsWonGameState();
+bool IsWonGameState(vector<vector<int>>& stateBoard, int minesQuantity);

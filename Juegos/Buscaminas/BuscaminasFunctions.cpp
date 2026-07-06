@@ -538,19 +538,36 @@ void FlagCommand(
     
 }
 
+/**
+ * @brief Evalúa si el estado actual del tablero representa una partida ganada.
+ * * La victoria se determina si el número de casillas reveladas que no son minas 
+ * es exactamente igual al total de casillas seguras que tiene el tablero.
+ * * @param stateBoard Referencia a la matriz (vector de vectores) que representa el estado actual del tablero de juego.
+ * @param minesQuantity Cantidad total de minas ocultas en el tablero.
+ * @return true Si el jugador ha revelado todas las casillas seguras (victoria).
+ * @return false Si aún quedan casillas seguras por revelar.
+ */
+bool IsWonGameState(vector<vector<int>>& stateBoard, int minesQuantity)
+{
+    int totalCells = stateBoard.size() * stateBoard[0].size();
+    int nonMineCells = totalCells - minesQuantity;
+    int countNonMine = 0;
+    int hiddenValue = GetStateValueHidden();
+    int mineValue = 9;
+    for(auto& row : stateBoard)
+    {
+        for(int& cell : row)
+        {
+            if(cell != hiddenValue && cell != mineValue)
+            {
+                ++countNonMine;
+            }
+        }
+    }
+
+    return countNonMine == nonMineCells;
+}
+
 // ======================================================================
 // VISTA --- 200 x 60
 // ======================================================================
-
-/**
- * Imprime el tablero en la consola.
- * @param board Referencia constante al tablero para evitar copias innecesarias.
- */
-void DisplayBoard(const vector<vector<int>>& board) {
-    for (const auto& row : board) {
-        for (int cell : row) {
-            cout << cell << " ";
-        }
-        cout << "\n";
-    }
-}

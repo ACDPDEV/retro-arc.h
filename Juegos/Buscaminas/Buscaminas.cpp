@@ -12,7 +12,7 @@
 
 using namespace std;
 
-int main()
+int Playbuscaminas()
 {
     // ======================================================================
     // CONFIGURACIONES
@@ -126,7 +126,7 @@ int main()
                 bool gameOver = false;
                 bool wonGame = false;
 
-                ::feedbackMessage = "Moverse: (W/A/S/D) | Revelar: (R) | Bandera: (B) | Salir: (Q)";
+                ::feedbackMessage = "Moverse: Flechas | Revelar: (R) | Bandera: (B) | Salir: (Q)";
                 /**
                  * 
                  * 
@@ -163,7 +163,7 @@ int main()
                         {
                             gameOver = true;
                         }
-                        else if(IsWonGameState())
+                        else if(IsWonGameState(playerStateBoard, minesQuantity))
                         {
                             /**
                              * TODO: VALIDAR SI CUMPLE CON LA CONDICIÓN PARA GANAR
@@ -183,19 +183,19 @@ int main()
                             "SÍ",
                             "NO"
                         };
-                        /**
-                         * 
-                         * TODO:
-                         * MESSAGE BOX PARA CONFIRMAR SALIDA
-                         * "¿Quieres abandonar la partida?"
-                         * "SI"  "NO"
-                         * 
-                         */
                         const int minMessageBoxOption = 0;
                         const int maxMessageBoxOption = messageBoxOptions->size() - 1;
                         int mbOption = minMessageBoxOption;
-
+                        
                         do{
+                            /**
+                             * 
+                             * TODO:
+                             * MESSAGE BOX PARA CONFIRMAR SALIDA
+                             * "¿Quieres abandonar la partida?"
+                             * "SI"  "NO"
+                             * 
+                             */
                             ::key = ReadConsoleChar();
                             if(IsNavigationKey(::key))
                             {
@@ -204,7 +204,7 @@ int main()
                             
                         }while( ! IsActionKey(::key));
                         
-                        if(messageBoxOptions[mbOption] == "Sí")
+                        if(messageBoxOptions[mbOption] == "SÍ")
                         {
                             gameOver = true;
                         }
