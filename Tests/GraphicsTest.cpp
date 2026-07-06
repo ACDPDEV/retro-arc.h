@@ -1,6 +1,7 @@
 #include "../Common/Sprite.h"
 #include "../Common/Color.h"
 #include "../Common/Graphics.h"
+#include "../Common/Music.h"
 #include "../Common/Terminal.h"
 #include "rayquaza.h"
 #include "arceus.h"
@@ -40,6 +41,7 @@ int main() {
 
     Clear();
     SetTerminalColor(COLOR_TRANSPARENT, {0,0,0});
+    PlayAudio("Sound.mp3");
     for (int i = 0;i < 20; i++) {
         DrawFillRectangle(0, 0, 100, 100, EMPTY_BLOCK, COLOR_TRANSPARENT, {0,0,0});
         DrawSprite(0, 0, rayquaza[i % rayquaza.size()]);
