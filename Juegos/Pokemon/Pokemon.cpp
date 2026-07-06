@@ -1,0 +1,14 @@
+#include <iostream>
+#include <conio.h>
+#include <vector>
+#include <array>
+#include <algorithm>
+#include "../../Common/Variables.h"
+#include "../../Common/Input.h"
+#include "../../Common/Navigation.h"
+#include "../../Common/Output.h"
+#include "PokemonFunctions.h"
+#include "PokemonFigures.h"
+#include "PokemonMusic.h"
+#include "PokemonSounds.h"
+#include "PokemonInterfaces.h"
