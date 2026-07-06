@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <conio.h>
+#include "Juegos/Buscaminas/Buscaminas.h"
 #include "Common/Variables.h"
 #include "Common/Navigation.h"
 #include "Common/Input.h"
@@ -171,6 +172,7 @@ int main() {
     
             // BUSCAMINAS
             case 1:
+                PlayBuscaminas();
                 break;
     
             // BATALLA NAVAL

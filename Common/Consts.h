@@ -29,8 +29,7 @@ const vector<vector<int>> NAVIGATION_KEYS = {
 
 const vector<vector<int>> ACTION_KEYS = {
     KEY_ENTER,
-    KEY_SPACE,
-    KEY_ESCAPE
+    KEY_SPACE
 };
 
 // LETRAS EN MAYÚSCULA
