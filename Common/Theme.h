@@ -10,8 +10,8 @@ using namespace std;
 using namespace std;
 
 // Base
-/// @brief Color de fondo base (#121212)
-const array<int, 3> BACKGROUND = {18, 18, 18};
+/// @brief Color de fondo base (#333a40)
+const array<int, 3> BACKGROUND = {51, 54, 64};
 
 /// @brief Color de primer plano / texto principal (#bebebe)
 const array<int, 3> FOREGROUND = {190, 190, 190};
