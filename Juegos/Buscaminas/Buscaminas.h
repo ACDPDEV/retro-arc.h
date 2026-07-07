@@ -35,8 +35,6 @@ namespace Minesweeper
         int gameOption = minGameOption;
     
         bool inGame = true;
-        std::string playerName = "Player 1";  // TODO ----------- REFERENCIAR A VARIABLE GLOBAL
-    
     
         while (inGame)
         {
