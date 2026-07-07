@@ -6,12 +6,13 @@
 #include <iostream>
 #include <string>
 
-using namespace std;
-
-void PrintFeedBackMessage()
+namespace Common
 {
-    GoToXY(::colFeedbackMessage, ::rowFeedbackMessage);
-    ClearConsoleLine(::MAX_FEEDBACK_MESSAGE_LENGTH);
-    GoToXY(::colFeedbackMessage, ::rowFeedbackMessage);
-    cout << ::feedbackMessage;
+    void PrintFeedBackMessage()
+    {
+        GoToXY(Common::colFeedbackMessage, Common::rowFeedbackMessage);
+        ClearConsoleLine(Common::MAX_FEEDBACK_MESSAGE_LENGTH);
+        GoToXY(Common::colFeedbackMessage, Common::rowFeedbackMessage);
+        std::cout << Common::feedbackMessage;
+    }
 }
