@@ -8,10 +8,12 @@
 #include <array>
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include "Terminal.h"
 #include "UnicodeGlyphs.h"
 #include "Color.h"
+#include "Utils.h"
 
 using namespace std;
 
@@ -160,9 +162,19 @@ inline void DrawFillRectangle(
 
 inline void DrawText(
     int x, int y,
-    string text,
+    int width, int height,
+    vector<string> text,
     array<int, 3> foreground,
     array<int, 3> background
 ) {
-    GoToXY(x, y); cout << Color(foreground, background) << text;
+    for (int i = 0; i < text.size() && (i < height || height == -1); i++) {
+        if (Length(text[i]) > width && width != -1) {
+            vector<string> lines = CutString(text[i], width);
+            for (int j = 0; j < lines.size(); j++) {
+                GoToXY(x, y + i + j); cout << Color(foreground, background) << lines[j];
+            }
+        } else {
+            GoToXY(x, y + i); cout << Color(foreground, background) << text[i];
+        }
+    }
 }
