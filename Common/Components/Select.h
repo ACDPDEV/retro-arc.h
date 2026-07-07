@@ -20,14 +20,14 @@ inline void ComponentSelect(
 ) {
     string leftPadding = RepeatString(" ", selectedPadding[0].size());
     string rightPadding = RepeatString(" ", selectedPadding[1].size());
-    DrawFillRectangle(x, y, MaxStringLength(options), options.size(), " ", COLOR_TRANSPARENT, backgroundColor);
+    DrawFillRectangle(x, y, MaxStringLength(options), options.size(), " ", COLOR_DEFAULT, backgroundColor);
     for (int i = 0; i < options.size(); i++) {
         GoToXY(x, y + i);
         if (selectedOption == i) {
             string paddedOption = selectedPadding[0] + options[i] + selectedPadding[1];
-            cout << Color(COLOR_TRANSPARENT, selectedColor) << paddedOption;
+            cout << Color(COLOR_DEFAULT, selectedColor) << paddedOption;
         } else {
-            cout << Color(COLOR_TRANSPARENT, backgroundColor) << leftPadding << options[i] << rightPadding;
+            cout << Color(COLOR_DEFAULT, backgroundColor) << leftPadding << options[i] << rightPadding;
         }
     }
 }

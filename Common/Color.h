@@ -13,7 +13,7 @@
 using namespace std;
 
 /// @brief Valor centinela: indica "no cambiar este color" (transparencia)
-const array<int, 3> COLOR_TRANSPARENT = {-1, -1, -1};
+const array<int, 3> COLOR_DEFAULT = {-1, -1, -1};
 
 /// @brief Verifica si un color es el centinela de transparencia
 inline bool isTransparent(const array<int, 3>& color) {
