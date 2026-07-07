@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <conio.h>
 #include "Juegos/Buscaminas/Buscaminas.h"
 #include "Common/Variables.h"
 #include "Common/Navigation.h"
