@@ -3,10 +3,12 @@
 #include <string>
 #include <vector>
 
-using namespace std;
+namespace Common
+{
+    std::vector<int> key;
+    std::string character;
+    std::string feedbackMessage = "";
+    int rowFeedbackMessage = 0;
+    int colFeedbackMessage = 0;    
+}
 
-vector<int> key;
-string character;
-string feedbackMessage = "";
-int rowFeedbackMessage = 0;
-int colFeedbackMessage = 0;
