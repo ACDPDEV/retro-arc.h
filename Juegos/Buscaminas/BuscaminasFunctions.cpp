@@ -407,7 +407,7 @@ namespace Minesweeper
      */
     bool IsMoveKey(std::vector<int>& key)
     {
-        if(IsNavigationKey(key))
+        if(Common::IsNavigationKey(key))
         {
             return true;
         }
@@ -423,7 +423,7 @@ namespace Minesweeper
      */
     bool IsRevealKey(std::vector<int>& key)
     {
-        if(key == KEY_R || key == KEY_R_LOWER)
+        if(key == Common::KEY_R || key == Common::KEY_R_LOWER)
         {
             return true;
         }
@@ -439,7 +439,7 @@ namespace Minesweeper
      */
     bool IsFlagKey(std::vector<int>& key)
     {
-        if(key == KEY_B || key == KEY_B_LOWER)
+        if(key == Common::KEY_B || key == Common::KEY_B_LOWER)
         {
             return true;
         }
@@ -455,7 +455,7 @@ namespace Minesweeper
      */
     bool IsExitMatchKey(std::vector<int>& key)
     {
-        if(key == KEY_ESCAPE || key == KEY_Q || key == KEY_Q_LOWER)
+        if(key == Common::KEY_ESCAPE || key == Common::KEY_Q || key == Common::KEY_Q_LOWER)
         {
             return true;
         }
@@ -473,28 +473,28 @@ namespace Minesweeper
      */
     void MoveCommand(int& playerRow, int& playerCol, int rows, int cols, std::vector<int>& key)
     {
-        if(IsKeyArrowTop(key))
+        if(Common::IsKeyArrowTop(key))
         {
             if(playerRow > 0)
                 --playerRow;
             else
                 playerRow = rows;
         }
-        else if(IsKeyArrowLeft(key))
+        else if(Common::IsKeyArrowLeft(key))
         {
             if(playerCol > 0)
                 --playerCol;
             else
                 playerCol = cols;
         }
-        else if(IsKeyArrowBottom(key))
+        else if(Common::IsKeyArrowBottom(key))
         {
             if(playerRow < rows -1)
                 ++playerRow;
             else
                 playerRow = 0;
         }
-        else if(IsKeyArrowRight(key))
+        else if(Common::IsKeyArrowRight(key))
         {
             if(playerCol < cols-1)
                 ++playerCol;
@@ -515,7 +515,7 @@ namespace Minesweeper
         if(!StateValueIsHidden(stateValue))
         {
             feedbackMessage = "No puedes poner una bandera allí";
-            PrintFeedBackMessage();
+            Common::PrintFeedBackMessage();
         }
         else if (StateValueIsFlagged(stateValue))
         {
@@ -531,7 +531,7 @@ namespace Minesweeper
             else
             {
                 feedbackMessage = "¡Ya no tienes banderas!";
-                PrintFeedBackMessage();
+                Common::PrintFeedBackMessage();
             }
         }
         

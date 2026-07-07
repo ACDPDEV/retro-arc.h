@@ -39,7 +39,7 @@ namespace Minesweeper
     
         while (inGame)
         {
-            ::feedbackMessage = "";
+            Common::feedbackMessage = "";
             
             do
             {
@@ -51,19 +51,19 @@ namespace Minesweeper
                  * 
                  */
     
-                ::key = ReadConsoleChar();
-                if(IsNavigationKey(::key))
+                Common::key = Common::ReadConsoleChar();
+                if(Common::IsNavigationKey(Common::key))
                 {
-                    ::feedbackMessage = "";
-                    PrintFeedBackMessage();
-                    SetOption(gameOption, minGameOption, maxGameOption, ::key);
+                    Common::feedbackMessage = "";
+                    Common::PrintFeedBackMessage();
+                    Common::SetOption(gameOption, minGameOption, maxGameOption, Common::key);
                 }
-                else if( ! IsActionKey(::key))
+                else if( ! Common::IsActionKey(Common::key))
                 {
-                    ::feedbackMessage = "Presiona las flechas y selecciona con ENTER o ESPACIO";
-                    PrintFeedBackMessage();
+                    Common::feedbackMessage = "Presiona las flechas y selecciona con ENTER o ESPACIO";
+                    Common::PrintFeedBackMessage();
                 }
-            } while (!IsActionKey(::key));
+            } while (!Common::IsActionKey(Common::key));
             
     
             switch (gameOption)
@@ -92,20 +92,20 @@ namespace Minesweeper
                          * 
                          * 
                          */
-                        ::key = ReadConsoleChar();
-                        if(IsNavigationKey(::key))
+                        Common::key = Common::ReadConsoleChar();
+                        if(Common::IsNavigationKey(Common::key))
                         {
-                            ::feedbackMessage = "";
-                            PrintFeedBackMessage();
-                            SetOption(levelOption, minLevelOption, maxLevelOption, ::key);
+                            Common::feedbackMessage = "";
+                            Common::PrintFeedBackMessage();
+                            Common::SetOption(levelOption, minLevelOption, maxLevelOption, Common::key);
                         }
-                        else if( ! IsActionKey(::key))
+                        else if( ! Common::IsActionKey(Common::key))
                         {
-                            ::feedbackMessage = "Presiona las flechas y selecciona con ENTER o ESPACIO";
-                            PrintFeedBackMessage();
+                            Common::feedbackMessage = "Presiona las flechas y selecciona con ENTER o ESPACIO";
+                            Common::PrintFeedBackMessage();
                         }
                     }
-                    while(! IsActionKey(::key));
+                    while(! Common::IsActionKey(Common::key));
     
                     rows = Minesweeper::SetRowsByLevel(levelOption);
                     cols = Minesweeper::SetColsByLevel(levelOption);
@@ -121,11 +121,10 @@ namespace Minesweeper
                     int playerCol = initialPosition[1];
     
                     std::vector<std::vector<int>> stateBoard = Minesweeper::CreatePageStateBoard(rows, cols);
-                    char actionKey;
                     bool gameOver = false;
                     bool wonGame = false;
     
-                    ::feedbackMessage = "Moverse: Flechas | Revelar: (R) | Bandera: (B) | Salir: (Q)";
+                    Common::feedbackMessage = "Moverse: Flechas | Revelar: (R) | Bandera: (B) | Salir: (Q)";
                     /**
                      * 
                      * 
@@ -149,16 +148,16 @@ namespace Minesweeper
                          */
     
                         // 2. Pedir la acción
-                        ::key = ReadConsoleChar();
+                        Common::key = Common::ReadConsoleChar();
     
-                        if(Minesweeper::IsMoveKey(::key))
+                        if(Minesweeper::IsMoveKey(Common::key))
                         {
-                            Minesweeper::MoveCommand(playerRow, playerCol, rows, cols, ::key);
+                            Minesweeper::MoveCommand(playerRow, playerCol, rows, cols, Common::key);
                         }
-                        else if(Minesweeper::IsRevealKey(::key))
+                        else if(Minesweeper::IsRevealKey(Common::key))
                         {
-                            Minesweeper::RevealCommand(backgroundBoard, stateBoard, playerRow, playerCol, ::feedbackMessage);
-                            if(Minesweeper::MineIsRevealed(backgroundBoard, playerRow, playerCol, ::feedbackMessage))
+                            Minesweeper::RevealCommand(backgroundBoard, stateBoard, playerRow, playerCol, Common::feedbackMessage);
+                            if(Minesweeper::MineIsRevealed(backgroundBoard, playerRow, playerCol, Common::feedbackMessage))
                             {
                                 gameOver = true;
                             }
@@ -171,11 +170,11 @@ namespace Minesweeper
                                 gameOver = true;
                             }
                         }
-                        else if(Minesweeper::IsFlagKey(::key))
+                        else if(Minesweeper::IsFlagKey(Common::key))
                         {
-                            Minesweeper::FlagCommand(flagCount, stateBoard, playerRow, playerCol, ::feedbackMessage);
+                            Minesweeper::FlagCommand(flagCount, stateBoard, playerRow, playerCol, Common::feedbackMessage);
                         }
-                        else if(Minesweeper::IsExitMatchKey(::key))
+                        else if(Minesweeper::IsExitMatchKey(Common::key))
                         {
                             const std::string messageBoxOptions[]
                             {
@@ -195,13 +194,13 @@ namespace Minesweeper
                                  * "SI"  "NO"
                                  * 
                                  */
-                                ::key = ReadConsoleChar();
-                                if(IsNavigationKey(::key))
+                                Common::key = Common::ReadConsoleChar();
+                                if(Common::IsNavigationKey(Common::key))
                                 {
-                                    SetOption(mbOption, minMessageBoxOption, maxMessageBoxOption, ::key);
+                                    Common::SetOption(mbOption, minMessageBoxOption, maxMessageBoxOption, Common::key);
                                 }
                                 
-                            }while( ! IsActionKey(::key));
+                            }while( ! Common::IsActionKey(Common::key));
                             
                             if(messageBoxOptions[mbOption] == "SÍ")
                             {
@@ -221,7 +220,7 @@ namespace Minesweeper
                         
                     }
     
-                    if(! Minesweeper::IsExitMatchKey(::key))
+                    if(! Minesweeper::IsExitMatchKey(Common::key))
                     {
                         // TODO mostrar la pantalla de victoria o resultado
     
