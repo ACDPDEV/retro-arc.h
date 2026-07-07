@@ -1,3 +1,6 @@
 #pragma once 
 
-int PlayBuscaminas();
+namespace Minesweeper
+{
+    void PlayMinesweeper();
+}
