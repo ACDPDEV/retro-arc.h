@@ -22,11 +22,20 @@ const vector<int> KEY_ARROW_LEFT = {224, 75};
 const vector<int> KEY_ARROW_BOTTOM = {224, 80};
 const vector<int> KEY_ARROW_RIGHT = {224, 77};
 
+const vector<int> KEY_ARROW_TOP_2 = {0, 72};
+const vector<int> KEY_ARROW_LEFT_2 = {0, 75};
+const vector<int> KEY_ARROW_BOTTOM_2 = {0, 80};
+const vector<int> KEY_ARROW_RIGHT_2 = {0, 77};
+
 const vector<vector<int>> NAVIGATION_KEYS = {
     KEY_ARROW_TOP,
     KEY_ARROW_LEFT,
     KEY_ARROW_BOTTOM,
-    KEY_ARROW_RIGHT
+    KEY_ARROW_RIGHT,
+    KEY_ARROW_TOP_2,
+    KEY_ARROW_LEFT_2,
+    KEY_ARROW_BOTTOM_2,
+    KEY_ARROW_RIGHT_2,
 };
 
 const vector<vector<int>> ACTION_KEYS = {
