@@ -1,16 +1,33 @@
 #pragma once
 
+#include <array>
 #include <string>
 #include <vector>
 
 using namespace std;
 
-vector<string> CutString(string str, int width) {
-    string buffer;
+int Length(string str) {
+    int count = 0;
+    for (size_t i = 0; i < str.size(); ) {
+        unsigned char c = str[i];
+        if ((c & 0x80) == 0x00) i += 1;
+        else if ((c & 0xE0) == 0xC0) i += 2;
+        else if ((c & 0xF0) == 0xE0) i += 3;
+        else if ((c & 0xF8) == 0xF0) i += 4;
+        else i += 1;
+        count++;
+    }
+    return count;
+}
+
+vector<string> CutString(const string& str, size_t width) {
     vector<string> result;
-    while (buffer.size() < width) {
-        result.push_back(buffer.substr(0, width));
-        buffer = str.substr(buffer.size(), width);
+    if (width == 0) return result;
+
+    size_t offset = 0;
+    while (offset < Length(str)) {
+        result.push_back(str.substr(offset, width));
+        offset += width;
     }
     return result;
 }
@@ -26,8 +43,8 @@ string InvertString(string str) {
 int MaxStringLength(vector<string> strings) {
     int maxLength = 0;
     for (int i = 0; i < strings.size(); i++) {
-        if (strings[i].size() > maxLength) {
-            maxLength = strings[i].size();
+        if (Length(strings[i]) > maxLength) {
+            maxLength = Length(strings[i]);
         }
     }
     return maxLength;
@@ -37,6 +54,14 @@ string RepeatString(string str, int count) {
     string result;
     for (int i = 0; i < count; i++) {
         result += str;
+    }
+    return result;
+}
+
+vector<string> ArrayToVector(array<string, 9> arr) {
+    vector<string> result;
+    for (int i = 0; i < arr.size(); i++) {
+        result.push_back(arr[i]);
     }
     return result;
 }
