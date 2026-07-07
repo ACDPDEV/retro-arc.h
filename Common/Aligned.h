@@ -6,7 +6,7 @@
 #include "Graphics.h"
 #include "Utils.h"
 
-int AlignedX(int x, int width, int childWidth, string alignment) {
+int AlignedX(int x, int width, int childWidth, std::string alignment) {
     if (alignment == "center") {
         return x + (width - childWidth) / 2;
     } else if (alignment == "right") {
@@ -17,7 +17,7 @@ int AlignedX(int x, int width, int childWidth, string alignment) {
     return x;
 }
 
-int AlignedY(int y, int height, int childHeight, string alignment) {
+int AlignedY(int y, int height, int childHeight, std::string alignment) {
     if (alignment == "center") {
         return y + (height - childHeight) / 2;
     } else if (alignment == "bottom") {

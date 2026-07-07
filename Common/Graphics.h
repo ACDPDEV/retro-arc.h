@@ -155,7 +155,7 @@ inline void DrawFillRectangle(
         line += fill;
     }
     for (int i = 0; i < height; i++) {
-        GoToXY(x, y + i); cout << Color(foreground, background) << line;
+        GoToXY(x, y + i); cout << Common::Color(foreground, background) << line;
     }
 }
 
@@ -171,10 +171,10 @@ inline void DrawText(
         if (Length(text[i]) > width && width != -1) {
             vector<string> lines = CutString(text[i], width);
             for (int j = 0; j < lines.size(); j++) {
-                GoToXY(x, y + i + j); cout << Color(foreground, background) << lines[j];
+                GoToXY(x, y + i + j); cout << Common::Color(foreground, background) << lines[j];
             }
         } else {
-            GoToXY(x, y + i); cout << Color(foreground, background) << text[i];
+            GoToXY(x, y + i); cout << Common::Color(foreground, background) << text[i];
         }
     }
 }

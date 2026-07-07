@@ -12,8 +12,6 @@
 #include <iostream>
 #include <array>
 
-using namespace std;
-
 /// @brief Habilita el procesamiento de terminal virtual (ANSI/VT100) para True Color
 /// @details Permite usar códigos de escape como \x1b[38;2;R;G;Bm para colores RGB reales
 inline void EnableTrueColor() {
@@ -112,7 +110,7 @@ inline int GetConsoleHeight() {
 
 /// @brief Obtiene el tamaño actual de la consola
 /// @return array{width, height} en caracteres
-inline array<int, 2> GetConsoleSize() {
+inline std::array<int, 2> GetConsoleSize() {
     return {GetConsoleWidth(), GetConsoleHeight()};
 }
 
@@ -138,10 +136,10 @@ inline void Sleep(int ms) {
  */
 inline void ClearConsoleLine(int lineLength)
 {
-    string blankSpace = "";
+    std::string blankSpace = "";
     for(int i = 0; i <= lineLength; i++)
     {
         blankSpace += " ";
     }
-    cout << blankSpace;
+    std::cout << blankSpace;
 }
