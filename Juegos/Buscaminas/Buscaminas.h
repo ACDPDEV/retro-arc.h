@@ -7,8 +7,8 @@
 #include "../../Common/Input.h"
 #include "../../Common/Navigation.h"
 #include "../../Common/Output.h"
-#include "Buscaminas.h"
-#include "BuscaminasFunctions.h"
+#include "BuscaminasDatabase.h"
+#include "BuscaminasService.h"
 
 namespace Minesweeper
 {
