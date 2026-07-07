@@ -26,32 +26,32 @@ int main() {
     string password = "";
     string passwordInView = "";
     
-    ::feedbackMessage = "";
-    ::rowFeedbackMessage = cursorInitialRow + 4;   // MODIFICAR SEGÚN VISTA    ==============================
-    ::colFeedbackMessage = cursorInitialCol + 0;     // MODIFICAR SEGÚN VISTA    ==============================
+    Common::feedbackMessage = "";
+    Common::rowFeedbackMessage = cursorInitialRow + 4;   // MODIFICAR SEGÚN VISTA    ==============================
+    Common::colFeedbackMessage = cursorInitialCol + 0;     // MODIFICAR SEGÚN VISTA    ==============================
 
     
     int countAttempts = 0;
 
-    while (countAttempts < ::MAX_ATTEMPTS)
+    while (countAttempts < Common::MAX_ATTEMPTS)
     {
         do
         {
-            GoToXY(cursorInitialCol, cursorInitialRow);
-            ClearConsoleLine(MAX_PASSWORD_LENGTH);
-            GoToXY(cursorInitialCol, cursorInitialRow);
+            Common::GoToXY(cursorInitialCol, cursorInitialRow);
+            Common::ClearConsoleLine(MAX_PASSWORD_LENGTH);
+            Common::GoToXY(cursorInitialCol, cursorInitialRow);
             cout << passwordInView;
-            ::key = ReadConsoleChar();
-            if(IsAlphaNumChar(::key))
+            Common::key = Common::ReadConsoleChar();
+            if(Common::IsAlphaNumChar(Common::key))
             {
                 if(passwordInView.length() <= MAX_PASSWORD_LENGTH)
                 {
-                    ::character = CastKeyToString(::key);
-                    password += ::character;
+                    Common::character = Common::CastKeyToString(Common::key);
+                    password += Common::character;
                     passwordInView += "*";
                 }
             }
-            else if(::key == KEY_BACKSPACE)
+            else if(Common::key == Common::KEY_BACKSPACE)
             {
                 if(passwordInView.length() > 0)
                 {
@@ -60,29 +60,29 @@ int main() {
                 }
             }
             
-        } while (::key != ::KEY_ENTER);
+        } while (Common::key != Common::KEY_ENTER);
 
         ++countAttempts;
 
-        if(password == ::CLAVE)
+        if(password == Common::CLAVE)
         {
-            GoToXY(::colFeedbackMessage, ::rowFeedbackMessage);
-            ClearConsoleLine(::MAX_FEEDBACK_MESSAGE_LENGTH);
-            ::feedbackMessage = "";
+            Common::GoToXY(Common::colFeedbackMessage, Common::rowFeedbackMessage);
+            Common::ClearConsoleLine(Common::MAX_FEEDBACK_MESSAGE_LENGTH);
+            Common::feedbackMessage = "";
             break;
         }
         else
         {
-            int difference = ::MAX_ATTEMPTS - countAttempts;
+            int difference = Common::MAX_ATTEMPTS - countAttempts;
             string remainingAttempts = to_string(difference);
-            ::feedbackMessage = "Te quedan " + remainingAttempts + " intentos";
+            Common::feedbackMessage = "Te quedan " + remainingAttempts + " intentos";
 
             // MOSTRAR EL MENSAJE DE ADVERTENCIA
-            GoToXY(::colFeedbackMessage, ::rowFeedbackMessage);
-            ClearConsoleLine(::MAX_FEEDBACK_MESSAGE_LENGTH);
-            GoToXY(::colFeedbackMessage, ::rowFeedbackMessage);
-            cout << ::feedbackMessage;
-            if(countAttempts == MAX_ATTEMPTS)
+            Common::GoToXY(Common::colFeedbackMessage, Common::rowFeedbackMessage);
+            Common::ClearConsoleLine(Common::MAX_FEEDBACK_MESSAGE_LENGTH);
+            Common::GoToXY(Common::colFeedbackMessage, Common::rowFeedbackMessage);
+            cout << Common::feedbackMessage;
+            if(countAttempts == Common::MAX_ATTEMPTS)
             {
                 /**
                  * 
@@ -146,20 +146,20 @@ int main() {
              * 
              */
     
-            ::key = ReadConsoleChar();
+            Common::key = Common::ReadConsoleChar();
     
-            if(IsNavigationKey(::key))
+            if(Common::IsNavigationKey(Common::key))
             {
-                SetOption(menu_option, menu_minOpt, menu_maxOpt, ::key);
+                Common::SetOption(menu_option, menu_minOpt, menu_maxOpt, Common::key);
             }
-            else if(::key != KEY_ENTER && ::key != KEY_SPACE)
+            else if(Common::key != Common::KEY_ENTER && Common::key != Common::KEY_SPACE)
             {
-                GoToXY(::colFeedbackMessage, ::rowFeedbackMessage);
-                ClearConsoleLine(::MAX_FEEDBACK_MESSAGE_LENGTH);
-                GoToXY(::colFeedbackMessage, ::rowFeedbackMessage);
-                feedbackMessage = "Presiona las flechas y selecciona con ENTER o ESPACIO";
+                Common::GoToXY(Common::colFeedbackMessage, Common::rowFeedbackMessage);
+                Common::ClearConsoleLine(Common::MAX_FEEDBACK_MESSAGE_LENGTH);
+                Common::GoToXY(Common::colFeedbackMessage, Common::rowFeedbackMessage);
+                Common::feedbackMessage = "Presiona las flechas y selecciona con ENTER o ESPACIO";
             }
-        }while(::key != KEY_ENTER && ::key != KEY_SPACE);
+        }while(Common::key != Common::KEY_ENTER && Common::key != Common::KEY_SPACE);
     
         // SWITCH HACIA LA OPCION
         switch(menu_option)
@@ -171,7 +171,7 @@ int main() {
     
             // BUSCAMINAS
             case 1:
-                PlayBuscaminas();
+                Minesweeper::PlayMinesweeper();
                 break;
     
             // BATALLA NAVAL
@@ -205,8 +205,8 @@ int main() {
                  */
 
                 do{
-                    ::key = ReadConsoleChar();
-                }while(::key != ::KEY_Q && ::key != ::KEY_Q_LOWER);
+                    Common::key = Common::ReadConsoleChar();
+                }while(Common::key != Common::KEY_Q && Common::key != Common::KEY_Q_LOWER);
                 break;
     
             // =========================================
