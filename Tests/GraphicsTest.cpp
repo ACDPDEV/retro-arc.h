@@ -20,9 +20,9 @@ int main() {
     //     }, 1000);
     // }
 
-    // DrawFillRectangle(0, 0, 60, 20, EMPTY_BLOCK, COLOR_TRANSPARENT, BACKGROUND);
-    // DrawText(8, 7, "Ingresa algo :)", FOREGROUND, COLOR_TRANSPARENT);
-    // DrawFillRectangle(8, 9, 40, 2, EMPTY_BLOCK, COLOR_TRANSPARENT, SELECTION_BACKGROUND);
+    // DrawFillRectangle(0, 0, 60, 20, EMPTY_BLOCK, COLOR_DEFAULT, BACKGROUND);
+    // DrawText(8, 7, "Ingresa algo :)", FOREGROUND, COLOR_DEFAULT);
+    // DrawFillRectangle(8, 9, 40, 2, EMPTY_BLOCK, COLOR_DEFAULT, SELECTION_BACKGROUND);
 
     vector<vector<string>> rayquaza = {
         rayquaza00,
@@ -40,10 +40,10 @@ int main() {
     HideCursor();
 
     Clear();
-    SetTerminalColor(COLOR_TRANSPARENT, {0,0,0});
+    SetTerminalColor(COLOR_DEFAULT, {0,0,0});
     PlayAudio("Sound.mp3");
     for (int i = 0;i < 20; i++) {
-        DrawFillRectangle(0, 0, 100, 100, EMPTY_BLOCK, COLOR_TRANSPARENT, {0,0,0});
+        DrawFillRectangle(0, 0, 100, 100, EMPTY_BLOCK, COLOR_DEFAULT, {0,0,0});
         DrawSprite(0, 0, rayquaza[i % rayquaza.size()]);
         DrawSprite(57, 0, rayquaza[i % rayquaza.size()]);
         Sleep(200);
