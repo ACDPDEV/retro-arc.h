@@ -474,28 +474,28 @@ bool IsExitMatchKey(vector<int>& key)
  */
 void MoveCommand(int& playerRow, int& playerCol, int rows, int cols, vector<int>& key)
 {
-    if(key == KEY_ARROW_TOP)
+    if(IsKeyArrowTop(key))
     {
         if(playerRow > 0)
             --playerRow;
         else
             playerRow = rows;
     }
-    else if(key == KEY_ARROW_LEFT)
+    else if(IsKeyArrowLeft(key))
     {
         if(playerCol > 0)
             --playerCol;
         else
             playerCol = cols;
     }
-    else if(key == KEY_ARROW_BOTTOM)
+    else if(IsKeyArrowBottom(key))
     {
         if(playerRow < rows -1)
             ++playerRow;
         else
             playerRow = 0;
     }
-    else if(key == KEY_ARROW_RIGHT)
+    else if(IsKeyArrowRight(key))
     {
         if(playerCol < cols-1)
             ++playerCol;
