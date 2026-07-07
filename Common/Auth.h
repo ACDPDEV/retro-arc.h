@@ -31,6 +31,6 @@ namespace Common
         // TODO: Enmarcar
         // Esto es una interfaz
         // Considerar mover a interfaces
-        std::cout << "Intentó 3 veces ingresar con una clave incorrecta. Comuníquese con el administrador." << endl;
+        std::cout << "Intentó 3 veces ingresar con una clave incorrecta. Comuníquese con el administrador." << std::endl;
     }
 }
