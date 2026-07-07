@@ -7,6 +7,7 @@
 #pragma once
 
 #include <array>
+#include <vector>
 #include <string>
 #include <iostream>
 
@@ -72,4 +73,23 @@ inline void SetTerminalColor(array<int, 3> foreground, array<int, 3> background)
     cout << "\033[2J\033[H";
 
     cout.flush();
+}
+
+inline vector<array<int, 3>> Gradient(
+    int steps,
+    array<int, 3> start,
+    array<int, 3> end
+) {
+    vector<array<int, 3>> result;
+
+    for (int i = 0; i < steps; i++) {
+        array<int, 3> color = {
+            start[0] + (end[0] - start[0]) * i / steps,
+            start[1] + (end[1] - start[1]) * i / steps,
+            start[2] + (end[2] - start[2]) * i / steps
+        };
+        result.push_back(color);
+    }
+
+    return result;
 }
