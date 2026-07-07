@@ -318,6 +318,19 @@ const array<string, 9> FONT_Z = {
     "           "
 };
 
+const array<string, 9> FONT_BLANK = {
+    "   ",
+    "   ",
+    "   ",
+    "   ",
+    "   ",
+    "   ",
+    "   ",
+    "   ",
+    "   "
+};
+
+
 const array<string, 9> FONT_DOT = {
     "  ",
     "  ",
@@ -330,15 +343,15 @@ const array<string, 9> FONT_DOT = {
     "██"
 };
 
-array<string, 9> ConcatFont(vector<array<string, 9>> FONTs, int separator) {
+inline array<string, 9> ConcatFont(vector<array<string, 9>> fontChar, int separator) {
     array<string, 9> result { "", "", "", "", "", "", "", "", "" };
     string sep = "";
     for (int i = 0; i < separator; i++) {
         sep += " ";
     }
     for (int i = 0; i < 9; i++) {
-        for (int j = 0; j < FONTs.size(); j++) {
-            result[i] += FONTs[j][i] + sep;
+        for (int j = 0; j < fontChar.size(); j++) {
+            result[i] += fontChar[j][i] + sep;
         }
     }
     return result;
