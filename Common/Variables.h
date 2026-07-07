@@ -5,10 +5,10 @@
 
 namespace Common
 {
-    std::vector<int> key;
-    std::string character;
-    std::string feedbackMessage = "";
-    int rowFeedbackMessage = 0;
-    int colFeedbackMessage = 0;    
+    inline std::vector<int> key;
+    inline std::string character;
+    inline std::string feedbackMessage = "";
+    inline int rowFeedbackMessage = 0;
+    inline int colFeedbackMessage = 0;    
 }
 
