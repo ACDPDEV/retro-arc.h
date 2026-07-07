@@ -10,6 +10,6 @@ int main() {
     }
     for (int i = 0; i < 200; i++) {
         cout << "a";
-    }g
+    }
     return 0;
 }
