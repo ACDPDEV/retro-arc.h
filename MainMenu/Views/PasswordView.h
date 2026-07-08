@@ -19,26 +19,24 @@
 #include "MainMenuView.h"
 #include "WrongPasswordView.h"
 
-using namespace std;
-
 inline void PasswordMenu() {
-    string input;
+    std::string input;
 
-    int inputX = AlignedX(0, WIDTH_SCREEN, MAX_PASSWORD_LEN, "center");
-    int inputY = AlignedY(0, HEIGHT_SCREEN, 1, "center") + 1;
+    int inputX = Common::AlignedX(0, Common::WIDTH_SCREEN, Common::MAX_PASSWORD_LEN, "center");
+    int inputY = Common::AlignedY(0, Common::HEIGHT_SCREEN, 1, "center") + 1;
 
-    HideCursor();
-    TitleComponent();
-    bool passed = Key(inputX, inputY);
-    cout << passed;
+    Common::HideCursor();
+    Common::TitleComponent();
+    bool passed = Common::Key(inputX, inputY);
+    std::cout << passed;
 
     if (passed) {
-        MainMenuView();
+        Common::MainMenuView();
     } else {
-        WrongPasswordView();
+        Common::WrongPasswordView();
     }
 
-    HideCursor();
-    Color(COLOR_DEFAULT, COLOR_DEFAULT);
-    GoToXY(0, HEIGHT_SCREEN + 1);
+    Common::HideCursor();
+    Common::Color(Common::COLOR_DEFAULT, Common::COLOR_DEFAULT);
+    Common::GoToXY(0, Common::HEIGHT_SCREEN + 1);
 }

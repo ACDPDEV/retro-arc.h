@@ -12,8 +12,6 @@
 #include <iostream>
 #include <array>
 
-using namespace std;
-
 inline void InitTerminalRawMode();
 
 /// @brief Habilita el procesamiento de terminal virtual (ANSI/VT100) para True Color
@@ -114,7 +112,7 @@ inline int GetConsoleHeight() {
 
 /// @brief Obtiene el tamaño actual de la consola
 /// @return array{width, height} en caracteres
-inline array<int, 2> GetConsoleSize() {
+inline std::array<int, 2> GetConsoleSize() {
     return {GetConsoleWidth(), GetConsoleHeight()};
 }
 
@@ -140,10 +138,10 @@ inline void Sleep(int ms) {
  */
 inline void ClearConsoleLine(int lineLength)
 {
-    string blankSpace = "";
+    std::string blankSpace = "";
     for(int i = 0; i <= lineLength; i++)
     {
         blankSpace += " ";
     }
-    cout << blankSpace;
+    std::cout << blankSpace;
 }

@@ -4,8 +4,6 @@
 #include <string>
 #include <vector>
 
-using namespace std;
-
 int Length(const std::string& str) {
     int count = 0;
     for (size_t i = 0; i < str.size(); ) {
@@ -48,8 +46,8 @@ int Length(const std::string& str) {
     return count;
 }
 
-vector<string> CutString(const string& str, size_t width) {
-    vector<string> result;
+std::vector<std::string> CutString(const std::string& str, size_t width) {
+    std::vector<std::string> result;
     if (width == 0) return result;
 
     size_t offset = 0;
@@ -60,16 +58,16 @@ vector<string> CutString(const string& str, size_t width) {
     return result;
 }
 
-string InvertString(string str) {
-    string result;
+std::string InvertString(std::string str) {
+    std::string result;
     for (int i = str.size() - 1; i >= 0; i--) {
         result = str[i] + result;
     }
     return result;
 }
 
-string MaxString(vector<string> strings) {
-    string maxLength;
+std::string MaxString(std::vector<std::string> strings) {
+    std::string maxLength;
     for (int i = 0; i < strings.size(); i++) {
         if (Length(strings[i]) > Length(maxLength)) {
             maxLength = strings[i];
@@ -78,16 +76,16 @@ string MaxString(vector<string> strings) {
     return maxLength;
 }
 
-string RepeatString(string str, int count) {
-    string result;
+std::string RepeatString(std::string str, int count) {
+    std::string result;
     for (int i = 0; i < count; i++) {
         result += str;
     }
     return result;
 }
 
-vector<string> ArrayToVector(array<string, 9> arr) {
-    vector<string> result;
+std::vector<std::string> ArrayToVector(std::array<std::string, 9> arr) {
+    std::vector<std::string> result;
     for (int i = 0; i < arr.size(); i++) {
         result.push_back(arr[i]);
     }

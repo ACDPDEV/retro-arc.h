@@ -14,7 +14,7 @@
 
 
 inline void TransitionView() {
-    vector<array<int, 3>> gradient = Gradient(WIDTH_SCREEN / 8, {247, 27, 27}, {247, 208, 58});
+    std::vector<std::array<int, 3>> gradient = Gradient(WIDTH_SCREEN / 8, {247, 27, 27}, {247, 208, 58});
     srand(time(0));
 
     HideCursor();

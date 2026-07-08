@@ -2,7 +2,7 @@
 
 
 int main() {
-    InitTerminalRawMode();
+    Common::InitTerminalRawMode();
     MainMenu();
     return 0;
 }

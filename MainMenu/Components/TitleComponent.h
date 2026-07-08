@@ -10,11 +10,11 @@
 #include "../../Common/Theme.h"
 
 inline void TitleComponent() {
-    const array<string, 9> title = ConcatFont({FONT_R, FONT_E, FONT_T, FONT_R, FONT_O, FONT_A, FONT_R, FONT_C, FONT_DOT, FONT_H}, 2);
-    vector<array<int, 3>> titleColor = Gradient(9, {247, 208, 58}, {247, 27, 27});
+    const std::array<std::string, 9> title = Common::ConcatFont({Common::FONT_R, Common::FONT_E, Common::FONT_T, Common::FONT_R, Common::FONT_O, Common::FONT_A, Common::FONT_R, Common::FONT_C, Common::FONT_DOT, Common::FONT_H}, 2);
+    std::vector<std::array<int, 3>> titleColor = Common::Gradient(9, {247, 208, 58}, {247, 27, 27});
 
-    DrawFillRectangle(0, 0, WIDTH_SCREEN, HEIGHT_SCREEN, " ", FOREGROUND, BACKGROUND);
+    Common::DrawFillRectangle(0, 0, Common::WIDTH_SCREEN, Common::HEIGHT_SCREEN, " ", Common::FOREGROUND, Common::BACKGROUND);
     for (int i = 0; i < title.size(); i++) {
-        DrawText(AlignedX(0, WIDTH_SCREEN, Length(title[i]), "center"), RelativeY(0, i + 4), -1, -1, {title[i]}, titleColor[i], COLOR_DEFAULT);
+        Common::DrawText(Common::AlignedX(0, Common::WIDTH_SCREEN, Common::Length(title[i]), "center"), Common::RelativeY(0, i + 4), -1, -1, {title[i]}, titleColor[i], Common::COLOR_DEFAULT);
     }
 }
