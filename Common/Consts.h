@@ -4,9 +4,6 @@
 
 namespace Common {
 
-const std::string CLAVE = "1234";
-const int MAX_ATTEMPTS = 3;
-const int MAX_PASSWORD_LEN = 24;
 const int WIDTH_SCREEN = 200;
 const int HEIGHT_SCREEN = 50;
 const int MAX_FEEDBACK_MESSAGE_LENGTH = 80;
@@ -22,12 +19,12 @@ const std::vector<int> KEY_ESCAPE = {27};
     const std::vector<int> KEY_ARROW_LEFT = {224, 75};
     const std::vector<int> KEY_ARROW_BOTTOM = {224, 80};
     const std::vector<int> KEY_ARROW_RIGHT = {224, 77};
-    
+
     const std::vector<int> KEY_ARROW_TOP_2 = {0, 72};
     const std::vector<int> KEY_ARROW_LEFT_2 = {0, 75};
     const std::vector<int> KEY_ARROW_BOTTOM_2 = {0, 80};
     const std::vector<int> KEY_ARROW_RIGHT_2 = {0, 77};
-    
+
     const std::vector<std::vector<int>> NAVIGATION_KEYS = {
         KEY_ARROW_TOP,
         KEY_ARROW_LEFT,
