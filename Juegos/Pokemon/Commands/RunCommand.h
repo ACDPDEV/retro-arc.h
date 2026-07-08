@@ -2,9 +2,12 @@
 
 #include "Command.h"
 
-class RunCommand : public Command
+namespace PokemonGame
 {
-    public:
-
-        void execute(Match& match) override;
-};
+    class RunCommand : public Command
+    {
+        public:
+    
+            void execute(Match& match) override;
+    };
+}

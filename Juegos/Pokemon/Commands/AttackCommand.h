@@ -2,7 +2,7 @@
 
 #include "Command.h"
 
-namespace Pokemon
+namespace PokemonGame
 {
     class Move;
     

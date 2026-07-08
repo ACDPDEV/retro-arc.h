@@ -2,17 +2,20 @@
 
 #include "Command.h"
 
-class Item;
-
-class BagCommand : public Command
+namespace PokemonGame
 {
-    private:
-
-        Item* item;
-
-    public:
-
-        BagCommand(Item* item);
-
-        void execute(Match& match) override;
-};
+    class Item;
+    
+    class BagCommand : public Command
+    {
+        private:
+    
+            Item* item;
+    
+        public:
+    
+            BagCommand(Item* item);
+    
+            void execute(Match& match) override;
+    };
+}

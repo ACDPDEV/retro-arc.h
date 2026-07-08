@@ -1,15 +1,18 @@
 #pragma once
 
-class Action;
-
-class Round
+namespace PokemonGame
 {
-    private:
-
-        Action* playerOneAction;
-        Action* playerTwoAction;
-
-    public:
-
-        void execute();
-};
+    class Action;
+    
+    class Round
+    {
+        private:
+    
+            Action* playerOneAction;
+            Action* playerTwoAction;
+    
+        public:
+    
+            void execute();
+    };
+}

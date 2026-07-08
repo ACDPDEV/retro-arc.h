@@ -2,11 +2,14 @@
 
 class Match;
 
-class Command
+namespace PokemonGame
 {
-    public:
-
-        virtual ~Command() = default;
-
-        virtual void execute(Match& match) = 0;
-};
+    class Command
+    {
+        public:
+    
+            virtual ~Command() = default;
+    
+            virtual void execute(Match& match) = 0;
+    };
+}

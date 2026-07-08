@@ -1,23 +1,26 @@
 #pragma once
 
-class Player;
-
-class Match
+namespace PokemonGame
 {
-    private:
-
-        Player* playerOne;
-        Player* playerTwo;
-
-    public:
-
-        Match(
-            Player* playerOne,
-            Player* playerTwo);
-
-        void start();
-
-        void nextRound();
-
-        void finish();
-};
+    class Player;
+    
+    class Match
+    {
+        private:
+    
+            Player* playerOne;
+            Player* playerTwo;
+    
+        public:
+    
+            Match(
+                Player* playerOne,
+                Player* playerTwo);
+    
+            void start();
+    
+            void nextRound();
+    
+            void finish();
+    };
+}

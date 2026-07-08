@@ -1,6 +1,10 @@
-class Game
-{
-public:
 
-    void start();
-};
+namespace PokemonGame
+{
+    class Game
+    {
+    public:
+    
+        void start();
+    };
+}
