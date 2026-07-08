@@ -144,7 +144,12 @@ inline void ClearConsoleLine(int lineLength)
     std::string blankSpace = "";
     for(int i = 0; i <= lineLength; i++)
     {
-        blankSpace += " ";
+        std::string blankSpace = "";
+        for(int i = 0; i <= lineLength; i++)
+        {
+            blankSpace += " ";
+        }
+        std::cout << blankSpace;
     }
     std::cout << blankSpace;
 }

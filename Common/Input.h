@@ -7,6 +7,11 @@
 #pragma once
 
 #include <string>
+#include <vector>
+#include <tuple>
+#include <iostream>
+#include <stdexcept>
+#include <cctype>
 #include "Terminal.h"
 #include "Consts.h"
 
@@ -112,6 +117,7 @@ inline bool TryInput(std::string& line) {
                 }
                 break;
         }
+        return std::stoi(str);
     }
 
     return false;
@@ -134,9 +140,14 @@ inline bool IsValidChar(std::vector<std::tuple<int, int>>& validCharRanges, int 
         std::tie(min, max) = range;
         if(min <= character && character <= max)
         {
-            isValid = true;
-            break;
+            std::tie(min, max) = range;
+            if(min <= character && character <= max)
+            {
+                isValid = true;
+                break;
+            }
         }
+        return isValid;
     }
     return isValid;
 }
@@ -152,10 +163,14 @@ inline bool IsValidChar(std::vector<std::vector<int>>& validChars, std::vector<i
 {
     for (auto& validChar : validChars)
     {
-        if(validChar == character)
+        for (auto& validChar : validChars)
         {
-            return true;
+            if(validChar == character)
+            {
+                return true;
+            }
         }
+        return false;
     }
     return false;
 }
@@ -228,7 +243,14 @@ inline std::string CastKeyToString(std::vector<int>& byteChar)
 
     for (int& byte : byteChar)
     {
-        character += static_cast<char>(byte);
+        std::string character;
+    
+        for (int& byte : byteChar)
+        {
+            character += static_cast<char>(byte);
+        }
+    
+        return character;
     }
 
     return character;
@@ -244,12 +266,15 @@ inline bool IsAlphaNumChar(std::vector<int>& byteChar)
 {
     for (auto& ch : ALPHA_NUM_CHARS)
     {
-        if(ch == byteChar)
+        for (auto& ch : Common::ALPHA_NUM_CHARS)
         {
-            return true;
+            if(ch == byteChar)
+            {
+                return true;
+            }
         }
+        return false;
     }
-    return false;
 }
 
 } // namespace Common

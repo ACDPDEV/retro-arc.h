@@ -74,6 +74,7 @@ std::string MaxString(std::vector<std::string> strings) {
         if (Length(strings[i]) > Length(maxLength)) {
             maxLength = strings[i];
         }
+        return maxLength;
     }
     return maxLength;
 }
@@ -91,7 +92,6 @@ std::vector<std::string> ArrayToVector(std::array<std::string, 9> arr) {
     for (int i = 0; i < arr.size(); i++) {
         result.push_back(arr[i]);
     }
-    return result;
 }
 
 } // namespace Common

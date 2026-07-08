@@ -18,17 +18,26 @@ const std::vector<int> KEY_BACKSPACE = {8};
 const std::vector<int> KEY_ESCAPE = {27};
 
 // NAVIGATION KEYS
-const std::vector<int> KEY_ARROW_TOP = {224, 72};
-const std::vector<int> KEY_ARROW_LEFT = {224, 75};
-const std::vector<int> KEY_ARROW_BOTTOM = {224, 80};
-const std::vector<int> KEY_ARROW_RIGHT = {224, 77};
-
-const std::vector<std::vector<int>> NAVIGATION_KEYS = {
-    KEY_ARROW_TOP,
-    KEY_ARROW_LEFT,
-    KEY_ARROW_BOTTOM,
-    KEY_ARROW_RIGHT
-};
+    const std::vector<int> KEY_ARROW_TOP = {224, 72};
+    const std::vector<int> KEY_ARROW_LEFT = {224, 75};
+    const std::vector<int> KEY_ARROW_BOTTOM = {224, 80};
+    const std::vector<int> KEY_ARROW_RIGHT = {224, 77};
+    
+    const std::vector<int> KEY_ARROW_TOP_2 = {0, 72};
+    const std::vector<int> KEY_ARROW_LEFT_2 = {0, 75};
+    const std::vector<int> KEY_ARROW_BOTTOM_2 = {0, 80};
+    const std::vector<int> KEY_ARROW_RIGHT_2 = {0, 77};
+    
+    const std::vector<std::vector<int>> NAVIGATION_KEYS = {
+        KEY_ARROW_TOP,
+        KEY_ARROW_LEFT,
+        KEY_ARROW_BOTTOM,
+        KEY_ARROW_RIGHT,
+        KEY_ARROW_TOP_2,
+        KEY_ARROW_LEFT_2,
+        KEY_ARROW_BOTTOM_2,
+        KEY_ARROW_RIGHT_2,
+    };
 
 const std::vector<std::vector<int>> ACTION_KEYS = {
     KEY_ENTER,

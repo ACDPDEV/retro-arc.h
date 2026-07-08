@@ -1,15 +1,17 @@
 #include <iostream>
 #include <vector>
-#include <conio.h>
 #include "Juegos/Buscaminas/Buscaminas.h"
 #include "Common/Variables.h"
 #include "Common/Navigation.h"
 #include "Common/Input.h"
 #include "Common/Consts.h"
-
-using namespace std;
+#include "Tests/MenuViewTest.h" // <<<<<<<<<<< BORRAR CUANDO YA NO SE ESTÉ USANDO RetroArcTest namespace <<<< BORRAR
 
 int main() {
+    #ifdef _WIN32
+        SetConsoleCP(CP_UTF8);
+        SetConsoleOutputCP(CP_UTF8);
+    #endif
     // =========================================
     // INICIO DE SESION
     // =========================================
@@ -24,35 +26,35 @@ int main() {
     const int MAX_PASSWORD_LENGTH = 15;  // MODIFICAR SEGÚN VISTA    ==============================
     const int cursorInitialRow = 4;   // MODIFICAR SEGÚN VISTA    ==============================
     const int cursorInitialCol = 5;   // MODIFICAR SEGÚN VISTA    ==============================
-    string password = "";
-    string passwordInView = "";
+    std::string password = "";
+    std::string passwordInView = "";
     
-    ::feedbackMessage = "";
-    ::rowFeedbackMessage = cursorInitialRow + 4;   // MODIFICAR SEGÚN VISTA    ==============================
-    ::colFeedbackMessage = cursorInitialCol + 0;     // MODIFICAR SEGÚN VISTA    ==============================
+    Common::feedbackMessage = "";
+    Common::rowFeedbackMessage = cursorInitialRow + 4;   // MODIFICAR SEGÚN VISTA    ==============================
+    Common::colFeedbackMessage = cursorInitialCol + 0;     // MODIFICAR SEGÚN VISTA    ==============================
 
     
     int countAttempts = 0;
 
-    while (countAttempts < ::MAX_ATTEMPTS)
+    while (countAttempts < Common::MAX_ATTEMPTS)
     {
         do
         {
-            GoToXY(cursorInitialCol, cursorInitialRow);
-            ClearConsoleLine(MAX_PASSWORD_LENGTH);
-            GoToXY(cursorInitialCol, cursorInitialRow);
-            cout << passwordInView;
-            ::key = ReadConsoleChar();
-            if(IsAlphaNumChar(::key))
+            Common::GoToXY(cursorInitialCol, cursorInitialRow);
+            Common::ClearConsoleLine(MAX_PASSWORD_LENGTH);
+            Common::GoToXY(cursorInitialCol, cursorInitialRow);
+            std::cout << passwordInView;
+            Common::key = Common::ReadConsoleChar();
+            if(Common::IsAlphaNumChar(Common::key))
             {
                 if(passwordInView.length() <= MAX_PASSWORD_LENGTH)
                 {
-                    ::character = CastKeyToString(::key);
-                    password += ::character;
+                    Common::character = Common::CastKeyToString(Common::key);
+                    password += Common::character;
                     passwordInView += "*";
                 }
             }
-            else if(::key == KEY_BACKSPACE)
+            else if(Common::key == Common::KEY_BACKSPACE)
             {
                 if(passwordInView.length() > 0)
                 {
@@ -61,29 +63,29 @@ int main() {
                 }
             }
             
-        } while (::key != ::KEY_ENTER);
+        } while (Common::key != Common::KEY_ENTER);
 
         ++countAttempts;
 
-        if(password == ::CLAVE)
+        if(password == Common::CLAVE)
         {
-            GoToXY(::colFeedbackMessage, ::rowFeedbackMessage);
-            ClearConsoleLine(::MAX_FEEDBACK_MESSAGE_LENGTH);
-            ::feedbackMessage = "";
+            Common::GoToXY(Common::colFeedbackMessage, Common::rowFeedbackMessage);
+            Common::ClearConsoleLine(Common::MAX_FEEDBACK_MESSAGE_LENGTH);
+            Common::feedbackMessage = "";
             break;
         }
         else
         {
-            int difference = ::MAX_ATTEMPTS - countAttempts;
-            string remainingAttempts = to_string(difference);
-            ::feedbackMessage = "Te quedan " + remainingAttempts + " intentos";
+            int difference = Common::MAX_ATTEMPTS - countAttempts;
+            std::string remainingAttempts = std::to_string(difference);
+            Common::feedbackMessage = "Te quedan " + remainingAttempts + " intentos";
 
             // MOSTRAR EL MENSAJE DE ADVERTENCIA
-            GoToXY(::colFeedbackMessage, ::rowFeedbackMessage);
-            ClearConsoleLine(::MAX_FEEDBACK_MESSAGE_LENGTH);
-            GoToXY(::colFeedbackMessage, ::rowFeedbackMessage);
-            cout << ::feedbackMessage;
-            if(countAttempts == MAX_ATTEMPTS)
+            Common::GoToXY(Common::colFeedbackMessage, Common::rowFeedbackMessage);
+            Common::ClearConsoleLine(Common::MAX_FEEDBACK_MESSAGE_LENGTH);
+            Common::GoToXY(Common::colFeedbackMessage, Common::rowFeedbackMessage);
+            std::cout << Common::feedbackMessage;
+            if(countAttempts == Common::MAX_ATTEMPTS)
             {
                 /**
                  * 
@@ -97,7 +99,7 @@ int main() {
             }
         }
     }
-    
+    Common::HideCursor();
     // =========================================
     // PANTALLA DE CARGA
     // =========================================
@@ -118,7 +120,7 @@ int main() {
         // MENU PRINCIPAL
         // =========================================
     
-        const string menu_options[] = {
+        const std::vector<std::string> menu_options = {
             "POKEMON", 
             "BUSCAMINAS", 
             "BATALLA NAVAL", 
@@ -130,10 +132,11 @@ int main() {
         };
     
         const int menu_minOpt = 0;
-        const int menu_maxOpt = menu_options->size();
+        const int menu_maxOpt = menu_options.size() - 1;
         int menu_option = menu_minOpt;
     
         do{
+            RetroArcTest::PrintMenuTest(menu_options, menu_option);
             /**
              * 
              * 
@@ -147,20 +150,20 @@ int main() {
              * 
              */
     
-            ::key = ReadConsoleChar();
+            Common::key = Common::ReadConsoleChar();
     
-            if(IsNavigationKey(::key))
+            if(Common::IsNavigationKey(Common::key))
             {
-                SetOption(menu_option, menu_minOpt, menu_maxOpt, ::key);
+                Common::SetOption(menu_option, menu_minOpt, menu_maxOpt, Common::key);
             }
-            else if(::key != KEY_ENTER && ::key != KEY_SPACE)
+            else if(Common::key != Common::KEY_ENTER && Common::key != Common::KEY_SPACE)
             {
-                GoToXY(::colFeedbackMessage, ::rowFeedbackMessage);
-                ClearConsoleLine(::MAX_FEEDBACK_MESSAGE_LENGTH);
-                GoToXY(::colFeedbackMessage, ::rowFeedbackMessage);
-                feedbackMessage = "Presiona las flechas y selecciona con ENTER o ESPACIO";
+                Common::GoToXY(Common::colFeedbackMessage, Common::rowFeedbackMessage);
+                Common::ClearConsoleLine(Common::MAX_FEEDBACK_MESSAGE_LENGTH);
+                Common::GoToXY(Common::colFeedbackMessage, Common::rowFeedbackMessage);
+                Common::feedbackMessage = "Presiona las flechas y selecciona con ENTER o ESPACIO";
             }
-        }while(::key != KEY_ENTER && ::key != KEY_SPACE);
+        }while(Common::key != Common::KEY_ENTER && Common::key != Common::KEY_SPACE);
     
         // SWITCH HACIA LA OPCION
         switch(menu_option)
@@ -172,7 +175,7 @@ int main() {
     
             // BUSCAMINAS
             case 1:
-                PlayBuscaminas();
+                Minesweeper::PlayMinesweeper();
                 break;
     
             // BATALLA NAVAL
@@ -206,8 +209,8 @@ int main() {
                  */
 
                 do{
-                    ::key = ReadConsoleChar();
-                }while(::key != ::KEY_Q && ::key != ::KEY_Q_LOWER);
+                    Common::key = Common::ReadConsoleChar();
+                }while(Common::key != Common::KEY_Q && Common::key != Common::KEY_Q_LOWER);
                 break;
     
             // =========================================
