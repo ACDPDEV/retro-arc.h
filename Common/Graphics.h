@@ -16,6 +16,7 @@
 #include "UnicodeGlyphs.h"
 #include "Color.h"
 #include "Utils.h"
+#include "Aligned.h"
 
 namespace Common
 {
@@ -185,28 +186,27 @@ namespace Common
             0, 0,
             WIDTH_SCREEN, HEIGHT_SCREEN,
             EMPTY_BLOCK,
-            FOREGROUND, BACKGROUND
+            FOREGROUND_DARK, BACKGROUND
         );
     }
 
 
 
-void PrintPrimaryBox(int x, int y, int width, int height, string text, array<int, 3> textColor, array<int, 3> borderColor, array<int, 3> fillColor)
-{
-    const int textX = Common::AlignedX(x, width, text.length(), "center");
-    const int textY = Common::AlignedY(y, height, 1, "center");
+    inline void PrintPrimaryBox(int x, int y, int width, int height, std::string text, std::array<int, 3> textColor, std::array<int, 3> borderColor, std::array<int, 3> fillColor)
+    {
+        const int textX = AlignedX(x, width, text.length(), "center");
+        const int textY = AlignedY(y, height, 1, "center");
 
-    Common::DrawFillRectangle(x, y - 1, width, 1, Common::LOWER_HALF_BLOCK, borderColor, {-1, -1, -1}); // borde superior
-    Common::DrawFillRectangle(x, y + height, width, 1, Common::UPPER_HALF_BLOCK, borderColor, {-1, -1, -1}); // borde inferior
-    Common::DrawFillRectangle(x, y, width, height, Common::FULL_BLOCK, borderColor, {-1, -1, -1}); // bordes de los costados
-    Common::DrawFillRectangle(x + 1, y, width - 2, height, Common::FULL_BLOCK, fillColor, {-1, -1, -1}); // relleno del recuadro
+        Common::DrawFillRectangle(x, y - 1, width, 1, Common::LOWER_HALF_BLOCK, borderColor, {-1, -1, -1}); // borde superior
+        Common::DrawFillRectangle(x, y + height, width, 1, Common::UPPER_HALF_BLOCK, borderColor, {-1, -1, -1}); // borde inferior
+        Common::DrawFillRectangle(x, y, width, height, Common::FULL_BLOCK, borderColor, {-1, -1, -1}); // bordes de los costados
+        Common::DrawFillRectangle(x + 1, y, width - 2, height, Common::FULL_BLOCK, fillColor, {-1, -1, -1}); // relleno del recuadro
 
-    Common::DrawText(
-        textX, textY,
-        width, height,
-        {text},
-        textColor, fillColor);
+        Common::DrawText(
+            textX, textY,
+            width, height,
+            {text},
+            textColor, fillColor);
 
-}
-
+    }
 }
