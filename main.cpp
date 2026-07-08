@@ -5,6 +5,7 @@
 #include "Common/Navigation.h"
 #include "Common/Input.h"
 #include "Common/Consts.h"
+#include "Pokemon/Game/Game.h"
 #include "Tests/MenuViewTest.h" // <<<<<<<<<<< BORRAR CUANDO YA NO SE ESTÉ USANDO RetroArcTest namespace <<<< BORRAR
 
 int main() {
@@ -171,6 +172,8 @@ int main() {
     
             // POKEMON
             case 0:
+                PokemonGame::Game game;
+                game.start();
                 break;
     
             // BUSCAMINAS
