@@ -8,6 +8,10 @@
 #include "Tests/MenuViewTest.h" // <<<<<<<<<<< BORRAR CUANDO YA NO SE ESTÉ USANDO RetroArcTest namespace <<<< BORRAR
 
 int main() {
+    #ifdef _WIN32
+        SetConsoleCP(CP_UTF8);
+        SetConsoleOutputCP(CP_UTF8);
+    #endif
     // =========================================
     // INICIO DE SESION
     // =========================================
