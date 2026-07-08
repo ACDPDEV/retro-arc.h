@@ -4,7 +4,7 @@
 
 class Item;
 
-class BagAction : public Action
+class BagCommand : public Command
 {
     private:
 
@@ -12,7 +12,7 @@ class BagAction : public Action
 
     public:
 
-        BagAction(Item* item);
+        BagCommand(Item* item);
 
         void execute(Match& match) override;
 };

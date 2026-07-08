@@ -4,7 +4,7 @@
 
 class Pokemon;
 
-class SwitchPokemonAction : public Action
+class SwitchPokemonCommand : public Command
 {
     private:
 
@@ -12,7 +12,7 @@ class SwitchPokemonAction : public Action
 
     public:
 
-        SwitchPokemonAction(Pokemon* pokemon);
+        SwitchPokemonCommand(Pokemon* pokemon);
 
         void execute(Match& match) override;
 };

@@ -2,7 +2,7 @@
 
 #include "Command.h"
 
-class RunAction : public Action
+class RunCommand : public Command
 {
     public:
 

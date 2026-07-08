@@ -6,7 +6,7 @@ namespace Pokemon
 {
     class Move;
     
-    class AttackAction : public Action
+    class AttackCommand : public Command
     {
         private:
     
@@ -14,7 +14,7 @@ namespace Pokemon
     
         public:
     
-            AttackAction(Move* move);
+            AttackCommand(Move* move);
     
             void execute(Match& match) override;
     };

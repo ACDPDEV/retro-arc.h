@@ -2,11 +2,11 @@
 
 class Match;
 
-class Action
+class Command
 {
     public:
 
-        virtual ~Action() = default;
+        virtual ~Command() = default;
 
         virtual void execute(Match& match) = 0;
 };
