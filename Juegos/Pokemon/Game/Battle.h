@@ -4,7 +4,7 @@ namespace PokemonGame
 {
     class Player;
     
-    class Match
+    class Battle
     {
         private:
     
@@ -13,7 +13,7 @@ namespace PokemonGame
     
         public:
     
-            Match(
+            Battle(
                 Player* playerOne,
                 Player* playerTwo);
     

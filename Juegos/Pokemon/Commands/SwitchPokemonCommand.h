@@ -1,21 +1,23 @@
 #pragma once
 
 #include "Command.h"
+#include "../Game/Battle.h"
+#include "../Models/Pokemon.h"
 
 namespace PokemonGame
 {
-    class Pokemon;
+    class PokemonGame::Pokemon;
     
-    class SwitchPokemonCommand : public Command
+    class SwitchPokemonCommand : public PokemonGame::Command
     {
         private:
     
-            Pokemon* pokemon;
+            PokemonGame::Pokemon* pokemon;
     
         public:
     
-            SwitchPokemonCommand(Pokemon* pokemon);
+            SwitchPokemonCommand(PokemonGame::Pokemon* pokemon);
     
-            void execute(Match& match) override;
+            void execute(PokemonGame::Battle& battle) override;
     };
 }

@@ -1,13 +1,13 @@
 #pragma once
-
 #include "Command.h"
+#include "../Game/Battle.h"
 
 namespace PokemonGame
 {
-    class RunCommand : public Command
+    class RunCommand : public PokemonGame::Command
     {
         public:
     
-            void execute(Match& match) override;
+            void execute(PokemonGame::Battle& battle) override;
     };
 }

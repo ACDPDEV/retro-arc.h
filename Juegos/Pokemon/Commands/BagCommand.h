@@ -1,21 +1,22 @@
 #pragma once
-
 #include "Command.h"
+#include "../Game/Battle.h"
+#include "../Models/Item.h"
 
 namespace PokemonGame
 {
-    class Item;
+    class PokemonGame::Item;
     
-    class BagCommand : public Command
+    class BagCommand : public PokemonGame::Command
     {
         private:
     
-            Item* item;
+            PokemonGame::Item* item;
     
         public:
     
-            BagCommand(Item* item);
+            BagCommand(PokemonGame::Item* item);
     
-            void execute(Match& match) override;
+            void execute(PokemonGame::Battle& battle) override;
     };
 }

@@ -1,15 +1,17 @@
 #pragma once
+#include "../Game/Battle.h"
 
-class Match;
 
 namespace PokemonGame
 {
+    class PokemonGame::Battle;
+    
     class Command
     {
         public:
     
             virtual ~Command() = default;
     
-            virtual void execute(Match& match) = 0;
+            virtual void execute(PokemonGame::Battle& battle) = 0;
     };
 }
