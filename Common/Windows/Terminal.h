@@ -11,6 +11,9 @@
 #include <conio.h>
 #include <iostream>
 #include <array>
+#include <string>
+
+namespace Common {
 
 inline void InitTerminalRawMode();
 
@@ -145,3 +148,5 @@ inline void ClearConsoleLine(int lineLength)
     }
     std::cout << blankSpace;
 }
+
+} // namespace Common

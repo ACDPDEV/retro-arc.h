@@ -15,6 +15,8 @@
 
 // Este es mi cambio :)
 
+namespace Common {
+
 /// @brief Verifica la clave permitiendo hasta MAX_ATTEMPTS intentos
 /// @return true si la clave es correcta dentro de los intentos permitidos, false si se agotan
 /// @details En cada intento fallido, vuelve a leer entrada. Usa CLAVE y MAX_ATTEMPTS de Consts.h
@@ -22,13 +24,13 @@ inline bool Key(int x, int y) {
     std::string input;
     std::string message = "Clave incorrecta. Intente de nuevo.";
 
-    Common::DrawText(Common::AlignedX(0, Common::WIDTH_SCREEN, Common::MAX_PASSWORD_LEN, "center"), y - 1, Common::MAX_PASSWORD_LEN, 1, {"Ingrese su contraseña:"}, Common::FOREGROUND, Common::BACKGROUND);
-    Common::DrawFillRectangle(x, y, Common::MAX_PASSWORD_LEN, 1, " ", Common::FOREGROUND, Common::SELECTION_BACKGROUND);
-    Common::ShowCursor();
-    Common::GoToXY(x, y);
-    for (int i = 1; i <= Common::MAX_ATTEMPTS; i++) {
+    DrawText(AlignedX(0, WIDTH_SCREEN, MAX_PASSWORD_LEN, "center"), y - 1, MAX_PASSWORD_LEN, 1, {"Ingrese su contraseña:"}, FOREGROUND, BACKGROUND);
+    DrawFillRectangle(x, y, MAX_PASSWORD_LEN, 1, " ", FOREGROUND, SELECTION_BACKGROUND);
+    ShowCursor();
+    GoToXY(x, y);
+    for (int i = 1; i <= MAX_ATTEMPTS; i++) {
         while (true) {
-            int key = Common::Getch();
+            int key = Getch();
 
             if (key == -1) {
                 break;
@@ -39,23 +41,23 @@ inline bool Key(int x, int y) {
             if (key == 127 || key == 8) {
                 if (!input.empty()) {
                     input.pop_back();
-                    Common::DrawText(x + static_cast<int>(input.size()), y, -1, -1, {" "}, Common::FOREGROUND, Common::SELECTION_BACKGROUND);
-                    Common::GoToXY(x + static_cast<int>(input.size()), y);
+                    DrawText(x + static_cast<int>(input.size()), y, -1, -1, {" "}, FOREGROUND, SELECTION_BACKGROUND);
+                    GoToXY(x + static_cast<int>(input.size()), y);
                 }
                 continue;
             }
-            if (32 <= key && key <= 126 && input.size() < Common::MAX_PASSWORD_LEN) {
+            if (32 <= key && key <= 126 && input.size() < MAX_PASSWORD_LEN) {
                 input.push_back(static_cast<char>(key));
                 std::cout << "*";
             }
         }
-        if (input == Common::CLAVE) {
+        if (input == CLAVE) {
             return true;
         } else {
-            Common::DrawText(Common::AlignedX(0, Common::WIDTH_SCREEN, Common::Length(message), "center"), y + 1, -1, -1, {message}, {200, 150, 100}, Common::BACKGROUND);
-            Common::DrawFillRectangle(x, y, static_cast<int>(input.size()), 1, " ", Common::FOREGROUND, Common::SELECTION_BACKGROUND);
+            DrawText(AlignedX(0, WIDTH_SCREEN, Length(message), "center"), y + 1, -1, -1, {message}, {200, 150, 100}, BACKGROUND);
+            DrawFillRectangle(x, y, static_cast<int>(input.size()), 1, " ", FOREGROUND, SELECTION_BACKGROUND);
             input.clear();
-            Common::GoToXY(x, y);
+            GoToXY(x, y);
         }
     }
     return false;
@@ -70,3 +72,5 @@ inline void WrongKey() {
     // Considerar mover a interfaces
     std::cout << "Intentó 3 veces ingresar con una clave incorrecta. Comuníquese con el administrador." << std::endl;
 }
+
+} // namespace Common

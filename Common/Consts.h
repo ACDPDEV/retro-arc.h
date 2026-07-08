@@ -2,6 +2,8 @@
 #include <string>
 #include <vector>
 
+namespace Common {
+
 const std::string CLAVE = "1234";
 const int MAX_ATTEMPTS = 3;
 const int MAX_PASSWORD_LEN = 24;
@@ -142,3 +144,5 @@ const std::vector<std::vector<int>> ALPHA_NUM_CHARS = {
         // Números
         {48}, {49}, {50}, {51}, {52}, {53}, {54}, {55}, {56}, {57}
 };
+
+} // namespace Common

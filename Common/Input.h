@@ -10,6 +10,8 @@
 #include "Terminal.h"
 #include "Consts.h"
 
+namespace Common {
+
 /// @brief Valida si una entrada coincide con un tipo esperado
 /// @param input String a validar
 /// @param type Tipo esperado: "int", "float", "string", "char", "bool"
@@ -240,7 +242,7 @@ inline std::string CastKeyToString(std::vector<int>& byteChar)
  */
 inline bool IsAlphaNumChar(std::vector<int>& byteChar)
 {
-    for (auto& ch : Common::ALPHA_NUM_CHARS)
+    for (auto& ch : ALPHA_NUM_CHARS)
     {
         if(ch == byteChar)
         {
@@ -249,3 +251,5 @@ inline bool IsAlphaNumChar(std::vector<int>& byteChar)
     }
     return false;
 }
+
+} // namespace Common

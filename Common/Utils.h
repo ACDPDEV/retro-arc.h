@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+namespace Common {
+
 int Length(const std::string& str) {
     int count = 0;
     for (size_t i = 0; i < str.size(); ) {
@@ -91,3 +93,5 @@ std::vector<std::string> ArrayToVector(std::array<std::string, 9> arr) {
     }
     return result;
 }
+
+} // namespace Common
