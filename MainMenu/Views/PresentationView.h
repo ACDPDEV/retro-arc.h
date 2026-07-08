@@ -24,7 +24,7 @@ namespace MainMenu {
         Common::EnableUTF8();
         Common::Clear();
         Common::HideCursor();
-        Common::DrawFillRectangle(0, 0, Common::WIDTH_SCREEN, Common::HEIGHT_SCREEN, " ", Common::FOREGROUND, Common::BACKGROUND);
+        Common::DrawFillRectangle(0, 0, Common::WIDTH_SCREEN, Common::HEIGHT_SCREEN, " ", Common::FOREGROUND_DARK, Common::BACKGROUND);
         Common::DrawSprite(2, Common::AlignedY(0, Common::HEIGHT_SCREEN, ArcadeLeft.size(), "bottom") - 1, ArcadeLeft);
         Common::DrawSprite(Common::AlignedX(0, Common::WIDTH_SCREEN, Common::Length(Common::MaxString(ArcadeRight)), "right") - 2, Common::AlignedY(0, Common::HEIGHT_SCREEN, ArcadeRight.size(), "bottom") - 1, ArcadeRight);
         for (int k = 0; k < 100; k++) {
