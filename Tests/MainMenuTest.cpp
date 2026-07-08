@@ -4,5 +4,6 @@
 int main() {
     Common::InitTerminalRawMode();
     MainMenu::MainMenu();
+    Common::ShowCursor();
     return 0;
 }
