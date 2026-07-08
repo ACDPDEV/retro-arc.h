@@ -3,6 +3,6 @@
 
 int main() {
     Common::InitTerminalRawMode();
-    MainMenu();
+    MainMenu::MainMenu();
     return 0;
 }
