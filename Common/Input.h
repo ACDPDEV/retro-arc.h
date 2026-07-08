@@ -117,7 +117,7 @@ inline bool TryInput(std::string& line) {
                 }
                 break;
         }
-        return std::stoi(str);
+        return std::stoi(line);
     }
 
     return false;
@@ -244,12 +244,12 @@ inline std::string CastKeyToString(std::vector<int>& byteChar)
     for (int& byte : byteChar)
     {
         std::string character;
-    
+
         for (int& byte : byteChar)
         {
             character += static_cast<char>(byte);
         }
-    
+
         return character;
     }
 
