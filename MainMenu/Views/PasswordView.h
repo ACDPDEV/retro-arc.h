@@ -20,7 +20,7 @@
 #include "WrongPasswordView.h"
 
 namespace MainMenu {
-    inline void PasswordMenu() {
+    inline void PasswordView() {
         std::string input;
 
         int inputX = Common::AlignedX(0, Common::WIDTH_SCREEN, MAX_PASSWORD_LEN, "center");
@@ -29,7 +29,6 @@ namespace MainMenu {
         Common::HideCursor();
         TitleComponent();
         bool passed = Key(inputX, inputY);
-        std::cout << passed;
 
         if (passed) {
             MainMenuView();

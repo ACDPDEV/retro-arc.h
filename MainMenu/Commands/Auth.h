@@ -15,6 +15,7 @@
 
 #include "../Consts/Env.h"
 #include "../Consts/Labels.h"
+#include "../Components/InputComponent.h"
 
 #include <string>
 
@@ -30,10 +31,7 @@ namespace MainMenu {
         std::string input;
         std::string message = WRONG_PASSWORD_MESSAGE;
 
-        Common::DrawText(Common::AlignedX(0, Common::WIDTH_SCREEN, MAX_PASSWORD_LEN, "center"), y - 1, MAX_PASSWORD_LEN, 1, {"Ingrese su contraseña:"}, Common::FOREGROUND, Common::BACKGROUND);
-        Common::DrawFillRectangle(x, y, MAX_PASSWORD_LEN, 1, " ", Common::FOREGROUND, Common::SELECTION_BACKGROUND);
-        Common::ShowCursor();
-        Common::GoToXY(x, y);
+        InputComponent(x, y, MAX_PASSWORD_LEN, 1, "", INPUT_LABEL, "", "*");
         for (int i = 1; i <= MAX_ATTEMPTS; i++) {
             while (true) {
                 int key = Common::Getch();
@@ -47,25 +45,22 @@ namespace MainMenu {
                 if (key == 127 || key == 8) {
                     if (!input.empty()) {
                         input.pop_back();
-                        Common::DrawText(x + static_cast<int>(input.size()), y, -1, -1, {" "}, Common::FOREGROUND, Common::SELECTION_BACKGROUND);
-                        Common::GoToXY(x + static_cast<int>(input.size()), y);
+                        InputComponent(x, y, MAX_PASSWORD_LEN, 1, input, INPUT_LABEL, "", "*");
                     }
                     continue;
                 }
                 if (32 <= key && key <= 126 && input.size() < MAX_PASSWORD_LEN) {
                     input.push_back(static_cast<char>(key));
-                    std::cout << "*";
+                    InputComponent(x, y, MAX_PASSWORD_LEN, 1, input, INPUT_LABEL, "", "*");
                 }
             }
             if (input == CLAVE) {
                 return true;
             } else {
-                Common::DrawText(Common::AlignedX(0, Common::WIDTH_SCREEN, Common::Length(message), "center"), y + 1, -1, -1, {message}, {200, 150, 100}, Common::BACKGROUND);
-                Common::DrawFillRectangle(x, y, static_cast<int>(input.size()), 1, " ", Common::FOREGROUND, Common::SELECTION_BACKGROUND);
-                input.clear();
-                Common::GoToXY(x, y);
+                input = "";
+                InputComponent(x, y, MAX_PASSWORD_LEN, 1, input, INPUT_LABEL, message, "*");
             }
         }
         return false;
     }
-} // namespace Common
+}
