@@ -13,6 +13,6 @@ namespace PokemonGame
     
         public:
     
-            void execute();
+            void Execute();
     };
 }

@@ -17,10 +17,12 @@ namespace PokemonGame
                 Player* playerOne,
                 Player* playerTwo);
     
-            void start();
+            void Start();
+
+            void Play();
     
-            void nextRound();
+            void NextRound();
     
-            void finish();
+            void Finish();
     };
 }

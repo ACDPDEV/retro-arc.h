@@ -17,6 +17,6 @@ namespace PokemonGame
     
             BagCommand(PokemonGame::Item* item);
     
-            void execute(PokemonGame::Battle& battle) override;
+            void Execute(PokemonGame::Battle& battle) override;
     };
 }
