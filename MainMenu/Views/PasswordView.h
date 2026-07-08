@@ -26,14 +26,14 @@ inline void PasswordMenu() {
     int inputY = Common::AlignedY(0, Common::HEIGHT_SCREEN, 1, "center") + 1;
 
     Common::HideCursor();
-    Common::TitleComponent();
+    TitleComponent();
     bool passed = Common::Key(inputX, inputY);
     std::cout << passed;
 
     if (passed) {
-        Common::MainMenuView();
+        MainMenuView();
     } else {
-        Common::WrongPasswordView();
+        WrongPasswordView();
     }
 
     Common::HideCursor();
