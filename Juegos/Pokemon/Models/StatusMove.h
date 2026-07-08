@@ -1,14 +1,18 @@
 #pragma once
 
 #include "Move.h"
+#include "Pokemon.h"
 
-class StatusMove : public Move
+namespace PokemonGame
 {
-public:
-
-    using Move::Move;
-
-    void execute(
-        Pokemon& attacker,
-        Pokemon& defender) override;
-};
+    class StatusMove : public PokemonGame::Move
+    {
+    public:
+    
+        using Move::Move;
+    
+        void execute(
+            PokemonGame::Pokemon& attacker,
+            PokemonGame::Pokemon& defender) override;
+    };
+}

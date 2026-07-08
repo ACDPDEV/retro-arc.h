@@ -1,12 +1,16 @@
 #pragma once
 
 #include "Item.h"
+#include "Pokemon.h"
 
-class Antidote : public Item
+namespace PokemonGame
 {
-public:
-
-    Antidote();
-
-    void use(Pokemon& target) override;
-};
+    class Antidote : public PokemonGame::Item
+    {
+        public:
+        
+            Antidote();
+        
+            void use(PokemonGame::Pokemon& target) override;
+    };
+}

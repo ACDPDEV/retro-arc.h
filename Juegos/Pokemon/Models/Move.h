@@ -1,29 +1,33 @@
 #pragma once
 
 #include <string>
+#include "Pokemon.h"
 
-class Pokemon;
-
-class Move
+namespace PokemonGame
 {
-protected:
-
-    std::string name;
-
-    int baseDamage;
-
-    int accuracy;
-
-public:
-
-    Move(
-        const std::string& name,
-        int damage,
-        int accuracy);
-
-    virtual ~Move() = default;
-
-    virtual void execute(
-        Pokemon& attacker,
-        Pokemon& defender) = 0;
-};
+    class PokemonGame::Pokemon;
+    
+    class Move
+    {
+        protected:
+        
+            std::string name;
+        
+            int baseDamage;
+        
+            int accuracy;
+        
+        public:
+        
+            Move(
+                const std::string& name,
+                int damage,
+                int accuracy);
+        
+            virtual ~Move() = default;
+        
+            virtual void execute(
+                PokemonGame::Pokemon& attacker,
+                PokemonGame::Pokemon& defender) = 0;
+    };
+}

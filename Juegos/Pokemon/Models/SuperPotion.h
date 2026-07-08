@@ -1,10 +1,14 @@
 #pragma once
 
 #include "Potion.h"
+#include "Pokemon.h"
 
-class SuperPotion : public Potion
+namespace PokemonGame
 {
-public:
-
-    SuperPotion();
-};
+    class SuperPotion : public PokemonGame::Potion
+    {
+    public:
+    
+        SuperPotion();
+    };
+}

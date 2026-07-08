@@ -1,20 +1,24 @@
 #pragma once
 
 #include <string>
+#include "Pokemon.h"
 
-class Pokemon;
-
-class Item
+namespace PokemonGame
 {
-protected:
-
-    std::string name;
-
-public:
-
-    Item(const std::string& name);
-
-    virtual ~Item() = default;
-
-    virtual void use(Pokemon& target) = 0;
-};
+    class PokemonGame::Pokemon;
+    
+    class Item
+    {
+        protected:
+        
+            std::string name;
+        
+        public:
+        
+            Item(const std::string& name);
+        
+            virtual ~Item() = default;
+        
+            virtual void use(PokemonGame::Pokemon& target) = 0;
+    };
+}

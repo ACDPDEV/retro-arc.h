@@ -1,16 +1,20 @@
 #pragma once
 
 #include "Item.h"
+#include "Pokemon.h"
 
-class Potion : public Item
+namespace PokemonGame
 {
-private:
-
-    int healPoints;
-
-public:
-
-    Potion(int healPoints);
-
-    void use(Pokemon& target) override;
-};
+    class Potion : public PokemonGame::Item
+    {
+        private:
+        
+            int healPoints;
+        
+        public:
+        
+            Potion(int healPoints);
+        
+            void use(PokemonGame::Pokemon& target) override;
+    };
+}

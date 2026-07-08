@@ -1,25 +1,30 @@
 #pragma once
 
 #include <vector>
+#include "Pokemon.h"
+#include "Item.h"
 
-class Item;
-class Pokemon;
-
-class Bag
+namespace PokemonGame
 {
-    private:
-
-        std::vector<Item*> items;
-
-    public:
-
-        Bag();
-
-        ~Bag();
-
-        void addItem(Item* item);
-
-        void useItem(
-            int index,
-            Pokemon& target);
-};
+    class PokemonGame::Item;
+    class PokemonGame::Pokemon;
+    
+    class Bag
+    {
+        private:
+    
+            std::vector<Item*> items;
+    
+        public:
+    
+            Bag();
+    
+            ~Bag();
+    
+            void addItem(PokemonGame::Item* item);
+    
+            void useItem(
+                int index,
+                PokemonGame::Pokemon& target);
+    };
+}
