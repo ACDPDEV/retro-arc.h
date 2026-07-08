@@ -2,6 +2,8 @@
 
 #include "../Components/TitleComponent.h"
 
-inline void MainMenuView() {
-    TitleComponent();
+namespace MainMenu {
+    inline void MainMenuView() {
+        TitleComponent();
+    }
 }
