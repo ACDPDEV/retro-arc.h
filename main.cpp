@@ -6,8 +6,6 @@
 #include "Common/Input.h"
 #include "Common/Consts.h"
 
-using namespace std;
-
 int main() {
     // =========================================
     // INICIO DE SESION
@@ -23,8 +21,8 @@ int main() {
     const int MAX_PASSWORD_LENGTH = 15;  // MODIFICAR SEGÚN VISTA    ==============================
     const int cursorInitialRow = 4;   // MODIFICAR SEGÚN VISTA    ==============================
     const int cursorInitialCol = 5;   // MODIFICAR SEGÚN VISTA    ==============================
-    string password = "";
-    string passwordInView = "";
+    std::string password = "";
+    std::string passwordInView = "";
     
     Common::feedbackMessage = "";
     Common::rowFeedbackMessage = cursorInitialRow + 4;   // MODIFICAR SEGÚN VISTA    ==============================
@@ -40,7 +38,7 @@ int main() {
             Common::GoToXY(cursorInitialCol, cursorInitialRow);
             Common::ClearConsoleLine(MAX_PASSWORD_LENGTH);
             Common::GoToXY(cursorInitialCol, cursorInitialRow);
-            cout << passwordInView;
+            std::cout << passwordInView;
             Common::key = Common::ReadConsoleChar();
             if(Common::IsAlphaNumChar(Common::key))
             {
@@ -74,14 +72,14 @@ int main() {
         else
         {
             int difference = Common::MAX_ATTEMPTS - countAttempts;
-            string remainingAttempts = to_string(difference);
+            std::string remainingAttempts = std::to_string(difference);
             Common::feedbackMessage = "Te quedan " + remainingAttempts + " intentos";
 
             // MOSTRAR EL MENSAJE DE ADVERTENCIA
             Common::GoToXY(Common::colFeedbackMessage, Common::rowFeedbackMessage);
             Common::ClearConsoleLine(Common::MAX_FEEDBACK_MESSAGE_LENGTH);
             Common::GoToXY(Common::colFeedbackMessage, Common::rowFeedbackMessage);
-            cout << Common::feedbackMessage;
+            std::cout << Common::feedbackMessage;
             if(countAttempts == Common::MAX_ATTEMPTS)
             {
                 /**
@@ -117,7 +115,7 @@ int main() {
         // MENU PRINCIPAL
         // =========================================
     
-        const string menu_options[] = {
+        const std::string menu_options[] = {
             "POKEMON", 
             "BUSCAMINAS", 
             "BATALLA NAVAL", 
