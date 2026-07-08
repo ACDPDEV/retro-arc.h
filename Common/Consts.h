@@ -6,6 +6,7 @@ using namespace std;
 
 const string CLAVE = "1234";
 const int MAX_ATTEMPTS = 3;
+const int MAX_PASSWORD_LEN = 24;
 const int WIDTH_SCREEN = 200;
 const int HEIGHT_SCREEN = 50;
 const int MAX_FEEDBACK_MESSAGE_LENGTH = 80;

@@ -5,6 +5,8 @@
 ///          Sleep() entre frames (ms). Requiere Linux/Terminal.h para Sleep().
 ///          TODO: paralelismo opcional entre frames (comentado).
 #pragma once
+#include "Color.h"
+#include "Graphics.h"
 #include "Terminal.h"
 #include "UnicodeGlyphs.h"
 #include <iostream>
@@ -20,7 +22,7 @@ using namespace std;
 inline void DrawSprite(int x, int y, const vector<string>& sprite) {
     for (int i = 0; i < sprite.size(); i++) {
         GoToXY(x, y + i);
-        cout << sprite[i];
+        DrawText(x, y, -1, -1, sprite, COLOR_DEFAULT, COLOR_DEFAULT);
     }
 }
 

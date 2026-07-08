@@ -14,6 +14,8 @@
 
 using namespace std;
 
+inline void InitTerminalRawMode();
+
 /// @brief Habilita el procesamiento de terminal virtual (ANSI/VT100) para True Color
 /// @details Permite usar códigos de escape como \x1b[38;2;R;G;Bm para colores RGB reales
 inline void EnableTrueColor() {

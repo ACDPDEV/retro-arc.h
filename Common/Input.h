@@ -169,19 +169,19 @@ inline int ReadConsoleChar(vector<tuple<int, int>>& validCharRanges)
 {
     int key;
 
-    key = getch();
+    key = Getch();
 
     // Compara con AND lógico bit a bit para validar si es un caracter de 2 bytes
     if((key & 0b11100000) == 0b11000000)
     {
-        key = getch();
+        key = Getch();
     }
 
     if (IsValidChar(validCharRanges, key))
     {
         return key;
     }
-    else 
+    else
     {
         return -1;
     }
@@ -196,23 +196,23 @@ inline vector<int> ReadConsoleChar()
     vector<int> byteChar = {};
     int key;
 
-    key = getch();
+    key = Getch();
     byteChar.push_back(key);
 
     if (key == 0 || key == 224)
     {
         // Tecla especial
-        byteChar.push_back(getch());
+        byteChar.push_back(Getch());
     }
     else
     {
         // Compara con AND lógico bit a bit para validar si es un caracter con cada cantidad de bytes
         if ((key & 0b11100000) == 0b11000000) // Para 2 bytes
-            byteChar.push_back(getch());
+            byteChar.push_back(Getch());
         else if ((key & 0b11110000) == 0b11100000) // Para 3 bytes
-            byteChar.push_back(getch()), byteChar.push_back(getch());
+            byteChar.push_back(Getch()), byteChar.push_back(Getch());
         else if ((key & 0b11111000) == 0b11110000) // Para 4 bytes
-            byteChar.push_back(getch()), byteChar.push_back(getch()), byteChar.push_back(getch());
+            byteChar.push_back(Getch()), byteChar.push_back(Getch()), byteChar.push_back(Getch());
     }
 
     return byteChar;
@@ -251,5 +251,3 @@ inline bool IsAlphaNumChar(vector<int>& byteChar)
     }
     return false;
 }
-
-
