@@ -13,30 +13,31 @@
 #include "../../Common/Utils.h"
 #include "../../Common/Theme.h"
 #include "../../Common/Input.h"
-#include "../../Common/Auth.h"
 
+#include "../Commands/Auth.h"
 #include "../Components/TitleComponent.h"
 #include "MainMenuView.h"
 #include "WrongPasswordView.h"
 
-inline void PasswordMenu() {
-    std::string input;
+namespace MainMenu {
+    inline void PasswordView() {
+        std::string input;
 
-    int inputX = Common::AlignedX(0, Common::WIDTH_SCREEN, Common::MAX_PASSWORD_LEN, "center");
-    int inputY = Common::AlignedY(0, Common::HEIGHT_SCREEN, 1, "center") + 1;
+        int inputX = Common::AlignedX(0, Common::WIDTH_SCREEN, MAX_PASSWORD_LEN, "center");
+        int inputY = Common::AlignedY(0, Common::HEIGHT_SCREEN, 1, "center") + 1;
 
-    Common::HideCursor();
-    Common::TitleComponent();
-    bool passed = Common::Key(inputX, inputY);
-    std::cout << passed;
+        Common::HideCursor();
+        TitleComponent();
+        bool passed = Key(inputX, inputY);
 
-    if (passed) {
-        Common::MainMenuView();
-    } else {
-        Common::WrongPasswordView();
+        if (passed) {
+            MainMenuView();
+        } else {
+            WrongPasswordView();
+        }
+
+        Common::HideCursor();
+        Common::Color(Common::COLOR_DEFAULT, Common::COLOR_DEFAULT);
+        Common::GoToXY(0, Common::HEIGHT_SCREEN + 1);
     }
-
-    Common::HideCursor();
-    Common::Color(Common::COLOR_DEFAULT, Common::COLOR_DEFAULT);
-    Common::GoToXY(0, Common::HEIGHT_SCREEN + 1);
 }

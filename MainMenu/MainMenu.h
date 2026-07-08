@@ -2,9 +2,10 @@
 #include "Views/PresentationView.h"
 #include "Views/PasswordView.h"
 
-
-inline void MainMenu() {
-    PresentationView();
-    TransitionView();
-    PasswordMenu();
+namespace MainMenu {
+    inline void MainMenu() {
+        PresentationView();
+        TransitionView();
+        PasswordView();
+    }
 }
