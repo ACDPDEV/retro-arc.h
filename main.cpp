@@ -5,6 +5,7 @@
 #include "Common/Navigation.h"
 #include "Common/Input.h"
 #include "Common/Consts.h"
+#include "Tests/MenuViewTest.h" // <<<<<<<<<<< BORRAR CUANDO YA NO SE ESTÉ USANDO RetroArcTest namespace <<<< BORRAR
 
 int main() {
     // =========================================
@@ -94,7 +95,7 @@ int main() {
             }
         }
     }
-    
+    Common::HideCursor();
     // =========================================
     // PANTALLA DE CARGA
     // =========================================
@@ -115,7 +116,7 @@ int main() {
         // MENU PRINCIPAL
         // =========================================
     
-        const std::string menu_options[] = {
+        const std::vector<std::string> menu_options = {
             "POKEMON", 
             "BUSCAMINAS", 
             "BATALLA NAVAL", 
@@ -127,10 +128,11 @@ int main() {
         };
     
         const int menu_minOpt = 0;
-        const int menu_maxOpt = menu_options->size();
+        const int menu_maxOpt = menu_options.size() - 1;
         int menu_option = menu_minOpt;
     
         do{
+            RetroArcTest::PrintMenuTest(menu_options, menu_option);
             /**
              * 
              * 

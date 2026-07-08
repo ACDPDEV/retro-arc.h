@@ -42,7 +42,7 @@ namespace Minesweeper
      */
     int SetMinesQuantity(int rows, int cols, int levelOption)
     {
-        std::vector<double> factors = {0.125, 0.168, 0.208};
+        std::vector<double> factors = {0.05, 0.082, 0.125};
 
         if(levelOption >= factors.size())
             levelOption = factors.size() - 1;
@@ -59,7 +59,7 @@ namespace Minesweeper
         }
         else
         {
-            minesQuantity;
+            return minesQuantity;
         }
     }
 
@@ -392,14 +392,14 @@ namespace Minesweeper
             if(playerRow > 0)
                 --playerRow;
             else
-                playerRow = rows;
+                playerRow = rows-1;
         }
         else if(Common::IsKeyArrowLeft(key))
         {
             if(playerCol > 0)
                 --playerCol;
             else
-                playerCol = cols;
+                playerCol = cols-1;
         }
         else if(Common::IsKeyArrowBottom(key))
         {

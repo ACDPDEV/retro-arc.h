@@ -9,6 +9,8 @@
 #include "../../Common/Output.h"
 #include "BuscaminasDatabase.h"
 #include "BuscaminasService.h"
+#include "../../Tests/MenuViewTest.h" // <<<<<<<<<<< BORRAR CUANDO YA NO SE ESTÉ USANDO RetroArcTest namespace <<<< BORRAR
+#include "../../Tests/MinesweeperTest.h" // <<<<<<<<<<< BORRAR CUANDO YA NO SE ESTÉ USANDO RetroArcTest namespace <<<< BORRAR
 
 namespace Minesweeper
 {
@@ -22,7 +24,7 @@ namespace Minesweeper
         int cols = 10;
         int minesQuantity = 8;
         
-        const std::string gameOptions[] = 
+        const std::vector<std::string> gameOptions = 
         {
             "JUGAR",
             "CRÉDITOS",
@@ -31,7 +33,7 @@ namespace Minesweeper
         };
     
         const int minGameOption = 0;
-        const int maxGameOption = gameOptions->size() - 1;
+        const int maxGameOption = gameOptions.size() - 1;
         int gameOption = minGameOption;
     
         bool inGame = true;
@@ -42,6 +44,7 @@ namespace Minesweeper
             
             do
             {
+                RetroArcTest::PrintMenuTest(gameOptions, gameOption); // <<<<<<<<<<< BORRAR CUANDO YA NO SE ESTÉ USANDO RetroArcTest namespace <<<< BORRAR
                 /**
                  * 
                  * TODO
@@ -71,7 +74,7 @@ namespace Minesweeper
                 case 0:
                 {
                     
-                    const std::string levels[] =
+                    const std::vector<std::string> levels =
                     {
                         "FÁCIL",
                         "INTERMEDIO",
@@ -80,10 +83,11 @@ namespace Minesweeper
                     // SELECCIONAR NIVEL
     
                     const int minLevelOption = 0;
-                    const int maxLevelOption = levels->size() - 1;
+                    const int maxLevelOption = levels.size() - 1;
                     int levelOption = minLevelOption;
                     
                     do{
+                        RetroArcTest::PrintMenuTest(levels, levelOption); // <<<<<<<<<<< BORRAR CUANDO YA NO SE ESTÉ USANDO RetroArcTest namespace <<<< BORRAR
                         /**
                          * TODO
                          * 
@@ -135,6 +139,7 @@ namespace Minesweeper
     
                     while (!gameOver)
                     {
+                        RetroArcTest::PrintMinesweeperBoardTest(stateBoard, playerRow, playerCol);
                         /**
                          * 
                          * TODO:
@@ -162,9 +167,6 @@ namespace Minesweeper
                             }
                             else if(Minesweeper::IsWonGameState(stateBoard, minesQuantity))
                             {
-                                /**
-                                 * TODO: VALIDAR SI CUMPLE CON LA CONDICIÓN PARA GANAR
-                                 */
                                 wonGame = true;
                                 gameOver = true;
                             }
