@@ -1,25 +1,33 @@
 #pragma once
+#include "../Models/Player.h"
 
 namespace PokemonGame
 {
-    class Player;
+    class PokemonGame::Player;
     
     class Battle
     {
         private:
     
-            Player* playerOne;
-            Player* playerTwo;
+            PokemonGame::Player* playerOne;
+            PokemonGame::Player* playerTwo;
     
         public:
     
             Battle(
-                Player* playerOne,
-                Player* playerTwo);
+                PokemonGame::Player* playerOne,
+                PokemonGame::Player* playerTwo)
+                :playerOne(playerOne),
+                playerTwo(playerTwo)
+            {
+            }
     
             void Start();
 
-            void Play();
+            void Play()
+            {
+                
+            }
     
             void NextRound();
     

@@ -24,7 +24,10 @@ namespace PokemonGame
     
         public:
     
-            Player(const std::string& name);
+            Player(const std::string& name)
+                :name(name)
+            {
+            }
     
             ~Player();
     
