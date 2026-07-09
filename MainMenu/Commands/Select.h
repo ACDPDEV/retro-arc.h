@@ -4,10 +4,10 @@
 
 namespace MainMenu {
     void IncreaseOption(){
-        MainMenu::OPTION + 1;
+        OPTION++;
     }
 
     void DecreaseOption() {
-        MainMenu::OPTION - 1;
+        OPTION--;
     }
 }

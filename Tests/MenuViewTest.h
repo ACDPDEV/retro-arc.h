@@ -22,6 +22,6 @@ namespace RetroArcTest
             }
             std::cout << options[i] << std::endl;
         }
-    
+
     }
 }

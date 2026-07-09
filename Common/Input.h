@@ -264,17 +264,15 @@ inline std::string CastKeyToString(std::vector<int>& byteChar)
  */
 inline bool IsAlphaNumChar(std::vector<int>& byteChar)
 {
-    for (auto& ch : ALPHA_NUM_CHARS)
+    for (auto& ch : Common::ALPHA_NUM_CHARS)
     {
-        for (auto& ch : Common::ALPHA_NUM_CHARS)
+        if(ch == byteChar)
         {
-            if(ch == byteChar)
-            {
-                return true;
-            }
+            return true;
         }
-        return false;
     }
+    return false;
 }
+
 
 } // namespace Common
