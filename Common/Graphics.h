@@ -64,6 +64,8 @@ namespace Common
             GoToXY(x, y + i);         std::cout << leftBorder;
             GoToXY(x + width, y + i); std::cout << rightBorder;
         }
+
+        std::cout.flush();
     }
 
     /// @brief Dibuja un cuadro usando índices de estilo predefinidos de UnicodeGlyphs.h.
@@ -114,6 +116,8 @@ namespace Common
         }
         line += right;
         GoToXY(x, y); std::cout << line;
+
+        std::cout.flush();
     }
 
     /// @brief Dibuja una línea vertical con extremos y centro personalizados.
@@ -135,6 +139,8 @@ namespace Common
             GoToXY(x, y + i); std::cout << center;
         }
         GoToXY(x, y + length); std::cout << bottom;
+
+        std::cout.flush();
     }
 
     /// @brief Dibuja un rectángulo relleno con color.
@@ -160,6 +166,8 @@ namespace Common
         for (int i = 0; i < height; i++) {
             GoToXY(x, y + i); std::cout << Common::Color(foreground, background) << line;
         }
+
+        std::cout.flush();
     }
 
 
@@ -180,7 +188,10 @@ namespace Common
                 GoToXY(x, y + static_cast<int>(i)); std::cout << Common::Color(foreground, background) << text[i];
             }
         }
+
+        std::cout.flush();
     }
+
     inline void DrawBackground() {
         DrawFillRectangle(
             0, 0,
