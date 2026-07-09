@@ -3,6 +3,7 @@
 #include <string>
 #include <memory>
 #include "Battle.h"
+#include "../../../Common/Variables.h"
 
 
 namespace PokemonGame
@@ -10,38 +11,65 @@ namespace PokemonGame
     class Game
     {
     public:
-    
-        void start()
+        Game()
         {
-            std::string playerName1 = "Jugador 1";
-            std::string playerName2 = "Jugador 2";
+        }
+    
+        void Start()
+        {
+            /**
+             * TODO: Asignar los valores de las variables globales y volver a asignar cualquier cambio de los objetos
+             * al terminar el programa
+             */
+            std::string playerNameOne = Common::playerName; 
+            std::string playerNameTwo = "Jugador 2";
             bool running = true;
+            PokemonGame::Player playerOne(playerNameOne);
+            PokemonGame::Player playerTwo(playerNameTwo);
             while (running)
             {
-                // Invocar a la clase o función que contiene la lógica de vista para seleccionar la opción. 
-                // return : Debe devolver la opción
+
+                /**
+                 * 
+                 * TODO: 
+                 * Invocar a la clase o función que contiene la lógica de vista para seleccionar la opción. 
+                 * return : Debe devolver la opción
+                 * 
+                 * 
+                 */
                 int option = 0;
 
                 switch (option)
                 {
+                    // iniciar batalla
                     case 0:
                     {
-                        auto player1 = std::make_unique<PokemonGame::Player>(playerName1);
-                        auto player2 = std::make_unique<PokemonGame::Player>(playerName2);
-                        
-                        auto battle = std::make_unique<PokemonGame::Battle>(player1, player2);
+                        PokemonGame::Battle battle(playerOne, playerTwo);
 
-                        battle->Play();
+                        battle.Play();
                         break;
                     }
 
+                    // Salir
                     case 1:
                     {
                         running = false;
                         break;
                     }
+                    
+                    // Configuraciones (nombre, maximo de pokemones)
+                    case 2:
+                    {
+                        break;
+                    }
                 }
             }
+
+            Common::playerName = playerOne.GetName();
+            /**
+             * TODO: Implementar variable global playerNameTwo y reasignar su valor
+             */
+            Common::playerName = playerTwo.GetName();
         }
     };
 }
