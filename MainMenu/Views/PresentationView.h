@@ -12,8 +12,8 @@
 #include "../../Common/Utils.h"
 #include "../../Common/Theme.h"
 #include "../../Common/Sprite.h"
-#include "../Components/ArcadeLeft.h"
-#include "../Components/ArcadeRight.h"
+#include "../Sprites/ArcadeLeft.h"
+#include "../Sprites/ArcadeRight.h"
 
 
 namespace MainMenu {
