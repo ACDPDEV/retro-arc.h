@@ -34,10 +34,16 @@ namespace Common {
         const int messageX = AlignedX(x, width, messageWidth, "center");
         const int messageY = RelativeY(y, + height);
         int cursorX, cursorY;
+        std::string cursorChar = QUADRANTS[5];
 
-        if (input == "") {
+
+        if (Length(input) == 0) {
             cursorX = x;
             cursorY = y;
+        } else if (Length(input) >= width - 1) {
+            cursorX = RelativeX(x, width - 1);
+            cursorY = y;
+            cursorChar = "";
         } else {
             cursorX = RelativeX(x, Length(formatedInput[formatedInput.size() - 1]));
             cursorY = y;
