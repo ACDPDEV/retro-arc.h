@@ -208,29 +208,48 @@ inline int ReadConsoleChar(std::vector<std::tuple<int, int>>& validCharRanges)
  */
 inline std::vector<int> ReadConsoleChar()
 {
-    std::vector<int> byteChar = {};
-    int key;
+    std::vector<int> bytes;
 
-    key = Getch();
-    byteChar.push_back(key);
+    int key = Getch();
+    bytes.push_back(key);
 
-    if (key == 0 || key == 224)
+    #ifdef _WIN32
+        // Teclas especiales de conio.h
+        if (key == 0 || key == 224)
+        {
+            bytes.push_back(Getch());
+            return bytes;
+        }
+    #else
+        // Secuencias ANSI (ESC ...)
+        if (key == 27)
+        {
+            // Leer todos los bytes disponibles de la secuencia
+            while (Kbhit())
+                bytes.push_back(Getch());
+
+            return bytes;
+        }
+    #endif
+
+    // Compara con AND lógico bit a bit para validar si es un caracter con cada cantidad de bytes
+    if ((key & 0b11100000) == 0b11000000)         // 2 bytes
     {
-        // Tecla especial
-        byteChar.push_back(Getch());
+        bytes.push_back(Getch());
     }
-    else
+    else if ((key & 0b11110000) == 0b11100000)    // 3 bytes
     {
-        // Compara con AND lógico bit a bit para validar si es un caracter con cada cantidad de bytes
-        if ((key & 0b11100000) == 0b11000000) // Para 2 bytes
-            byteChar.push_back(Getch());
-        else if ((key & 0b11110000) == 0b11100000) // Para 3 bytes
-            byteChar.push_back(Getch()), byteChar.push_back(Getch());
-        else if ((key & 0b11111000) == 0b11110000) // Para 4 bytes
-            byteChar.push_back(Getch()), byteChar.push_back(Getch()), byteChar.push_back(Getch());
+        bytes.push_back(Getch());
+        bytes.push_back(Getch());
+    }
+    else if ((key & 0b11111000) == 0b11110000)    // 4 bytes
+    {
+        bytes.push_back(Getch());
+        bytes.push_back(Getch());
+        bytes.push_back(Getch());
     }
 
-    return byteChar;
+    return bytes;
 }
 
 /**

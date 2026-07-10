@@ -80,7 +80,9 @@ namespace Common
     ///          rompiendo las comparaciones bit a bit (key & 0b11100000) en el código que
     ///          decodifica UTF-8 a partir de este valor.
     inline int Getch() {
-        return getchar() & 0xFF;
+        unsigned char ch;
+        read(STDIN_FILENO, &ch, 1);
+        return ch;
     }
 
     /// @brief Habilita el procesamiento de color verdadero (True Color / ANSI)
