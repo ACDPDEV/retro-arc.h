@@ -14,12 +14,12 @@ namespace PokemonGame
             /**
              * TODO: Referenciar al menú de selección de pokemon
              */
-            
+
             int option = 0; // ShowPokemonMenu()
     
-            PokemonGame::Pokemon* pokemon = PokemonGame::PokemonFactory::Create(option);
+            std::unique_ptr<PokemonGame::Pokemon> pokemon = PokemonGame::PokemonFactory::Create(option);
     
-            player.AddPokemon(pokemon);
+            player.AddPokemon(std::move(pokemon));
         }
     }
 }

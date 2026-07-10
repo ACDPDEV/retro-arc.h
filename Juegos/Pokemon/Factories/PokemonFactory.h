@@ -7,9 +7,22 @@ namespace PokemonGame
         private:
             // static int totalDbPokemon;
         public:
-            static PokemonGame::Pokemon* Create(int option)
+            static std::unique_ptr<PokemonGame::Pokemon> Create(int option)
             {
-                
+                switch (option)
+                {
+                    // case 0:
+                    //     return std::make_unique<Pikachu>();
+
+                    // case 1:
+                    //     return std::make_unique<Charmander>();
+
+                    // case 2:
+                    //     return std::make_unique<Bulbasaur>();
+
+                    default:
+                        return nullptr;
+                }
             }
     };
 }
