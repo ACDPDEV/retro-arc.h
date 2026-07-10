@@ -17,8 +17,8 @@ int main()
     /* PrintPrimaryBox(30, 10, 36, 3, "", {255, 236, 153}, {255, 255, 255}, {255, 236, 153});
     Common::DrawBottomBar(); */
    /*  Pokemon::BattleOptionsView(14, "PSYDUCK",  "ROCKRUFF", "PSYDUCK"); */
-    /* Pokemon::BattleOptionsFightFaintedView(14, "PSYDUCK",  "ROCKRUFF", "PSYDUCK"); */
-    Pokemon::BattleBeginningTitleView();
+   // Pokemon::BattleOptionsFightFaintedView(14, "PSYDUCK",  "ROCKRUFF", "PSYDUCK");
+   Pokemon::BattleBeginningTitleView();
     return 0;
 }
 
