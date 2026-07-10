@@ -3,6 +3,9 @@
 #include <vector>
 
 namespace Common {
+    // SPECIAL KEYS
+    const std::vector<int> SPECIAL_ESC = {0, 224};
+
     // ACTION KEYS
     const std::vector<int> KEY_ENTER = {13};
     const std::vector<int> KEY_SPACE = {32};
