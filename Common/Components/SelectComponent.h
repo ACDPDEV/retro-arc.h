@@ -37,19 +37,27 @@ namespace Common {
         for (int i = 0; i < options.size(); i++) {
             const std::string& rest = RepeatString(" ", selectWidth - Length(options[i]) - Length(leftPadding) - Length(rightPadding));
 
+            const int optionX = x;
+            const int optionY = y + i * (innerGap + 1) + verticalPadding[0];
+            const int optionWidth = selectWidth;
+            const int optionHeight = 1;
+
+            std::string option;
+
+
             if (selectedOption == i) {
-                const std::string& option = selectedPadding[0] + options[i] + rest + selectedPadding[1];
+                option = selectedPadding[0] + options[i] + rest + selectedPadding[1];
                 DrawText(
-                    x, y + (i * (innerGap + 1) + verticalPadding[0]),
-                    selectWidth, 1,
+                    optionX, optionY,
+                    optionWidth, optionHeight,
                     {option},
                     FOREGROUND_DARK, selectedColor
                 );
             } else {
-                const std::string& option = leftPadding + options[i] + rest + rightPadding;
+                option = leftPadding + options[i] + rest + rightPadding;
                 DrawText(
-                    x, y + (i * (innerGap + 1) + verticalPadding[0]),
-                    selectWidth, 1,
+                    optionX, optionY,
+                    optionWidth, optionHeight,
                     {option},
                     FOREGROUND_LIGHT, backgroundColor
                 );
