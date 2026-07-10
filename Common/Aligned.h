@@ -8,7 +8,7 @@
 
 namespace Common
 {
-    int AlignedX(int x, int width, int childWidth, std::string alignment) {
+    inline int AlignedX(int x, int width, int childWidth, std::string alignment) {
         if (alignment == "center") {
             return x + (width - childWidth) / 2;
         } else if (alignment == "right") {
@@ -18,8 +18,8 @@ namespace Common
         }
         return x;
     }
-    
-    int AlignedY(int y, int height, int childHeight, std::string alignment) {
+
+    inline int AlignedY(int y, int height, int childHeight, std::string alignment) {
         if (alignment == "center") {
             return y + (height - childHeight) / 2;
         } else if (alignment == "bottom") {
@@ -29,12 +29,12 @@ namespace Common
         }
         return y;
     }
-    
-    int RelativeX(int x, int ChildX) {
+
+    inline int RelativeX(int x, int ChildX) {
         return ChildX + x;
     }
-    
-    int RelativeY(int y, int ChildY) {
+
+    inline int RelativeY(int y, int ChildY) {
         return ChildY + y;
     }
 }

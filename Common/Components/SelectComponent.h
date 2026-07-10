@@ -31,14 +31,27 @@ namespace Common {
         );
 
         for (int i = 0; i < options.size(); i++) {
-            GoToXY(x, y + i);
             if (selectedOption == i) {
-                DrawFillRectangle(x, y, selectWidth, 1, EMPTY_BLOCK, FOREGROUND_DARK, selectedColor);
-                GoToXY(x, y + i);
-                std::string paddedOption = selectedPadding[0] + options[i] + selectedPadding[1];
-                std::cout << Color(FOREGROUND_DARK, selectedColor) << paddedOption;
+                const std::string& option = selectedPadding[0] + options[i] + selectedPadding[1];
+                DrawFillRectangle(
+                    x, y + i,
+                    selectWidth, 1,
+                    EMPTY_BLOCK, FOREGROUND_DARK, selectedColor
+                );
+                DrawText(
+                    x, y + i,
+                    selectWidth, 1,
+                    std::vector<std::string>{option},
+                    FOREGROUND_DARK, selectedColor
+                );
             } else {
-                std::cout << Color(FOREGROUND_DARK, backgroundColor) << leftPadding << options[i] << rightPadding;
+                const std::string& option = leftPadding + options[i] + rightPadding;
+                DrawText(
+                    x, y + i,
+                    selectWidth, 1,
+                    std::vector<std::string>{option},
+                    FOREGROUND_DARK, backgroundColor
+                );
             }
         }
     }
