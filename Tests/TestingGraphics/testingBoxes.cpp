@@ -4,6 +4,8 @@
 #include "../../Common/Music.h"
 #include "../../Common/Terminal.h"
 #include "../../Common/Aligned.h"
+#include "../../Common/Components/BottomBar.h"
+#include "../../Juegos/Pokemon/PokemonUI.h"
 using namespace std;
 
 void PrintPrimaryBox(int x, int y, int width, int height, string text, array<int, 3> textColor, array<int, 3> borderColor, array<int, 3> fillColor);
@@ -12,7 +14,11 @@ int main()
 {
     // BLANCO {255,255,255}
     // CREMA {255, 236,153}
-    PrintPrimaryBox(30, 10, 36, 3, "", {255, 236, 153}, {255, 255, 255}, {255, 236, 153});
+    /* PrintPrimaryBox(30, 10, 36, 3, "", {255, 236, 153}, {255, 255, 255}, {255, 236, 153});
+    Common::DrawBottomBar(); */
+   /*  Pokemon::BattleOptionsView(14, "PSYDUCK",  "ROCKRUFF", "PSYDUCK"); */
+    /* Pokemon::BattleOptionsFightFaintedView(14, "PSYDUCK",  "ROCKRUFF", "PSYDUCK"); */
+    Pokemon::BattleBeginningTitleView();
     return 0;
 }
 

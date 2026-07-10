@@ -59,5 +59,6 @@ namespace Common
     /// @brief Color 9: Rojo brillante (#B91C1C)
     const std::array<int, 3> DARK_RED = {182, 54, 59};
     
-
+    /// @brief Color 10: Amarillo (#B91C1C)
+    const std::array<int, 3> YELLOW = {255, 202, 2};
 }

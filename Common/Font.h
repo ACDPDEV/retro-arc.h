@@ -343,6 +343,18 @@ namespace Common
         "██"
     };
 
+    const std::array<std::string, 9> FONT_EXCLAMATION = {
+        " ▄█ ",
+        "███ ",
+        "███▌",
+        "███▌",
+        "███ ",
+        "█▀  ",
+        "    ",
+        "██  ",
+        "    "
+    };
+
         const std::array<std::string, 4> FONT_a = {
             " ██ ",
             "█  █",

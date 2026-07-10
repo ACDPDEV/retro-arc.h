@@ -203,21 +203,25 @@ namespace Common
 
 
 
-    inline void PrintPrimaryBox(int x, int y, int width, int height, std::string text, std::array<int, 3> textColor, std::array<int, 3> borderColor, std::array<int, 3> fillColor)
+    inline void PrintPrimaryBox(int x, int y, int width, int height, std::vector<std::string> text, std::array<int, 3> textColor, std::array<int, 3> borderColor, std::array<int, 3> fillColor)
     {
-        const int textX = AlignedX(x, width, text.length(), "center");
-        const int textY = AlignedY(y, height, 1, "center");
+        const int textY = AlignedY(y, height, text.size(), "center");
 
-        Common::DrawFillRectangle(x, y - 1, width, 1, Common::LOWER_HALF_BLOCK, borderColor, {-1, -1, -1}); // borde superior
-        Common::DrawFillRectangle(x, y + height, width, 1, Common::UPPER_HALF_BLOCK, borderColor, {-1, -1, -1}); // borde inferior
-        Common::DrawFillRectangle(x, y, width, height, Common::FULL_BLOCK, borderColor, {-1, -1, -1}); // bordes de los costados
-        Common::DrawFillRectangle(x + 1, y, width - 2, height, Common::FULL_BLOCK, fillColor, {-1, -1, -1}); // relleno del recuadro
-
-        Common::DrawText(
-            textX, textY,
+        Common::DrawFillRectangle(x, y - 1, width, 1, Common::LOWER_HALF_BLOCK, borderColor, BACKGROUND); // borde superior
+        Common::DrawFillRectangle(x, y + height, width, 1, Common::UPPER_HALF_BLOCK, borderColor, BACKGROUND); // borde inferior
+        Common::DrawFillRectangle(x, y, width, height, Common::FULL_BLOCK, borderColor, BACKGROUND); // bordes de los costados
+        Common::DrawFillRectangle(x + 1, y, width - 2, height, Common::FULL_BLOCK, fillColor, BACKGROUND); // relleno del recuadro
+        
+        for (size_t i = 0; i < text.size(); i++)
+        {
+            const int textX = AlignedX(x, width, Common::Length(text[i]), "center");
+            Common::DrawText(
+            textX, textY+i,
             width, height,
-            {text},
+            {text[i]},
             textColor, fillColor);
+        }
+        
 
     }
 }
