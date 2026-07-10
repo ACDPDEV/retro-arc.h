@@ -4,6 +4,7 @@
 #include <memory>
 #include "Battle.h"
 #include "../../../Common/Variables.h"
+#include "../Functions/BuildTeam.h"
 
 
 namespace PokemonGame
@@ -11,6 +12,12 @@ namespace PokemonGame
     class Game
     {
     public:
+
+        /**
+         * @brief Cantidad de pokemon que puede tener cada jugador
+         */
+        static inline int maxPokemon = 6;
+
         Game()
         {
         }
@@ -44,9 +51,12 @@ namespace PokemonGame
                     // iniciar batalla
                     case 0:
                     {
+                        BuildTeam(playerOne);
+                        BuildTeam(playerTwo);
+
                         PokemonGame::Battle battle(playerOne, playerTwo);
 
-                        battle.Play();
+                        battle.Start();
                         break;
                     }
 

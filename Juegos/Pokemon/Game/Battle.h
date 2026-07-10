@@ -1,5 +1,6 @@
 #pragma once
 #include "../Models/Player.h"
+#include "Round.h"
 
 namespace PokemonGame
 {
@@ -9,24 +10,52 @@ namespace PokemonGame
     {
         private:
     
-            PokemonGame::Player* playerOne;
-            PokemonGame::Player* playerTwo;
+            PokemonGame::Player& playerOne;
+            PokemonGame::Player& playerTwo;
+            bool finished = false;
     
         public:
     
             Battle(
-                PokemonGame::Player* playerOne,
-                PokemonGame::Player* playerTwo)
-                :playerOne(playerOne),
+                PokemonGame::Player& playerOne,
+                PokemonGame::Player& playerTwo)
+                :
+                playerOne(playerOne),
                 playerTwo(playerTwo)
             {
             }
     
-            void Start();
-
-            void Play()
+            void Start()
             {
-                
+                while (!finished)
+                {
+                    PokemonGame::Round round(*this, playerOne, playerTwo);
+
+                    round.Play();
+
+                    EvaluateBattle();
+                }
+            }
+
+
+            void EvaluateBattle()
+            {
+                if (playerOne.HasLost())
+                {
+                    finished = true;
+                }
+
+                if (playerTwo.HasLost())
+                {
+                    finished = true;
+                }
+            }
+            
+            bool IsFinished()
+            {
+                /**
+                 * TODO: Implementar método
+                 */
             }
     
             void NextRound();
