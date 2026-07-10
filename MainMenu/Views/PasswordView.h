@@ -26,7 +26,7 @@ namespace MainMenu {
         const int inputWidth = MAX_PASSWORD_LEN;
         const int inputHeight = 1;
 
-        Common::HideCursor();
+        Common::DrawBackground();
         TitleComponent();
 
         if (BLOCKED) {
@@ -63,6 +63,6 @@ namespace MainMenu {
             }
         }
 
-        Common::GoToXY(0, Common::HEIGHT_SCREEN + 1);
+        Common::GoToEnd();
     }
 }

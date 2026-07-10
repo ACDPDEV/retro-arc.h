@@ -39,7 +39,7 @@ namespace MainMenu {
             Common::Sleep(400 / (k + 1));
         }
 
-        Common::GoToXY(0, Common::HEIGHT_SCREEN + 1);
+        Common::GoToEnd();
         Common::Sleep(1000);
     }
 }
