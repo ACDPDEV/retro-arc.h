@@ -18,6 +18,9 @@ namespace PokemonGame
     
             SwitchPokemonCommand(PokemonGame::Pokemon* pokemon);
     
-            void Execute(PokemonGame::Battle& battle) override;
+            void Execute(
+                PokemonGame::Battle& battle,
+                PokemonGame::Player& actor,
+                PokemonGame::Player& opponent) override;
     };
 }

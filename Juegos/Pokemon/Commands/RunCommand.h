@@ -8,6 +8,9 @@ namespace PokemonGame
     {
         public:
     
-            void Execute(PokemonGame::Battle& battle) override;
+            void Execute(
+                PokemonGame::Battle& battle,
+                PokemonGame::Player& actor,
+                PokemonGame::Player& opponent) override;
     };
 }

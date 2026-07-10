@@ -17,6 +17,9 @@ namespace Pokemon
     
             AttackCommand(PokemonGame::Move* move);
     
-            void Execute(PokemonGame::Battle& battle) override;
+            void Execute(
+                PokemonGame::Battle& battle,
+                PokemonGame::Player& actor,
+                PokemonGame::Player& opponent) override;
     };
 }
