@@ -10,10 +10,13 @@
 #include <string>
 #include <vector>
 
+#include "Consts.h"
 #include "Terminal.h"
+#include "Theme.h"
 #include "UnicodeGlyphs.h"
 #include "Color.h"
 #include "Utils.h"
+#include "Aligned.h"
 
 namespace Common
 {
@@ -50,19 +53,21 @@ namespace Common
             TopHorizontalLine += topBorder;
             BottomHorizontalLine += bottomBorder;
         }
-    
+
         GoToXY(x, y);
         std::cout << topLeftCorner << TopHorizontalLine << topRightCorner;
-    
+
         GoToXY(x, y + height);
         std::cout << BottomLeftCorner << BottomHorizontalLine << BottomRightCorner;
-    
+
         for (int i = 1; i < height; i++) {
             GoToXY(x, y + i);         std::cout << leftBorder;
             GoToXY(x + width, y + i); std::cout << rightBorder;
         }
+
+        std::cout.flush();
     }
-    
+
     /// @brief Dibuja un cuadro usando índices de estilo predefinidos de UnicodeGlyphs.h.
     /// @param x Coordenada X de la esquina superior izquierda.
     /// @param y Coordenada Y de la esquina superior izquierda.
@@ -90,7 +95,7 @@ namespace Common
             CORNERS[corners[3]][3]
         );
     }
-    
+
     /// @brief Dibuja una línea horizontal con extremos y centro personalizados.
     /// @param x Coordenada X inicial.
     /// @param y Coordenada Y.
@@ -111,8 +116,10 @@ namespace Common
         }
         line += right;
         GoToXY(x, y); std::cout << line;
+
+        std::cout.flush();
     }
-    
+
     /// @brief Dibuja una línea vertical con extremos y centro personalizados.
     /// @param x Coordenada X.
     /// @param y Coordenada Y inicial.
@@ -132,8 +139,10 @@ namespace Common
             GoToXY(x, y + i); std::cout << center;
         }
         GoToXY(x, y + length); std::cout << bottom;
+
+        std::cout.flush();
     }
-    
+
     /// @brief Dibuja un rectángulo relleno con color.
     /// @param x Coordenada X de la esquina superior izquierda.
     /// @param y Coordenada Y de la esquina superior izquierda.
@@ -157,9 +166,11 @@ namespace Common
         for (int i = 0; i < height; i++) {
             GoToXY(x, y + i); std::cout << Common::Color(foreground, background) << line;
         }
+
+        std::cout.flush();
     }
-    
-    
+
+
     inline void DrawText(
         int x, int y,
         int width, int height,
@@ -177,5 +188,40 @@ namespace Common
                 GoToXY(x, y + static_cast<int>(i)); std::cout << Common::Color(foreground, background) << text[i];
             }
         }
+
+        std::cout.flush();
+    }
+
+    inline void DrawBackground() {
+        DrawFillRectangle(
+            0, 0,
+            WIDTH_SCREEN, HEIGHT_SCREEN,
+            EMPTY_BLOCK,
+            FOREGROUND_DARK, BACKGROUND
+        );
+    }
+
+
+
+    inline void PrintPrimaryBox(int x, int y, int width, int height, std::vector<std::string> text, std::array<int, 3> textColor, std::array<int, 3> borderColor, std::array<int, 3> fillColor)
+    {
+        const int textY = AlignedY(y, height, text.size(), "center");
+
+        Common::DrawFillRectangle(x, y - 1, width, 1, Common::LOWER_HALF_BLOCK, borderColor, BACKGROUND); // borde superior
+        Common::DrawFillRectangle(x, y + height, width, 1, Common::UPPER_HALF_BLOCK, borderColor, BACKGROUND); // borde inferior
+        Common::DrawFillRectangle(x, y, width, height, Common::FULL_BLOCK, borderColor, BACKGROUND); // bordes de los costados
+        Common::DrawFillRectangle(x + 1, y, width - 2, height, Common::FULL_BLOCK, fillColor, BACKGROUND); // relleno del recuadro
+        
+        for (size_t i = 0; i < text.size(); i++)
+        {
+            const int textX = AlignedX(x, width, Common::Length(text[i]), "center");
+            Common::DrawText(
+            textX, textY+i,
+            width, height,
+            {text[i]},
+            textColor, fillColor);
+        }
+        
+
     }
 }

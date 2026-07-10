@@ -13,30 +13,56 @@
 #include "../../Common/Utils.h"
 #include "../../Common/Theme.h"
 #include "../../Common/Input.h"
-#include "../../Common/Auth.h"
+#include "../../Common/Components/InputComponent.h"
 
+#include "../Commands/Auth.h"
 #include "../Components/TitleComponent.h"
-#include "MainMenuView.h"
-#include "WrongPasswordView.h"
+#include "../Database/Env.h"
 
-inline void PasswordMenu() {
-    std::string input;
+namespace MainMenu {
+    inline void PasswordView() {
+        const int inputX = Common::AlignedX(0, Common::WIDTH_SCREEN, MAX_PASSWORD_LEN, "center");
+        const int inputY = Common::AlignedY(0, Common::HEIGHT_SCREEN, 1, "center") + 1;
+        const int inputWidth = MAX_PASSWORD_LEN;
+        const int inputHeight = 1;
 
-    int inputX = Common::AlignedX(0, Common::WIDTH_SCREEN, Common::MAX_PASSWORD_LEN, "center");
-    int inputY = Common::AlignedY(0, Common::HEIGHT_SCREEN, 1, "center") + 1;
+        Common::HideCursor();
+        TitleComponent();
 
-    Common::HideCursor();
-    TitleComponent();
-    bool passed = Common::Key(inputX, inputY);
-    std::cout << passed;
+        if (BLOCKED) {
+            if (HIDDEN_PASSWORD) {
+                Common::TextBoxComponent(
+                    inputX, inputY,
+                    inputWidth, inputHeight,
+                    INPUT,
+                    LABEL, MESSAGE, HIDDEN_CHAR
+                );
+            } else {
+                Common::TextBoxComponent(
+                    inputX, inputY,
+                    inputWidth, inputHeight,
+                    INPUT,
+                    LABEL, MESSAGE
+                );
+            }
+        } else {
+            if (HIDDEN_PASSWORD) {
+                Common::InputComponent(
+                    inputX, inputY,
+                    inputWidth, inputHeight,
+                    INPUT,
+                    LABEL, MESSAGE, HIDDEN_CHAR
+                );
+            } else {
+                Common::InputComponent(
+                    inputX, inputY,
+                    inputWidth, inputHeight,
+                    INPUT,
+                    LABEL, MESSAGE
+                );
+            }
+        }
 
-    if (passed) {
-        MainMenuView();
-    } else {
-        WrongPasswordView();
+        Common::GoToXY(0, Common::HEIGHT_SCREEN + 1);
     }
-
-    Common::HideCursor();
-    Common::Color(Common::COLOR_DEFAULT, Common::COLOR_DEFAULT);
-    Common::GoToXY(0, Common::HEIGHT_SCREEN + 1);
 }
