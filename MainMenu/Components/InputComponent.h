@@ -1,20 +1,24 @@
 #pragma once
 
+#include <iostream>
+#include <string>
+#include <vector>
+
 #include "../../Common/Graphics.h"
 #include "../../Common/Aligned.h"
 #include "../../Common/Theme.h"
 #include "../../Common/Consts.h"
+#include "../../Common/Variables.h"
+#include "../../Common/Input.h"
 
-#include "../Consts/Env.h"
-
-#include <string>
-#include <vector>
+#include "../BD/Env.h"
+#include "../BD/Labels.h"
 
 namespace MainMenu {
-    inline void InputComponent(
+    inline void TextBoxComponent(
         int x, int y,
         int width, int height,
-        std::string input,
+        std::string &input,
         std::string label = "",
         std::string message = "",
         std::string replaceChar = ""
@@ -46,13 +50,13 @@ namespace MainMenu {
             labelX, labelY,
             labelWidth, labelHeight,
             {label},
-            Common::FOREGROUND_DARK, Common::BACKGROUND
+            Common::FOREGROUND_LIGHT, Common::BACKGROUND
         );
         Common::DrawFillRectangle(
             x, y,
             width, height,
             Common::EMPTY_BLOCK,
-            Common::FOREGROUND_DARK, Common::SELECTION_BACKGROUND
+            Common::FOREGROUND_LIGHT, Common::SELECTION_BACKGROUND
         );
         Common::DrawText(
             messageX, messageY,
@@ -66,7 +70,7 @@ namespace MainMenu {
                 x, y,
                 width, height,
                 formatedInput,
-                Common::FOREGROUND_DARK, Common::SELECTION_BACKGROUND
+                Common::FOREGROUND_LIGHT, Common::SELECTION_BACKGROUND
             );
         } else {
             Common::DrawText(
@@ -76,11 +80,52 @@ namespace MainMenu {
                     replaceChar,
                     Common::Length(input)
                 )},
-                Common::FOREGROUND_DARK, Common::SELECTION_BACKGROUND
+                Common::FOREGROUND_LIGHT, Common::SELECTION_BACKGROUND
             );
         }
 
-        Common::DrawText(cursorX, cursorY, -1, -1, {Common::QUADRANTS[5]}, Common::FOREGROUND_DARK, Common::SELECTION_BACKGROUND);
+        Common::DrawText(cursorX, cursorY, -1, -1, {Common::QUADRANTS[5]}, Common::FOREGROUND_LIGHT, Common::SELECTION_BACKGROUND);
+    }
 
+    inline void InputComponent(
+        int x, int y,
+        int width, int height,
+        std::string& input,
+        std::string label = "",
+        std::string message = "",
+        std::string replaceChar = ""
+    ) {
+        while (true) {
+            TextBoxComponent(
+                x, y,
+                width, height,
+                input,
+                label, message, replaceChar
+            );
+
+            Common::key = Common::ReadConsoleChar();
+
+            if (Common::key == Common::KEY_ENTER) {
+                break;
+            } else if (Common::key == Common::KEY_BACKSPACE) {
+                if (!input.empty()) {
+                    input.pop_back();
+                    TextBoxComponent(
+                        x, y,
+                        width, height,
+                        input,
+                        label, message, replaceChar
+                    );
+                }
+                continue;
+            } else if (input.size() < MAX_PASSWORD_LEN && Common::IsAlphaNumChar(Common::key)) {
+                for (char c : Common::CastKeyToString(Common::key)) input.push_back(c);
+                TextBoxComponent(
+                    x, y, width, height,
+                    input,
+                    label, message, replaceChar
+                );
+            }
+        }
     }
 }
