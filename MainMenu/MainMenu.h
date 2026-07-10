@@ -1,13 +1,16 @@
-#include "BD/Env.h"
-#include "Commands/Auth.h"
-#include "BD/Labels.h"
-#include "BD/Labels.h"
+#pragma once
+
+#include <iostream>
+
 #include "../Common/Components/TransitionComponent.h"
+
+#include "Database/Env.h"
+#include "Commands/Auth.h"
+#include "Database/Labels.h"
 #include "Views/MainMenuView.h"
 #include "Views/PresentationView.h"
 #include "Views/PasswordView.h"
 #include "Views/WrongPasswordView.h"
-#include <iostream>
 
 namespace MainMenu {
     inline void MainMenu() {

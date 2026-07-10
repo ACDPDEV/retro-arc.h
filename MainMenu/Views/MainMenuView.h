@@ -6,7 +6,7 @@
 #include "../../Common/Components/SelectComponent.h"
 
 #include "../Components/TitleComponent.h"
-#include "../BD/Options.h"
+#include "../Database/Options.h"
 
 namespace MainMenu {
     inline void MainMenuView() {
