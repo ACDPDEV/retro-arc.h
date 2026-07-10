@@ -29,7 +29,7 @@ namespace PokemonGame
             {
             }
 
-            std::unique_ptr<PokemonGame::Command> Player::ChooseCommand(Battle& battle)
+            std::unique_ptr<PokemonGame::Command> ChooseCommand(Battle& battle)
             {
                 /**
                  * TODO: UI para seleccionar la opción
