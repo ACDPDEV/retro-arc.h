@@ -29,11 +29,21 @@ namespace Pokemon
 
         Common::EnableUTF8();
         Common::Clear();
-        Common::HideCursor();
         Common::DrawBackground();
+        Common::HideCursor();
         for (int k = 0; k < 100; k++) {
             for (int i = 0; i < FightTitle.size(); i++) {
-                Common::DrawText(Common::AlignedX(0, Common::WIDTH_SCREEN, Common::Length(FightTitle[i]), "center"), Common::AlignedY(-5, Common::HEIGHT_SCREEN, 9, "center") + i, -1, -1, {FightTitle[i]}, {Common::BACKGROUND[0] + (FightTitleColor[i][0] - Common::BACKGROUND[0]) * k / 100, Common::BACKGROUND[1] + (FightTitleColor[i][1] - Common::BACKGROUND[1]) * k / 100, Common::BACKGROUND[2] + (FightTitleColor[i][2] - Common::BACKGROUND[2]) * k / 100}, Common::BACKGROUND);
+                Common::DrawText(Common::AlignedX(0, Common::WIDTH_SCREEN, Common::Length(FightTitle[i]), "center"), Common::AlignedY(0, Common::HEIGHT_SCREEN, 9, "center") + i, -1, -1, {FightTitle[i]}, {Common::BACKGROUND[0] + (FightTitleColor[i][0] - Common::BACKGROUND[0]) * k / 100, Common::BACKGROUND[1] + (FightTitleColor[i][1] - Common::BACKGROUND[1]) * k / 100, Common::BACKGROUND[2] + (FightTitleColor[i][2] - Common::BACKGROUND[2]) * k / 100}, Common::BACKGROUND);
+             /*    Common::GoToXY(0, Common::HEIGHT_SCREEN + 1); */
+            }
+            std::cout.flush();
+            Common::Sleep(400 / (k + 1));
+        }
+            Common::Sleep(400);
+        for (int k = 100; k > 0; k--) {
+            for (int i = 0; i < FightTitle.size(); i++) {
+                Common::DrawText(Common::AlignedX(0, Common::WIDTH_SCREEN, Common::Length(FightTitle[i]), "center"), Common::AlignedY(0, Common::HEIGHT_SCREEN, 9, "center") + i, -1, -1, {FightTitle[i]}, {Common::BACKGROUND[0] + (FightTitleColor[i][0] - Common::BACKGROUND[0]) * k / 100, Common::BACKGROUND[1] + (FightTitleColor[i][1] - Common::BACKGROUND[1]) * k / 100, Common::BACKGROUND[2] + (FightTitleColor[i][2] - Common::BACKGROUND[2]) * k / 100}, Common::BACKGROUND);
+                /* Common::GoToXY(0, Common::HEIGHT_SCREEN + 1); */
             }
             std::cout.flush();
             Common::Sleep(400 / (k + 1));
@@ -54,9 +64,11 @@ namespace Pokemon
 
             // Cajas de vidas
                 // Caja de vida 1
-        Common::DrawLifeBar(InformationBox_1X + 2 * Margin, InformationBox_1Y + Margin, BoxWitdh - 5 * Margin, Common::RED, Common::LIGHT_GREEN, Common::GRAY);
+        Common::DrawLifeBar(InformationBox_1X + 2 * Margin, InformationBox_1Y + Margin, BoxWitdh/2 - 2 * Margin, Common::RED, Common::YELLOW, Common::GRAY);
+        Common::DrawLifeBar(InformationBox_1X + 2 * Margin+BoxWitdh/2 - 2 * Margin, InformationBox_1Y + Margin, BoxWitdh/2 - 3 * Margin, Common::YELLOW, Common::LIGHT_GREEN, Common::GRAY);
                 // Caja de vida 2
-        Common::DrawLifeBar(InformationBox_2X + 2 * Margin, InformationBox_2Y + Margin, BoxWitdh - 5 * Margin, Common::RED, Common::LIGHT_GREEN, Common::GRAY);
+        Common::DrawLifeBar(InformationBox_2X + 2 * Margin, InformationBox_2Y + Margin, BoxWitdh/2 - 2 * Margin, Common::RED, Common::YELLOW, Common::GRAY);
+        Common::DrawLifeBar(InformationBox_2X + 2 * Margin+BoxWitdh/2 - 2 * Margin, InformationBox_2Y + Margin, BoxWitdh/2 - 3 * Margin, Common::YELLOW, Common::LIGHT_GREEN, Common::GRAY);
 
             // Nombres
         Common::GoToXY(InformationBox_1X + 2 * Margin, InformationBox_1Y + Margin / 2);
