@@ -13,10 +13,10 @@
 #include "../../Common/Utils.h"
 #include "../../Common/Theme.h"
 #include "../../Common/Input.h"
+#include "../../Common/Components/InputComponent.h"
 
 #include "../Commands/Auth.h"
 #include "../Components/TitleComponent.h"
-#include "../Components/InputComponent.h"
 #include "../BD/Env.h"
 
 namespace MainMenu {
@@ -31,14 +31,14 @@ namespace MainMenu {
 
         if (BLOCKED) {
             if (HIDDEN_PASSWORD) {
-                TextBoxComponent(
+                Common::TextBoxComponent(
                     inputX, inputY,
                     inputWidth, inputHeight,
                     INPUT,
                     LABEL, MESSAGE, HIDDEN_CHAR
                 );
             } else {
-                TextBoxComponent(
+                Common::TextBoxComponent(
                     inputX, inputY,
                     inputWidth, inputHeight,
                     INPUT,
@@ -47,14 +47,14 @@ namespace MainMenu {
             }
         } else {
             if (HIDDEN_PASSWORD) {
-                InputComponent(
+                Common::InputComponent(
                     inputX, inputY,
                     inputWidth, inputHeight,
                     INPUT,
                     LABEL, MESSAGE, HIDDEN_CHAR
                 );
             } else {
-                InputComponent(
+                Common::InputComponent(
                     inputX, inputY,
                     inputWidth, inputHeight,
                     INPUT,
