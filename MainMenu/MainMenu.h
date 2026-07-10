@@ -2,7 +2,7 @@
 #include "Commands/Auth.h"
 #include "BD/Labels.h"
 #include "BD/Labels.h"
-#include "TransitionView.h"
+#include "../Common/Components/TransitionComponent.h"
 #include "Views/MainMenuView.h"
 #include "Views/PresentationView.h"
 #include "Views/PasswordView.h"
@@ -12,7 +12,7 @@
 namespace MainMenu {
     inline void MainMenu() {
         PresentationView();
-        TransitionView();
+        Common::TransitionComponent();
 
         for (int i = 0; i < MAX_ATTEMPTS; i++) {
             PasswordView();
@@ -35,7 +35,7 @@ namespace MainMenu {
             MESSAGE = AUTH_SUCCESS_MESSAGE + "(0s)";
             PasswordView();
 
-            TransitionView();
+            Common::TransitionComponent();
 
             MainMenuView();
         } else {
