@@ -16,28 +16,53 @@
 
 #include "../Commands/Auth.h"
 #include "../Components/TitleComponent.h"
-#include "MainMenuView.h"
-#include "WrongPasswordView.h"
+#include "../Components/InputComponent.h"
+#include "../BD/Env.h"
 
 namespace MainMenu {
     inline void PasswordView() {
-        std::string input;
-
-        int inputX = Common::AlignedX(0, Common::WIDTH_SCREEN, MAX_PASSWORD_LEN, "center");
-        int inputY = Common::AlignedY(0, Common::HEIGHT_SCREEN, 1, "center") + 1;
+        const int inputX = Common::AlignedX(0, Common::WIDTH_SCREEN, MAX_PASSWORD_LEN, "center");
+        const int inputY = Common::AlignedY(0, Common::HEIGHT_SCREEN, 1, "center") + 1;
+        const int inputWidth = MAX_PASSWORD_LEN;
+        const int inputHeight = 1;
 
         Common::HideCursor();
         TitleComponent();
-        bool passed = Key(inputX, inputY);
 
-        if (passed) {
-            MainMenuView();
+        if (BLOCKED) {
+            if (HIDDEN_PASSWORD) {
+                TextBoxComponent(
+                    inputX, inputY,
+                    inputWidth, inputHeight,
+                    INPUT,
+                    LABEL, MESSAGE, HIDDEN_CHAR
+                );
+            } else {
+                TextBoxComponent(
+                    inputX, inputY,
+                    inputWidth, inputHeight,
+                    INPUT,
+                    LABEL, MESSAGE
+                );
+            }
         } else {
-            WrongPasswordView();
+            if (HIDDEN_PASSWORD) {
+                InputComponent(
+                    inputX, inputY,
+                    inputWidth, inputHeight,
+                    INPUT,
+                    LABEL, MESSAGE, HIDDEN_CHAR
+                );
+            } else {
+                InputComponent(
+                    inputX, inputY,
+                    inputWidth, inputHeight,
+                    INPUT,
+                    LABEL, MESSAGE
+                );
+            }
         }
 
-        Common::HideCursor();
-        Common::Color(Common::COLOR_DEFAULT, Common::COLOR_DEFAULT);
         Common::GoToXY(0, Common::HEIGHT_SCREEN + 1);
     }
 }
