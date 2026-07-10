@@ -9,6 +9,7 @@
 #include "../../Common/Aligned.h"
 #include "../../Common/Consts.h"
 #include "../../Common/Theme.h"
+#include "../../Common/Graphics.h"
 
 namespace MainMenu {
     inline int calculateTitleX(
