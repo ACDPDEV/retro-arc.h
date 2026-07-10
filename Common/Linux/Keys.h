@@ -4,8 +4,11 @@
 #include <vector>
 
 namespace Common {
+    // SPECIAL KEYS
+    const std::vector<int> SPECIAL_ESC = {27};
+
     // ACTION KEYS
-    const std::vector<int> KEY_ENTER = {13};
+    const std::vector<int> KEY_ENTER = {10};
     const std::vector<int> KEY_SPACE = {32};
     const std::vector<int> KEY_BACKSPACE = {127}; // DEL: código estándar de backspace en terminales Linux
     const std::vector<int> KEY_ESCAPE = {27};
