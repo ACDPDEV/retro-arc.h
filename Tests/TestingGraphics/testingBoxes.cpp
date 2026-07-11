@@ -16,9 +16,20 @@ int main()
     // CREMA {255, 236,153}
     /* PrintPrimaryBox(30, 10, 36, 3, "", {255, 236, 153}, {255, 255, 255}, {255, 236, 153});
     Common::DrawBottomBar(); */
-   /*  Pokemon::BattleOptionsView(14, "PSYDUCK",  "ROCKRUFF", "PSYDUCK"); */
-   // Pokemon::BattleOptionsFightFaintedView(14, "PSYDUCK",  "ROCKRUFF", "PSYDUCK");
-   Pokemon::BattleBeginningTitleView();
+    Pokemon::BattleBeginningTitleView();
+    Common::Sleep(2000);
+    Pokemon::BattleBeginningAnimationView();
+    Common::Sleep(2000);
+    /* Pokemon::BattleOptionsView(14, "PSYDUCK",  "ROCKRUFF", "PSYDUCK");
+    Common::Sleep(2000);
+    Pokemon::BattleOptionsFightView(14, "PSYDUCK",  "ROCKRUFF", "PSYDUCK");
+    Common::Sleep(2000);
+    Pokemon::BattleOptionsFightAttackedView(14, "PSYDUCK",  "ROCKRUFF", "PSYDUCK");
+    Common::Sleep(2000);
+    Pokemon::BattleOptionsFightEffectivenessView(14, "PSYDUCK",  "ROCKRUFF", "PSYDUCK");
+    Common::Sleep(2000);
+    Pokemon::BattleOptionsFightFaintedView(14, "PSYDUCK",  "ROCKRUFF", "PSYDUCK"); */
+    Common::Sleep(2000);
     return 0;
 }
 
