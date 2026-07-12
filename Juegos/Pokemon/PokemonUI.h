@@ -124,14 +124,16 @@ namespace Pokemon
         {
             Common::DrawSprite(PokeballLaunch_1X, PokeballLaunch_1Y, Pokemon::PokeballLaunchRight[i]);
             Common::DrawSprite(PokeballLaunch_2X, PokeballLaunch_2Y, Pokemon::PokeballLaunchLeft[i]);
+            if (i == 9){ continue; }
             Common::Sleep(500);
         }
         Common::Clear();
         Common::DrawBackground();
         Common::Sleep(300);
         ShowPokemonSprites();
-       
+        Common::Sleep(500);
         PermanentBattleGraphicsView("PSYDUCK", "ROCKRUFF");
+        Common::Sleep(500);
         BattleOptionsView("PSYDUCK", "ROCKRUFF", "PSYDUCK");
     }
 
