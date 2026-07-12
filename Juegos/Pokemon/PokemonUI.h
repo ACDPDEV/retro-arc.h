@@ -16,7 +16,8 @@
 #include "../../Common/UnicodeGlyphs.h"
 #include "PokeballLaunch_Left.h"
 #include "PokeballLaunch_Right.h"
-#include "PokemonFigures.h"
+#include "PokemonAnimatedSprites/PsyduckBack.h"
+#include "PokemonAnimatedSprites/RockruffFront.h"
 // PANTALLA: 200 x 50
 
 namespace Pokemon
@@ -45,8 +46,14 @@ namespace Pokemon
     std::string Attack = "Impactrueno", AttackType = "Electrico"; 
 
     void ShowPokemonSprites(){
-        Common::DrawSprite(PokemonSprite_1X, PokemonSprite_1Y, Pokemon::PsyduckBack);
-        Common::DrawSprite(PokemonSprite_2X, PokemonSprite_2Y,Pokemon::RockruffFront);
+        for (size_t i = 0; i < 10; i++)
+        {
+            Common::DrawSprite(PokemonSprite_1X, PokemonSprite_1Y, Pokemon::PsyduckBack_ALL[i]);
+            Common::DrawSprite(PokemonSprite_2X, PokemonSprite_2Y,Pokemon::RockruffFront_ALL[i]);
+            if (i == 9){ continue; }
+            Common::Sleep(150);
+        }
+        
     }
 
         /// @brief No incluye DrawBackground()
@@ -129,10 +136,15 @@ namespace Pokemon
         Common::Clear();
         Common::DrawBackground();
         ShowPokemonSprites();
-        Common::Sleep(500);
+
+        Common::Sleep(300);
         PermanentBattleGraphicsView("PSYDUCK", "ROCKRUFF");
-        Common::Sleep(500);
+        Common::Sleep(300);
         BattleOptionsView("PSYDUCK", "ROCKRUFF", "PSYDUCK");
+        while (true)
+        {
+            ShowPokemonSprites();
+        }
     }
 
 
