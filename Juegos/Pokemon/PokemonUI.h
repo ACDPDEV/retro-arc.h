@@ -14,9 +14,10 @@
 #include "../../Common/Components/BottomBar.h"
 #include "../../Common/Theme.h"
 #include "../../Common/UnicodeGlyphs.h"
-#include "PokeballLaunchRight.h"
-#include "PokeballLaunchLeft.h"
-#include "PokemonFigures.h"
+#include "PokeballLaunch_Left.h"
+#include "PokeballLaunch_Right.h"
+#include "PokemonAnimatedSprites/PsyduckBack.h"
+#include "PokemonAnimatedSprites/RockruffFront.h"
 // PANTALLA: 200 x 50
 
 namespace Pokemon
@@ -45,8 +46,14 @@ namespace Pokemon
     std::string Attack = "Impactrueno", AttackType = "Electrico"; 
 
     void ShowPokemonSprites(){
-        Common::DrawSprite(PokemonSprite_1X, PokemonSprite_1Y, Pokemon::PsyduckBack);
-        Common::DrawSprite(PokemonSprite_2X, PokemonSprite_2Y,Pokemon::RockruffFront);
+        for (size_t i = 0; i < 10; i++)
+        {
+            Common::DrawSprite(PokemonSprite_1X, PokemonSprite_1Y, Pokemon::PsyduckBack_ALL[i]);
+            Common::DrawSprite(PokemonSprite_2X, PokemonSprite_2Y,Pokemon::RockruffFront_ALL[i]);
+            if (i == 9){ continue; }
+            Common::Sleep(150);
+        }
+        
     }
 
         /// @brief No incluye DrawBackground()
@@ -115,26 +122,29 @@ namespace Pokemon
     
     void BattleBeginningAnimationView(){
         Common::EnableUTF8();
-        Common::Clear();
         Common::DrawBackground();
         Common::HideCursor();
 
         // Animacion pokeball lanzada
-        for (size_t i = 0; i < 10; i++)
+        for (size_t i = 0; i < 23; i++)
         {
-            Common::DrawSprite(PokeballLaunch_1X, PokeballLaunch_1Y, Pokemon::PokeballLaunchRight[i]);
-            Common::DrawSprite(PokeballLaunch_2X, PokeballLaunch_2Y, Pokemon::PokeballLaunchLeft[i]);
-            if (i == 9){ continue; }
-            Common::Sleep(500);
+            Common::DrawSprite(PokeballLaunch_1X-6*Margin, PokeballLaunch_1Y, Pokemon::PokeballLaunch_Left_ALL[i]);
+            Common::DrawSprite(PokeballLaunch_2X-8*Margin, PokeballLaunch_2Y, Pokemon::PokeballLaunch_Right_ALL[i]);
+            if (i == 22){ continue; }
+            Common::Sleep(100);
         }
         Common::Clear();
         Common::DrawBackground();
-        Common::Sleep(300);
         ShowPokemonSprites();
-        Common::Sleep(500);
+
+        Common::Sleep(300);
         PermanentBattleGraphicsView("PSYDUCK", "ROCKRUFF");
-        Common::Sleep(500);
+        Common::Sleep(300);
         BattleOptionsView("PSYDUCK", "ROCKRUFF", "PSYDUCK");
+        while (true)
+        {
+            ShowPokemonSprites();
+        }
     }
 
 
