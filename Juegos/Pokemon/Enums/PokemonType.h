@@ -1,10 +1,5 @@
 #pragma once
 
-#include <string>
-#include <vector>
-#include "Pokemon.h"
-#include "Move.h"
-
 namespace PokemonGame
 {    
     enum class PokemonType
