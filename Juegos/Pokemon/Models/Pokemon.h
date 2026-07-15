@@ -17,36 +17,66 @@ namespace PokemonGame
             std::string name;
     
             PokemonGame::PokemonType type;
-    
-            int maxHp;
-            int currentHp;
-    
-            int attack;
-            int defense;
-            int speed;
-    
+
+            double maxHp;
+            double currentHp;
+            double defense;
             std::vector<PokemonGame::Move*> moves;
+
+            double GetEffectiveDamage(double damage)
+            {
+                return damage / (damage + 60);
+            }
     
         public:
     
             Pokemon(
                 const std::string& name,
                 PokemonGame::PokemonType type,
-                int hp,
-                int attack,
-                int defense,
-                int speed);
+                double hp,
+                double defense)
+                :
+                name(name),
+                type(type),
+                maxHp(hp),
+                currentHp(hp),
+                defense(defense)
+            {
+                
+            }
     
             virtual ~Pokemon();
     
-            void receiveDamage(int damage);
+            void receiveDamage(double damage)
+            {
+                double effectiveDamage = GetEffectiveDamage(damage);
+                if(effectiveDamage < currentHp)
+                {
+                    currentHp -= effectiveDamage;
+                }
+                else
+                {
+                    currentHp = 0;
+                }
+            }
     
             bool isFainted() const;
     
             void addMove(PokemonGame::Move* move);
+
+            std::vector<PokemonGame::Move*> GetMoves()
+            {
+                return moves;
+            }
     
-            PokemonGame::Move* getMove(int index);
+            PokemonGame::Move* getMoveById(int index)
+            {
+
+            }
     
-            PokemonGame::PokemonType getType() const;
+            PokemonGame::PokemonType getType() const
+            {
+                return type;
+            }
     };
 }
