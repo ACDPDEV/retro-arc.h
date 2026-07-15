@@ -3,7 +3,6 @@
 #include <vector>
 #include <string>
 
-#include "Graphics.h"
 #include "Utils.h"
 
 namespace Common

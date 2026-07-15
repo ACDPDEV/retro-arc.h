@@ -10,6 +10,7 @@
 ///          Kbhit, Getch, Sleep.
 /// @note En Linux, Kbhit/Getch requieren que la terminal esté en modo raw
 ///       (InitTerminalRawMode() se auto-llama al incluir este header en Linux).
+#include "Consts.h"
 #ifdef _WIN32
     #pragma once
 
@@ -19,3 +20,9 @@
 
     #include "Linux/Terminal.h"
 #endif
+
+namespace Common {
+    inline void GoToEnd() {
+        GoToXY(0, HEIGHT_SCREEN + 1);
+    }
+}

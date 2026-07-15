@@ -11,6 +11,16 @@ namespace Common
 {
     void DrawBottomBar()
     {
-        Common::DrawFillRectangle(0, 48, WIDTH_SCREEN, 3, EMPTY_BLOCK, BLUE, BLUE);
+        const int barWidth = WIDTH_SCREEN;
+        const int barHeight = 3;
+        const int barY = HEIGHT_SCREEN - barHeight;
+        const int barX = 0;
+
+        Common::DrawFillRectangle(
+            barX, barY,
+            barWidth, barHeight,
+            EMPTY_BLOCK,
+            BLUE, BLUE
+        );
     }
 }

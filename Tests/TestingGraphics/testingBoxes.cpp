@@ -18,7 +18,9 @@ int main()
     Common::DrawBottomBar(); */
     Pokemon::BattleBeginningTitleView();
     Common::Sleep(2000);
-    Pokemon::BattleOptionsView(14, "PSYDUCK",  "ROCKRUFF", "PSYDUCK");
+    Pokemon::BattleBeginningAnimationView();
+    Common::Sleep(2000);
+    /* Pokemon::BattleOptionsView(14, "PSYDUCK",  "ROCKRUFF", "PSYDUCK");
     Common::Sleep(2000);
     Pokemon::BattleOptionsFightView(14, "PSYDUCK",  "ROCKRUFF", "PSYDUCK");
     Common::Sleep(2000);
@@ -26,7 +28,8 @@ int main()
     Common::Sleep(2000);
     Pokemon::BattleOptionsFightEffectivenessView(14, "PSYDUCK",  "ROCKRUFF", "PSYDUCK");
     Common::Sleep(2000);
-    Pokemon::BattleOptionsFightFaintedView(14, "PSYDUCK",  "ROCKRUFF", "PSYDUCK");
+    Pokemon::BattleOptionsFightFaintedView(14, "PSYDUCK",  "ROCKRUFF", "PSYDUCK"); */
+    Common::Sleep(2000);
     return 0;
 }
 
