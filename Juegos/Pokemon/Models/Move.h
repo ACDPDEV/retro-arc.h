@@ -12,6 +12,8 @@ namespace PokemonGame
         protected:
         
             std::string name;
+
+            PokemonGame::PokemonType type;
         
             int baseDamage;
         

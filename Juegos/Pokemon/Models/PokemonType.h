@@ -6,9 +6,7 @@
 #include "Move.h"
 
 namespace PokemonGame
-{
-    class PokemonGame::Move;
-    
+{    
     enum class PokemonType
     {
         ACERO,

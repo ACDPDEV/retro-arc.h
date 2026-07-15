@@ -3,24 +3,12 @@
 #include <string>
 #include <vector>
 #include "Pokemon.h"
+#include "PokemonType.h"
 #include "Move.h"
 
 namespace PokemonGame
 {
     class PokemonGame::Move;
-    
-    enum class PokemonType
-    {
-        Normal,
-        Fire,
-        Water,
-        Grass,
-        Electric,
-        Rock,
-        Ice,
-        Psychic,
-        Ghost
-    };
     
     class Pokemon
     {
