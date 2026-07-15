@@ -9,27 +9,38 @@ namespace PokemonGame
     
     class Move
     {
-        protected:
+        private:
         
             std::string name;
 
             PokemonGame::PokemonType type;
         
-            int baseDamage;
+            double baseDamage;
         
-            int accuracy;
+            double accuracy;
         
         public:
         
             Move(
                 const std::string& name,
-                int damage,
-                int accuracy);
+                PokemonGame::PokemonType type,
+                double baseDamage,
+                double accuracy)
+                : 
+                name(name),
+                type(type),
+                baseDamage(baseDamage),
+                accuracy(accuracy)
+            {
+                
+            }
         
-            virtual ~Move() = default;
+            ~Move() = default;
         
-            virtual void execute(
+            void execute(
                 PokemonGame::Pokemon& attacker,
-                PokemonGame::Pokemon& defender) = 0;
+                PokemonGame::Pokemon& defender);
+
+            bool HasValue();
     };
 }
