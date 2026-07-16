@@ -9,13 +9,12 @@ namespace PokemonGame
     
     class Item
     {
-        protected:
-        
-            std::string name;
         
         public:
         
-            Item(const std::string& name);
+            Item()
+            {
+            }
         
             virtual ~Item() = default;
         

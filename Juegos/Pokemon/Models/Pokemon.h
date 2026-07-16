@@ -3,13 +3,11 @@
 #include <string>
 #include <vector>
 #include "Pokemon.h"
-#include "PokemonType.h"
+#include "./Enums/PokemonType.h"
 #include "Move.h"
 
 namespace PokemonGame
-{
-    class PokemonGame::Move;
-    
+{   
     class Pokemon
     {
         private:
@@ -21,6 +19,7 @@ namespace PokemonGame
             double maxHp;
             double currentHp;
             double defense;
+            bool hasFocusBand = false;
             std::vector<PokemonGame::Move*> moves;
 
             double GetEffectiveDamage(double damage)
@@ -44,15 +43,25 @@ namespace PokemonGame
             {
                 
             }
+
+            Pokemon()
+            {
+                
+            }
     
             virtual ~Pokemon();
     
-            void receiveDamage(double damage)
+            void ReceiveDamage(double incomingDamage)
             {
-                double effectiveDamage = GetEffectiveDamage(damage);
+                double effectiveDamage = GetEffectiveDamage(incomingDamage);
                 if(effectiveDamage < currentHp)
                 {
                     currentHp -= effectiveDamage;
+                }
+                else if(hasFocusBand)
+                {
+                    currentHp = 1;
+                    hasFocusBand = false;
                 }
                 else
                 {
@@ -61,20 +70,31 @@ namespace PokemonGame
             }
     
             bool isFainted() const;
-    
-            void addMove(PokemonGame::Move* move);
+
+            void AddMove(PokemonGame::Move* move)
+            {
+                moves.push_back(move);
+            }
 
             std::vector<PokemonGame::Move*> GetMoves()
             {
                 return moves;
             }
     
-            PokemonGame::Move* getMoveById(int index)
+            PokemonGame::Move* GetMoveById(int index)
             {
-
+                for (PokemonGame::Move* move : moves)
+                {
+                    if (move != nullptr && move->GetId() == index)
+                    {
+                        return move;
+                    }
+                }
+                
+                return nullptr;
             }
     
-            PokemonGame::PokemonType getType() const
+            PokemonGame::PokemonType GetType() const
             {
                 return type;
             }
