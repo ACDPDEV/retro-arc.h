@@ -23,7 +23,7 @@ namespace Common {
 inline void DrawSprite(int x, int y, const std::vector<std::string>& sprite) {
     for (int i = 0; i < sprite.size(); i++) {
         GoToXY(x, y + i);
-        DrawText(x, y, -1, -1, sprite, COLOR_DEFAULT, COLOR_DEFAULT);
+        DrawText(x, y + i, -1, -1, {sprite[i]}, COLOR_DEFAULT, COLOR_DEFAULT);
     }
 }
 
