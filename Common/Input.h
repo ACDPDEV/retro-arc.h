@@ -244,22 +244,13 @@ inline std::vector<int> ReadConsoleChar()
  * @brief Convierte un byteChar en un Caracter imprimible
  * @param byteChar bytes de la tecla presionada
  */
-inline std::string CastKeyToString(std::vector<int>& byteChar)
+inline std::string CastKeyToString(const std::vector<int>& byteChar)
 {
     std::string character;
-
-    for (int& byte : byteChar)
+    for (int byte : byteChar)
     {
-        std::string character;
-
-        for (int& byte : byteChar)
-        {
-            character += static_cast<char>(byte);
-        }
-
-        return character;
+        character += static_cast<char>(byte);
     }
-
     return character;
 }
 
