@@ -23,7 +23,7 @@ namespace Common {
 inline void DrawSprite(int x, int y, const std::vector<std::string>& sprite) {
     for (int i = 0; i < sprite.size(); i++) {
         GoToXY(x, y + i);
-        DrawText(x, y, -1, -1, sprite, COLOR_DEFAULT, COLOR_DEFAULT);
+        DrawText(x, y + i, -1, -1, {sprite[i]}, COLOR_DEFAULT, COLOR_DEFAULT);
     }
 }
 
@@ -35,9 +35,9 @@ inline void DrawSprite(int x, int y, const std::vector<std::string>& sprite) {
 ///          No limpia frames anteriores; el llamador debe manejar Clear() o posicionamiento.
 inline void DrawAnimatedSprite(int x, int y, const std::vector<std::vector<std::string>>& sprites, int gapTime, int iterations) {
     for (int i = 1; i <= iterations; i++) {
-        for (int i = 0; i < sprites.size(); i++) {
-            DrawSprite(x, y, sprites[i]);
-            if (i + 1 < sprites.size()) {
+        for (int j = 0; j < sprites.size(); j++) {
+            DrawSprite(x, y, sprites[j]);
+            if (j + 1 < sprites.size()) {
                 Sleep(gapTime);
             }
         }

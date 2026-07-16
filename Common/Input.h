@@ -117,7 +117,7 @@ inline bool TryInput(std::string& line) {
                 }
                 break;
         }
-        return std::stoi(line);
+        return false;
     }
 
     return false;
@@ -132,24 +132,16 @@ inline bool TryInput(std::string& line) {
  */
 inline bool IsValidChar(std::vector<std::tuple<int, int>>& validCharRanges, int character)
 {
-    bool isValid = false;
-    int min;
-    int max;
     for (const auto& range : validCharRanges)
     {
+        int min, max;
         std::tie(min, max) = range;
         if(min <= character && character <= max)
         {
-            std::tie(min, max) = range;
-            if(min <= character && character <= max)
-            {
-                isValid = true;
-                break;
-            }
+            return true;
         }
-        return isValid;
     }
-    return isValid;
+    return false;
 }
 
 /**
@@ -163,14 +155,10 @@ inline bool IsValidChar(std::vector<std::vector<int>>& validChars, std::vector<i
 {
     for (auto& validChar : validChars)
     {
-        for (auto& validChar : validChars)
+        if(validChar == character)
         {
-            if(validChar == character)
-            {
-                return true;
-            }
+            return true;
         }
-        return false;
     }
     return false;
 }
@@ -256,22 +244,13 @@ inline std::vector<int> ReadConsoleChar()
  * @brief Convierte un byteChar en un Caracter imprimible
  * @param byteChar bytes de la tecla presionada
  */
-inline std::string CastKeyToString(std::vector<int>& byteChar)
+inline std::string CastKeyToString(const std::vector<int>& byteChar)
 {
     std::string character;
-
-    for (int& byte : byteChar)
+    for (int byte : byteChar)
     {
-        std::string character;
-
-        for (int& byte : byteChar)
-        {
-            character += static_cast<char>(byte);
-        }
-
-        return character;
+        character += static_cast<char>(byte);
     }
-
     return character;
 }
 
