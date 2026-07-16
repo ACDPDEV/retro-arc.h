@@ -1,9 +1,9 @@
 #pragma once
 #include "Command.h"
-#include "../Game/Battle.h"
+#include "../Controllers/Battle.h"
 #include "../Models/Move.h"
 
-namespace Pokemon
+namespace PokemonGame
 {
     class PokemonGame::Move;
     
@@ -15,11 +15,19 @@ namespace Pokemon
     
         public:
     
-            AttackCommand(PokemonGame::Move* move);
+            AttackCommand(PokemonGame::Move* move)
+            :
+            move(move)
+            {
+
+            }
     
             void Execute(
                 PokemonGame::Battle& battle,
                 PokemonGame::Player& actor,
-                PokemonGame::Player& opponent) override;
+                PokemonGame::Player& opponent) override
+            {
+                // actor.activePokemon->getMove()->execute(actor, opponent);
+            }
     };
 }

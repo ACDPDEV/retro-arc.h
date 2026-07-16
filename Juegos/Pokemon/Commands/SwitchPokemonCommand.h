@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Command.h"
-#include "../Game/Battle.h"
+#include "../Controllers/Battle.h"
 #include "../Models/Pokemon.h"
 
 namespace PokemonGame
