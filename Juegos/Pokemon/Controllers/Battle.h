@@ -1,5 +1,5 @@
 #pragma once
-#include "../Models/Player.h"
+#include "Player.h"
 #include "Round.h"
 
 namespace PokemonGame

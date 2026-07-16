@@ -51,8 +51,8 @@ namespace PokemonGame
                     // iniciar batalla
                     case 0:
                     {
-                        BuildTeam(playerOne);
-                        BuildTeam(playerTwo);
+                        PokemonGame::BuildTeam(playerOne);
+                        PokemonGame::BuildTeam(playerTwo);
 
                         PokemonGame::Battle battle(playerOne, playerTwo);
 

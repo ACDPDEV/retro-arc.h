@@ -1,11 +1,10 @@
 #pragma once
 #include "../Commands/Command.h"
-#include "../Models/Player.h"
+#include "Player.h"
+#include "Battle.h"
 
 namespace PokemonGame
-{
-    class PokemonGame::Command;
-    
+{    
     class Round
     {
         private:

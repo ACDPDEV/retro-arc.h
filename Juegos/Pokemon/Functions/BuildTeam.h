@@ -1,4 +1,4 @@
-#include "../Models/Player.h"
+#include "../Controllers/Player.h"
 #include "../Factories/PokemonFactory.h"
 
 namespace PokemonGame
