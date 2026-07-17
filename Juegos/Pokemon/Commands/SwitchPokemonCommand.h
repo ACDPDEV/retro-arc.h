@@ -25,8 +25,14 @@ namespace PokemonGame
             void Execute(
                 PokemonGame::Player& affectedPlayer) override
             {
-                if(affectedPlayer.HasPokemonWithId(pokemon->GetId()))
-                    affectedPlayer.SwitchPokemon(pokemon);
+                affectedPlayer.SwitchPokemon(pokemon);
+            }
+
+            bool CanExecute(PokemonGame::Player& actor)
+            {
+                if(actor.HasPokemonWithId(pokemon->GetId()))
+                    return true;
+                return false;
             }
     };
 }

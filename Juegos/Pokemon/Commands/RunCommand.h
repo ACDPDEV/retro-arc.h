@@ -11,5 +11,10 @@ namespace PokemonGame
     
             void Execute(
                 PokemonGame::Player& affectedPlayer) override;
+
+            bool  CanExecute(PokemonGame::Player& actor)
+            {
+                
+            }
     };
 }
