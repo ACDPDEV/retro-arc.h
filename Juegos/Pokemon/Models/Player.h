@@ -24,6 +24,8 @@ namespace PokemonGame
             PokemonGame::Bag bag;
             
             bool canUseFocusBand = true;
+
+            bool canPlay = true;
     
         public:
     
@@ -96,6 +98,11 @@ namespace PokemonGame
             PokemonGame::Bag& GetBag()
             {
                 return bag;
+            }
+
+            bool CanPlay()
+            {
+                return canPlay;
             }
     };
 }

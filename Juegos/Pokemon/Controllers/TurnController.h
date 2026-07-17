@@ -3,11 +3,13 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include "../Models/Player.h"
 #include "Battle.h"
 #include "../Commands/Command.h"
 #include "../Models/Bag.h"
 #include "../Models/Item.h"
 #include "../Models/Pokemon.h"
+#include "../Models/Player.h"
 #include "../Enums/MenuOption.h"
 #include "../Commands/AttackCommand.h"
 #include "../Commands/SwitchPokemonCommand.h"
@@ -17,28 +19,19 @@
 namespace PokemonGame
 {
     
-    class Player
+    class TurnController
     {
         private:
-    
-            std::string name;
-    
-            std::vector<std::unique_ptr<PokemonGame::Pokemon>> team;
-            
-            PokemonGame::Pokemon* activePokemon = nullptr;
-            
-            PokemonGame::Bag bag;
-            
-            bool canUseFocusBand = true;
+            PokemonGame::Player& player;
     
         public:
     
-            Player(const std::string& name)
-                :name(name)
+            TurnController(PokemonGame::Player& player)
+                :player(player)
             {
             }
 
-            std::unique_ptr<PokemonGame::Command> ChooseCommand(PokemonGame::Battle& battle)
+            std::unique_ptr<PokemonGame::Command> ChooseCommand()
             {
                 while (true)
                 {
@@ -55,7 +48,7 @@ namespace PokemonGame
 
                             if (moveId != -1)
                             {
-                                PokemonGame::Move* move = GetActivePokemon()->GetMoveById(moveId);
+                                PokemonGame::Move* move = player.GetActivePokemon()->GetMoveById(moveId);
                                 return std::make_unique<PokemonGame::AttackCommand>(move);
                             }
 
@@ -72,7 +65,7 @@ namespace PokemonGame
 
                             if (itemId != -1)
                             {
-                                PokemonGame::Item* item = GetBag().GetItemById(itemId);
+                                PokemonGame::Item* item = player.GetBag().GetItemById(itemId);
                                 return std::make_unique<PokemonGame::BagCommand>(item);
                             }
 
@@ -88,8 +81,12 @@ namespace PokemonGame
                             int pokemonId = 0; // ShowSwitchPokemonMeny(); retorn int pokemonId;
 
                             if (pokemonId != -1)
-                                PokemonGame::Pokemon* pokemon;
-                                return std::make_unique<PokemonGame::SwitchPokemonCommand>(pokemon);
+                                PokemonGame::Pokemon* selectedPokemon = player.GetPokemonById(pokemonId);
+                                /**
+                                 * TODO:
+                                 * Pasar el pokemon por parámetro del constructor de switchCommand
+                                 */
+                                return std::make_unique<PokemonGame::SwitchPokemonCommand>();
 
                             break;
                         }
@@ -109,12 +106,13 @@ namespace PokemonGame
                 }
             }
     
-            ~Player() = default;
+            ~TurnController() = default;
 
-            std::string GetName()
+            PokemonGame::Player& GetPlayer()
             {
-                return name;
+                return player;
             }
+
 
             bool HasLost()
             {
@@ -123,55 +121,5 @@ namespace PokemonGame
                  */
             }
 
-            /**
-             * @brief Elimina todos los Pokemon que pertenecen al jugador
-             */
-            void ClearTeam()
-            {
-                team.clear();
-                activePokemon = nullptr;
-            }
-    
-            /**
-             * Obtiene la cantidad de pokemones dentro del equipo
-             * @returns La cantidad de pokemones dentro del equipo
-             */
-            int TeamSize() const
-            {
-                return team.size();
-            }
-
-            /**
-             * Agrega un pokemon al equipo del jugador
-             * @param pokemon Pokemon que se va a agregar al equipo
-             */
-            void AddPokemon(std::unique_ptr<PokemonGame::Pokemon> pokemon)
-            {
-                if (team.empty())
-                {
-                    activePokemon = pokemon.get();
-                }
-                team.push_back(std::move(pokemon));
-            }
-
-            PokemonGame::Pokemon* GetPokemon(size_t index)
-            {
-                return team.at(index).get();
-            }
-    
-            void SwitchPokemon(size_t index)
-            {
-                activePokemon = team.at(index).get();
-            }
-    
-            PokemonGame::Pokemon* GetActivePokemon()
-            {
-                return activePokemon;
-            }
-    
-            PokemonGame::Bag& GetBag()
-            {
-                return bag;
-            }
     };
 }

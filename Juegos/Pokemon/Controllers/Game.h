@@ -4,6 +4,7 @@
 #include <memory>
 #include "Battle.h"
 #include "../../../Common/Variables.h"
+#include "../Models/Player.h"
 #include "../Functions/BuildTeam.h"
 
 

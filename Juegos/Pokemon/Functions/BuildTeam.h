@@ -1,5 +1,5 @@
 #include "../Controllers/Game.h"
-#include "../Controllers/Player.h"
+#include "../Models/Player.h"
 #include "../Factories/PokemonFactory.h"
 
 namespace PokemonGame

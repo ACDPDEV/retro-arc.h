@@ -1,30 +1,28 @@
 #pragma once
-#include "../Commands/Command.h"
 #include <memory>
 #include "Player.h"
+#include "TurnController.h"
 #include "Battle.h"
+#include "../Commands/Command.h"
 
 namespace PokemonGame
 {    
     class Round
     {
         private:
-            PokemonGame::Player& player1;
-            PokemonGame::Player& player2;
-            PokemonGame::Battle& battle;
+            PokemonGame::TurnController& turnOne;
+            PokemonGame::TurnController& turnTwo;
 
             std::unique_ptr<PokemonGame::Command> playerOneCommand;
             std::unique_ptr<PokemonGame::Command> playerTwoCommand;
     
         public:
             Round(
-                PokemonGame::Battle& battle,
-                PokemonGame::Player& player1, 
-                PokemonGame::Player& player2)
+                PokemonGame::TurnController& turnOne, 
+                PokemonGame::TurnController& turnTwo)
                 :
-                battle(battle),
-                player1(player1),
-                player2(player2)
+                turnOne(turnOne),
+                turnTwo(turnTwo)
             {
             }
     
@@ -34,28 +32,28 @@ namespace PokemonGame
                 // Turno del jugador 1
                 //----------------------------------
 
-                playerOneCommand = player1.ChooseCommand(battle);
+                playerOneCommand = turnOne.ChooseCommand();
 
                 //----------------------------------
                 // Turno del jugador 2
                 //----------------------------------
 
-                playerTwoCommand = player2.ChooseCommand(battle);
+                playerTwoCommand = turnTwo.ChooseCommand();
 
                 //----------------------------------
                 // Ejecutar acciones
                 //----------------------------------
 
-                if(playerOneCommand->CanExecute(player1))
-                    playerOneCommand->Execute(battle, player1, player2);
+                if(playerOneCommand->CanExecute(turnOne.GetPlayer()))
+                    playerOneCommand->Execute(turnOne.GetPlayer(), turnTwo.GetPlayer());
 
-                if (battle.IsFinished())
+                if (! turnOne.GetPlayer().CanPlay())
                     return;
                 
-                if(playerTwoCommand->CanExecute(player2))
-                    playerTwoCommand->Execute(battle, player2, player1);
+                if(playerTwoCommand->CanExecute(turnTwo.GetPlayer()))
+                    playerTwoCommand->Execute(turnTwo.GetPlayer(), turnOne.GetPlayer());
 
-                if (battle.IsFinished())
+                if (! turnTwo.GetPlayer().CanPlay())
                     return;                
             }
     };

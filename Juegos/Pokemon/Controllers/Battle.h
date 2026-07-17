@@ -1,27 +1,26 @@
 #pragma once
-#include "Player.h"
+#include "TurnController.h"
 #include "Round.h"
 
 namespace PokemonGame
 {
-    class PokemonGame::Player;
     
     class Battle
     {
         private:
     
-            PokemonGame::Player& playerOne;
-            PokemonGame::Player& playerTwo;
+            PokemonGame::TurnController& playerOneTurn;
+            PokemonGame::TurnController& playerTwoTurn;
             bool finished = false;
     
         public:
     
             Battle(
-                PokemonGame::Player& playerOne,
-                PokemonGame::Player& playerTwo)
+                PokemonGame::TurnController& playerOneTurn,
+                PokemonGame::TurnController& playerTwoTurn)
                 :
-                playerOne(playerOne),
-                playerTwo(playerTwo)
+                playerOneTurn(playerOneTurn),
+                playerTwoTurn(playerTwoTurn)
             {
             }
     
@@ -29,7 +28,7 @@ namespace PokemonGame
             {
                 while (!finished)
                 {
-                    PokemonGame::Round round(*this, playerOne, playerTwo);
+                    PokemonGame::Round round(*this, playerOneTurn, playerTwoTurn);
 
                     round.Play();
 
@@ -40,12 +39,12 @@ namespace PokemonGame
 
             void EvaluateBattle()
             {
-                if (playerOne.HasLost())
+                if (playerOneTurn.HasLost())
                 {
                     finished = true;
                 }
 
-                if (playerTwo.HasLost())
+                if (playerTwoTurn.HasLost())
                 {
                     finished = true;
                 }
