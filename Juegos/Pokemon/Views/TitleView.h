@@ -24,7 +24,7 @@ namespace Pokemon {
     inline void TitleView() {
         Common::DrawBackground();
 
-        // Logo "POKEMON" con ConcatFont (FONT_P-FONT_N)
+        // Logo "POKEMON" con ConcatFont (FONT_P-FONT_N) - 9-line font
         const std::array<std::string, 9> logo = Common::ConcatFont({
             Common::FONT_P, Common::FONT_O, Common::FONT_K,
             Common::FONT_E, Common::FONT_M, Common::FONT_O, Common::FONT_N
@@ -50,7 +50,7 @@ namespace Pokemon {
         Common::DrawSprite(35, 14, CharmanderFront);
         Common::DrawSprite(125, 14, PikachuFront);
 
-        // Texto de prompt en español - 4-line font
+        // Texto (Presione una tecla para empezar) - 4-line font
         const std::array<std::string, 4> promptFont = Common::ConcatFont({
             Common::FONT_p, Common::FONT_r, Common::FONT_e, Common::FONT_s,
             Common::FONT_i, Common::FONT_o, Common::FONT_n, Common::FONT_a,
