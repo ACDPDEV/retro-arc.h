@@ -10,6 +10,11 @@ namespace PokemonGame
     class Command
     {
         public:
+        
+            Command()
+            {
+                
+            }
     
             virtual ~Command() = default;
     

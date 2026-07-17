@@ -1,17 +1,18 @@
 #pragma once
 
 #include <string>
+#include <memory>
 #include <vector>
 #include "Battle.h"
 #include "../Commands/Command.h"
 #include "../Models/Bag.h"
 #include "../Models/Item.h"
+#include "../Models/Pokemon.h"
 #include "../Enums/MenuOption.h"
 #include "../Commands/AttackCommand.h"
 #include "../Commands/SwitchPokemonCommand.h"
 #include "../Commands/RunCommand.h"
 #include "../Commands/BagCommand.h"
-#include "../Models/Pokemon.h"
 
 namespace PokemonGame
 {
@@ -23,11 +24,11 @@ namespace PokemonGame
             std::string name;
     
             std::vector<std::unique_ptr<PokemonGame::Pokemon>> team;
-    
+            
             PokemonGame::Pokemon* activePokemon = nullptr;
-    
+            
             PokemonGame::Bag bag;
-
+            
             bool canUseFocusBand = true;
     
         public:
@@ -80,7 +81,7 @@ namespace PokemonGame
                              * Controlar el flujo de que efectivamente se ha seleccionado esta opción
                              */
                             if (true)
-                                return std::make_unique<PokemonGame::SwitchPokemonCommand>(*pokemon);
+                                return std::make_unique<PokemonGame::SwitchPokemonCommand>(pokemon);
 
                             break;
                         }

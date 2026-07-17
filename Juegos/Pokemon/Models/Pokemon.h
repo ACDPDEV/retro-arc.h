@@ -2,7 +2,6 @@
 
 #include <string>
 #include <vector>
-#include "Pokemon.h"
 #include "./Enums/PokemonType.h"
 #include "Move.h"
 
@@ -44,10 +43,7 @@ namespace PokemonGame
                 
             }
 
-            Pokemon()
-            {
-                
-            }
+
     
             virtual ~Pokemon();
     

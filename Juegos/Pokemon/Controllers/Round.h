@@ -1,5 +1,6 @@
 #pragma once
 #include "../Commands/Command.h"
+#include <memory>
 #include "Player.h"
 #include "Battle.h"
 
