@@ -56,10 +56,7 @@ namespace PokemonGame
                         PokemonGame::BuildTeam(playerOne);
                         PokemonGame::BuildTeam(playerTwo);
 
-                        PokemonGame::TurnController turnOne(playerOne);
-                        PokemonGame::TurnController turnOne(playerTwo);
-
-                        PokemonGame::Battle battle(turnOne, turnOne);
+                        PokemonGame::Battle battle(playerOne, playerTwo);
 
                         battle.Start();
                         break;

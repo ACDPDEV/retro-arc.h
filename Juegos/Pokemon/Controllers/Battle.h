@@ -9,18 +9,18 @@ namespace PokemonGame
     {
         private:
     
-            PokemonGame::TurnController& playerOneTurn;
-            PokemonGame::TurnController& playerTwoTurn;
+            PokemonGame::TurnController playerOneTurn;
+            PokemonGame::TurnController playerTwoTurn;
             bool finished = false;
     
         public:
     
             Battle(
-                PokemonGame::TurnController& playerOneTurn,
-                PokemonGame::TurnController& playerTwoTurn)
+                PokemonGame::Player& playerOne,
+                PokemonGame::Player& playerTwo)
                 :
-                playerOneTurn(playerOneTurn),
-                playerTwoTurn(playerTwoTurn)
+                playerOneTurn(playerOne),
+                playerTwoTurn(playerTwo)
             {
             }
     
