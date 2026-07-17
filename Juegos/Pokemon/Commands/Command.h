@@ -1,6 +1,6 @@
 #pragma once
 #include "../Controllers/Battle.h"
-#include "../Controllers/Player.h"
+#include "../Models/Player.h"
 
 
 namespace PokemonGame

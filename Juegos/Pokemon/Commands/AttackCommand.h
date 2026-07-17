@@ -2,6 +2,7 @@
 #include "Command.h"
 #include "../Controllers/Battle.h"
 #include "../Models/Move.h"
+#include "../Models/Player.h"
 
 namespace PokemonGame
 {

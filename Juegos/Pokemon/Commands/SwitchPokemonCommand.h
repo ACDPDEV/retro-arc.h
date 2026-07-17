@@ -3,6 +3,7 @@
 #include "Command.h"
 #include "../Controllers/Battle.h"
 #include "../Models/Pokemon.h"
+#include "../Models/Player.h"
 
 namespace PokemonGame
 {
