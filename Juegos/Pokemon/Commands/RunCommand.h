@@ -10,7 +10,6 @@ namespace PokemonGame
         public:
     
             void Execute(
-                PokemonGame::Player& actor,
-                PokemonGame::Player& opponent) override;
+                PokemonGame::Player& affectedPlayer) override;
     };
 }

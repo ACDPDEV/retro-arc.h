@@ -23,7 +23,10 @@ namespace PokemonGame
             {}
     
             void Execute(
-                PokemonGame::Player& actor,
-                PokemonGame::Player& opponent) override;
+                PokemonGame::Player& affectedPlayer) override
+            {
+                if(affectedPlayer.HasPokemonWithId(pokemon->GetId()))
+                    affectedPlayer.SwitchPokemon(pokemon);
+            }
     };
 }

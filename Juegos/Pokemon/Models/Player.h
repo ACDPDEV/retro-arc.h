@@ -72,6 +72,19 @@ namespace PokemonGame
                 team.push_back(std::move(pokemon));
             }
 
+            bool HasPokemonWithId(int pokemonId)
+            {
+                for (const auto& pokemonPtr : team)
+                {
+                    if (pokemonPtr != nullptr && pokemonPtr->GetId() == pokemonId)
+                    {
+                        return true;
+                    }
+                }
+                
+                return false;
+            }
+
             PokemonGame::Pokemon* GetPokemonById(int id)
             {
                 for (const auto& pokemonPtr : team)
@@ -85,9 +98,9 @@ namespace PokemonGame
                 return nullptr;
             }
     
-            void SwitchPokemon(int pokemonId)
+            void SwitchPokemon(PokemonGame::Pokemon* pokemon)
             {
-                activePokemon = GetPokemonById(pokemonId);
+                activePokemon = pokemon;
             }
     
             PokemonGame::Pokemon* GetActivePokemon()

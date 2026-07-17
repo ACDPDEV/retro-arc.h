@@ -13,6 +13,11 @@ namespace PokemonGame
         private:
     
             PokemonGame::Move* move;
+            
+            double GetEffectiveness(PokemonGame::PokemonType attackerType, PokemonGame::PokemonType defenderType)
+            {
+                return PokemonGame::EFFECTIVENESS[static_cast<int>(attackerType)][static_cast<int>(defenderType)];
+            }
     
         public:
     
@@ -24,7 +29,6 @@ namespace PokemonGame
             }
     
             void Execute(
-                PokemonGame::Player& attacker, // -------------------------- este parámetro no se está usando
                 PokemonGame::Player& defender) override
             {                
                 PokemonGame::Pokemon* defenderPokemon = defender.GetActivePokemon();
@@ -43,12 +47,6 @@ namespace PokemonGame
                     return true;
                 }
                 return false;
-            }
-
-
-            double GetEffectiveness(PokemonGame::PokemonType attackerType, PokemonGame::PokemonType defenderType)
-            {
-                return PokemonGame::EFFECTIVENESS[static_cast<int>(attackerType)][static_cast<int>(defenderType)];
             }
     };
 }

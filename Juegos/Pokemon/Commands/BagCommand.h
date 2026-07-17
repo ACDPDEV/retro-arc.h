@@ -24,10 +24,10 @@ namespace PokemonGame
             }
     
             void Execute(
-                PokemonGame::Player& actor,
-                PokemonGame::Player& opponent) override
+                PokemonGame::Player& affectedPlayer) override
             {
-                
+                item->Use(*affectedPlayer.GetActivePokemon());
+
             }
             
             bool  CanExecute(PokemonGame::Player& actor) override

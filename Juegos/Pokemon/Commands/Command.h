@@ -19,8 +19,7 @@ namespace PokemonGame
             virtual ~Command() = default;
     
             virtual void Execute(
-                PokemonGame::Player& actor,
-                PokemonGame::Player& opponent) = 0;
+                PokemonGame::Player& affectedPlayer);
 
             virtual bool  CanExecute(PokemonGame::Player& actor) = 0;
     };
