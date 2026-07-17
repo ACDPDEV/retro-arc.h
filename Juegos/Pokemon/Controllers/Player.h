@@ -49,13 +49,13 @@ namespace PokemonGame
                         {
                             /**
                              * TODO:
-                             * incluir el ShowMoveMenu() que retorna un Move con parámetros
+                             * incluir el ShowMoveMenu() que retorna int moveId
                              */
-                            int moveIndex = 0; // ShowMoveMenu(PokemonGame::Pokemon* activePokemon) retorna Move(name, type, baseDamage, accuracy);
+                            int moveId = 0; // ShowMoveMenu(PokemonGame::Pokemon* activePokemon) retorna int moveId;
 
-                            if (moveIndex != -1)
+                            if (moveId != -1)
                             {
-                                PokemonGame::Move move();
+                                PokemonGame::Move* move = activePokemon->GetMoveById(moveId);
                                 return std::make_unique<PokemonGame::AttackCommand>(move);
                             }
 
