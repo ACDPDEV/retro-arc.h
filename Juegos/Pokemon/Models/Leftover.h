@@ -21,7 +21,7 @@ namespace PokemonGame
             {
             }
         
-            void Use(PokemonGame::Pokemon& target) override
+            void Use(PokemonGame::Pokemon* target) override
             {
                 
             }

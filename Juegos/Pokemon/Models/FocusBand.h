@@ -20,9 +20,9 @@ namespace PokemonGame
                 remainingUses = 0;
             }
 
-            void Use(PokemonGame::Pokemon& target) override
+            void Use(PokemonGame::Pokemon* target) override
             {
-                target.WearFocusBand();
+                target->WearFocusBand();
                 RegisterUse();
             }
     };

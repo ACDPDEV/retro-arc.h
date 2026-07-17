@@ -40,6 +40,6 @@ namespace PokemonGame
 
             virtual void RegisterUse() = 0;
         
-            virtual void Use(PokemonGame::Pokemon& target) = 0;
+            virtual void Use(PokemonGame::Pokemon* target) = 0;
     };
 }
