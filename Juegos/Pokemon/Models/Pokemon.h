@@ -29,10 +29,19 @@ namespace PokemonGame
                 currentHp = std::max(currentHp, 1.0);
                 hasFocusBand = false;
             }
+
+            double CalulateDamageReduction(double defense)
+            {
+                double defenseScale = 10.0;
+                if(defense <= 0)
+                    return 0.0;
+                
+                return defense / (defense + defenseScale);
+            }
             
             double GetEffectiveDamage(double damage)
             {
-                return damage / (damage + 60);
+                return damage * (1.0 - CalulateDamageReduction(defense));
             }
     
         public:
