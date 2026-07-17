@@ -15,6 +15,22 @@ namespace PokemonGame
 
             std::unique_ptr<PokemonGame::Command> playerOneCommand;
             std::unique_ptr<PokemonGame::Command> playerTwoCommand;
+
+            void ExecuteIfIsDefensiveCommand(PokemonGame::Command* command, PokemonGame::TurnController& affectedTurn)
+            {
+                if( ! dynamic_cast<AttackCommand*>(command))
+                {
+                    command->Execute(affectedTurn.GetPlayer());
+                }
+            }
+
+            void ExecuteIfIsAttackCommand(PokemonGame::Command* command, PokemonGame::TurnController& defenderTurn)
+            {
+                if(PokemonGame::AttackCommand* attackCommand = dynamic_cast<AttackCommand*>(command))
+                {
+                    attackCommand->Execute(defenderTurn.GetPlayer());
+                }
+            }
     
         public:
             Round(
@@ -41,68 +57,35 @@ namespace PokemonGame
                 playerTwoCommand = turnTwo.ChooseCommand();
 
                 //----------------------------------
+                // Validar comandos
+                //----------------------------------
+                bool bothCanExecute = true;
+                if( ! playerOneCommand->CanExecute(turnOne.GetPlayer()))
+                    bothCanExecute = false;
+
+                if( ! playerTwoCommand->CanExecute(turnTwo.GetPlayer()))
+                    bothCanExecute = false;
+
+                if( ! bothCanExecute)
+                {
+                    /**
+                     * TODO:
+                     * Mostrar mensaje que no se pudo ejecutar el comando
+                     */
+                    return;
+                }
+
+                //----------------------------------
                 // Ejecutar acciones defensivas
                 //----------------------------------
-                if( ! dynamic_cast<AttackCommand*>(playerOneCommand.get()))
-                {
-                    if(playerOneCommand->CanExecute(turnOne.GetPlayer()))
-                    {
-                        playerOneCommand->Execute(turnOne.GetPlayer());
-                    }
-                    else
-                    {
-                        /**
-                         * TODO:
-                         * Mostrar mensaje que no se pudo ejecutar el comando
-                         */
-                    }
-                }
-                if( ! dynamic_cast<AttackCommand*>(playerTwoCommand.get()))
-                {
-                    if(playerTwoCommand->CanExecute(turnTwo.GetPlayer()))
-                    {
-                        playerTwoCommand->Execute(turnTwo.GetPlayer());
-                    }
-                    else
-                    {
-                        /**
-                         * TODO:
-                         * Mostrar mensaje que no se pudo ejecutar el comando
-                         */
-                    }
-                }
+                ExecuteIfIsDefensiveCommand(playerOneCommand.get(), turnOne);
+                ExecuteIfIsDefensiveCommand(playerTwoCommand.get(), turnTwo);
 
                 //----------------------------------
                 // Ejecutar acciones ofensivas
                 //----------------------------------
-                if(dynamic_cast<AttackCommand*>(playerOneCommand.get()))
-                {
-                    if(playerOneCommand->CanExecute(turnOne.GetPlayer()))
-                    {
-                        playerOneCommand->Execute(turnTwo.GetPlayer());
-                    }
-                    else
-                    {
-                        /**
-                         * TODO:
-                         * Mostrar mensaje que no se pudo ejecutar el comando
-                         */
-                    }
-                }
-                if(dynamic_cast<AttackCommand*>(playerTwoCommand.get()))
-                {
-                    if(playerTwoCommand->CanExecute(turnTwo.GetPlayer()))
-                    {
-                        playerTwoCommand->Execute(turnOne.GetPlayer());
-                    }
-                    else
-                    {
-                        /**
-                         * TODO:
-                         * Mostrar mensaje que no se pudo ejecutar el comando
-                         */
-                    }
-                }
+                ExecuteIfIsAttackCommand(playerOneCommand.get(), turnTwo);
+                ExecuteIfIsAttackCommand(playerTwoCommand.get(), turnOne);
 
 
                 if (! turnOne.GetPlayer().CanPlay())
