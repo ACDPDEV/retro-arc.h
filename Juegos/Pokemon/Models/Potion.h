@@ -13,8 +13,12 @@ namespace PokemonGame
         
         public:
         
-            Potion(int healPoints);
+            Potion(int maxUses)
+                :
+                Item(maxUses)
+            {
+            }
         
-            void use(PokemonGame::Pokemon& target) override;
+            void Use(PokemonGame::Pokemon& target) override;
     };
 }

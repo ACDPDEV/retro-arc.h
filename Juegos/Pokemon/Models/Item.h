@@ -9,15 +9,26 @@ namespace PokemonGame
     
     class Item
     {
+        protected:
+            int remainingUses;
         
         public:
         
-            Item()
+            Item(int maxUses)
+            :
+            remainingUses(maxUses)
             {
             }
         
             virtual ~Item() = default;
+
+            bool CanUse()
+            {
+                return remainingUses > 0;
+            }
+
+            virtual void RegisterUse() = 0;
         
-            virtual void use(PokemonGame::Pokemon& target) = 0;
+            virtual void Use(PokemonGame::Pokemon& target) = 0;
     };
 }

@@ -12,9 +12,13 @@ namespace PokemonGame
     {
         public:
         
-            Leftover();
+            Leftover(int maxUses)
+                :
+                Item(maxUses)
+            {
+            }
         
-            void use(PokemonGame::Pokemon& target) override
+            void Use(PokemonGame::Pokemon& target) override
             {
                 
             }

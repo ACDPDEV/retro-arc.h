@@ -49,21 +49,6 @@ namespace PokemonGame
         
             ~Move() = default;
 
-            double GetEffectiveness(PokemonGame::PokemonType attackerType, PokemonGame::PokemonType defenderType)
-            {
-                return PokemonGame::EFFECTIVENESS[static_cast<int>(attackerType)][static_cast<int>(defenderType)];
-            }
-        
-            void Execute(
-                PokemonGame::Pokemon& attacker,
-                PokemonGame::Pokemon& defender)
-            {
-                double damageEffectiveness = GetEffectiveness(attacker.GetType(), defender.GetType());
-                double modifiedDamage = baseDamage * damageEffectiveness;
-
-                defender.ReceiveDamage(modifiedDamage);
-            }
-
             int GetId()
             {
                 return id;

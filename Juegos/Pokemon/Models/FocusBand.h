@@ -7,18 +7,23 @@ namespace PokemonGame
 {
     class FocusBand : public PokemonGame::Item
     {
-        private:
-            bool canActive = true;
-
         public:
         
-            FocusBand()
+            FocusBand(int maxUses)
+                :
+                Item(maxUses)
             {
             }
-        
-            void use(PokemonGame::Pokemon& target) override
+
+            void RegisterUse() override
             {
-                
+                remainingUses = 0;
+            }
+
+            void Use(PokemonGame::Pokemon& target) override
+            {
+                target.WearFocusBand();
+                RegisterUse();
             }
     };
 }

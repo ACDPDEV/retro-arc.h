@@ -21,6 +21,7 @@ namespace PokemonGame
             double defense;
             bool hasFocusBand = false;
             std::vector<PokemonGame::Move*> moves;
+            PokemonGame::Move* currentMove = nullptr;
 
             void UseFocusBand()
             {
