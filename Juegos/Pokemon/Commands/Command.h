@@ -22,5 +22,7 @@ namespace PokemonGame
                 PokemonGame::Battle& battle,
                 PokemonGame::Player& actor,
                 PokemonGame::Player& opponent) = 0;
+
+            virtual bool  CanExecute(PokemonGame::Player& actor) = 0;
     };
 }

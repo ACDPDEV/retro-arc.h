@@ -46,12 +46,14 @@ namespace PokemonGame
                 // Ejecutar acciones
                 //----------------------------------
 
-                playerOneCommand->Execute(battle, player1, player2);
+                if(playerOneCommand->CanExecute(player1))
+                    playerOneCommand->Execute(battle, player1, player2);
 
                 if (battle.IsFinished())
                     return;
-
-                playerTwoCommand->Execute(battle, player2, player1);
+                
+                if(playerTwoCommand->CanExecute(player2))
+                    playerTwoCommand->Execute(battle, player2, player1);
 
                 if (battle.IsFinished())
                     return;                

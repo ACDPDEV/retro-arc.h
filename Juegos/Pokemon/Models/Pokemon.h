@@ -21,7 +21,6 @@ namespace PokemonGame
             double defense;
             bool hasFocusBand = false;
             std::vector<PokemonGame::Move*> moves;
-            PokemonGame::Move* currentMove = nullptr;
 
             void UseFocusBand()
             {
@@ -51,7 +50,7 @@ namespace PokemonGame
                 
             }
     
-            virtual ~Pokemon();
+            ~Pokemon() = default;
 
             void WearFocusBand()
             {
@@ -99,6 +98,17 @@ namespace PokemonGame
                 }
                 
                 return nullptr;
+            }
+            
+            bool IsValidMove(PokemonGame::Move* move)
+            {
+                auto it = std::find(moves.begin(), moves.end(), move);
+
+                if (! (it == moves.end()) )
+                {
+                    return true;
+                }
+                return false;
             }
     
             PokemonGame::PokemonType GetType() const

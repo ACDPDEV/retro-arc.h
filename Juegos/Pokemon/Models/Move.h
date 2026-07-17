@@ -63,6 +63,16 @@ namespace PokemonGame
                 return !name.empty();
             }
 
+            PokemonGame::PokemonType GetType()
+            {
+                return type;
+            }
+
+            double GetBaseDamage()
+            {
+                return baseDamage;
+            }
+
             bool RollAccuracy()
             {
                 static std::random_device rd;

@@ -23,11 +23,32 @@ namespace PokemonGame
             }
     
             void Execute(
-                PokemonGame::Battle& battle,
-                PokemonGame::Player& actor,
-                PokemonGame::Player& opponent) override
+                PokemonGame::Battle& battle,  // -------------------------- este parámetro no se está usando
+                PokemonGame::Player& attacker,
+                PokemonGame::Player& defender) override
+            {                
+                PokemonGame::Pokemon* defenderPokemon = defender.GetActivePokemon();
+
+                double damageEffectiveness = GetEffectiveness(move->GetType(), defenderPokemon->GetType());
+                
+                double modifiedDamage = move->GetBaseDamage() * damageEffectiveness;
+                defenderPokemon->ReceiveDamage(modifiedDamage);
+            }
+
+            bool CanExecute(PokemonGame::Player& attacker)
             {
-                // actor.activePokemon->getMove()->execute(actor, opponent);
+                bool isValidMove = attacker.GetActivePokemon()->IsValidMove(move);
+                if(isValidMove)
+                {
+                    return true;
+                }
+                return false;
+            }
+
+
+            double GetEffectiveness(PokemonGame::PokemonType attackerType, PokemonGame::PokemonType defenderType)
+            {
+                return PokemonGame::EFFECTIVENESS[static_cast<int>(attackerType)][static_cast<int>(defenderType)];
             }
     };
 }
