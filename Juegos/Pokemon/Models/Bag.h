@@ -42,5 +42,18 @@ namespace PokemonGame
                 
                 return nullptr;
             }
+
+            bool HasItemWithId(int itemId)
+            {
+                for (const auto& itemPtr : items)
+                {
+                    if (itemPtr != nullptr && itemPtr->GetId() == itemId)
+                    {
+                        return true;
+                    }
+                }
+                
+                return false;
+            }
     };
 }

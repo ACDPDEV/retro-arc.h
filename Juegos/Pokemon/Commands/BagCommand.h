@@ -26,13 +26,19 @@ namespace PokemonGame
             void Execute(
                 PokemonGame::Player& affectedPlayer) override
             {
-                item->Use(*affectedPlayer.GetActivePokemon());
-
+                item->Use(affectedPlayer.GetActivePokemon());
+                item->RegisterUse();
             }
             
-            bool  CanExecute(PokemonGame::Player& actor) override
+            bool CanExecute(PokemonGame::Player& actor) override
             {
+                bool canExecute = true;
+                if(!actor.GetBag().HasItemWithId(item->GetId()))
+                    canExecute = false;
+                else if(!item->CanUse())
+                    canExecute = false;
 
+                return canExecute;
             }
     };
 }

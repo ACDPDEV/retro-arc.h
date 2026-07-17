@@ -21,6 +21,6 @@ namespace PokemonGame
             virtual void Execute(
                 PokemonGame::Player& affectedPlayer);
 
-            virtual bool  CanExecute(PokemonGame::Player& actor) = 0;
+            virtual bool CanExecute(PokemonGame::Player& actor) = 0;
     };
 }
