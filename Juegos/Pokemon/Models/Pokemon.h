@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <algorithm>
 #include <vector>
 #include "./Enums/PokemonType.h"
 #include "Move.h"
@@ -21,6 +22,12 @@ namespace PokemonGame
             bool hasFocusBand = false;
             std::vector<PokemonGame::Move*> moves;
 
+            void UseFocusBand()
+            {
+                currentHp = std::max(currentHp, 1.0);
+                hasFocusBand = false;
+            }
+            
             double GetEffectiveDamage(double damage)
             {
                 return damage / (damage + 60);
@@ -42,10 +49,13 @@ namespace PokemonGame
             {
                 
             }
-
-
     
             virtual ~Pokemon();
+
+            void WearFocusBand()
+            {
+                hasFocusBand = true;
+            }
     
             void ReceiveDamage(double incomingDamage)
             {
@@ -54,14 +64,14 @@ namespace PokemonGame
                 {
                     currentHp -= effectiveDamage;
                 }
-                else if(hasFocusBand)
-                {
-                    currentHp = 1;
-                    hasFocusBand = false;
-                }
                 else
                 {
                     currentHp = 0;
+                }
+
+                if(hasFocusBand)
+                {
+                    UseFocusBand();
                 }
             }
     
