@@ -24,7 +24,6 @@ namespace PokemonGame
             }
     
             void Execute(
-                PokemonGame::Battle& battle,
                 PokemonGame::Player& actor,
                 PokemonGame::Player& opponent) override
             {

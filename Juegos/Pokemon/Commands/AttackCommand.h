@@ -24,7 +24,6 @@ namespace PokemonGame
             }
     
             void Execute(
-                PokemonGame::Battle& battle,  // -------------------------- este parámetro no se está usando
                 PokemonGame::Player& attacker, // -------------------------- este parámetro no se está usando
                 PokemonGame::Player& defender) override
             {                

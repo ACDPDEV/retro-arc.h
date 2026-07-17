@@ -17,10 +17,12 @@ namespace PokemonGame
     
         public:
     
-            SwitchPokemonCommand(PokemonGame::Pokemon* pokemon);
+            SwitchPokemonCommand(PokemonGame::Pokemon* pokemon)
+                :
+                pokemon(pokemon)
+            {}
     
             void Execute(
-                PokemonGame::Battle& battle,
                 PokemonGame::Player& actor,
                 PokemonGame::Player& opponent) override;
     };
