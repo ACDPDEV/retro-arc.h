@@ -24,7 +24,7 @@ namespace PokemonGame
     
             void Execute(
                 PokemonGame::Battle& battle,  // -------------------------- este parámetro no se está usando
-                PokemonGame::Player& attacker,
+                PokemonGame::Player& attacker, // -------------------------- este parámetro no se está usando
                 PokemonGame::Player& defender) override
             {                
                 PokemonGame::Pokemon* defenderPokemon = defender.GetActivePokemon();
@@ -35,7 +35,7 @@ namespace PokemonGame
                 defenderPokemon->ReceiveDamage(modifiedDamage);
             }
 
-            bool CanExecute(PokemonGame::Player& attacker)
+            bool CanExecute(PokemonGame::Player& attacker) override
             {
                 bool isValidMove = attacker.GetActivePokemon()->IsValidMove(move);
                 if(isValidMove)

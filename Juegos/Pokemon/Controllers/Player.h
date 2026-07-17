@@ -55,7 +55,7 @@ namespace PokemonGame
 
                             if (moveId != -1)
                             {
-                                PokemonGame::Move* move = activePokemon->GetMoveById(moveId);
+                                PokemonGame::Move* move = GetActivePokemon()->GetMoveById(moveId);
                                 return std::make_unique<PokemonGame::AttackCommand>(move);
                             }
 
@@ -64,23 +64,31 @@ namespace PokemonGame
 
                         case static_cast<int>(PokemonGame::MenuOption::BAG):
                         {
-                            auto item = PokemonGame::Move(); // ShowBagMenu(); retorna Item(name);
+                            /**
+                             * TODO:
+                             * Implementar función para vista
+                             */
+                            int itemId = 0; // ShowBagMenu(); retorna int itemId;
 
-                            if (item.HasName())
+                            if (itemId != -1)
+                            {
+                                PokemonGame::Item* item = GetBag().GetItemById(itemId);
                                 return std::make_unique<PokemonGame::BagCommand>(item);
+                            }
 
                             break;
                         }
 
                         case static_cast<int>(PokemonGame::MenuOption::POKEMON):
                         {
-                            auto pokemon = *team[0]; //ShowPokemonMenu();
-
                             /**
                              * TODO:
-                             * Controlar el flujo de que efectivamente se ha seleccionado esta opción
+                             * Implementar la vista para seleccionar el pokemon retorna -1
                              */
-                            if (true)
+                            int pokemonId = 0; // ShowSwitchPokemonMeny(); retorn int pokemonId;
+
+                            if (pokemonId != -1)
+                                PokemonGame::Pokemon* pokemon;
                                 return std::make_unique<PokemonGame::SwitchPokemonCommand>(pokemon);
 
                             break;

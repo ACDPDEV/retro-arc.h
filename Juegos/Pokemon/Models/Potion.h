@@ -13,9 +13,9 @@ namespace PokemonGame
         
         public:
         
-            Potion(int maxUses)
+            Potion(int id, int maxUses)
                 :
-                Item(maxUses)
+                Item(id, maxUses)
             {
             }
         

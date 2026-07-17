@@ -15,11 +15,24 @@ namespace PokemonGame
     
         public:
     
-            BagCommand(PokemonGame::Item* item);
+            BagCommand(PokemonGame::Item* item)
+                :
+                item(item)
+            {
+
+            }
     
             void Execute(
                 PokemonGame::Battle& battle,
                 PokemonGame::Player& actor,
-                PokemonGame::Player& opponent) override;
+                PokemonGame::Player& opponent) override
+            {
+                
+            }
+            
+            bool  CanExecute(PokemonGame::Player& actor) override
+            {
+
+            }
     };
 }

@@ -9,9 +9,9 @@ namespace PokemonGame
     {
         public:
         
-            FocusBand(int maxUses)
+            FocusBand(int id, int maxUses)
                 :
-                Item(maxUses)
+                Item(id, maxUses)
             {
             }
 

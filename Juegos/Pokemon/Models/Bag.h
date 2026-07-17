@@ -17,14 +17,30 @@ namespace PokemonGame
     
         public:
     
-            Bag();
+            Bag()
+            {
+
+            }
     
-            ~Bag();
+            ~Bag() = default;
     
             void addItem(PokemonGame::Item* item);
     
             void useItem(
                 int index,
                 PokemonGame::Pokemon& target);
+            
+            PokemonGame::Item* GetItemById(int id)
+            {
+                for (PokemonGame::Item* item : items)
+                {
+                    if (item != nullptr && item->GetId() == id)
+                    {
+                        return item;
+                    }
+                }
+                
+                return nullptr;
+            }
     };
 }

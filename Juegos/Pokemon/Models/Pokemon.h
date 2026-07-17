@@ -11,6 +11,8 @@ namespace PokemonGame
     class Pokemon
     {
         private:
+
+            int id;
     
             std::string name;
     
@@ -36,11 +38,13 @@ namespace PokemonGame
         public:
     
             Pokemon(
+                const int id,
                 const std::string& name,
                 PokemonGame::PokemonType type,
                 double hp,
                 double defense)
                 :
+                id(id),
                 name(name),
                 type(type),
                 maxHp(hp),

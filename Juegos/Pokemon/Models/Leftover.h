@@ -10,11 +10,14 @@ namespace PokemonGame
      */
     class Leftover : public PokemonGame::Item
     {
+        private:
+            int countActiveLeftovers = 0;
+
         public:
         
-            Leftover(int maxUses)
+            Leftover(int id, int maxUses)
                 :
-                Item(maxUses)
+                Item(id, maxUses)
             {
             }
         

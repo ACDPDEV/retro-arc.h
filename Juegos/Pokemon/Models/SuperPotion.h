@@ -9,9 +9,9 @@ namespace PokemonGame
     {
         public:
         
-            SuperPotion(int maxUses)
+            SuperPotion(int id, int maxUses)
                     :
-                    Potion(maxUses)
+                    Potion(id, maxUses)
                 {
                 }
     };

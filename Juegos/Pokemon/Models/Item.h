@@ -10,12 +10,18 @@ namespace PokemonGame
     class Item
     {
         protected:
+            int id;
+            int maxUses;
             int remainingUses;
         
         public:
         
-            Item(int maxUses)
+            Item(
+                int id,
+                int maxUses)
             :
+            id(id),
+            maxUses(maxUses),
             remainingUses(maxUses)
             {
             }
@@ -25,6 +31,11 @@ namespace PokemonGame
             bool CanUse()
             {
                 return remainingUses > 0;
+            }
+
+            int GetId()
+            {
+                return id;
             }
 
             virtual void RegisterUse() = 0;
