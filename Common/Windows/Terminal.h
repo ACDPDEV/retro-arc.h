@@ -141,17 +141,7 @@ inline void Sleep(int ms) {
  */
 inline void ClearConsoleLine(int lineLength)
 {
-    std::string blankSpace = "";
-    for(int i = 0; i <= lineLength; i++)
-    {
-        std::string blankSpace = "";
-        for(int i = 0; i <= lineLength; i++)
-        {
-            blankSpace += " ";
-        }
-        std::cout << blankSpace;
-    }
-    std::cout << blankSpace;
+    std::cout << std::string(lineLength, ' ');
 }
 
 } // namespace Common

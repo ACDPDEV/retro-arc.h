@@ -2,7 +2,7 @@
 
 #include "Consts.h"
 #include "Variables.h"
-#include "Windows/Terminal.h"
+#include "Terminal.h"
 #include <iostream>
 #include <string>
 
