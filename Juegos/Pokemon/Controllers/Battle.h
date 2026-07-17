@@ -28,7 +28,7 @@ namespace PokemonGame
             {
                 while (!finished)
                 {
-                    PokemonGame::Round round(*this, playerOneTurn, playerTwoTurn);
+                    PokemonGame::Round round(playerOneTurn, playerTwoTurn);
 
                     round.Play();
 
