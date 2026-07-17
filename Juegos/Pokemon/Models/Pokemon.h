@@ -56,6 +56,11 @@ namespace PokemonGame
     
             ~Pokemon() = default;
 
+            int GetId()
+            {
+                return id;
+            }
+
             void WearFocusBand()
             {
                 hasFocusBand = true;
