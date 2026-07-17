@@ -6,6 +6,7 @@
 #include "../../../Common/Variables.h"
 #include "../Models/Player.h"
 #include "../Functions/BuildTeam.h"
+#include "../Enums/GameOption.h"
 
 
 namespace PokemonGame
@@ -50,26 +51,29 @@ namespace PokemonGame
                 switch (option)
                 {
                     // iniciar batalla
-                    case 0:
+                    case static_cast<int>(PokemonGame::GameOption::BATTLE):
                     {
                         PokemonGame::BuildTeam(playerOne);
                         PokemonGame::BuildTeam(playerTwo);
 
-                        PokemonGame::Battle battle(playerOne, playerTwo);
+                        PokemonGame::TurnController turnOne(playerOne);
+                        PokemonGame::TurnController turnOne(playerTwo);
+
+                        PokemonGame::Battle battle(turnOne, turnOne);
 
                         battle.Start();
                         break;
                     }
 
                     // Salir
-                    case 1:
+                    case static_cast<int>(PokemonGame::GameOption::QUIT):
                     {
                         running = false;
                         break;
                     }
                     
                     // Configuraciones (nombre, maximo de pokemones)
-                    case 2:
+                    case static_cast<int>(PokemonGame::GameOption::CONFIG):
                     {
                         break;
                     }

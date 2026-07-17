@@ -3,14 +3,14 @@
 #include <string>
 #include <memory>
 #include <vector>
-#include "../Models/Player.h"
 #include "Battle.h"
-#include "../Commands/Command.h"
+#include "../Models/Player.h"
 #include "../Models/Bag.h"
 #include "../Models/Item.h"
 #include "../Models/Pokemon.h"
 #include "../Models/Player.h"
-#include "../Enums/MenuOption.h"
+#include "../Enums/ChooseCommandOption.h"
+#include "../Commands/Command.h"
 #include "../Commands/AttackCommand.h"
 #include "../Commands/SwitchPokemonCommand.h"
 #include "../Commands/RunCommand.h"
@@ -38,7 +38,7 @@ namespace PokemonGame
                     int option = 0; // ShowBattleMenu();
                     switch (option)
                     {
-                        case static_cast<int>(PokemonGame::MenuOption::FIGTH):
+                        case static_cast<int>(PokemonGame::ChooseCommandOption::FIGTH):
                         {
                             /**
                              * TODO:
@@ -55,7 +55,7 @@ namespace PokemonGame
                             break;
                         }
 
-                        case static_cast<int>(PokemonGame::MenuOption::BAG):
+                        case static_cast<int>(PokemonGame::ChooseCommandOption::BAG):
                         {
                             /**
                              * TODO:
@@ -72,7 +72,7 @@ namespace PokemonGame
                             break;
                         }
 
-                        case static_cast<int>(PokemonGame::MenuOption::POKEMON):
+                        case static_cast<int>(PokemonGame::ChooseCommandOption::POKEMON):
                         {
                             /**
                              * TODO:
@@ -91,7 +91,7 @@ namespace PokemonGame
                             break;
                         }
 
-                        case static_cast<int>(PokemonGame::MenuOption::RUN):
+                        case static_cast<int>(PokemonGame::ChooseCommandOption::RUN):
                         {
                             /**
                              * TODO:

@@ -2,7 +2,7 @@
 
 namespace PokemonGame
 {    
-    enum class MenuOption
+    enum class ChooseCommandOption
     {
         FIGTH,
         BAG,
