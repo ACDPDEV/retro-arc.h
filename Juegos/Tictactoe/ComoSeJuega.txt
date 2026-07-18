@@ -1,0 +1,61 @@
+¿COMO SE JUEGA?
+Al iniciar el programa aparecerá un menú principal con 3 opciones:
+(Menu principal)
+1.original (Juego clasico de Tictactoe)
+2.Modo futbol (Tictactoe + Quiz de futbol)
+3.salir
+.
+Los dos modos de juego son para 2 jugadores.
+Opción 1: Original
+Aparece las instrucciones de cómo jugar el tictactoe.
+Luego de dar presionar una tecla.
+Aparece el Marco del juego y dice turno de X.
+En el marco, aparece numero (del 1 al 9) que indican la posición.
+Para jugar tienes que escribir un numero y se pondrá tu ficha (X o O), dependiendo tu turno.
+
+Tiene validaciones para que no puedas sobreponer una "X" donde ya esté lleno el espacio.
+Gana cuando se forma una fila o columna de "X" o "O".
+Aparece las letras "Ganó "X" o "O""
+y te pregunta si quieres jugar nuevamente (S/N):
+Si escribes S, el juego comienza desde las instrucciones.
+Si escribes N, te posiciona en el menu principal
+
+OPcion 2:Modo futbol
+Aparece las instrucciones de cómo jugar el tictactoe.
+Luego, Aparece el tablero de tictactoe y a la derecha un Marco "Quiz futbolero".
+En ese marco irán las preguntas y las opciones. 
+Utiliza la misma lógica del tictactoe para ganar, poner una ficha, etc.
+Antes de poner una ficha(X o O), 
+De un vector de 30 preguntas. Aleatoriamente se presenta una pregunta con sus opciones (A,B,C,D)
+El jugador "X", debe responder con (A,B,C,D)
+Si responde correctamente, aparecerá: "Respuesta correcta, Selecciona donde quieres poner tu ficha)
+ (el jugador recién puede escribir donde poner su ficha en la posicion(1,..9))
+Si responde incorrectamente, aparecerá: "Error, respuesta incorrecta".
+ (el jugador pierde su turno y no puede colocar su ficha. Pasando al turno del siguiente jugador".
+ 
+Ejemplo: turno X, responde bien y coloca su ficha.
+        turno O, responde mal , no puede colocar su ficha. siguiente
+        turno x, responde bien y coloca su ficha.
+Hasta este punto El jugador X, habrá puesto 2 fichas y el jugador 0, nada.
+
+Siguen cambiando las preguntas y respondiendo. 
+Cuando un jugador gana: Aparece en la pantalla "Victoria"
+Luego te pregunta:
+si quieres jugar nuevamente (S/N):
+
+
+opcion 3: Salir
+Sales del programa
+
+
+
+
+
+
+
+
+
+
+
+
+

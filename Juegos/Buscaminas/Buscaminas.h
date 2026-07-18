@@ -9,8 +9,7 @@
 #include "../../Common/Output.h"
 #include "BuscaminasDatabase.h"
 #include "BuscaminasService.h"
-#include "../../Tests/MenuViewTest.h" // <<<<<<<<<<< BORRAR CUANDO YA NO SE ESTÉ USANDO RetroArcTest namespace <<<< BORRAR
-#include "../../Tests/MinesweeperTest.h" // <<<<<<<<<<< BORRAR CUANDO YA NO SE ESTÉ USANDO RetroArcTest namespace <<<< BORRAR
+#include "BuscaminasUI.h"
 
 namespace Minesweeper
 {
@@ -24,225 +23,74 @@ namespace Minesweeper
         int cols = 10;
         int minesQuantity = 8;
         
-        const std::vector<std::string> gameOptions = 
-        {
-            "JUGAR",
-            "CRÉDITOS",
-            "VOLVER AL MENÚ",
-            "CONFIGURACIONES"  
-        };
-    
-        const int minGameOption = 0;
-        const int maxGameOption = gameOptions.size() - 1;
-        int gameOption = minGameOption;
-    
         bool inGame = true;
     
         while (inGame)
         {
-            Common::feedbackMessage = "";
-            
-            do
-            {
-                RetroArcTest::PrintMenuTest(gameOptions, gameOption); // <<<<<<<<<<< BORRAR CUANDO YA NO SE ESTÉ USANDO RetroArcTest namespace <<<< BORRAR
-                /**
-                 * 
-                 * TODO
-                 * MOSTRAR PANTALLA CON LAS OPCIONES Y TÍTULO. DEBE INCLUIR LA VARIABLE feebbackMessage
-                 * 
-                 * 
-                 */
-    
-                Common::key = Common::ReadConsoleChar();
-                if(Common::IsNavigationKey(Common::key))
-                {
-                    Common::feedbackMessage = "";
-                    Common::PrintFeedBackMessage();
-                    Common::SetOption(gameOption, minGameOption, maxGameOption, Common::key);
-                }
-                else if( ! Common::IsActionKey(Common::key))
-                {
-                    Common::feedbackMessage = "Presiona las flechas y selecciona con ENTER o ESPACIO";
-                    Common::PrintFeedBackMessage();
-                }
-            } while (!Common::IsActionKey(Common::key));
-            
-    
-            switch (gameOption)
+            int menuOption = Buscaminas::MainMenuView();
+
+            switch (menuOption)
             {
                 // OPCIÓN: JUGAR
                 case 0:
                 {
-                    
-                    const std::vector<std::string> levels =
-                    {
-                        "FÁCIL",
-                        "INTERMEDIO",
-                        "DIFÍCIL"
-                    };
-                    // SELECCIONAR NIVEL
-    
-                    const int minLevelOption = 0;
-                    const int maxLevelOption = levels.size() - 1;
-                    int levelOption = minLevelOption;
-                    
-                    do{
-                        RetroArcTest::PrintMenuTest(levels, levelOption); // <<<<<<<<<<< BORRAR CUANDO YA NO SE ESTÉ USANDO RetroArcTest namespace <<<< BORRAR
-                        /**
-                         * TODO
-                         * 
-                         * PANTALLA PARA SELECCIONAR NIVEL
-                         * 
-                         * 
-                         */
-                        Common::key = Common::ReadConsoleChar();
-                        if(Common::IsNavigationKey(Common::key))
-                        {
-                            Common::feedbackMessage = "";
-                            Common::PrintFeedBackMessage();
-                            Common::SetOption(levelOption, minLevelOption, maxLevelOption, Common::key);
-                        }
-                        else if( ! Common::IsActionKey(Common::key))
-                        {
-                            Common::feedbackMessage = "Presiona las flechas y selecciona con ENTER o ESPACIO";
-                            Common::PrintFeedBackMessage();
-                        }
-                    }
-                    while(! Common::IsActionKey(Common::key));
-    
+                    int levelOption = Buscaminas::LevelSelectView();
+                    if (levelOption == -1) break; // Esc → back to main menu
+
                     rows = Minesweeper::SetRowsByLevel(levelOption);
                     cols = Minesweeper::SetColsByLevel(levelOption);
                     minesQuantity = Minesweeper::SetMinesQuantity(rows, cols, levelOption);
-                    int flagCount = Minesweeper::SetInitialFlagCount(minesQuantity);
-    
-                    std::vector<std::vector<int>> backgroundBoard = Minesweeper::CreateBackgroundBoard(rows, cols);
-                    Minesweeper::PlaceMines(backgroundBoard, minesQuantity);
-                    Minesweeper::CountAdjacentMines(backgroundBoard);
-    
-                    const std::array<int, 2> initialPosition = Minesweeper::GetInitialPosition(rows, cols);
-                    int playerRow = initialPosition[0];
-                    int playerCol = initialPosition[1];
-    
-                    std::vector<std::vector<int>> stateBoard = Minesweeper::CreatePageStateBoard(rows, cols);
-                    bool gameOver = false;
-                    bool wonGame = false;
-    
-                    Common::feedbackMessage = "Moverse: Flechas | Revelar: (R) | Bandera: (B) | Salir: (Q)";
-                    /**
-                     * 
-                     * 
-                     * TODO:
-                     * MOSTRAR IU SIN PARÁMETROS
-                     * 
-                     * 
-                     */
-    
-                    while (!gameOver)
-                    {
-                        RetroArcTest::PrintMinesweeperBoardTest(stateBoard, playerRow, playerCol);
-                        /**
-                         * 
-                         * TODO:
-                         * MOSTRAR SECCIONES DE UI CON PARÁMETROS
-                         * TABLERO,
-                         * FEEDBACK MESSAGGE,
-                         * BANDERAS,
-                         * POSICION ACTUAL DEL JUGADOR (ROW, COL)
-                         * 
-                         */
-    
-                        // 2. Pedir la acción
-                        Common::key = Common::ReadConsoleChar();
-    
-                        if(Minesweeper::IsMoveKey(Common::key))
-                        {
-                            Minesweeper::MoveCommand(playerRow, playerCol, rows, cols, Common::key);
-                        }
-                        else if(Minesweeper::IsRevealKey(Common::key))
-                        {
-                            Minesweeper::RevealCommand(backgroundBoard, stateBoard, playerRow, playerCol, Common::feedbackMessage);
-                            if(Minesweeper::MineIsRevealed(backgroundBoard, playerRow, playerCol, Common::feedbackMessage))
-                            {
-                                gameOver = true;
-                            }
-                            else if(Minesweeper::IsWonGameState(stateBoard, minesQuantity))
-                            {
-                                wonGame = true;
-                                gameOver = true;
+
+                    bool playAgain = false;
+                    do {
+                        playAgain = false;
+
+                        int flagCount = Minesweeper::SetInitialFlagCount(minesQuantity);
+
+                        std::vector<std::vector<int>> backgroundBoard = Minesweeper::CreateBackgroundBoard(rows, cols);
+                        Minesweeper::PlaceMines(backgroundBoard, minesQuantity);
+                        Minesweeper::CountAdjacentMines(backgroundBoard);
+
+                        const std::array<int, 2> initialPosition = Minesweeper::GetInitialPosition(rows, cols);
+                        int playerRow = initialPosition[0];
+                        int playerCol = initialPosition[1];
+
+                        std::vector<std::vector<int>> stateBoard = Minesweeper::CreatePageStateBoard(rows, cols);
+
+                        // GameBoardView handles its own input loop
+                        // Returns: -1=quit, 1=won, 2=lost
+                        int boardResult = Buscaminas::GameBoardView(
+                            stateBoard, backgroundBoard,
+                            playerRow, playerCol,
+                            flagCount, minesQuantity,
+                            levelOption
+                        );
+
+                        if (boardResult == 1 || boardResult == 2) {
+                            int goAction = Buscaminas::GameOverView(boardResult == 1);
+                            if (goAction == 0) {
+                                playAgain = true;
                             }
                         }
-                        else if(Minesweeper::IsFlagKey(Common::key))
-                        {
-                            Minesweeper::FlagCommand(flagCount, stateBoard, playerRow, playerCol, Common::feedbackMessage);
-                        }
-                        else if(Minesweeper::IsExitMatchKey(Common::key))
-                        {
-                            const std::string messageBoxOptions[]
-                            {
-                                "SÍ",
-                                "NO"
-                            };
-                            const int minMessageBoxOption = 0;
-                            const int maxMessageBoxOption = messageBoxOptions->size() - 1;
-                            int mbOption = minMessageBoxOption;
-                            
-                            do{
-                                /**
-                                 * 
-                                 * TODO:
-                                 * MESSAGE BOX PARA CONFIRMAR SALIDA
-                                 * "¿Quieres abandonar la partida?"
-                                 * "SI"  "NO"
-                                 * 
-                                 */
-                                Common::key = Common::ReadConsoleChar();
-                                if(Common::IsNavigationKey(Common::key))
-                                {
-                                    Common::SetOption(mbOption, minMessageBoxOption, maxMessageBoxOption, Common::key);
-                                }
-                                
-                            }while( ! Common::IsActionKey(Common::key));
-                            
-                            if(messageBoxOptions[mbOption] == "SÍ")
-                            {
-                                gameOver = true;
-                            }
-                        }
-                        else
-                        {
-                            /**
-                             * 
-                             * TODO:
-                             * GESTIONAR TECLA EQUIVOCADA
-                             * 
-                             */
-                        }
-    
-                        
-                    }
-    
-                    if(! Minesweeper::IsExitMatchKey(Common::key))
-                    {
-                        // TODO mostrar la pantalla de victoria o resultado
-    
-                    }
+                        // boardResult == -1 → quit confirmed, go back to menu
+                    } while (playAgain);
+
                     break;
                 }
-    
-                
+
                 // OPCIÓN: CRÉDITOS
                 case 1:
-                // TODO: CRÉDITOS DE BUSCAMINAS
-                break;
-                
-                // OPCIÓN: SALIR
-                case 2:
-                inGame = false;
-                break;
+                    Buscaminas::CreditsView();
+                    break;
                 
                 // OPCIÓN: CONFIGURACIONES
+                case 2:
+                    Buscaminas::ConfigView();
+                    break;
+                
+                // OPCIÓN: VOLVER
                 case 3:
-                    // TODO: CONFIGURAR NOMBRE DEL JUGADOR
+                    inGame = false;
                     break;
                 
                 default:
