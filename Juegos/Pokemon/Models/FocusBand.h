@@ -23,7 +23,6 @@ namespace PokemonGame
             void Use(PokemonGame::Pokemon* target) override
             {
                 target->WearFocusBand();
-                RegisterUse();
             }
     };
 }
