@@ -15,8 +15,8 @@
 #include "../../../Common/Terminal.h"
 #include "../../../Common/Theme.h"
 #include "../../../Common/Utils.h"
-#include "../PokemonStaticSprites/Trainer1Front.h"
-#include "../PokemonStaticSprites/Trainer2Front.h"
+#include "../Sprites/Trainer1.h"
+#include "../Sprites/Trainer2.h"
 
 namespace Pokemon {
 
@@ -51,10 +51,10 @@ namespace Pokemon {
         }
 
         // Sprite Trainer1 (jugador 1) - posicion x=15, y=16
-        Common::DrawSprite(15, 16, Trainer1Front);
+        Common::DrawSprite(15, 16, Trainer1);
 
         // Sprite Trainer2 (jugador 2) - posicion x=130, y=16
-        Common::DrawSprite(130, 16, Trainer2Front);
+        Common::DrawSprite(130, 16, Trainer2);
 
         // Etiqueta "Jugador 1:" centrada arriba de la caja de input
         const std::string label1 = "Jugador 1:";

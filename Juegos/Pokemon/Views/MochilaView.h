@@ -16,8 +16,10 @@
 #include "../../../Common/Theme.h"
 #include "../../../Common/UnicodeGlyphs.h"
 #include "../../../Common/Utils.h"
+#include "../../../Common/Variables.h"
+#include "../../../Common/Navigation.h"
 #include "../Database/MockData.h"
-#include "../PokemonStaticSprites/MochilaFront.h"
+#include "../Sprites/Mochila.h"
 
 namespace Pokemon {
 
@@ -45,7 +47,7 @@ namespace Pokemon {
         }
 
         // Sprite de la mochila (posicion x=15, y=12)
-        Common::DrawSprite(15, 12, MochilaFront);
+        Common::DrawSprite(15, 12, Mochila);
 
         // Panel de items (posicion x=80, y=10, w=110, h=30)
         const int panelX = 80;
