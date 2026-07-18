@@ -28,16 +28,16 @@ namespace MainMenu {
 
     inline void TitleComponent() {
         const std::array<std::string, 9> title = Common::ConcatFont({
-            Common::FONT_R,
-            Common::FONT_E,
-            Common::FONT_T,
-            Common::FONT_R,
-            Common::FONT_O,
-            Common::FONT_A,
-            Common::FONT_R,
-            Common::FONT_C,
-            Common::FONT_DOT,
-            Common::FONT_H
+            Common::FONT9_R,
+            Common::FONT9_E,
+            Common::FONT9_T,
+            Common::FONT9_R,
+            Common::FONT9_O,
+            Common::FONT9_A,
+            Common::FONT9_R,
+            Common::FONT9_C,
+            Common::FONT9_DOT,
+            Common::FONT9_H
         }, 2);
 
         const std::vector<std::array<int, 3>> titleColor = Common::Gradient(

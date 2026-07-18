@@ -36,11 +36,11 @@ namespace Pokemon {
     inline void PokemonSelectionView(int& selectedPokemon) {
         Common::DrawBackground();
 
-        // Titulo "SELECCIONA" con ConcatFont (FONT_S-FONT_A) - 9-line font
+        // Titulo "SELECCIONA" con ConcatFont (FONT9_S-FONT9_A) - 9-line font
         const std::array<std::string, 9> title = Common::ConcatFont({
-            Common::FONT_S, Common::FONT_E, Common::FONT_L, Common::FONT_E,
-            Common::FONT_C, Common::FONT_C, Common::FONT_I, Common::FONT_O,
-            Common::FONT_N, Common::FONT_A
+            Common::FONT9_S, Common::FONT9_E, Common::FONT9_L, Common::FONT9_E,
+            Common::FONT9_C, Common::FONT9_C, Common::FONT9_I, Common::FONT9_O,
+            Common::FONT9_N, Common::FONT9_A
         }, 1);
 
         // Centrar titulo horizontalmente

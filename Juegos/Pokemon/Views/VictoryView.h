@@ -37,10 +37,10 @@ namespace Pokemon {
     inline void VictoryView(const std::string& winnerName, int pokemonIndex, int round) {
         Common::DrawBackground();
 
-        // Titulo "VICTORIA" con ConcatFont (FONT_V-FONT_A) - 9-line font
+        // Titulo "VICTORIA" con ConcatFont (FONT9_V-FONT9_A) - 9-line font
         const std::array<std::string, 9> title = Common::ConcatFont({
-            Common::FONT_V, Common::FONT_I, Common::FONT_C, Common::FONT_T,
-            Common::FONT_O, Common::FONT_R, Common::FONT_I, Common::FONT_A
+            Common::FONT9_V, Common::FONT9_I, Common::FONT9_C, Common::FONT9_T,
+            Common::FONT9_O, Common::FONT9_R, Common::FONT9_I, Common::FONT9_A
         }, 2);
 
         // Gradiente: amarillo -> rojo -> amarillo para las 9 lineas del titulo

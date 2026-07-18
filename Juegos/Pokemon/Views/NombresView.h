@@ -28,10 +28,10 @@ namespace Pokemon {
     inline void NombresView(std::string& player1Name, std::string& player2Name) {
         Common::DrawBackground();
 
-        // Logo "POKEMON" con ConcatFont (FONT_P-FONT_N) - 9-line font
+        // Logo "POKEMON" con ConcatFont (FONT9_P-FONT9_N) - 9-line font
         const std::array<std::string, 9> logo = Common::ConcatFont({
-            Common::FONT_P, Common::FONT_O, Common::FONT_K,
-            Common::FONT_E, Common::FONT_M, Common::FONT_O, Common::FONT_N
+            Common::FONT9_P, Common::FONT9_O, Common::FONT9_K,
+            Common::FONT9_E, Common::FONT9_M, Common::FONT9_O, Common::FONT9_N
         }, 1);
 
         // Gradiente: amarillo -> rojo para las 9 lineas del logo

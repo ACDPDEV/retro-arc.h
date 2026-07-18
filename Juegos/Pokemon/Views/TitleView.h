@@ -24,10 +24,10 @@ namespace Pokemon {
     inline void TitleView() {
         Common::DrawBackground();
 
-        // Logo "POKEMON" con ConcatFont (FONT_P-FONT_N) - 9-line font
+        // Logo "POKEMON" con ConcatFont (FONT9_P-FONT9_N) - 9-line font
         const std::array<std::string, 9> logo = Common::ConcatFont({
-            Common::FONT_P, Common::FONT_O, Common::FONT_K,
-            Common::FONT_E, Common::FONT_M, Common::FONT_O, Common::FONT_N
+            Common::FONT9_P, Common::FONT9_O, Common::FONT9_K,
+            Common::FONT9_E, Common::FONT9_M, Common::FONT9_O, Common::FONT9_N
         }, 1);
 
         // Gradiente: amarillo → rojo para las 9 lineas del logo
@@ -52,16 +52,16 @@ namespace Pokemon {
 
         // Texto (Presione una tecla para empezar) - 4-line font
         const std::array<std::string, 4> promptFont = Common::ConcatFont({
-            Common::FONT_p, Common::FONT_r, Common::FONT_e, Common::FONT_s,
-            Common::FONT_i, Common::FONT_o, Common::FONT_n, Common::FONT_a,
-            Common::FONT_blank,
-            Common::FONT_u, Common::FONT_n, Common::FONT_a,
-            Common::FONT_blank,
-            Common::FONT_t, Common::FONT_e, Common::FONT_c, Common::FONT_l, Common::FONT_a,
-            Common::FONT_blank,
-            Common::FONT_p, Common::FONT_a, Common::FONT_r, Common::FONT_a,
-            Common::FONT_blank,
-            Common::FONT_e, Common::FONT_m, Common::FONT_p, Common::FONT_e, Common::FONT_z, Common::FONT_a, Common::FONT_r
+            Common::FONT4_p, Common::FONT4_r, Common::FONT4_e, Common::FONT4_s,
+            Common::FONT4_i, Common::FONT4_o, Common::FONT4_n, Common::FONT4_a,
+            Common::FONT4_blank,
+            Common::FONT4_u, Common::FONT4_n, Common::FONT4_a,
+            Common::FONT4_blank,
+            Common::FONT4_t, Common::FONT4_e, Common::FONT4_c, Common::FONT4_l, Common::FONT4_a,
+            Common::FONT4_blank,
+            Common::FONT4_p, Common::FONT4_a, Common::FONT4_r, Common::FONT4_a,
+            Common::FONT4_blank,
+            Common::FONT4_e, Common::FONT4_m, Common::FONT4_p, Common::FONT4_e, Common::FONT4_z, Common::FONT4_a, Common::FONT4_r
         }, 1);
 
         const int promptX = Common::AlignedX(0, Common::WIDTH_SCREEN, Common::Length(promptFont[0]), "center");

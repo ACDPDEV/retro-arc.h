@@ -94,7 +94,7 @@ namespace Pokemon
     }
 
     void BattleBeginningTitleView(){
-        const std::array<std::string, 9> FightTitle = Common::ConcatFont({Common::FONT_F,Common::FONT_I,Common::FONT_G,Common::FONT_H,Common::FONT_T, Common::FONT_EXCLAMATION}, 2);
+        const std::array<std::string, 9> FightTitle = Common::ConcatFont({Common::FONT9_F,Common::FONT9_I,Common::FONT9_G,Common::FONT9_H,Common::FONT9_T, Common::FONT9_EXCLAMATION}, 2);
         std::vector<std::array<int, 3>> FightTitleColor = Common::Gradient(9, Common::DARK_RED, Common::YELLOW);
 
         Common::EnableUTF8();

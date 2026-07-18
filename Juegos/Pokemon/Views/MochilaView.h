@@ -29,10 +29,10 @@ namespace Pokemon {
     inline void MochilaView() {
         Common::DrawBackground();
 
-        // Titulo "MOCHILA" con ConcatFont (FONT_M-FONT_A) - 9-line font
+        // Titulo "MOCHILA" con ConcatFont (FONT9_M-FONT9_A) - 9-line font
         const std::array<std::string, 9> title = Common::ConcatFont({
-            Common::FONT_M, Common::FONT_O, Common::FONT_C, Common::FONT_H,
-            Common::FONT_I, Common::FONT_L, Common::FONT_A
+            Common::FONT9_M, Common::FONT9_O, Common::FONT9_C, Common::FONT9_H,
+            Common::FONT9_I, Common::FONT9_L, Common::FONT9_A
         }, 1);
 
         // Centrar titulo horizontalmente
