@@ -21,7 +21,7 @@ namespace PokemonGame
             
             PokemonGame::Pokemon* activePokemon = nullptr;
             
-            PokemonGame::Bag bag;
+            PokemonGame::Bag bag{};
             
             bool canUseFocusBand = true;
 
