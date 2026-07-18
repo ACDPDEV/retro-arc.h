@@ -4,7 +4,10 @@
 #define CONSOLA_H
 
 #include <iostream>
+<<<<<<< HEAD
 #include <sstream>
+=======
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 #include <windows.h>
 #include <conio.h>
 #include <string>
@@ -18,6 +21,7 @@ using namespace std;
 const int ANCHO_PANTALLA = 200;
 const int ALTO_PANTALLA  = 60;
 
+<<<<<<< HEAD
 //=========================================================
 // DOBLE BUFFER (evita el parpadeo durante el juego)
 //=========================================================
@@ -180,11 +184,14 @@ void imprimir(const T& valor)
     WriteConsoleA(handleActivo(), texto.c_str(), (DWORD)texto.length(), &escritos, NULL);
 }
 
+=======
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 //---------------------------------------------------------
 // COLOR
 //---------------------------------------------------------
 void color(int c)
 {
+<<<<<<< HEAD
     if(usandoDobleBuffer)
     {
         colorActual = (WORD)c;
@@ -192,6 +199,9 @@ void color(int c)
     }
 
     SetConsoleTextAttribute(handleActivo(), c);
+=======
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c);
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 }
 
 //---------------------------------------------------------
@@ -199,6 +209,7 @@ void color(int c)
 //---------------------------------------------------------
 void gotoxy(int x, int y)
 {
+<<<<<<< HEAD
     if(usandoDobleBuffer)
     {
         cursorX = x;
@@ -207,6 +218,9 @@ void gotoxy(int x, int y)
     }
 
     HANDLE hCon = handleActivo();
+=======
+    HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
     COORD pos;
 

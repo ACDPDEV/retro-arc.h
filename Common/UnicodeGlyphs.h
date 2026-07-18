@@ -9,6 +9,7 @@
 #include <string>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 using namespace std;
 
 /// @brief Bloques de octavos verticales (9 niveles: 0/8 vacío a 8/8 lleno)
@@ -242,6 +243,8 @@ const array<array<string, 4>, 6> CORNERS = {{
     { QUADRANTS[7], QUADRANTS[11], QUADRANTS[14], QUADRANTS[13] }
 }};
 =======
+=======
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 namespace Common
 {
     /// @brief Bloques de octavos verticales (9 niveles: 0/8 vacío a 8/8 lleno)
@@ -476,4 +479,7 @@ namespace Common
     }};
 }
 
+<<<<<<< HEAD
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
+=======
 >>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08

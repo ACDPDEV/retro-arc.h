@@ -2,9 +2,14 @@
 #include "../Common/Color.h"
 #include "../Common/Graphics.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "../Common/Terminal.h"
 #include "rayquaza.h"
 #include "arceus.h"
+=======
+#include "../Common/Music.h"
+#include "rayquaza.h"
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 =======
 #include "../Common/Music.h"
 #include "rayquaza.h"
@@ -15,8 +20,13 @@ using namespace std;
 
 int main() {
 <<<<<<< HEAD
+<<<<<<< HEAD
     EnableUTF8();
     Clear();
+=======
+    Common::EnableUTF8();
+    Common::Clear();
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 =======
     Common::EnableUTF8();
     Common::Clear();
@@ -30,9 +40,15 @@ int main() {
     // }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     // DrawFillRectangle(0, 0, 60, 20, EMPTY_BLOCK, COLOR_TRANSPARENT, BACKGROUND);
     // DrawText(8, 7, "Ingresa algo :)", FOREGROUND, COLOR_TRANSPARENT);
     // DrawFillRectangle(8, 9, 40, 2, EMPTY_BLOCK, COLOR_TRANSPARENT, SELECTION_BACKGROUND);
+=======
+    // DrawFillRectangle(0, 0, 60, 20, EMPTY_BLOCK, COLOR_DEFAULT, BACKGROUND);
+    // DrawText(8, 7, "Ingresa algo :)", FOREGROUND_DARK, COLOR_DEFAULT);
+    // DrawFillRectangle(8, 9, 40, 2, EMPTY_BLOCK, COLOR_DEFAULT, SELECTION_BACKGROUND);
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 =======
     // DrawFillRectangle(0, 0, 60, 20, EMPTY_BLOCK, COLOR_DEFAULT, BACKGROUND);
     // DrawText(8, 7, "Ingresa algo :)", FOREGROUND_DARK, COLOR_DEFAULT);
@@ -53,6 +69,7 @@ int main() {
     };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     HideCursor();
 
     Clear();
@@ -67,6 +84,8 @@ int main() {
     GoToXY(0, 50);
     ShowCursor();
 =======
+=======
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
     Common::HideCursor();
 
     Common::Clear();
@@ -81,6 +100,9 @@ int main() {
 
     Common::GoToXY(0, 50);
     Common::ShowCursor();
+<<<<<<< HEAD
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
+=======
 >>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
     return 0;
 }

@@ -8,6 +8,7 @@
 #include <windows.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 using namespace std;
 
 /// @brief Reproduce un archivo de audio MP3/WAV (detiene cualquier reproducción anterior)
@@ -58,6 +59,8 @@ inline void ResumeAudio() {
     mciSendString("resume audio", NULL, 0, NULL);
 }
 =======
+=======
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 namespace Common
 {
     /// @brief Reproduce un archivo de audio MP3/WAV (detiene cualquier reproducción anterior)
@@ -107,5 +110,9 @@ namespace Common
     inline void ResumeAudio() {
         mciSendString("resume audio", NULL, 0, NULL);
     }
+<<<<<<< HEAD
+}
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
+=======
 }
 >>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08

@@ -11,6 +11,10 @@
 /// @note En Linux, Kbhit/Getch requieren que la terminal esté en modo raw
 ///       (InitTerminalRawMode() se auto-llama al incluir este header en Linux).
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+#include "Consts.h"
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 =======
 #include "Consts.h"
 >>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
@@ -24,11 +28,17 @@
     #include "Linux/Terminal.h"
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
 namespace Common {
     inline void GoToEnd() {
         GoToXY(0, HEIGHT_SCREEN + 1);
     }
 }
+<<<<<<< HEAD
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
+=======
 >>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08

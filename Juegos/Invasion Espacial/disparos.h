@@ -1,12 +1,19 @@
+<<<<<<< HEAD
 #ifndef DISPAROS_H
 #define DISPAROS_H
+=======
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
 #include <iostream>
 #include <windows.h>
 #include <conio.h>
 
 #include "consola2.h"
+<<<<<<< HEAD
 #include "figuras.h"
+=======
+#include "figuritas.h"
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
 using namespace std;
 
@@ -35,7 +42,11 @@ void moverBalaJugador(int &x, int &y,
     {
         borrarBalaJugador(x,y);
 
+<<<<<<< HEAD
         y -= 2;
+=======
+        y--;
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
         if(y<=0)
         {
@@ -181,4 +192,7 @@ void moverLaserJefe(int &xLaser1, int &yLaser1,
     }
 }
 
+<<<<<<< HEAD
 #endif
+=======
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08

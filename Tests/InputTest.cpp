@@ -33,23 +33,30 @@ void AddTest(string name, bool result) {
 /// @details Verifica int, float, string, char, bool con entradas válidas
 void ValidateTest() {
 <<<<<<< HEAD
+<<<<<<< HEAD
     AddTest("Validar entero", Validate("1", "int"));
     AddTest("Validar flotante", Validate("1.5", "float"));
     AddTest("Validar cadena", Validate("hello", "string"));
     AddTest("Validar carácter", Validate("a", "char"));
     AddTest("Validar booleano", Validate("true", "bool"));
 =======
+=======
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
     AddTest("Validar entero", Common::Validate("1", "int"));
     AddTest("Validar flotante", Common::Validate("1.5", "float"));
     AddTest("Validar cadena", Common::Validate("hello", "string"));
     AddTest("Validar carácter", Common::Validate("a", "char"));
     AddTest("Validar booleano", Common::Validate("true", "bool"));
+<<<<<<< HEAD
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
+=======
 >>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 }
 
 /// @brief Tests para ParseInt(): conversión string -> int (permisivo)
 /// @details Casos: "1" ok, "1.5" truncado a 1, inválidos "hello","a","true" lanzan excepción
 void ParseIntTest() {
+<<<<<<< HEAD
 <<<<<<< HEAD
     try { AddTest("Convertir \"1\" a entero", ParseInt("1") == 1); }
     catch (...) { AddTest("Convertir \"1\" a entero", false); }
@@ -65,6 +72,8 @@ void ParseIntTest() {
 
     try { ParseInt("true"); AddTest("Error al convertir \"true\" a entero", false); }
 =======
+=======
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
     try { AddTest("Convertir \"1\" a entero", Common::ParseInt("1") == 1); }
     catch (...) { AddTest("Convertir \"1\" a entero", false); }
 
@@ -78,6 +87,9 @@ void ParseIntTest() {
     catch (...) { AddTest("Error al convertir \"a\" a entero", true); }
 
     try { Common::ParseInt("true"); AddTest("Error al convertir \"true\" a entero", false); }
+<<<<<<< HEAD
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
+=======
 >>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
     catch (...) { AddTest("Error al convertir \"true\" a entero", true); }
 }
@@ -85,6 +97,7 @@ void ParseIntTest() {
 /// @brief Tests para ParseIntStrict(): conversión estricta sin decimales/notación científica
 /// @details Acepta solo enteros puros. Rechaza "1.5", "1e5", "1e-5" (lanzan excepción)
 void ParseIntStrictTest() {
+<<<<<<< HEAD
 <<<<<<< HEAD
     try { AddTest("Convertir \"1\" a entero estricto", ParseIntStrict("1") == 1); }
     catch (...) { AddTest("Convertir \"1\" a entero estricto", false); }
@@ -97,6 +110,8 @@ void ParseIntStrictTest() {
 
     try { ParseIntStrict("1e-5"); AddTest("Error al convertir \"1e-5\" a entero estricto", false); }
 =======
+=======
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
     try { AddTest("Convertir \"1\" a entero estricto", Common::ParseIntStrict("1") == 1); }
     catch (...) { AddTest("Convertir \"1\" a entero estricto", false); }
 
@@ -107,6 +122,9 @@ void ParseIntStrictTest() {
     catch (...) { AddTest("Error al convertir \"1e5\" a entero estricto", true); }
 
     try { Common::ParseIntStrict("1e-5"); AddTest("Error al convertir \"1e-5\" a entero estricto", false); }
+<<<<<<< HEAD
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
+=======
 >>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
     catch (...) { AddTest("Error al convertir \"1e-5\" a entero estricto", true); }
 }
@@ -114,6 +132,7 @@ void ParseIntStrictTest() {
 /// @brief Tests para ParseFloat(): conversión string -> float
 /// @details Casos: "1.5" ok, inválidos "hello","a","true" lanzan excepción
 void ParseFloatTest() {
+<<<<<<< HEAD
 <<<<<<< HEAD
     try { AddTest("Convertir \"1.5\" a flotante", ParseFloat("1.5") == 1.5f); }
     catch (...) { AddTest("Convertir \"1.5\" a flotante", false); }
@@ -126,6 +145,8 @@ void ParseFloatTest() {
 
     try { ParseFloat("true"); AddTest("Error al convertir \"true\" a flotante", false); }
 =======
+=======
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
     try { AddTest("Convertir \"1.5\" a flotante", Common::ParseFloat("1.5") == 1.5f); }
     catch (...) { AddTest("Convertir \"1.5\" a flotante", false); }
 
@@ -136,6 +157,9 @@ void ParseFloatTest() {
     catch (...) { AddTest("Error al convertir \"a\" a flotante", true); }
 
     try { Common::ParseFloat("true"); AddTest("Error al convertir \"true\" a flotante", false); }
+<<<<<<< HEAD
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
+=======
 >>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
     catch (...) { AddTest("Error al convertir \"true\" a flotante", true); }
 }
@@ -143,6 +167,7 @@ void ParseFloatTest() {
 /// @brief Tests para ParseBool(): conversión string -> bool
 /// @details Acepta "true"/"false" y "1"/"0". Inválidos "hello","a" lanzan excepción
 void ParseBoolTest() {
+<<<<<<< HEAD
 <<<<<<< HEAD
     try { AddTest("Convertir \"true\" a booleano", ParseBool("true") == true); }
     catch (...) { AddTest("Convertir \"true\" a booleano", false); }
@@ -161,6 +186,8 @@ void ParseBoolTest() {
 
     try { ParseBool("a"); AddTest("Error al convertir \"a\" a booleano", false); }
 =======
+=======
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
     try { AddTest("Convertir \"true\" a booleano", Common::ParseBool("true") == true); }
     catch (...) { AddTest("Convertir \"true\" a booleano", false); }
 
@@ -177,6 +204,9 @@ void ParseBoolTest() {
     catch (...) { AddTest("Error al convertir \"hello\" a booleano", true); }
 
     try { Common::ParseBool("a"); AddTest("Error al convertir \"a\" a booleano", false); }
+<<<<<<< HEAD
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
+=======
 >>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
     catch (...) { AddTest("Error al convertir \"a\" a booleano", true); }
 }
@@ -188,6 +218,11 @@ int main() {
     ParseIntTest();
     ParseIntStrictTest();
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 =======
 
 
@@ -197,6 +232,7 @@ int main() {
 
     cout << endl;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     if (passed) cout << color(FOREGROUND, BACKGROUND) << "Todos los tests pasaron." << endl << endl;
     else cout << color(ACCENT, BACKGROUND) << "Algunos tests fallaron." << endl << endl;
@@ -208,6 +244,8 @@ int main() {
 
     cout << endl << color(FOREGROUND, BACKGROUND) << "Test que pasaron: ";
 =======
+=======
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
     if (passed) cout << Common::Color(Common::FOREGROUND_DARK, Common::BACKGROUND) << "Todos los tests pasaron." << endl << endl;
     else cout << Common::Color(Common::ACCENT, Common::BACKGROUND) << "Algunos tests fallaron." << endl << endl;
 
@@ -217,6 +255,9 @@ int main() {
     }
 
     cout << endl << Common::Color(Common::FOREGROUND_DARK, Common::BACKGROUND) << "Test que pasaron: ";
+<<<<<<< HEAD
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
+=======
 >>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
     int passedCount = 0;
@@ -227,7 +268,11 @@ int main() {
     if (passed) return 0;
     else return 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 =======
 }
 >>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08

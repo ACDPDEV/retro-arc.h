@@ -3,8 +3,13 @@
 #include <string>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "../Common/Color.h"
 #include "../Common/Theme.h"
+=======
+#include "../Common/Theme.h"
+#include "../Common/Color.h"
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 =======
 #include "../Common/Theme.h"
 #include "../Common/Color.h"
@@ -35,6 +40,7 @@ void AddTest(string name, bool result) {
 /// @details Verifica generación de secuencias ANSI True Color para combinaciones RGB
 void ColorTest() {
 <<<<<<< HEAD
+<<<<<<< HEAD
     AddTest("Convertir el color Negro; Negro", color({0,0,0}, {0,0,0}) == "\033[38;2;0;0;0;48;2;0;0;0m");
     AddTest("Convertir el color Blanco; Blanco", color({255,255,255}, {255,255,255}) == "\033[38;2;255;255;255;48;2;255;255;255m");
     AddTest("Convertir el color Rojo; Azul", color({255,0,0}, {0,0,255}) == "\033[38;2;255;0;0;48;2;0;0;255m");
@@ -42,12 +48,17 @@ void ColorTest() {
     AddTest("Convertir en un solo canal", color({255, 0, 0}, {0, 255, 0}) == "\033[38;2;255;0;0;48;2;0;255;0m");
     AddTest("Convertir máximo y mínimo", color({255, 255, 255}, {0, 0, 0}) == "\033[38;2;255;255;255;48;2;0;0;0m");
 =======
+=======
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
     AddTest("Convertir el color Negro; Negro", Common::Color({0,0,0}, {0,0,0}) == "\033[38;2;0;0;0;48;2;0;0;0m");
     AddTest("Convertir el color Blanco; Blanco", Common::Color({255,255,255}, {255,255,255}) == "\033[38;2;255;255;255;48;2;255;255;255m");
     AddTest("Convertir el color Rojo; Azul", Common::Color({255,0,0}, {0,0,255}) == "\033[38;2;255;0;0;48;2;0;0;255m");
     AddTest("Convertir colores random", Common::Color({128, 64, 32}, {16, 8, 4}) == "\033[38;2;128;64;32;48;2;16;8;4m");
     AddTest("Convertir en un solo canal", Common::Color({255, 0, 0}, {0, 255, 0}) == "\033[38;2;255;0;0;48;2;0;255;0m");
     AddTest("Convertir máximo y mínimo", Common::Color({255, 255, 255}, {0, 0, 0}) == "\033[38;2;255;255;255;48;2;0;0;0m");
+<<<<<<< HEAD
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
+=======
 >>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 }
 
@@ -56,6 +67,7 @@ int main() {
 
     cout << endl;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     if (passed) cout << color(FOREGROUND, BACKGROUND) << "Todos los tests pasaron." << endl << endl;
     else cout << color(ACCENT, BACKGROUND) << "Algunos tests fallaron." << endl << endl;
@@ -67,6 +79,8 @@ int main() {
 
     cout << endl << color(FOREGROUND, BACKGROUND) << "Test que pasaron: ";
 =======
+=======
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
     if (passed) cout << Common::Color(Common::FOREGROUND_DARK, Common::BACKGROUND) << "Todos los tests pasaron." << endl << endl;
     else cout << Common::Color(Common::ACCENT, Common::BACKGROUND) << "Algunos tests fallaron." << endl << endl;
 
@@ -76,6 +90,9 @@ int main() {
     }
 
     cout << endl << Common::Color(Common::FOREGROUND_DARK, Common::BACKGROUND) << "Test que pasaron: ";
+<<<<<<< HEAD
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
+=======
 >>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
     int passedCount = 0;
@@ -87,7 +104,11 @@ int main() {
     if (passed) return 0;
     else return 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 =======
 }
 >>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
