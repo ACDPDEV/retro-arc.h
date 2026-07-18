@@ -26,38 +26,6 @@ namespace PokemonGame
                 playerTwoTurn(playerTwo)
             {
             }
-
-            /**
-             * @brief Permite que el jugador seleccione los pokemon de su equipo
-             * @return true Cuando el jugador completa su equipo
-             * @return false Cuando el jugador elije salir
-             */
-            bool BuildTeam(PokemonGame::Player& player)
-            {
-                player.ClearTeam();
-            
-                while (player.TeamSize() < PokemonGame::Game::maxPokemon)
-                {
-                    // Mostrar lista de Pokémon
-            
-                    /**
-                     * TODO: Referenciar al menú de selección de pokemon
-                     */
-
-                    int pokemonId = 0; // ShowPokemonMenu()
-
-                    if(pokemonId == -1)
-                    {
-                        return false;
-                    }
-            
-                    std::unique_ptr<PokemonGame::Pokemon> pokemon = PokemonGame::PokemonFactory::Create(pokemonId);
-            
-                    player.AddPokemon(std::move(pokemon));
-                }
-
-                return true;
-            }
     
             void Start()
             {

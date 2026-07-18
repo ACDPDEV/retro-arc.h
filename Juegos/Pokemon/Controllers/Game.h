@@ -2,11 +2,11 @@
 // #include <iostream>
 #include <string>
 #include <memory>
-#include "Battle.h"
 #include "../../../Common/Variables.h"
 #include "../Models/Player.h"
-#include "../Functions/BuildTeam.h"
 #include "../Enums/GameOption.h"
+#include "PlayerController.h"
+#include "Battle.h"
 
 
 namespace PokemonGame
@@ -55,14 +55,17 @@ namespace PokemonGame
                     {
                         PokemonGame::Battle battle(playerOne, playerTwo);
 
-                        bool teamOneIsReady = battle.BuildTeam(playerOne);
+                        bool teamOneIsReady = PokemonGame::PlayerController::BuildTeam(playerOne);
                         if(!teamOneIsReady)
                             break;
 
-                        bool teamTwoIsReady = battle.BuildTeam(playerTwo);
+                        bool teamTwoIsReady = PokemonGame::PlayerController::BuildTeam(playerTwo);
                         if(!teamTwoIsReady)
                             break;
 
+                        PokemonGame::PlayerController::FillBag(playerOne);
+                        PokemonGame::PlayerController::FillBag(playerTwo);
+                        
                         battle.Start();
                         break;
                     }
