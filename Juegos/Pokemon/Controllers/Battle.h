@@ -1,6 +1,9 @@
 #pragma once
+#include <memory>
+#include "Game.h"
 #include "TurnController.h"
 #include "Round.h"
+#include "../Factories/PokemonFactory.h"
 
 namespace PokemonGame
 {
@@ -22,6 +25,38 @@ namespace PokemonGame
                 playerOneTurn(playerOne),
                 playerTwoTurn(playerTwo)
             {
+            }
+
+            /**
+             * @brief Permite que el jugador seleccione los pokemon de su equipo
+             * @return true Cuando el jugador completa su equipo
+             * @return false Cuando el jugador elije salir
+             */
+            bool BuildTeam(PokemonGame::Player& player)
+            {
+                player.ClearTeam();
+            
+                while (player.TeamSize() < PokemonGame::Game::maxPokemon)
+                {
+                    // Mostrar lista de Pokémon
+            
+                    /**
+                     * TODO: Referenciar al menú de selección de pokemon
+                     */
+
+                    int option = 0; // ShowPokemonMenu()
+
+                    if(option == -1)
+                    {
+                        return false;
+                    }
+            
+                    std::unique_ptr<PokemonGame::Pokemon> pokemon = PokemonGame::PokemonFactory::Create(option);
+            
+                    player.AddPokemon(std::move(pokemon));
+                }
+
+                return true;
             }
     
             void Start()

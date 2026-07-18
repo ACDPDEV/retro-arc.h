@@ -4,6 +4,15 @@
 
 namespace PokemonGame
 {
+
+    /**
+     * TODO:
+     * ELIMIAR ESTE ARCHIVO
+     */
+
+    /**
+     * NO USAR ESTA FUNCIÓN SE VA A ELMINAR
+     */
     void BuildTeam(PokemonGame::Player& player)
     {
         player.ClearTeam();

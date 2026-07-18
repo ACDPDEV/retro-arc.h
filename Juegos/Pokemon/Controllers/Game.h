@@ -42,21 +42,26 @@ namespace PokemonGame
                  * 
                  * TODO: 
                  * Invocar a la clase o función que contiene la lógica de vista para seleccionar la opción. 
-                 * return : Debe devolver la opción
+                 * return : Debe devolver la opción  PokemonGame::GameOption::
                  * 
                  * 
                  */
-                int option = 0;
+                int option = static_cast<int>(PokemonGame::GameOption::BATTLE);
 
                 switch (option)
                 {
                     // iniciar batalla
                     case static_cast<int>(PokemonGame::GameOption::BATTLE):
                     {
-                        PokemonGame::BuildTeam(playerOne);
-                        PokemonGame::BuildTeam(playerTwo);
-
                         PokemonGame::Battle battle(playerOne, playerTwo);
+
+                        bool teamOneIsReady = battle.BuildTeam(playerOne);
+                        if(!teamOneIsReady)
+                            break;
+
+                        bool teamTwoIsReady = battle.BuildTeam(playerTwo);
+                        if(!teamTwoIsReady)
+                            break;
 
                         battle.Start();
                         break;
