@@ -65,7 +65,7 @@ namespace PokemonGame
     
             ~Pokemon() = default;
 
-            int GetId()
+            int GetId() const
             {
                 return id;
             }
@@ -93,7 +93,10 @@ namespace PokemonGame
                 }
             }
     
-            bool isFainted() const;
+            bool IsFainted() const
+            {
+                return currentHp == 0;
+            }
 
             void AddMove(PokemonGame::Move* move)
             {

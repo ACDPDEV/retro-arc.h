@@ -42,7 +42,8 @@ namespace PokemonGame
             bool CanExecute(PokemonGame::Player& attacker) override
             {
                 bool isValidMove = attacker.GetActivePokemon()->IsValidMove(move);
-                if(isValidMove)
+                bool isFainted = attacker.GetActivePokemon()->IsFainted();
+                if(isValidMove && !isFainted)
                 {
                     return true;
                 }
