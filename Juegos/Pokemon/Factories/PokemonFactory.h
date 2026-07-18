@@ -1,3 +1,6 @@
+#pragma once
+
+#include <memory>
 #include "../Models/Pokemon.h"
 
 namespace PokemonGame
@@ -7,22 +10,9 @@ namespace PokemonGame
         private:
             // static int totalDbPokemon;
         public:
-            static std::unique_ptr<PokemonGame::Pokemon> Create(int option)
+            static std::unique_ptr<PokemonGame::Pokemon> Create(int pokemonId)
             {
-                switch (option)
-                {
-                    // case 0:
-                    //     return std::make_unique<Pikachu>();
-
-                    // case 1:
-                    //     return std::make_unique<Charmander>();
-
-                    // case 2:
-                    //     return std::make_unique<Bulbasaur>();
-
-                    default:
-                        return nullptr;
-                }
+                return nullptr;
             }
     };
 }

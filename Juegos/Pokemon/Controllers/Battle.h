@@ -44,14 +44,14 @@ namespace PokemonGame
                      * TODO: Referenciar al menú de selección de pokemon
                      */
 
-                    int option = 0; // ShowPokemonMenu()
+                    int pokemonId = 0; // ShowPokemonMenu()
 
-                    if(option == -1)
+                    if(pokemonId == -1)
                     {
                         return false;
                     }
             
-                    std::unique_ptr<PokemonGame::Pokemon> pokemon = PokemonGame::PokemonFactory::Create(option);
+                    std::unique_ptr<PokemonGame::Pokemon> pokemon = PokemonGame::PokemonFactory::Create(pokemonId);
             
                     player.AddPokemon(std::move(pokemon));
                 }
