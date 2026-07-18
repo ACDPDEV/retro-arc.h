@@ -12,11 +12,11 @@
 
 int main() {
     // Pokemon::TitleComponent();
-    Pokemon::TitleView();
-    Common::Sleep(2000);
-    // std::string player1Name = "a";
-    // std::string player2Name = "b";
-    // Pokemon::NombresView(player1Name, player2Name);
+    // Pokemon::TitleView();
+    // Common::Sleep(2000);
+    std::string player1Name = "a";
+    std::string player2Name = "b";
+    Pokemon::NombresView(player1Name, player2Name);
     // Common::Sleep(2000);
     // Pokemon::MochilaView();
     // Common::Sleep(2000);
