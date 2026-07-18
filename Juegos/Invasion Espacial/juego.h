@@ -8,11 +8,7 @@
 #include <ctime>
 
 #include "consola2.h"
-<<<<<<< HEAD
 #include "figuras.h"
-=======
-#include "figuritas.h"
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 #include "movimientos.h"
 #include "disparos.h"
 #include "colisiones.h"
@@ -33,11 +29,7 @@ void gameOver(string usuario, int puntaje);
 
 int posicionAleatoriaMeteorito()
 {
-<<<<<<< HEAD
     return rand() % (ANCHO_PANTALLA - ANCHO_METEORITO3 - 2) + 1;
-=======
-    return rand() % (ANCHO_PANTALLA - ANCHO_METEORITO - 2) + 1;
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 }
 
 
@@ -62,11 +54,7 @@ int posicionAleatoriaJefe()
 // CONFIGURACIÓN DEL JUEGO
 //=========================================================
 
-<<<<<<< HEAD
 const int VIDAS_INICIALES = 5;
-=======
-const int VIDAS_INICIALES = 3;
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
 
 const int PUNTOS_METEORITO = 10;
@@ -100,35 +88,26 @@ int nivel = 1;
 int xMeteorito1;
 int yMeteorito1;
 
-<<<<<<< HEAD
 bool explotandoMeteorito1 = false;
 int  contadorExplosion1 = 0;
 
-=======
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
 int xMeteorito2;
 int yMeteorito2;
 
-<<<<<<< HEAD
 bool explotandoMeteorito2 = false;
 int  contadorExplosion2 = 0;
 
-=======
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
 int xMeteorito3;
 int yMeteorito3;
 
-<<<<<<< HEAD
 bool explotandoMeteorito3 = false;
 int  contadorExplosion3 = 0;
 
 // Cuantos frames dura la animacion de la explosion
 const int DURACION_EXPLOSION = 8;
 
-=======
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
 
 //=========================================================
@@ -215,7 +194,6 @@ bool disparandoJefe = false;
 
 
 //=========================================================
-<<<<<<< HEAD
 // VIDA DEL JEFE FINAL
 //=========================================================
 
@@ -237,8 +215,6 @@ int contadorInvulnerable = 0;
 const int DURACION_INVULNERABILIDAD = 20;
 
 //=========================================================
-=======
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 // ESTADO DEL JUEGO
 //=========================================================
 
@@ -282,37 +258,28 @@ void inicializarJuego()
 
     yMeteorito1 = -5;
 
-<<<<<<< HEAD
     explotandoMeteorito1 = false;
 
     contadorExplosion1 = 0;
 
-=======
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
     xMeteorito2 = posicionAleatoriaMeteorito();
 
     yMeteorito2 = -20;
 
-<<<<<<< HEAD
     explotandoMeteorito2 = false;
 
     contadorExplosion2 = 0;
 
-=======
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
     xMeteorito3 = posicionAleatoriaMeteorito();
 
     yMeteorito3 = -35;
 
-<<<<<<< HEAD
     explotandoMeteorito3 = false;
 
     contadorExplosion3 = 0;
 
-=======
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
 
     // OVNI 1
@@ -370,7 +337,6 @@ void inicializarJuego()
 
 
 
-<<<<<<< HEAD
     // JEFE FINAL - VIDA
 
     vidaJefe = VIDA_INICIAL_JEFE;
@@ -381,8 +347,6 @@ void inicializarJuego()
 
     contadorInvulnerable = 0;
 
-=======
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
     // ESTADOS
 
     juegoTerminado = false;
@@ -404,7 +368,6 @@ void mostrarHUD()
 
     gotoxy(0,0);
 
-<<<<<<< HEAD
     imprimir("+");
 
 
@@ -413,16 +376,6 @@ void mostrarHUD()
 
 
     imprimir("+");
-=======
-    cout<<"+";
-
-
-    for(int i=1;i<ANCHO_PANTALLA-1;i++)
-        cout<<"-";
-
-
-    cout<<"+";
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
 
 
@@ -430,20 +383,12 @@ void mostrarHUD()
 
     gotoxy(0,1);
 
-<<<<<<< HEAD
     imprimir("|");
-=======
-    cout<<"¦";
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
 
     gotoxy(ANCHO_PANTALLA-1,1);
 
-<<<<<<< HEAD
     imprimir("|");
-=======
-    cout<<"¦";
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
 
 
@@ -451,7 +396,6 @@ void mostrarHUD()
 
     gotoxy(0,2);
 
-<<<<<<< HEAD
     imprimir("+"); 
 
 
@@ -460,16 +404,6 @@ void mostrarHUD()
 
 
     imprimir("+");
-=======
-    cout<<"+"; 
-
-
-    for(int i=1;i<ANCHO_PANTALLA-1;i++)
-        cout<<"-";
-
-
-    cout<<"+";
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
 
 
@@ -481,11 +415,7 @@ void mostrarHUD()
 
     gotoxy(3,1);
 
-<<<<<<< HEAD
     imprimir("VIDAS:");
-=======
-    cout<<"VIDAS:";
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
 
     if(vidas>=1)
@@ -493,7 +423,6 @@ void mostrarHUD()
 
 
     if(vidas>=2)
-<<<<<<< HEAD
         dibujarVida(24,0);
 
 
@@ -507,13 +436,6 @@ void mostrarHUD()
 
     if(vidas>=5)
         dibujarVida(54,0);
-=======
-        dibujarVida(26,0);
-
-
-    if(vidas>=3)
-        dibujarVida(38,0);
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
 
 
@@ -521,11 +443,7 @@ void mostrarHUD()
 
     gotoxy(80,1);
 
-<<<<<<< HEAD
     imprimir("PUNTOS: "); imprimir(puntos);
-=======
-    cout<<"PUNTOS: "<<puntos;
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
 
 
@@ -533,11 +451,7 @@ void mostrarHUD()
 
     gotoxy(155,1);
 
-<<<<<<< HEAD
     imprimir("NIVEL: "); imprimir(nivel);
-=======
-    cout<<"NIVEL: "<<nivel;
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
 }
 
@@ -553,13 +467,9 @@ void verificarColisiones()
 
     // BALA - METEORITO 1
 
-<<<<<<< HEAD
     if(disparandoJugador &&
        !explotandoMeteorito1 &&
        colisionBalaMeteorito1(
-=======
-    if(colisionBalaMeteorito1(
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
         xBalaJugador,
         yBalaJugador,
         xMeteorito1,
@@ -572,25 +482,11 @@ void verificarColisiones()
         disparandoJugador=false;
 
 
-<<<<<<< HEAD
         explotandoMeteorito1 = true;
 
         contadorExplosion1 = DURACION_EXPLOSION;
 
         Beep(1200, 60); // Explosion (meteorito chico: sonido agudo y corto)
-=======
-        borrarMeteorito1(
-            xMeteorito1,
-            yMeteorito1);
-
-
-
-        xMeteorito1 =
-        posicionAleatoriaMeteorito();
-
-
-        yMeteorito1=-10;
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
     }
 
@@ -600,13 +496,9 @@ void verificarColisiones()
     // BALA - METEORITO 2
 
 
-<<<<<<< HEAD
     if(disparandoJugador &&
        !explotandoMeteorito2 &&
        colisionBalaMeteorito2(
-=======
-    if(colisionBalaMeteorito2(
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
         xBalaJugador,
         yBalaJugador,
         xMeteorito2,
@@ -620,26 +512,11 @@ void verificarColisiones()
         disparandoJugador=false;
 
 
-<<<<<<< HEAD
         explotandoMeteorito2 = true;
 
         contadorExplosion2 = DURACION_EXPLOSION;
 
         Beep(700, 90); // Explosion (meteorito mediano)
-=======
-
-        borrarMeteorito2(
-            xMeteorito2,
-            yMeteorito2);
-
-
-
-        xMeteorito2 =
-        posicionAleatoriaMeteorito();
-
-
-        yMeteorito2=-20;
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
     }
 
@@ -649,13 +526,9 @@ void verificarColisiones()
     // BALA - METEORITO 3
 
 
-<<<<<<< HEAD
     if(disparandoJugador &&
        !explotandoMeteorito3 &&
        colisionBalaMeteorito3(
-=======
-    if(colisionBalaMeteorito3(
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
         xBalaJugador,
         yBalaJugador,
         xMeteorito3,
@@ -669,7 +542,6 @@ void verificarColisiones()
         disparandoJugador=false;
 
 
-<<<<<<< HEAD
         explotandoMeteorito3 = true;
 
         contadorExplosion3 = DURACION_EXPLOSION;
@@ -908,23 +780,6 @@ void actualizarExplosiones()
             yMeteorito3 = -30;
         }
     }
-=======
-
-        borrarMeteorito3(
-            xMeteorito3,
-            yMeteorito3);
-
-
-
-        xMeteorito3 =
-        posicionAleatoriaMeteorito();
-
-
-        yMeteorito3=-30;
-
-    }
-
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 }
 
 
@@ -972,20 +827,15 @@ void actualizarJuego()
 
     moverJugador(
         xJugador,
-<<<<<<< HEAD
         yJugador,
         xBalaJugador,
         yBalaJugador,
         disparandoJugador);
-=======
-        yJugador);
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
 
 
     // METEORITOS
 
-<<<<<<< HEAD
     bool escapoMeteorito1 = false;
     bool escapoMeteorito2 = false;
     bool escapoMeteorito3 = false;
@@ -1016,23 +866,6 @@ void actualizarJuego()
     // una vida (antes esto no pasaba nunca).
     if(escapoMeteorito1 || escapoMeteorito2 || escapoMeteorito3)
         vidas--;
-=======
-    moverMeteorito1(
-        xMeteorito1,
-        yMeteorito1);
-
-
-
-    moverMeteorito2(
-        xMeteorito2,
-        yMeteorito2);
-
-
-
-    moverMeteorito3(
-        xMeteorito3,
-        yMeteorito3);
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
 
 
@@ -1056,14 +889,11 @@ void actualizarJuego()
             yBalaOvni1,
             disparandoOvni1);
 
-<<<<<<< HEAD
         moverBalaOvni1(
             xBalaOvni1,
             yBalaOvni1,
             disparandoOvni1);
 
-=======
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
     }
 
 
@@ -1088,14 +918,11 @@ void actualizarJuego()
             yBalaOvni2,
             disparandoOvni2);
 
-<<<<<<< HEAD
         moverBalaOvni2(
             xBalaOvni2,
             yBalaOvni2,
             disparandoOvni2);
 
-=======
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
     }
 
 	// JEFE FINAL
@@ -1118,7 +945,6 @@ void actualizarJuego()
         yLaser2,
         disparandoJefe);
 
-<<<<<<< HEAD
     	moverLaserJefe(
         xLaser1,
         yLaser1,
@@ -1126,8 +952,6 @@ void actualizarJuego()
         yLaser2,
         disparandoJefe);
 
-=======
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 	}
     // BALA JUGADOR
 
@@ -1136,7 +960,6 @@ void actualizarJuego()
         yBalaJugador,
         disparandoJugador);
 
-<<<<<<< HEAD
     // INVULNERABILIDAD TEMPORAL DEL JUGADOR
 
     if(invulnerable)
@@ -1147,8 +970,6 @@ void actualizarJuego()
             invulnerable = false;
     }
 
-=======
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 }
 //=========================================================
 // DIBUJAR JUEGO
@@ -1167,7 +988,6 @@ void ejecutarJuego(string usuario)
     system("cls");
     inicializarJuego();
 
-<<<<<<< HEAD
     iniciarDobleBuffer();
 
     // CICLO PRINCIPAL
@@ -1175,16 +995,10 @@ void ejecutarJuego(string usuario)
     {
         limpiarPantallaCompleta();
 
-=======
-    // CICLO PRINCIPAL
-    while(vidas>0 && !juegoVictoria)
-    {
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
         actualizarJuego();
 
         verificarColisiones();
 
-<<<<<<< HEAD
         actualizarExplosiones();
 
         actualizarNivel();
@@ -1192,20 +1006,12 @@ void ejecutarJuego(string usuario)
         dibujarJuego();
 
         mostrarFrame();
-=======
-        actualizarNivel();
-
-        //dibujarJuego();
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
         Sleep(40);
     }
 
-<<<<<<< HEAD
     finalizarDobleBuffer();
 
-=======
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
     system("cls");
 
     // FINAL DEL JUEGO
