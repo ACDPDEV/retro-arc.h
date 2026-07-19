@@ -6,6 +6,7 @@
 #include "../../Common/Aligned.h"
 #include "../../Common/Components/BottomBar.h"
 #include "../../Juegos/Pokemon/PokemonUI.h"
+#include "../../Juegos/Buscaminas/BuscaminasUI.h"
 using namespace std;
 
 void PrintPrimaryBox(int x, int y, int width, int height, string text, array<int, 3> textColor, array<int, 3> borderColor, array<int, 3> fillColor);
@@ -16,10 +17,10 @@ int main()
     // CREMA {255, 236,153}
     /* PrintPrimaryBox(30, 10, 36, 3, "", {255, 236, 153}, {255, 255, 255}, {255, 236, 153});
     Common::DrawBottomBar(); */
-    Pokemon::BattleBeginningTitleView();
+    /* Pokemon::BattleBeginningTitleView();
     Common::Sleep(2000);
     Pokemon::BattleBeginningAnimationView();
-    Common::Sleep(2000);
+    Common::Sleep(2000); */
     /* Pokemon::BattleOptionsView(14, "PSYDUCK",  "ROCKRUFF", "PSYDUCK");
     Common::Sleep(2000);
     Pokemon::BattleOptionsFightView(14, "PSYDUCK",  "ROCKRUFF", "PSYDUCK");
@@ -29,7 +30,18 @@ int main()
     Pokemon::BattleOptionsFightEffectivenessView(14, "PSYDUCK",  "ROCKRUFF", "PSYDUCK");
     Common::Sleep(2000);
     Pokemon::BattleOptionsFightFaintedView(14, "PSYDUCK",  "ROCKRUFF", "PSYDUCK"); */
-    Common::Sleep(2000);
+ /*    Buscaminas::MainMenuView();
+    Common::Sleep(200);
+    Buscaminas:: LevelSelectView();
+    Common::Sleep(200); */
+   /*  Buscaminas::GameBoardView(); */
+  /*   Buscaminas::ExitConfirmView();
+    Common::Sleep(200);
+    Buscaminas::GameOverView(1);
+    Common::Sleep(200);
+    Buscaminas::CreditsView(); */
+    Common::Sleep(200);
+    Buscaminas::ConfigView();
     return 0;
 }
 
