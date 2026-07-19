@@ -61,4 +61,7 @@ namespace Common
     
     /// @brief Color 10: Amarillo (#B91C1C)
     const std::array<int, 3> YELLOW = {255, 202, 2};
+
+    /// @brief Color rosa/salmón para paneles de jugador (#FFB6C1)
+    const std::array<int, 3> PINK = {255, 182, 193};
 }
