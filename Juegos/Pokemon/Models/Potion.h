@@ -9,13 +9,14 @@ namespace PokemonGame
     {
         protected:
         
-            int healPoints = 20;
+            int healPoints;
         
         public:
         
-            Potion(int id, int maxUses)
+            Potion(int id, int maxUses, int healPoints)
                 :
-                Item(id, maxUses)
+                Item(id, maxUses),
+                healPoints(healPoints)
             {
             }
         

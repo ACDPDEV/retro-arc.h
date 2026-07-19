@@ -147,6 +147,16 @@ namespace PokemonGame
                 }
                 return false;
             }
+
+            double GetCurrentHp() const
+            {
+                return currentHp;
+            }
+
+            double GetMaxHp() const
+            {
+                return maxHp;
+            }
     
             PokemonGame::PokemonType GetType() const
             {

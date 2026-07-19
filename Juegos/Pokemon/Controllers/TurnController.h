@@ -38,7 +38,7 @@ namespace PokemonGame
                     int option = 0; // ShowBattleMenu();
                     switch (option)
                     {
-                        case static_cast<int>(PokemonGame::ChooseCommandOption::FIGTH):
+                        case static_cast<int>(PokemonGame::ChooseCommandOption::FIGHT):
                         {
                             /**
                              * TODO:

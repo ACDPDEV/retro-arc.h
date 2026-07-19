@@ -16,9 +16,12 @@ namespace PokemonGame
                 
             }
 
-            bool  CanExecute(PokemonGame::Player& actor)
+            bool CanExecute(PokemonGame::Player& actor) override
             {
-                actor.GetActivePokemon()->Run();
+                bool isAlive = actor.GetActivePokemon()->IsFainted();
+                if(isAlive)
+                    return true;
+                return false;
             }
     };
 }

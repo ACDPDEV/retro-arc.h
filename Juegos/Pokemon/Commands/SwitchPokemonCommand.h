@@ -28,12 +28,12 @@ namespace PokemonGame
                 affectedPlayer.SwitchPokemon(pokemon);
             }
 
-            bool CanExecute(PokemonGame::Player& actor)
+            bool CanExecute(PokemonGame::Player& actor) override
             {
                 bool playerCanPlay = actor.CanPlay();
                 bool playerHasPokemon = actor.HasPokemonWithId(pokemon->GetId());
                 bool pokemonIsAlive = !pokemon->IsFainted();
-                if(playerCanPlay && playerHasPokemon & pokemonIsAlive)
+                if(playerCanPlay && playerHasPokemon && pokemonIsAlive)
                     return true;
                 return false;
             }

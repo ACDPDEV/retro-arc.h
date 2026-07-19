@@ -4,7 +4,7 @@ namespace PokemonGame
 {    
     enum class ChooseCommandOption
     {
-        FIGTH,
+        FIGHT,
         BAG,
         POKEMON,
         RUN

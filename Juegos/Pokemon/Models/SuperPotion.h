@@ -9,15 +9,10 @@ namespace PokemonGame
     {
         public:
         
-            SuperPotion(int id, int maxUses)
+            SuperPotion(int id, int maxUses, int healPoints)
                     :
-                    Potion(id, maxUses)
+                    Potion(id, maxUses, healPoints)
             {
-            }
-
-            void Use(PokemonGame::Pokemon* target) override
-            {
-                target->ReceiveHeal(healPoints * 3);
             }
     };
 }
