@@ -1,7 +1,8 @@
 #pragma once
 #include "Command.h"
-#include "../Game/Battle.h"
+#include "../Controllers/Battle.h"
 #include "../Models/Item.h"
+#include "../Models/Player.h"
 
 namespace PokemonGame
 {
@@ -15,11 +16,29 @@ namespace PokemonGame
     
         public:
     
-            BagCommand(PokemonGame::Item* item);
+            BagCommand(PokemonGame::Item* item)
+                :
+                item(item)
+            {
+
+            }
     
             void Execute(
-                PokemonGame::Battle& battle,
-                PokemonGame::Player& actor,
-                PokemonGame::Player& opponent) override;
+                PokemonGame::Player& affectedPlayer) override
+            {
+                item->Use(affectedPlayer.GetActivePokemon());
+                item->RegisterUse();
+            }
+            
+            bool CanExecute(PokemonGame::Player& actor) override
+            {
+                bool canExecute = true;
+                if(!actor.GetBag().HasItemWithId(item->GetId()))
+                    canExecute = false;
+                else if(!item->CanUse())
+                    canExecute = false;
+
+                return canExecute;
+            }
     };
 }

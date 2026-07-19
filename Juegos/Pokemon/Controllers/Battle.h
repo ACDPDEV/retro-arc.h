@@ -1,17 +1,19 @@
 #pragma once
-#include "../Models/Player.h"
+#include <memory>
+#include "Game.h"
+#include "TurnController.h"
 #include "Round.h"
+#include "../Factories/PokemonFactory.h"
 
 namespace PokemonGame
 {
-    class PokemonGame::Player;
     
     class Battle
     {
         private:
     
-            PokemonGame::Player& playerOne;
-            PokemonGame::Player& playerTwo;
+            PokemonGame::TurnController playerOneTurn;
+            PokemonGame::TurnController playerTwoTurn;
             bool finished = false;
     
         public:
@@ -20,16 +22,20 @@ namespace PokemonGame
                 PokemonGame::Player& playerOne,
                 PokemonGame::Player& playerTwo)
                 :
-                playerOne(playerOne),
-                playerTwo(playerTwo)
+                playerOneTurn(playerOne),
+                playerTwoTurn(playerTwo)
             {
             }
+
+            ~Battle() = default;
     
             void Start()
             {
+                playerOneTurn.GetPlayer().ResetForNewBattle();
+                playerTwoTurn.GetPlayer().ResetForNewBattle();
                 while (!finished)
                 {
-                    PokemonGame::Round round(*this, playerOne, playerTwo);
+                    PokemonGame::Round round(playerOneTurn, playerTwoTurn);
 
                     round.Play();
 
@@ -40,12 +46,12 @@ namespace PokemonGame
 
             void EvaluateBattle()
             {
-                if (playerOne.HasLost())
+                if (playerOneTurn.HasLost())
                 {
                     finished = true;
                 }
 
-                if (playerTwo.HasLost())
+                if (playerTwoTurn.HasLost())
                 {
                     finished = true;
                 }

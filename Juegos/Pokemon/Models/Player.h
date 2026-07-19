@@ -1,14 +1,15 @@
 #pragma once
 
 #include <string>
+#include <memory>
 #include <vector>
 #include "Bag.h"
+#include "Item.h"
 #include "Pokemon.h"
+
 
 namespace PokemonGame
 {
-    class PokemonGame::Pokemon;
-    class PokemonGame::Bag;
     
     class Player
     {
@@ -17,41 +18,18 @@ namespace PokemonGame
             std::string name;
     
             std::vector<std::unique_ptr<PokemonGame::Pokemon>> team;
-    
+            
             PokemonGame::Pokemon* activePokemon = nullptr;
-    
-            PokemonGame::Bag bag;
+            
+            PokemonGame::Bag bag{};
+            
+            bool canUseFocusBand = true;
     
         public:
     
             Player(const std::string& name)
                 :name(name)
             {
-            }
-
-            std::unique_ptr<PokemonGame::Command> Player::ChooseCommand(Battle& battle)
-            {
-                /**
-                 * TODO: UI para seleccionar la opción
-                 */
-                int option = 0; // ShowBattleMenu();  <<--- FUNCIÓN QUE MUESTRA LA VISTA PARA OBTENER LA OPCIÓN
-
-                switch(option)
-                {
-                    case 1:
-                        // return std::make_unique<AttackCommand>(ChooseMove());
-
-                    case 2:
-                        // return std::make_unique<BagCommand>(ChooseItem());
-
-                    case 3:
-                        // return std::make_unique<SwitchPokemonCommand>(ChoosePokemon());
-
-                    case 4:
-                        // return std::make_unique<RunCommand>();
-                }
-
-                return nullptr;
             }
     
             ~Player() = default;
@@ -61,11 +39,9 @@ namespace PokemonGame
                 return name;
             }
 
-            bool HasLost()
+            std::vector<std::unique_ptr<PokemonGame::Pokemon>> GetTeam() const
             {
-                /**
-                 * TODO: implementar
-                 */
+                return team;
             }
 
             /**
@@ -73,8 +49,8 @@ namespace PokemonGame
              */
             void ClearTeam()
             {
-                team.clear();
                 activePokemon = nullptr;
+                team.clear();
             }
     
             /**
@@ -99,14 +75,35 @@ namespace PokemonGame
                 team.push_back(std::move(pokemon));
             }
 
-            PokemonGame::Pokemon* GetPokemon(size_t index)
+            bool HasPokemonWithId(int pokemonId)
             {
-                return team.at(index).get();
+                for (const auto& pokemonPtr : team)
+                {
+                    if (pokemonPtr != nullptr && pokemonPtr->GetId() == pokemonId)
+                    {
+                        return true;
+                    }
+                }
+                
+                return false;
+            }
+
+            PokemonGame::Pokemon* GetPokemonById(int id)
+            {
+                for (const auto& pokemonPtr : team)
+                {
+                    if (pokemonPtr != nullptr && pokemonPtr->GetId() == id)
+                    {
+                        return pokemonPtr.get();
+                    }
+                }
+                
+                return nullptr;
             }
     
-            void SwitchPokemon(size_t index)
+            void SwitchPokemon(PokemonGame::Pokemon* pokemon)
             {
-                activePokemon = team.at(index).get();
+                activePokemon = pokemon;
             }
     
             PokemonGame::Pokemon* GetActivePokemon()
@@ -117,6 +114,37 @@ namespace PokemonGame
             PokemonGame::Bag& GetBag()
             {
                 return bag;
+            }
+
+            bool CanPlay()
+            {
+                return ! activePokemon->IsRunning();
+            }
+
+            bool IsTeamDefeated() const
+            {
+                if (team.empty()) 
+                {
+                    return true;
+                }
+
+                for (const auto& pokemonPtr : team)
+                {
+                    if (pokemonPtr != nullptr && !pokemonPtr->IsFainted())
+                    {
+                        return false; 
+                    }
+                }
+
+                return true;
+            }
+
+            void ResetForNewBattle()
+            {
+                canUseFocusBand = true;
+                activePokemon = nullptr;
+                ClearTeam();
+                bag.ClearBag();
             }
     };
 }
