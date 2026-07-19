@@ -103,6 +103,11 @@ namespace PokemonGame
                     UseFocusBand();
                 }
             }
+
+            void ReceiveHeal(double heal)
+            {
+                currentHp += std::min(heal, maxHp-currentHp);
+            }
     
             bool IsFainted() const
             {

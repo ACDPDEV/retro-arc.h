@@ -12,7 +12,12 @@ namespace PokemonGame
             SuperPotion(int id, int maxUses)
                     :
                     Potion(id, maxUses)
-                {
-                }
+            {
+            }
+
+            void Use(PokemonGame::Pokemon* target) override
+            {
+                target->ReceiveHeal(healPoints * 3);
+            }
     };
 }
