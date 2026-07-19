@@ -1,10 +1,12 @@
+#ifndef DISPAROS_H
+#define DISPAROS_H
 
 #include <iostream>
 #include <windows.h>
 #include <conio.h>
 
 #include "consola2.h"
-#include "figuritas.h"
+#include "figuras.h"
 
 using namespace std;
 
@@ -33,7 +35,7 @@ void moverBalaJugador(int &x, int &y,
     {
         borrarBalaJugador(x,y);
 
-        y--;
+        y -= 2;
 
         if(y<=0)
         {
@@ -179,3 +181,4 @@ void moverLaserJefe(int &xLaser1, int &yLaser1,
     }
 }
 
+#endif

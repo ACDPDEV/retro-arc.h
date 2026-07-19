@@ -4,6 +4,7 @@
 #define CONSOLA_H
 
 #include <iostream>
+#include <sstream>
 #include <windows.h>
 #include <conio.h>
 #include <string>
@@ -17,12 +18,180 @@ using namespace std;
 const int ANCHO_PANTALLA = 200;
 const int ALTO_PANTALLA  = 60;
 
+//=========================================================
+// DOBLE BUFFER (evita el parpadeo durante el juego)
+//=========================================================
+// Idea: en vez de dibujar directamente sobre la pantalla que
+// el usuario esta viendo, dibujamos todo el frame en un buffer
+// "oculto" y recien al final lo mostramos de una sola vez con
+// SetConsoleActiveScreenBuffer. Como el cambio es instantaneo,
+// el ojo nunca ve un borrado a medias -> no hay parpadeo.
+
+HANDLE bufferJuego[2];
+int    indiceVisible     = 0;
+bool   usandoDobleBuffer = false;
+
+// CUADRO EN MEMORIA: durante el juego, en vez de mandar una
+// llamada a Windows por cada linea de cada sprite (que es lo
+// que dejaba una ventana chiquita para que el sistema repinte
+// la consola a mitad de dibujar el frame -> esas lineas/pixeles
+// sueltos que se ven), armamos el frame completo aca en RAM y
+// recien en mostrarFrame() lo mandamos TODO junto en una unica
+// llamada a la API.
+CHAR_INFO cuadro[ANCHO_PANTALLA * ALTO_PANTALLA];
+int  cursorX     = 0;
+int  cursorY     = 0;
+WORD colorActual = 15;
+
+// Devuelve el handle sobre el que hay que escribir AHORA MISMO
+HANDLE handleActivo()
+{
+    if(usandoDobleBuffer)
+        return bufferJuego[1 - indiceVisible]; // el que esta oculto
+    else
+        return GetStdHandle(STD_OUTPUT_HANDLE); // consola normal (menus)
+}
+
+// Escribe un caracter en el cuadro en memoria, con limite de bordes
+void escribirCelda(int x, int y, char c, WORD atributo)
+{
+    if(x < 0 || x >= ANCHO_PANTALLA || y < 0 || y >= ALTO_PANTALLA)
+        return;
+
+    int indice = y * ANCHO_PANTALLA + x;
+
+    cuadro[indice].Char.AsciiChar = c;
+    cuadro[indice].Attributes     = atributo;
+}
+
+// Crea los dos buffers y activa el modo doble buffer
+void iniciarDobleBuffer()
+{
+    for(int i = 0; i < 2; i++)
+    {
+        bufferJuego[i] = CreateConsoleScreenBuffer(
+            GENERIC_READ | GENERIC_WRITE,
+            FILE_SHARE_READ | FILE_SHARE_WRITE,
+            NULL,
+            CONSOLE_TEXTMODE_BUFFER,
+            NULL);
+
+        COORD tam;
+        tam.X = ANCHO_PANTALLA;
+        tam.Y = ALTO_PANTALLA;
+        SetConsoleScreenBufferSize(bufferJuego[i], tam);
+
+        SMALL_RECT ventana;
+        ventana.Left   = 0;
+        ventana.Top    = 0;
+        ventana.Right  = ANCHO_PANTALLA - 1;
+        ventana.Bottom = ALTO_PANTALLA - 1;
+        SetConsoleWindowInfo(bufferJuego[i], TRUE, &ventana);
+
+        CONSOLE_CURSOR_INFO cursor;
+        cursor.dwSize   = 1;
+        cursor.bVisible = FALSE;
+        SetConsoleCursorInfo(bufferJuego[i], &cursor);
+    }
+
+    indiceVisible = 0;
+    SetConsoleActiveScreenBuffer(bufferJuego[indiceVisible]);
+    usandoDobleBuffer = true;
+}
+
+// Se llama UNA vez por vuelta del bucle del juego: muestra
+// el frame recien dibujado y deja preparado el otro buffer
+// para dibujar ahi el siguiente frame
+void mostrarFrame()
+{
+    HANDLE oculto = bufferJuego[1 - indiceVisible];
+
+    COORD tamBuffer      = { (SHORT)ANCHO_PANTALLA, (SHORT)ALTO_PANTALLA };
+    COORD origenBuffer   = { 0, 0 };
+    SMALL_RECT region    = { 0, 0, (SHORT)(ANCHO_PANTALLA - 1), (SHORT)(ALTO_PANTALLA - 1) };
+
+    // UNA sola llamada para todo el frame (antes eran decenas/
+    // cientos de llamadas chiquitas, una por cada linea de cada
+    // sprite, y Windows a veces alcanzaba a repintar la ventana
+    // a mitad de esa secuencia)
+    WriteConsoleOutputA(oculto, cuadro, tamBuffer, origenBuffer, &region);
+
+    indiceVisible = 1 - indiceVisible;
+    SetConsoleActiveScreenBuffer(bufferJuego[indiceVisible]);
+}
+
+// Vuelve a la consola normal (para pantallas de game over, victoria, etc.)
+void finalizarDobleBuffer()
+{
+    usandoDobleBuffer = false;
+    SetConsoleActiveScreenBuffer(GetStdHandle(STD_OUTPUT_HANDLE));
+    CloseHandle(bufferJuego[0]);
+    CloseHandle(bufferJuego[1]);
+}
+
+// Limpia TODO el buffer oculto de una sola vez (rapido, sin
+// parpadeo). Hay que llamarla al principio de cada frame para
+// que no queden "fantasmas" de dos frames atras al alternar
+// entre los dos buffers.
+void limpiarPantallaCompleta()
+{
+    if(usandoDobleBuffer)
+    {
+        for(int i = 0; i < ANCHO_PANTALLA * ALTO_PANTALLA; i++)
+        {
+            cuadro[i].Char.AsciiChar = ' ';
+            cuadro[i].Attributes     = 15;
+        }
+
+        return;
+    }
+
+    HANDLE h = handleActivo();
+    COORD  inicio = {0, 0};
+    DWORD  escritos;
+    DWORD  total = (DWORD)(ANCHO_PANTALLA * ALTO_PANTALLA);
+
+    FillConsoleOutputCharacterA(h, ' ', total, inicio, &escritos);
+    FillConsoleOutputAttribute(h, 15, total, inicio, &escritos);
+}
+
+//---------------------------------------------------------
+// IMPRIMIR (reemplaza a "cout <<" en el juego para que el
+// texto se escriba siempre en el buffer correcto)
+//---------------------------------------------------------
+template <typename T>
+void imprimir(const T& valor)
+{
+    ostringstream oss;
+    oss << valor;
+    string texto = oss.str();
+
+    if(usandoDobleBuffer)
+    {
+        for(size_t i = 0; i < texto.size(); i++)
+            escribirCelda(cursorX + (int)i, cursorY, texto[i], colorActual);
+
+        cursorX += (int)texto.size();
+
+        return;
+    }
+
+    DWORD escritos;
+    WriteConsoleA(handleActivo(), texto.c_str(), (DWORD)texto.length(), &escritos, NULL);
+}
+
 //---------------------------------------------------------
 // COLOR
 //---------------------------------------------------------
 void color(int c)
 {
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c);
+    if(usandoDobleBuffer)
+    {
+        colorActual = (WORD)c;
+        return;
+    }
+
+    SetConsoleTextAttribute(handleActivo(), c);
 }
 
 //---------------------------------------------------------
@@ -30,7 +199,14 @@ void color(int c)
 //---------------------------------------------------------
 void gotoxy(int x, int y)
 {
-    HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
+    if(usandoDobleBuffer)
+    {
+        cursorX = x;
+        cursorY = y;
+        return;
+    }
+
+    HANDLE hCon = handleActivo();
 
     COORD pos;
 

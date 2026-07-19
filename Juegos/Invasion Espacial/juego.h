@@ -8,7 +8,7 @@
 #include <ctime>
 
 #include "consola2.h"
-#include "figuritas.h"
+#include "figuras.h"
 #include "movimientos.h"
 #include "disparos.h"
 #include "colisiones.h"
@@ -29,7 +29,7 @@ void gameOver(string usuario, int puntaje);
 
 int posicionAleatoriaMeteorito()
 {
-    return rand() % (ANCHO_PANTALLA - ANCHO_METEORITO - 2) + 1;
+    return rand() % (ANCHO_PANTALLA - ANCHO_METEORITO3 - 2) + 1;
 }
 
 
@@ -54,7 +54,7 @@ int posicionAleatoriaJefe()
 // CONFIGURACI”N DEL JUEGO
 //=========================================================
 
-const int VIDAS_INICIALES = 3;
+const int VIDAS_INICIALES = 5;
 
 
 const int PUNTOS_METEORITO = 10;
@@ -88,13 +88,25 @@ int nivel = 1;
 int xMeteorito1;
 int yMeteorito1;
 
+bool explotandoMeteorito1 = false;
+int  contadorExplosion1 = 0;
+
 
 int xMeteorito2;
 int yMeteorito2;
 
+bool explotandoMeteorito2 = false;
+int  contadorExplosion2 = 0;
+
 
 int xMeteorito3;
 int yMeteorito3;
+
+bool explotandoMeteorito3 = false;
+int  contadorExplosion3 = 0;
+
+// Cuantos frames dura la animacion de la explosion
+const int DURACION_EXPLOSION = 8;
 
 
 
@@ -182,6 +194,27 @@ bool disparandoJefe = false;
 
 
 //=========================================================
+// VIDA DEL JEFE FINAL
+//=========================================================
+
+const int VIDA_INICIAL_JEFE = 5;
+
+int vidaJefe = VIDA_INICIAL_JEFE;
+
+//=========================================================
+// INVULNERABILIDAD TEMPORAL DEL JUGADOR
+//=========================================================
+// Al recibir un golpe, el jugador queda unos frames sin poder
+// recibir da√±o de nuevo, para que un mismo choque no le quite
+// varias vidas de una sola vez.
+
+bool invulnerable = false;
+
+int contadorInvulnerable = 0;
+
+const int DURACION_INVULNERABILIDAD = 20;
+
+//=========================================================
 // ESTADO DEL JUEGO
 //=========================================================
 
@@ -225,15 +258,27 @@ void inicializarJuego()
 
     yMeteorito1 = -5;
 
+    explotandoMeteorito1 = false;
+
+    contadorExplosion1 = 0;
+
 
     xMeteorito2 = posicionAleatoriaMeteorito();
 
     yMeteorito2 = -20;
 
+    explotandoMeteorito2 = false;
+
+    contadorExplosion2 = 0;
+
 
     xMeteorito3 = posicionAleatoriaMeteorito();
 
     yMeteorito3 = -35;
+
+    explotandoMeteorito3 = false;
+
+    contadorExplosion3 = 0;
 
 
 
@@ -292,6 +337,16 @@ void inicializarJuego()
 
 
 
+    // JEFE FINAL - VIDA
+
+    vidaJefe = VIDA_INICIAL_JEFE;
+
+    // INVULNERABILIDAD
+
+    invulnerable = false;
+
+    contadorInvulnerable = 0;
+
     // ESTADOS
 
     juegoTerminado = false;
@@ -313,14 +368,14 @@ void mostrarHUD()
 
     gotoxy(0,0);
 
-    cout<<"+";
+    imprimir("+");
 
 
     for(int i=1;i<ANCHO_PANTALLA-1;i++)
-        cout<<"-";
+        imprimir("-");
 
 
-    cout<<"+";
+    imprimir("+");
 
 
 
@@ -328,12 +383,12 @@ void mostrarHUD()
 
     gotoxy(0,1);
 
-    cout<<"¶";
+    imprimir("|");
 
 
     gotoxy(ANCHO_PANTALLA-1,1);
 
-    cout<<"¶";
+    imprimir("|");
 
 
 
@@ -341,14 +396,14 @@ void mostrarHUD()
 
     gotoxy(0,2);
 
-    cout<<"+"; 
+    imprimir("+"); 
 
 
     for(int i=1;i<ANCHO_PANTALLA-1;i++)
-        cout<<"-";
+        imprimir("-");
 
 
-    cout<<"+";
+    imprimir("+");
 
 
 
@@ -360,7 +415,7 @@ void mostrarHUD()
 
     gotoxy(3,1);
 
-    cout<<"VIDAS:";
+    imprimir("VIDAS:");
 
 
     if(vidas>=1)
@@ -368,11 +423,19 @@ void mostrarHUD()
 
 
     if(vidas>=2)
-        dibujarVida(26,0);
+        dibujarVida(24,0);
 
 
     if(vidas>=3)
-        dibujarVida(38,0);
+        dibujarVida(34,0);
+
+
+    if(vidas>=4)
+        dibujarVida(44,0);
+
+
+    if(vidas>=5)
+        dibujarVida(54,0);
 
 
 
@@ -380,7 +443,7 @@ void mostrarHUD()
 
     gotoxy(80,1);
 
-    cout<<"PUNTOS: "<<puntos;
+    imprimir("PUNTOS: "); imprimir(puntos);
 
 
 
@@ -388,7 +451,7 @@ void mostrarHUD()
 
     gotoxy(155,1);
 
-    cout<<"NIVEL: "<<nivel;
+    imprimir("NIVEL: "); imprimir(nivel);
 
 }
 
@@ -404,7 +467,9 @@ void verificarColisiones()
 
     // BALA - METEORITO 1
 
-    if(colisionBalaMeteorito1(
+    if(disparandoJugador &&
+       !explotandoMeteorito1 &&
+       colisionBalaMeteorito1(
         xBalaJugador,
         yBalaJugador,
         xMeteorito1,
@@ -417,17 +482,11 @@ void verificarColisiones()
         disparandoJugador=false;
 
 
-        borrarMeteorito1(
-            xMeteorito1,
-            yMeteorito1);
+        explotandoMeteorito1 = true;
 
+        contadorExplosion1 = DURACION_EXPLOSION;
 
-
-        xMeteorito1 =
-        posicionAleatoriaMeteorito();
-
-
-        yMeteorito1=-10;
+        Beep(1200, 60); // Explosion (meteorito chico: sonido agudo y corto)
 
     }
 
@@ -437,7 +496,9 @@ void verificarColisiones()
     // BALA - METEORITO 2
 
 
-    if(colisionBalaMeteorito2(
+    if(disparandoJugador &&
+       !explotandoMeteorito2 &&
+       colisionBalaMeteorito2(
         xBalaJugador,
         yBalaJugador,
         xMeteorito2,
@@ -451,18 +512,11 @@ void verificarColisiones()
         disparandoJugador=false;
 
 
+        explotandoMeteorito2 = true;
 
-        borrarMeteorito2(
-            xMeteorito2,
-            yMeteorito2);
+        contadorExplosion2 = DURACION_EXPLOSION;
 
-
-
-        xMeteorito2 =
-        posicionAleatoriaMeteorito();
-
-
-        yMeteorito2=-20;
+        Beep(700, 90); // Explosion (meteorito mediano)
 
     }
 
@@ -472,7 +526,9 @@ void verificarColisiones()
     // BALA - METEORITO 3
 
 
-    if(colisionBalaMeteorito3(
+    if(disparandoJugador &&
+       !explotandoMeteorito3 &&
+       colisionBalaMeteorito3(
         xBalaJugador,
         yBalaJugador,
         xMeteorito3,
@@ -486,21 +542,244 @@ void verificarColisiones()
         disparandoJugador=false;
 
 
+        explotandoMeteorito3 = true;
 
-        borrarMeteorito3(
-            xMeteorito3,
-            yMeteorito3);
+        contadorExplosion3 = DURACION_EXPLOSION;
 
-
-
-        xMeteorito3 =
-        posicionAleatoriaMeteorito();
-
-
-        yMeteorito3=-30;
+        Beep(350, 130); // Explosion (meteorito gigante: sonido grave y mas largo)
 
     }
 
+
+
+    // BALA - OVNI 1
+
+    if(nivel>=2 &&
+       disparandoJugador &&
+       colisionBalaOvni1(
+        xBalaJugador,
+        yBalaJugador,
+        xOvni1,
+        yOvni1))
+    {
+        puntos += PUNTOS_OVNI1;
+
+        disparandoJugador = false;
+
+        yOvni1 = -40;
+        xOvni1 = posicionAleatoriaOvni1();
+
+        Beep(900, 100); // Explosion ovni 1
+    }
+
+
+
+    // BALA - OVNI 2
+
+    if(nivel>=3 &&
+       disparandoJugador &&
+       colisionBalaOvni2(
+        xBalaJugador,
+        yBalaJugador,
+        xOvni2,
+        yOvni2))
+    {
+        puntos += PUNTOS_OVNI2;
+
+        disparandoJugador = false;
+
+        yOvni2 = -70;
+        xOvni2 = posicionAleatoriaOvni2();
+
+        Beep(600, 130); // Explosion ovni 2
+    }
+
+
+
+    // BALA - JEFE FINAL
+
+    if(nivel>=4 &&
+       disparandoJugador &&
+       colisionBalaJefeFinal(
+        xBalaJugador,
+        yBalaJugador,
+        xJefe,
+        yJefe))
+    {
+        puntos += PUNTOS_JEFE;
+
+        disparandoJugador = false;
+
+        vidaJefe--;
+
+        if(vidaJefe <= 0)
+        {
+            juegoVictoria = true;
+            Beep(250, 400); // Explosion final del jefe (grave y larga)
+        }
+        else
+        {
+            Beep(1000, 50); // Impacto en el jefe (todavia sigue con vida)
+        }
+    }
+
+
+
+    //=====================================================
+    // DA√ëO AL JUGADOR (con invulnerabilidad temporal)
+    //=====================================================
+
+    if(!invulnerable)
+    {
+        bool golpeado = false;
+
+        // JUGADOR - METEORITO 1
+        if(!explotandoMeteorito1 &&
+           colisionJugadorMeteorito1(xJugador, yJugador, xMeteorito1, yMeteorito1))
+        {
+            golpeado = true;
+
+            explotandoMeteorito1 = true;
+            contadorExplosion1 = DURACION_EXPLOSION;
+        }
+
+        // JUGADOR - METEORITO 2
+        if(!explotandoMeteorito2 &&
+           colisionJugadorMeteorito2(xJugador, yJugador, xMeteorito2, yMeteorito2))
+        {
+            golpeado = true;
+
+            explotandoMeteorito2 = true;
+            contadorExplosion2 = DURACION_EXPLOSION;
+        }
+
+        // JUGADOR - METEORITO 3
+        if(!explotandoMeteorito3 &&
+           colisionJugadorMeteorito3(xJugador, yJugador, xMeteorito3, yMeteorito3))
+        {
+            golpeado = true;
+
+            explotandoMeteorito3 = true;
+            contadorExplosion3 = DURACION_EXPLOSION;
+        }
+
+        // JUGADOR - OVNI 1
+        if(nivel>=2 &&
+           colisionJugadorOvni1(xJugador, yJugador, xOvni1, yOvni1))
+        {
+            golpeado = true;
+
+            yOvni1 = -40;
+            xOvni1 = posicionAleatoriaOvni1();
+        }
+
+        // JUGADOR - OVNI 2
+        if(nivel>=3 &&
+           colisionJugadorOvni2(xJugador, yJugador, xOvni2, yOvni2))
+        {
+            golpeado = true;
+
+            yOvni2 = -70;
+            xOvni2 = posicionAleatoriaOvni2();
+        }
+
+        // JUGADOR - BALA OVNI 1
+        if(disparandoOvni1 &&
+           colisionJugadorBalaOvni(xJugador, yJugador, xBalaOvni1, yBalaOvni1))
+        {
+            golpeado = true;
+
+            disparandoOvni1 = false;
+        }
+
+        // JUGADOR - BALA OVNI 2
+        if(disparandoOvni2 &&
+           colisionJugadorBalaOvni(xJugador, yJugador, xBalaOvni2, yBalaOvni2))
+        {
+            golpeado = true;
+
+            disparandoOvni2 = false;
+        }
+
+        // JUGADOR - LASER DEL JEFE (ambos rayos)
+        if(disparandoJefe &&
+           (colisionJugadorLaserJefe(xJugador, yJugador, xLaser1, yLaser1) ||
+            colisionJugadorLaserJefe(xJugador, yJugador, xLaser2, yLaser2)))
+        {
+            golpeado = true;
+
+            disparandoJefe = false;
+        }
+
+        if(golpeado)
+        {
+            vidas--;
+
+            invulnerable = true;
+            contadorInvulnerable = DURACION_INVULNERABILIDAD;
+
+            Beep(200, 200); // Alarma: la nave del jugador recibio un golpe
+        }
+    }
+}
+
+
+
+//=========================================================
+// ACTUALIZAR EXPLOSIONES
+//=========================================================
+// Dibuja la animacion de explosion mientras dura, y cuando
+// termina hace reaparecer al meteorito arriba de la pantalla.
+
+void actualizarExplosiones()
+{
+    if(explotandoMeteorito1)
+    {
+        dibujarExplosion1(xMeteorito1 + 3, yMeteorito1 + 2);
+
+        contadorExplosion1--;
+
+        if(contadorExplosion1 <= 0)
+        {
+            explotandoMeteorito1 = false;
+
+            xMeteorito1 = posicionAleatoriaMeteorito();
+
+            yMeteorito1 = -10;
+        }
+    }
+
+    if(explotandoMeteorito2)
+    {
+        dibujarExplosion2(xMeteorito2 + 6, yMeteorito2 + 3);
+
+        contadorExplosion2--;
+
+        if(contadorExplosion2 <= 0)
+        {
+            explotandoMeteorito2 = false;
+
+            xMeteorito2 = posicionAleatoriaMeteorito();
+
+            yMeteorito2 = -20;
+        }
+    }
+
+    if(explotandoMeteorito3)
+    {
+        dibujarExplosion3(xMeteorito3 + 8, yMeteorito3 + 4);
+
+        contadorExplosion3--;
+
+        if(contadorExplosion3 <= 0)
+        {
+            explotandoMeteorito3 = false;
+
+            xMeteorito3 = posicionAleatoriaMeteorito();
+
+            yMeteorito3 = -30;
+        }
+    }
 }
 
 
@@ -548,27 +827,45 @@ void actualizarJuego()
 
     moverJugador(
         xJugador,
-        yJugador);
+        yJugador,
+        xBalaJugador,
+        yBalaJugador,
+        disparandoJugador);
 
 
 
     // METEORITOS
 
-    moverMeteorito1(
-        xMeteorito1,
-        yMeteorito1);
+    bool escapoMeteorito1 = false;
+    bool escapoMeteorito2 = false;
+    bool escapoMeteorito3 = false;
+
+    if(!explotandoMeteorito1)
+        moverMeteorito1(
+            xMeteorito1,
+            yMeteorito1,
+            escapoMeteorito1);
 
 
 
-    moverMeteorito2(
-        xMeteorito2,
-        yMeteorito2);
+    if(!explotandoMeteorito2)
+        moverMeteorito2(
+            xMeteorito2,
+            yMeteorito2,
+            escapoMeteorito2);
 
 
 
-    moverMeteorito3(
-        xMeteorito3,
-        yMeteorito3);
+    if(!explotandoMeteorito3)
+        moverMeteorito3(
+            xMeteorito3,
+            yMeteorito3,
+            escapoMeteorito3);
+
+    // Si un meteorito llego abajo sin ser destruido, se pierde
+    // una vida (antes esto no pasaba nunca).
+    if(escapoMeteorito1 || escapoMeteorito2 || escapoMeteorito3)
+        vidas--;
 
 
 
@@ -588,6 +885,11 @@ void actualizarJuego()
         dispararOvni1(
             xOvni1,
             yOvni1,
+            xBalaOvni1,
+            yBalaOvni1,
+            disparandoOvni1);
+
+        moverBalaOvni1(
             xBalaOvni1,
             yBalaOvni1,
             disparandoOvni1);
@@ -616,6 +918,11 @@ void actualizarJuego()
             yBalaOvni2,
             disparandoOvni2);
 
+        moverBalaOvni2(
+            xBalaOvni2,
+            yBalaOvni2,
+            disparandoOvni2);
+
     }
 
 	// JEFE FINAL
@@ -638,6 +945,13 @@ void actualizarJuego()
         yLaser2,
         disparandoJefe);
 
+    	moverLaserJefe(
+        xLaser1,
+        yLaser1,
+        xLaser2,
+        yLaser2,
+        disparandoJefe);
+
 	}
     // BALA JUGADOR
 
@@ -645,6 +959,16 @@ void actualizarJuego()
         xBalaJugador,
         yBalaJugador,
         disparandoJugador);
+
+    // INVULNERABILIDAD TEMPORAL DEL JUGADOR
+
+    if(invulnerable)
+    {
+        contadorInvulnerable--;
+
+        if(contadorInvulnerable <= 0)
+            invulnerable = false;
+    }
 
 }
 //=========================================================
@@ -664,19 +988,29 @@ void ejecutarJuego(string usuario)
     system("cls");
     inicializarJuego();
 
+    iniciarDobleBuffer();
+
     // CICLO PRINCIPAL
     while(vidas>0 && !juegoVictoria)
     {
+        limpiarPantallaCompleta();
+
         actualizarJuego();
 
         verificarColisiones();
 
+        actualizarExplosiones();
+
         actualizarNivel();
 
-        //dibujarJuego();
+        dibujarJuego();
+
+        mostrarFrame();
 
         Sleep(40);
     }
+
+    finalizarDobleBuffer();
 
     system("cls");
 

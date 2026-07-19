@@ -33,7 +33,7 @@ namespace Common
         return ChildX + x;
     }
 
-    inline int RelativeY(int y, int ChildY) {
-        return ChildY + y;
+    inline int RelativeY(int y, int RelativePostion) {
+        return RelativePostion + y;
     }
 }

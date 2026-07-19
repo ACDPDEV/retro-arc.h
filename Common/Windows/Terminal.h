@@ -11,6 +11,8 @@
 #include <conio.h>
 #include <iostream>
 #include <array>
+
+using namespace std;
 #include <string>
 
 namespace Common {
@@ -115,7 +117,7 @@ inline int GetConsoleHeight() {
 
 /// @brief Obtiene el tamaño actual de la consola
 /// @return array{width, height} en caracteres
-inline std::array<int, 2> GetConsoleSize() {
+inline array<int, 2> GetConsoleSize() {
     return {GetConsoleWidth(), GetConsoleHeight()};
 }
 
@@ -126,8 +128,13 @@ inline bool Kbhit() {
 }
 
 /// @brief Obtiene el carácter presionado
-/// @return Carácter presionado
-inline char Getch() {
+/// @return El byte leído, en el rango 0-255 (nunca negativo)
+/// @details Devuelve int (no char) para evitar sign-extension: en la mayoría de plataformas
+///          char es signed, y bytes >= 128 (comunes en el primer byte de secuencias UTF-8,
+///          ej. 0xC3 para ñ/á/é...) se leerían como negativos si se devolvieran como char,
+///          rompiendo las comparaciones bit a bit (key & 0b11100000) en el código que
+///          decodifica UTF-8 a partir de este valor.
+inline int Getch() {
     return _getch();
 }
 

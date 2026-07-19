@@ -614,6 +614,20 @@ namespace Common
             "  "
         };
 
+        const std::array<std::string, 4> FONT4_dot = {
+            "  ",
+            "  ",
+            "  ",
+            "▀▀"
+        };
+
+        const std::array<std::string, 4> FONT4_colon = {
+            "  ",
+            "▀▀",
+            "  ",
+            "▀▀"
+        };
+
 
     inline std::array<std::string, 9> ConcatFont(std::vector<std::array<std::string, 9>> fontChar, int separator) {
         std::array<std::string, 9> result { "", "", "", "", "", "", "", "", "" };

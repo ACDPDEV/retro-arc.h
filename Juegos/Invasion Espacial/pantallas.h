@@ -6,7 +6,7 @@
 #include <conio.h>
 
 #include "consola2.h"
-#include "figuritas.h"
+#include "figuras.h"
 
 using namespace std;
 //=========================================================
@@ -28,6 +28,7 @@ void menu();
 
 void instrucciones();
 void creditos();
+void despedida(string usuario);
 
 void gameOver();
 void victoria();
@@ -71,7 +72,7 @@ void presentacion()
 
         color(10);
 
-        cout<<"¦";
+        cout<<"|";
 
         gotoxy(70,34);
 
@@ -109,40 +110,64 @@ bool clave()
 {
     string codigo;
 
-    system("cls");
+    const int MAX_INTENTOS = 3;
 
-    color(11);
-
-    gotoxy(55,8);
-    cout<<"==========================================";
-
-    gotoxy(65,10);
-    cout<<"CENTRO DE DEFENSA ESPACIAL";
-
-    gotoxy(55,12);
-    cout<<"==========================================";
-
-
-    color(15);
-
-    gotoxy(65,17);
-    cout<<"INGRESE CLAVE DE ACCESO:";
-
-
-    gotoxy(65,19);
-    cout<<"> ";
-
-    getline(cin,codigo);
-
-
-    if(codigo=="ATAQUE ESPACIAL")
+    for(int intento = 1; intento <= MAX_INTENTOS; intento++)
     {
-        return true;
+        system("cls");
+
+        color(11);
+
+        gotoxy(55,8);
+        cout<<"==========================================";
+
+        gotoxy(65,10);
+        cout<<"CENTRO DE DEFENSA ESPACIAL";
+
+        gotoxy(55,12);
+        cout<<"==========================================";
+
+
+        color(15);
+
+        gotoxy(65,17);
+        cout<<"INGRESE CLAVE DE ACCESO:";
+
+
+        color(14);
+
+        gotoxy(65,18);
+        cout<<"Intento "<<intento<<" de "<<MAX_INTENTOS;
+
+
+        color(15);
+
+        gotoxy(65,20);
+        cout<<"> ";
+
+        getline(cin,codigo);
+
+
+        if(codigo=="1234")
+        {
+            return true;
+        }
+
+
+        if(intento < MAX_INTENTOS)
+        {
+            color(12);
+
+            gotoxy(65,23);
+            cout<<"CLAVE INCORRECTA. INTENTELO DE NUEVO.";
+
+            Beep(300,200);
+
+            Sleep(1400);
+        }
     }
-    else
-    {
-        return false;
-    }
+
+    return false;
 }
 //=========================================================
 // SOLICITAR NOMBRE DE USUARIO
@@ -201,19 +226,38 @@ void bienvenida(string usuario)
 
     escribirTexto(
         65,
-        15,
+        6,
         "ACCESO AUTORIZADO",
         40);
 
 
-
     color(11);
 
-
-    gotoxy(55,18);
+    gotoxy(55,9);
 
     cout<<"BIENVENIDO COMANDANTE "<<usuario;
 
+
+    // FIGURA ANIMADA: la nave llega volando hasta el centro
+
+    int xNave;
+    int yNave = 15;
+
+    for(xNave = 20; xNave <= 80; xNave += 4)
+    {
+        if(xNave > 20)
+            borrarJugador(xNave - 4, yNave);
+
+        dibujarJugador(xNave, yNave);
+
+        Sleep(25);
+    }
+
+
+    color(15);
+
+    gotoxy(55,40);
+    cout<<"Preparando sistemas de combate...";
 
 
     Beep(1000,200);
@@ -231,19 +275,35 @@ void claveIncorrecta()
 
     color(12);
 
-    escribirTexto(65,15,
-    "ACCESO DENEGADO",40);
+    gotoxy(40,13);
+    cout<<"+--------------------------------------------------------------+";
 
+    gotoxy(40,14);
+    cout<<"|                                                                |";
 
-    color(14);
+    gotoxy(40,15);
+    cout<<"|   ACCESO DENEGADO                                             |";
 
-    escribirTexto(55,18,
-    "CLAVE INCORRECTA",40);
+    gotoxy(40,16);
+    cout<<"|                                                                |";
+
+    gotoxy(40,17);
+    cout<<"|   Intento 3 veces ingresar con una clave incorrecta.          |";
+
+    gotoxy(40,18);
+    cout<<"|   Comuniquese con el administrador.                          |";
+
+    gotoxy(40,19);
+    cout<<"|                                                                |";
+
+    gotoxy(40,20);
+    cout<<"+--------------------------------------------------------------+";
 
 
     Beep(400,300);
+    Beep(250,400);
 
-    Sleep(1500);
+    Sleep(2500);
 }
 //=========================================================
 // MENÚ
@@ -295,7 +355,17 @@ void menu(string usuario)
         cout<<"Seleccione una opcion: ";
 
         cin>>opcion;
-        cin.ignore();
+
+        if(cin.fail())
+        {
+            cin.clear();
+            cin.ignore(10000, '\n');
+            opcion = -1;
+        }
+        else
+        {
+            cin.ignore();
+        }
 
 
 
@@ -338,12 +408,7 @@ void menu(string usuario)
 
             case 4:
 
-                color(12);
-
-                gotoxy(65,27);
-                cout<<"CERRANDO SISTEMA...";
-
-                Sleep(1000);
+                despedida(usuario);
 
                 break;
 
@@ -400,7 +465,7 @@ void instrucciones()
     cout<<"Defiende la galaxia de la invasion";
 
     gotoxy(60,15);
-    cout<<"alienigena.";
+    cout<<"alienigena y meteoritos.";
 
 
     gotoxy(60,18);
@@ -408,7 +473,7 @@ void instrucciones()
 
 
     gotoxy(60,20);
-    cout<<"Movimiento  :  A  D";
+    cout<<"Movimiento  :  FLECHAS IZQ/DER";
 
     gotoxy(60,21);
     cout<<"Disparo     :  ESPACIO";
@@ -460,11 +525,11 @@ void creditos()
     cout<<"Proyecto Final";
 
     gotoxy(60,20);
-    cout<<"Programacion I";
+    cout<<"Algoritmos y programacion";
 
 
     gotoxy(60,23);
-    cout<<"Desarrollado por:";
+    cout<<"Desarrollado por: VASQUEZ CHAVEZ YAMILLET";
 
 
     gotoxy(60,25);
@@ -485,109 +550,63 @@ void creditos()
 // PANTALLAS DEL JUEGO
 //=========================================================
 
+
+
 //=========================================================
-// GAME OVER
+// DESPEDIDA
 //=========================================================
 
-void gameOver(string usuario, int puntaje)
+void despedida(string usuario)
 {
     system("cls");
 
-    color(12);
+    color(11);
 
+    gotoxy(55,6);
+    cout<<"==========================================";
 
-    gotoxy(65,10);
-    cout<<"==========================";
+    gotoxy(63,8);
+    cout<<"MISION FINALIZADA";
 
-
-    gotoxy(72,12);
-    cout<<"GAME OVER";
-
-
-    gotoxy(65,14);
-    cout<<"==========================";
+    gotoxy(55,10);
+    cout<<"==========================================";
 
 
     color(15);
 
-
-    gotoxy(60,18);
-    cout<<"La invasion ha terminado";
-
-
-    gotoxy(60,20);
-    cout<<"La Tierra necesita otra oportunidad";
+    gotoxy(50,13);
+    cout<<"Gracias por defender la galaxia, comandante "<<usuario<<".";
 
 
-    gotoxy(60,22);
-    cout<<"COMANDANTE: "<<usuario;
+    // FIGURA ANIMADA: la nave se aleja del centro hasta salir de pantalla
+
+    int xNave;
+    int yNave = 18;
+
+    for(xNave = 80; xNave >= 10; xNave -= 4)
+    {
+        if(xNave < 80)
+            borrarJugador(xNave + 4, yNave);
+
+        dibujarJugador(xNave, yNave);
+
+        Sleep(25);
+    }
+
+    borrarJugador(xNave + 4, yNave);
 
 
-    gotoxy(60,24);
-    cout<<"PUNTAJE FINAL: "<<puntaje;
+    color(10);
+
+    gotoxy(60,45);
+    cout<<"Hasta la proxima mision, "<<usuario<<"...";
 
 
-    Beep(400,300);
-
+    Beep(700,150);
+    Beep(500,150);
+    Beep(300,300);
 
     Sleep(2000);
-}
-
-//=========================================================
-// VICTORIA
-//=========================================================
-
-void victoria(string usuario, int puntaje)
-{
-    system("cls");
-
-
-    color(10);
-
-
-    gotoxy(60,8);
-    cout<<"================================";
-
-
-    gotoxy(70,10);
-    cout<<"VICTORIA";
-
-
-    gotoxy(60,12);
-    cout<<"================================";
-
-
-    color(15);
-
-
-    gotoxy(65,16);
-    cout<<"MISION COMPLETADA";
-
-
-    gotoxy(65,19);
-    cout<<"PUNTAJE FINAL:";
-
-
-    color(14);
-
-    gotoxy(80,19);
-    cout<<puntaje;
-
-
-    color(10);
-
-
-    gotoxy(55,24);
-    cout<<"La galaxia esta a salvo";
-
-
-    gotoxy(60,28);
-    cout<<"Presione una tecla para continuar";
-
-
-    Beep(1000,300);
-
-    getch();
 }
 
 
