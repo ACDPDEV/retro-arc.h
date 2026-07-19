@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include <string>
 #include <vector>
 
@@ -10,6 +11,7 @@ namespace Common
     inline std::string feedbackMessage = "";
     inline int rowFeedbackMessage = 0;
     inline int colFeedbackMessage = 0; 
-    inline std::string playerName = "Player 1";   
+    inline std::string playerName = "Player 1";
+    inline std::vector<std::array<std::string, 2>> keysHelper;
 }
 
