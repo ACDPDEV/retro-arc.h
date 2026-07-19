@@ -44,7 +44,7 @@ namespace Pokemon {
     ///          Bloquea hasta que ambos nombres sean ingresados.
     /// @param player1Name Referencia al nombre del jugador 1 (se modifica con el input)
     /// @param player2Name Referencia al nombre del jugador 2 (se modifica con el input)
-    inline void NombresView(std::string& player1Name, std::string& player2Name) {
+    inline void PlayersView(std::string& player1Name, std::string& player2Name) {
         Common::DrawBackground();
 
         // ─── Dimensiones compartidas de paneles ───
@@ -104,7 +104,7 @@ namespace Pokemon {
         const int sub1Y = Common::AlignedY(panel1Y, panelHeight, sub1Height, "top") + 1;
         Common::DrawText(sub1X, sub1Y, -1, -1,
             sub1,
-            Common::ORANGE, Common::CREAM);
+            Common::RED, Common::CREAM);
 
         // Input jugador 1 (ultima linea del panel)
         const int input1Weight = 50;
@@ -131,7 +131,7 @@ namespace Pokemon {
         const int sub2Y = Common::AlignedY(panel2Y, panelHeight, sub2Height, "top") + 1;
         Common::DrawText(sub2X, sub2Y, -1, -1,
             sub2,
-            Common::ORANGE, Common::PINK);
+            Common::RED, Common::PINK);
 
         // Input jugador 2 (ultima linea del panel)
         const int input2Weight = 50;
@@ -142,6 +142,7 @@ namespace Pokemon {
 
         // ─── 6. Barra inferior ───
         Common::DrawBottomBar();
+
         // ─── 4. Input bloqueante para jugador 1 ───
         Common::InputComponent(input1X, input1Y, input1Weight, input1Height, player1Name, "", "", "", inputP1Bg, inputP1Txt);
 
