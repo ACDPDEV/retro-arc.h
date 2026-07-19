@@ -49,8 +49,8 @@ namespace PokemonGame
              */
             void ClearTeam()
             {
-                team.clear();
                 activePokemon = nullptr;
+                team.clear();
             }
     
             /**

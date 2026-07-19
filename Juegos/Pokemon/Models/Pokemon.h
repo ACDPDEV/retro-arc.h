@@ -11,11 +11,8 @@ namespace PokemonGame
     class Pokemon
     {
         private:
-
             int id;
-    
             std::string name;
-    
             PokemonGame::PokemonType type;
 
             double maxHp;
@@ -37,7 +34,7 @@ namespace PokemonGame
                 if(defense <= 0)
                     return 0.0;
                 
-                return defense / (defense + defenseScale);
+                return defense / (2.0 * defense + defenseScale);
             }
             
             double GetEffectiveDamage(double damage)
@@ -46,7 +43,6 @@ namespace PokemonGame
             }
     
         public:
-    
             Pokemon(
                 const int id,
                 const std::string& name,
@@ -64,11 +60,23 @@ namespace PokemonGame
                 
             }
     
-            ~Pokemon() = default;
+            ~Pokemon()
+            {
+                for (PokemonGame::Move* move : moves)
+                {
+                    delete move;
+                }
+                moves.clear();
+            }
 
             int GetId() const
             {
                 return id;
+            }
+
+            std::string GetName() const
+            {
+                return name;
             }
 
             void WearFocusBand()
