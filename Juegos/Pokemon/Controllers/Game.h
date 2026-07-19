@@ -2,9 +2,11 @@
 // #include <iostream>
 #include <string>
 #include <memory>
-#include "Battle.h"
 #include "../../../Common/Variables.h"
-#include "../Functions/BuildTeam.h"
+#include "../Models/Player.h"
+#include "../Enums/GameOption.h"
+#include "PlayerController.h"
+#include "Battle.h"
 
 
 namespace PokemonGame
@@ -40,35 +42,46 @@ namespace PokemonGame
                  * 
                  * TODO: 
                  * Invocar a la clase o función que contiene la lógica de vista para seleccionar la opción. 
-                 * return : Debe devolver la opción
+                 * return : Debe devolver la opción  PokemonGame::GameOption::
                  * 
                  * 
                  */
-                int option = 0;
+                int option = static_cast<int>(PokemonGame::GameOption::BATTLE);
 
                 switch (option)
                 {
                     // iniciar batalla
-                    case 0:
+                    case static_cast<int>(PokemonGame::GameOption::BATTLE):
                     {
-                        BuildTeam(playerOne);
-                        BuildTeam(playerTwo);
-
                         PokemonGame::Battle battle(playerOne, playerTwo);
 
+                        bool teamOneIsReady = PokemonGame::PlayerController::BuildTeam(playerOne);
+                        if(!teamOneIsReady)
+                            break;
+                        
+                        bool teamTwoIsReady = PokemonGame::PlayerController::BuildTeam(playerTwo);
+                        if(!teamTwoIsReady)
+                            break;
+                            
+                        PokemonGame::PlayerController::SetInitialActivePokemon(playerOne);
+                        PokemonGame::PlayerController::SetInitialActivePokemon(playerTwo);
+
+                        PokemonGame::PlayerController::FillBag(playerOne);
+                        PokemonGame::PlayerController::FillBag(playerTwo);
+                        
                         battle.Start();
                         break;
                     }
 
                     // Salir
-                    case 1:
+                    case static_cast<int>(PokemonGame::GameOption::QUIT):
                     {
                         running = false;
                         break;
                     }
                     
                     // Configuraciones (nombre, maximo de pokemones)
-                    case 2:
+                    case static_cast<int>(PokemonGame::GameOption::CONFIG):
                     {
                         break;
                     }

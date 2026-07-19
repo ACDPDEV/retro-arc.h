@@ -1,5 +1,6 @@
 #pragma once
-#include "../Game/Battle.h"
+#include "../Controllers/Battle.h"
+#include "../Models/Player.h"
 
 
 namespace PokemonGame
@@ -9,12 +10,17 @@ namespace PokemonGame
     class Command
     {
         public:
+        
+            Command()
+            {
+                
+            }
     
             virtual ~Command() = default;
     
             virtual void Execute(
-                PokemonGame::Battle& battle,
-                PokemonGame::Player& actor,
-                PokemonGame::Player& opponent) = 0;
+                PokemonGame::Player& affectedPlayer) = 0;
+
+            virtual bool CanExecute(PokemonGame::Player& actor) = 0;
     };
 }

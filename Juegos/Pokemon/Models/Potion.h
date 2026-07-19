@@ -7,14 +7,22 @@ namespace PokemonGame
 {
     class Potion : public PokemonGame::Item
     {
-        private:
+        protected:
         
             int healPoints;
         
         public:
         
-            Potion(int healPoints);
+            Potion(int id, int maxUses, int healPoints)
+                :
+                Item(id, maxUses),
+                healPoints(healPoints)
+            {
+            }
         
-            void use(PokemonGame::Pokemon& target) override;
+            void Use(PokemonGame::Pokemon* target) override
+            {
+                target->ReceiveHeal(healPoints);
+            }
     };
 }

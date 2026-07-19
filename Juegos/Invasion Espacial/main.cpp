@@ -173,7 +173,7 @@ int main() {
             // POKEMON
             case 0:
                 PokemonGame::Game game;
-                game.start();
+                game.Start();
                 break;
 
             // BUSCAMINAS

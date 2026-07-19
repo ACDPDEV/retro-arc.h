@@ -5,20 +5,39 @@
 
 namespace PokemonGame
 {
-    class PokemonGame::Pokemon;
-    
     class Item
     {
         protected:
-        
-            std::string name;
+            int id;
+            int maxUses;
+            int remainingUses;
         
         public:
         
-            Item(const std::string& name);
+            Item(
+                int id,
+                int maxUses)
+            :
+            id(id),
+            maxUses(maxUses),
+            remainingUses(maxUses)
+            {
+            }
         
             virtual ~Item() = default;
+
+            bool CanUse()
+            {
+                return remainingUses > 0;
+            }
+
+            int GetId()
+            {
+                return id;
+            }
+
+            virtual void RegisterUse() = 0;
         
-            virtual void use(PokemonGame::Pokemon& target) = 0;
+            virtual void Use(PokemonGame::Pokemon* target) = 0;
     };
 }

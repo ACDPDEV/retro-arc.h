@@ -1,64 +1,174 @@
 #pragma once
 
 #include <string>
+#include <algorithm>
 #include <vector>
-#include "Pokemon.h"
+#include "./Enums/PokemonType.h"
 #include "Move.h"
 
 namespace PokemonGame
-{
-    class PokemonGame::Move;
-    
-    enum class PokemonType
-    {
-        Normal,
-        Fire,
-        Water,
-        Grass,
-        Electric,
-        Rock,
-        Ice,
-        Psychic,
-        Ghost
-    };
-    
+{   
     class Pokemon
     {
         private:
-    
+            int id;
             std::string name;
-    
             PokemonGame::PokemonType type;
-    
-            int maxHp;
-            int currentHp;
-    
-            int attack;
-            int defense;
-            int speed;
-    
+
+            double maxHp;
+            double currentHp;
+            double defense;
+            bool hasFocusBand = false;
+            bool isRunning = false;
             std::vector<PokemonGame::Move*> moves;
+
+            void UseFocusBand()
+            {
+                currentHp = std::max(currentHp, 1.0);
+                hasFocusBand = false;
+            }
+
+            double CalulateDamageReduction(double defense)
+            {
+                double defenseScale = 10.0;
+                if(defense <= 0)
+                    return 0.0;
+                
+                return defense / (2.0 * defense + defenseScale);
+            }
+            
+            double GetEffectiveDamage(double damage)
+            {
+                return damage * (1.0 - CalulateDamageReduction(defense));
+            }
     
         public:
-    
             Pokemon(
+                const int id,
                 const std::string& name,
                 PokemonGame::PokemonType type,
-                int hp,
-                int attack,
-                int defense,
-                int speed);
+                double hp,
+                double defense)
+                :
+                id(id),
+                name(name),
+                type(type),
+                maxHp(hp),
+                currentHp(hp),
+                defense(defense)
+            {
+                
+            }
     
-            virtual ~Pokemon();
+            ~Pokemon()
+            {
+                for (PokemonGame::Move* move : moves)
+                {
+                    delete move;
+                }
+                moves.clear();
+            }
+
+            int GetId() const
+            {
+                return id;
+            }
+
+            std::string GetName() const
+            {
+                return name;
+            }
+
+            void WearFocusBand()
+            {
+                hasFocusBand = true;
+            }
+
+            void Run()
+            {
+                isRunning = true;
+            }
+
+            bool IsRunning() const
+            {
+                return isRunning;
+            }
     
-            void receiveDamage(int damage);
+            void ReceiveDamage(double incomingDamage)
+            {
+                double effectiveDamage = GetEffectiveDamage(incomingDamage);
+                if(effectiveDamage < currentHp)
+                {
+                    currentHp -= effectiveDamage;
+                }
+                else
+                {
+                    currentHp = 0;
+                }
+
+                if(hasFocusBand)
+                {
+                    UseFocusBand();
+                }
+            }
+
+            void ReceiveHeal(double heal)
+            {
+                currentHp += std::min(heal, maxHp-currentHp);
+            }
     
-            bool isFainted() const;
+            bool IsFainted() const
+            {
+                return currentHp == 0;
+            }
+
+            void AddMove(PokemonGame::Move* move)
+            {
+                moves.push_back(move);
+            }
+
+            std::vector<PokemonGame::Move*> GetMoves()
+            {
+                return moves;
+            }
     
-            void addMove(PokemonGame::Move* move);
+            PokemonGame::Move* GetMoveById(int index)
+            {
+                for (PokemonGame::Move* move : moves)
+                {
+                    if (move != nullptr && move->GetId() == index)
+                    {
+                        return move;
+                    }
+                }
+                
+                return nullptr;
+            }
+            
+            bool IsValidMove(PokemonGame::Move* move)
+            {
+                auto it = std::find(moves.begin(), moves.end(), move);
+
+                if (! (it == moves.end()) )
+                {
+                    return true;
+                }
+                return false;
+            }
+
+            double GetCurrentHp() const
+            {
+                return currentHp;
+            }
+
+            double GetMaxHp() const
+            {
+                return maxHp;
+            }
     
-            PokemonGame::Move* getMove(int index);
-    
-            PokemonGame::PokemonType getType() const;
+            PokemonGame::PokemonType GetType() const
+            {
+                return type;
+            }
     };
 }
