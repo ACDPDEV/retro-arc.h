@@ -16,6 +16,7 @@
 #include "../../../Common/Terminal.h"
 #include "../../../Common/Theme.h"
 #include "../../../Common/Utils.h"
+#include "../Database/State.h"
 #include "../PokemonStaticSprites/BulbasaurFront.h"
 #include "../PokemonStaticSprites/CharmanderFront.h"
 #include "../PokemonStaticSprites/ChikoritaFront.h"
@@ -31,12 +32,23 @@ namespace Pokemon {
     /// @details Muestra el titulo con ConcatFont, el sprite del Pokemon ganador, confeti con particulas
     ///          aleatorias, el mensaje de victoria y el contador de rondas. La animacion continua
     ///          hasta que se presione una tecla.
-    /// @param winnerName Nombre del jugador ganador
-    /// @param pokemonIndex Indice del Pokemon ganador (0-7)
-    /// @param round Numero de rondas jugadas
-    inline void VictoryView(const std::string& winnerName, int pokemonIndex, int round) {
+    ///          Lee los valores de los globals: winnerName, currentRound, y determina el indice del Pokemon
+    ///          ganador a partir de selectedCurrentPokemonId[winnerIndex] donde winnerIndex se obtiene
+    ///          comparando winnerName con playerNames[0] y playerNames[1].
+    inline void VictoryView() {
         Common::DrawBackground();
 
+        // Determine winner index and pokemon index from globals
+        int winnerIndex = 0;
+        if (winnerName == playerNames[0]) {
+            winnerIndex = 0;
+        } else if (winnerName == playerNames[1]) {
+            winnerIndex = 1;
+        } else {
+            // Default to 0 if no match (should not happen)
+            winnerIndex = 0;
+        }
+        int pokemonIndex = selectedCurrentPokemonId[winnerIndex];
         // Titulo "VICTORIA" con ConcatFont (FONT9_V-FONT9_A) - 9-line font
         const std::array<std::string, 9> title = Common::ConcatFont({
             Common::FONT9_V, Common::FONT9_I, Common::FONT9_C, Common::FONT9_T,
@@ -207,7 +219,7 @@ namespace Pokemon {
             Common::DrawText(messageX, 38, -1, -1, {message}, Common::FOREGROUND_LIGHT, Common::BACKGROUND);
 
             // Contador de rondas (centrado, y=42)
-            std::string roundText = "Rondas jugadas: " + std::to_string(round);
+        std::string roundText = "Rondas jugadas: " + std::to_string(currentRound);
             const int roundX = Common::AlignedX(0, Common::WIDTH_SCREEN, Common::Length(roundText), "center");
             Common::DrawText(roundX, 42, -1, -1, {roundText}, Common::ACCENT, Common::BACKGROUND);
 

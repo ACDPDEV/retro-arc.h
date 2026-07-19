@@ -73,13 +73,14 @@ Pokemon battle game with modern OOP architecture, Command Pattern, and comprehen
 
 | Directory | Files | Purpose |
 |-----------|-------|---------|
-| `Database/` | `MockData.h` | Mock Pokemon and item data (8 Pokemon, 4 items) |
+| `Database/` | `MockData.h`, `State.h` | Mock Pokemon and item data (8 Pokemon, 4 items) + global game state |
 | `Factories/` | `PokemonFactory.h` | Factory pattern for creating Pokemon instances |
 | `Functions/` | `BuildTeam.h` | Team building logic (uses factory) |
 | `Components/` | `TitleComponent.h` | Reusable title component with gradient |
 | `Sprites/` | `Trainer1.h`, `Trainer2.h`, `Mochila.h` | Trainer and bag sprites |
 | `PokemonStaticSprites/` | 16 files | Static front/back sprites for 8 Pokemon |
 | `PokemonAnimatedSprites/` | 16 files | Animated front/back sprites for 8 Pokemon (10 frames each) |
+| `PokemonMiniSprites/` | 8 files | Mini ANSI truecolor sprites for PokemonSelectionView (1 per Pokemon) |
 
 ---
 
@@ -146,8 +147,18 @@ Game::Start()
 ```cpp
 namespace Pokemon {
     inline void Pokemon() {
-        TitleView();  // Show title screen
-        MenuView();   // Show main menu
+        TitleView();           // Show title screen
+        MenuView();            // Show main menu
+        PlayersView();         // Enter player names (writes to playerNames[])
+        
+        currentSelectionPlayer = 0;
+        PokemonSelectionView(); // Player 1 selects Pokemon
+        
+        currentSelectionPlayer = 1;
+        PokemonSelectionView(); // Player 2 selects Pokemon
+        
+        // Battle would go here
+        HuidaView();           // Placeholder - shows run animation
     }
 }
 ```
@@ -245,20 +256,20 @@ inline void TitleView();
 // Main menu
 inline void MenuView();
 
-// Player name input with styled panels
-inline void PlayersView(std::string& player1Name, std::string& player2Name);
+// Player name input with styled panels — writes to playerNames[0] and playerNames[1]
+inline void PlayersView();
 
-// Pokemon selection grid (4x2)
-inline void PokemonSelectionView(int& selectedPokemon);
+// Pokemon selection grid (4x2) — reads currentSelectionPlayer, writes to selectedCurrentPokemonId[currentSelectionPlayer]
+inline void PokemonSelectionView();
 
 // Bag view with item descriptions
 inline void MochilaView();
 
-// Run away animation
-inline void HuidaView(const std::string& pokemonName, const std::string& playerName, int round);
+// Run away animation — reads currentPokemonName, playerNames[currentSelectionPlayer], currentRound
+inline void HuidaView();
 
-// Victory screen with confetti
-inline void VictoryView(const std::string& winnerName, int pokemonIndex, int round);
+// Victory screen with confetti — reads winnerName, currentRound, selectedCurrentPokemonId[winnerIndex]
+inline void VictoryView();
 ```
 
 ### Battle UI Functions (PokemonUI.h)
@@ -281,8 +292,8 @@ void BattleOptionsFightEffectivenessView(std::string Pokemon1, std::string Pokem
 User Input → Command → Game → Battle → Round → Execute Command → Update Models → Refresh Views
 
 Detailed:
-1. TitleView() → MenuView() → PlayersView()
-2. PokemonSelectionView() → BuildTeam() (×2 players)
+1. TitleView() → MenuView() → PlayersView() (writes playerNames[])
+2. PokemonSelectionView() × 2 (writes selectedCurrentPokemonId[])
 3. Battle::Start()
 4.   Round::Play()
 5.     Player::ChooseCommand() → User selects action
@@ -320,6 +331,19 @@ PokemonType (enum class)
 ---
 
 ## Database
+
+### Global State (State.h)
+```cpp
+namespace Pokemon {
+    inline std::string playerNames[2] = {"", ""};           // Player names
+    inline int selectedCurrentPokemonId[2] = {0, 0};       // Selected Pokemon per player
+    inline int currentSelectionPlayer = 0;                  // Current player selecting (0 or 1)
+    inline int pokemonPlayers[2] = {0, 0};                  // Pokemon IDs per player
+    inline std::string currentPokemonName = "";              // Current Pokemon name
+    inline int currentRound = 0;                            // Current round number
+    inline std::string winnerName = "";                     // Winner's name
+}
+```
 
 ### Mock Data
 ```cpp
@@ -359,6 +383,12 @@ Each Pokemon has 10 animation frames (front and back):
 - `Trainer1.h`, `Trainer2.h` — Player trainer sprites
 - `Mochila.h` — Bag/backpack sprite
 - `PokeballLaunch_Left/Right.h` — 23-frame pokeball launch animation
+
+### Mini Sprites (8 Pokemon)
+Used in PokemonSelectionView for compact display:
+- BulbasaurMini, CharmanderMini, SquirtleMini, PikachuMini
+- PsyduckMini, EeveeMini, RockruffMini, ChikoritaMini
+- ANSI truecolor precomputed sprites — zero runtime cost
 
 ---
 
