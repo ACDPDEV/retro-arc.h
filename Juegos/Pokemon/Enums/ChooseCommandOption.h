@@ -7,6 +7,7 @@ namespace PokemonGame
         FIGHT,
         BAG,
         POKEMON,
-        RUN
+        RUN,
+        QUIT
     };
 }

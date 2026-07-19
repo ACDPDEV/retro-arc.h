@@ -21,6 +21,11 @@ namespace PokemonGame
             }
     
             ~Bag() = default;
+
+            void ClearBag()
+            {
+                items.clear();
+            }
     
             void AddItem(std::unique_ptr<PokemonGame::Item> item)
             {

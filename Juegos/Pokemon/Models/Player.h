@@ -24,8 +24,6 @@ namespace PokemonGame
             PokemonGame::Bag bag{};
             
             bool canUseFocusBand = true;
-
-            bool canPlay = true;
     
         public:
     
@@ -39,6 +37,11 @@ namespace PokemonGame
             std::string GetName()
             {
                 return name;
+            }
+
+            std::vector<std::unique_ptr<PokemonGame::Pokemon>> GetTeam() const
+            {
+                return team;
             }
 
             /**
@@ -115,7 +118,33 @@ namespace PokemonGame
 
             bool CanPlay()
             {
-                return canPlay;
+                return ! activePokemon->IsRunning();
+            }
+
+            bool IsTeamDefeated() const
+            {
+                if (team.empty()) 
+                {
+                    return true;
+                }
+
+                for (const auto& pokemonPtr : team)
+                {
+                    if (pokemonPtr != nullptr && !pokemonPtr->IsFainted())
+                    {
+                        return false; 
+                    }
+                }
+
+                return true;
+            }
+
+            void ResetForNewBattle()
+            {
+                canUseFocusBand = true;
+                activePokemon = nullptr;
+                ClearTeam();
+                bag.ClearBag();
             }
     };
 }

@@ -48,13 +48,33 @@ namespace PokemonGame
                 // Turno del jugador 1
                 //----------------------------------
 
-                playerOneCommand = turnOne.ChooseCommand();
-
+                /**
+                 * TODO:
+                 * Vista que retorna ChooseCommandOption y recibe entityId como parámetro por referencia
+                 */
+                int entityId1; // Se debe pasar esta variable como parámetro
+                PokemonGame::ChooseCommandOption p1Option = PokemonGame::ChooseCommandOption::QUIT; // AQUÍ VA LA VISTA <<<----------
+                if(p1Option == PokemonGame::ChooseCommandOption::QUIT)
+                {
+                    return;
+                }
+                playerOneCommand = turnOne.ChooseCommand(p1Option, entityId1);
+                
                 //----------------------------------
                 // Turno del jugador 2
                 //----------------------------------
-
-                playerTwoCommand = turnTwo.ChooseCommand();
+                
+                /**
+                 * TODO:
+                 * Vista que retorna ChooseCommandOption y recibe entityId como parámetro por referencia
+                 */
+                int entityId2; // Se debe pasar esta variable como parámetro
+                PokemonGame::ChooseCommandOption p2Option = PokemonGame::ChooseCommandOption::QUIT; // AQUÍ VA LA VISTA <<<----------
+                if(p2Option == PokemonGame::ChooseCommandOption::QUIT)
+                {
+                    return;
+                }
+                playerTwoCommand = turnTwo.ChooseCommand(p2Option, entityId2);
 
                 //----------------------------------
                 // Validar comandos
@@ -80,6 +100,11 @@ namespace PokemonGame
                 //----------------------------------
                 ExecuteIfIsDefensiveCommand(playerOneCommand.get(), turnOne);
                 ExecuteIfIsDefensiveCommand(playerTwoCommand.get(), turnTwo);
+                if (! turnOne.GetPlayer().CanPlay())
+                    return;
+                
+                if (! turnTwo.GetPlayer().CanPlay())
+                    return;                
 
                 //----------------------------------
                 // Ejecutar acciones ofensivas
@@ -88,11 +113,6 @@ namespace PokemonGame
                 ExecuteIfIsAttackCommand(playerTwoCommand.get(), turnOne);
 
 
-                if (! turnOne.GetPlayer().CanPlay())
-                    return;
-                
-                if (! turnTwo.GetPlayer().CanPlay())
-                    return;                
             }
     };
 }

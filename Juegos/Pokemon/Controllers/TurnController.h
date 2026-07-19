@@ -31,77 +31,39 @@ namespace PokemonGame
             {
             }
 
-            std::unique_ptr<PokemonGame::Command> ChooseCommand()
+            std::unique_ptr<PokemonGame::Command> ChooseCommand(PokemonGame::ChooseCommandOption option, int entityId)
             {
-                while (true)
+                switch (option)
                 {
-                    int option = 0; // ShowBattleMenu();
-                    switch (option)
+                    case PokemonGame::ChooseCommandOption::FIGHT:
                     {
-                        case static_cast<int>(PokemonGame::ChooseCommandOption::FIGHT):
-                        {
-                            /**
-                             * TODO:
-                             * incluir el ShowMoveMenu() que retorna int moveId
-                             */
-                            int moveId = 0; // ShowMoveMenu(PokemonGame::Pokemon* activePokemon) retorna int moveId;
+                        PokemonGame::Move* move = player.GetActivePokemon()->GetMoveById(entityId);
+                        return std::make_unique<PokemonGame::AttackCommand>(move);
 
-                            if (moveId != -1)
-                            {
-                                PokemonGame::Move* move = player.GetActivePokemon()->GetMoveById(moveId);
-                                return std::make_unique<PokemonGame::AttackCommand>(move);
-                            }
+                        break;
+                    }
 
-                            break;
-                        }
+                    case PokemonGame::ChooseCommandOption::BAG:
+                    {
+                        PokemonGame::Item* item = player.GetBag().GetItemById(entityId);
+                        return std::make_unique<PokemonGame::BagCommand>(item);
 
-                        case static_cast<int>(PokemonGame::ChooseCommandOption::BAG):
-                        {
-                            /**
-                             * TODO:
-                             * Implementar función para vista
-                             */
-                            int itemId = 0; // ShowBagMenu(); retorna int itemId;
+                        break;
+                    }
 
-                            if (itemId != -1)
-                            {
-                                PokemonGame::Item* item = player.GetBag().GetItemById(itemId);
-                                return std::make_unique<PokemonGame::BagCommand>(item);
-                            }
+                    case PokemonGame::ChooseCommandOption::POKEMON:
+                    {
+                        PokemonGame::Pokemon* selectedPokemon = player.GetPokemonById(entityId);
+                        return std::make_unique<PokemonGame::SwitchPokemonCommand>(selectedPokemon);
 
-                            break;
-                        }
+                        break;
+                    }
 
-                        case static_cast<int>(PokemonGame::ChooseCommandOption::POKEMON):
-                        {
-                            /**
-                             * TODO:
-                             * Implementar la vista para seleccionar el pokemon retorna -1
-                             */
-                            int pokemonId = 0; // ShowSwitchPokemonMeny(); retorn int pokemonId;
+                    case PokemonGame::ChooseCommandOption::RUN:
+                    {
+                        return std::make_unique<PokemonGame::RunCommand>();
 
-                            if (pokemonId != -1)
-                                PokemonGame::Pokemon* selectedPokemon = player.GetPokemonById(pokemonId);
-                                /**
-                                 * TODO:
-                                 * Pasar el pokemon por parámetro del constructor de switchCommand
-                                 */
-                                return std::make_unique<PokemonGame::SwitchPokemonCommand>();
-
-                            break;
-                        }
-
-                        case static_cast<int>(PokemonGame::ChooseCommandOption::RUN):
-                        {
-                            /**
-                             * TODO:
-                             * Hacer ventana para confirmar la opción de huir
-                             */
-                            if (true)
-                                return std::make_unique<PokemonGame::RunCommand>();
-
-                            break;
-                        }
+                        break;
                     }
                 }
             }
@@ -116,9 +78,7 @@ namespace PokemonGame
 
             bool HasLost()
             {
-                /**
-                 * TODO: implementar
-                 */
+                return !player.CanPlay() || player.IsTeamDefeated();
             }
 
     };

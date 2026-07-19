@@ -59,5 +59,13 @@ namespace PokemonGame
 
                 return true;
             }
+
+            static void SetInitialActivePokemon(PokemonGame::Player& player)
+            {
+                if(player.TeamSize() == 0)
+                    return;
+                auto team = player.GetTeam();
+                player.SwitchPokemon(team[0].get());
+            }
     };
 }

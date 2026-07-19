@@ -58,10 +58,13 @@ namespace PokemonGame
                         bool teamOneIsReady = PokemonGame::PlayerController::BuildTeam(playerOne);
                         if(!teamOneIsReady)
                             break;
-
+                        
                         bool teamTwoIsReady = PokemonGame::PlayerController::BuildTeam(playerTwo);
                         if(!teamTwoIsReady)
                             break;
+                            
+                        PokemonGame::PlayerController::SetInitialActivePokemon(playerOne);
+                        PokemonGame::PlayerController::SetInitialActivePokemon(playerTwo);
 
                         PokemonGame::PlayerController::FillBag(playerOne);
                         PokemonGame::PlayerController::FillBag(playerTwo);

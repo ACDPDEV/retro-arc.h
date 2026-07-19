@@ -29,6 +29,8 @@ namespace PokemonGame
     
             void Start()
             {
+                playerOneTurn.GetPlayer().ResetForNewBattle();
+                playerTwoTurn.GetPlayer().ResetForNewBattle();
                 while (!finished)
                 {
                     PokemonGame::Round round(playerOneTurn, playerTwoTurn);
