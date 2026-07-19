@@ -123,5 +123,5 @@ executes, and the player sees the victory message on start without playing.
 
 ## See Also
 
-- [Common Library](../CommonDOCS.md)
+- [Common Library](./Common.md)
 - [MainMenu](MainMenu.md)

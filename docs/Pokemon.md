@@ -403,5 +403,5 @@ Each Pokemon has 10 animation frames (front and back):
 
 ## See Also
 
-- [Common Library](../CommonDOCS.md)
+- [Common Library](./Common.md)
 - [MainMenu](MainMenu.md)

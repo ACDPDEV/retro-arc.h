@@ -1,13 +1,13 @@
 # AGENTS.md — Reglas del Proyecto PROC1
 
 > Instrucciones para AI agents que trabajan en este proyecto.
-> Lee `CommonDOCS.md` antes de tocar código.
+> Lee `docs/Common.md` antes de tocar código.
 
 ---
 
 ## 1. Dependencias
 
-- **SIEMPRE** usar las utilidades de `Common/` y leer `CommonDOCS.md` antes de tocar código.
+- **SIEMPRE** usar las utilidades de `Common/` y leer `docs/Common.md` antes de tocar código.
 - **NO** usar librerías externas. Solo:
   - Librerías estándar de C++ (`<array>`, `<vector>`, `<string>`, etc.)
   - Utilidades propias del proyecto (`Common/*.h`)
@@ -167,8 +167,8 @@ PROC1/
 │   ├── Sprites/
 │   └── Views/
 ├── Tests/            # Pruebas
-├── docs/              ← NUEVO: Documentación del proyecto
-├── CommonDOCS.md     # Documentación de Common
+├── docs/              # Documentación del proyecto
+│   └── Common.md     # Documentación de Common
 ├── AGENTS.md
 └── README.md
 ```
@@ -192,7 +192,7 @@ Cada módulo/juego se organiza por carpetas:
 ### Archivos de Documentación
 | Archivo | Propósito | Cuándo Leer |
 |---------|-----------|-------------|
-| `CommonDOCS.md` | Referencia de la biblioteca Common | Antes de usar cualquier utilidad de Common/ |
+| `docs/Common.md` | Referencia de la biblioteca Common | Antes de usar cualquier utilidad de Common/ |
 | `docs/{Game}.md` | Documentación específica del juego | Antes de modificar un juego |
 | `docs/MainMenu.md` | Documentación del menú principal | Antes de modificar MainMenu/ |
 | `docs/Tests.md` | Infraestructura de pruebas | Antes de agregar/modificar pruebas |
@@ -206,11 +206,11 @@ Cada módulo/juego se organiza por carpetas:
 
 ### Para Agentes de IA
 - Comenzar con `AGENTS.md` (este archivo) para reglas de codificación
-- Leer `CommonDOCS.md` para utilidades disponibles
+- Leer `docs/Common.md` para utilidades disponibles
 - Leer `.md` específico del módulo para contexto antes de cambios
 - Usar la sección de Referencia Rápida para búsqueda rápida de funciones
 - Verificar Referencias Cruzadas para entender relaciones entre módulos
 
 ---
 
-> **Importante**: Antes de implementar cualquier función o módulo, revisa `CommonDOCS.md` para entender las utilidades disponibles.
+> **Importante**: Antes de implementar cualquier función o módulo, revisa `docs/Common.md` para entender las utilidades disponibles.

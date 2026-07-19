@@ -298,7 +298,7 @@ Service Layer (key identification, command dispatch)
 
 ## See Also
 
-- [Common Library](../CommonDOCS.md)
+- [Common Library](./Common.md)
 - [MainMenu](MainMenu.md)
 - [BatallaNaval](BatallaNaval.md)
 - [Tictactoe](Tictactoe.md)

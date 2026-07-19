@@ -450,7 +450,7 @@ New contributors (human or agent) follow this sequence:
 
 1. **Read README.md** — project overview and goals
 2. **Read AGENTS.md** — constraints and rules (MANDATORY — no enums, no templates, no classes, no nullptr)
-3. **Read CommonDOCS.md** — Common utilities documentation (Spanish)
+3. **Read docs/Common.md** — Common utilities documentation (Spanish)
 4. **Read INDEX.md** — complete file manifest and relationships
 5. **Search Engram** — check for past decisions on similar work
 6. **Identify target module** — use INDEX.md to find relevant files

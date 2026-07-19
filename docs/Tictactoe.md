@@ -104,5 +104,5 @@ Main Menu → Mode Selection → Game Loop → Input → Update Board → Check 
 - Box-drawing characters use CP437 codes (186, 201, 205, etc.)
 
 ## See Also
-- [Common Library](../CommonDOCS.md)
+- [Common Library](./Common.md)
 - [MainMenu](MainMenu.md)

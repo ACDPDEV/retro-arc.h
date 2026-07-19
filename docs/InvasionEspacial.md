@@ -679,5 +679,5 @@ Game Loop (ejecutarJuego):
 
 ## See Also
 
-- [Common Library](../CommonDOCS.md)
+- [Common Library](./Common.md)
 - [MainMenu](MainMenu.md)

@@ -285,7 +285,7 @@ isValidPassword() → INPUT == CLAVE
 
 ## See Also
 
-- [Common Library](../CommonDOCS.md)
+- [Common Library](./Common.md)
 - [Pokemon](Pokemon.md)
 - [Buscaminas](Buscaminas.md)
 - [Batalla Naval](BatallaNaval.md)
