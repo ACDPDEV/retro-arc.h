@@ -1,7 +1,5 @@
 #pragma once
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 #include <string>
 #include <vector>
 
@@ -16,9 +14,6 @@ vector<string> CutString(string str, int width) {
     }
     return result;
 }
-=======
-=======
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 #include <array>
 #include <string>
 #include <vector>
@@ -114,7 +109,3 @@ std::vector<std::string> ArrayToVector(std::array<std::string, 9> arr) {
 }
 
 } // namespace Common
-<<<<<<< HEAD
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
-=======
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08

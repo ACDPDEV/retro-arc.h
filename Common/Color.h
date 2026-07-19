@@ -7,8 +7,6 @@
 #pragma once
 
 #include <array>
-<<<<<<< HEAD
-<<<<<<< HEAD
 #include <string>
 #include <iostream>
 
@@ -75,9 +73,6 @@ inline void SetTerminalColor(array<int, 3> foreground, array<int, 3> background)
 
     cout.flush();
 }
-=======
-=======
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 #include <vector>
 #include <string>
 #include <iostream>
@@ -164,9 +159,4 @@ namespace Common
     
         return result;
     }
-<<<<<<< HEAD
 }
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
-=======
-}
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08

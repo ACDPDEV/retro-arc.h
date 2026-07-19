@@ -8,8 +8,6 @@
 #include <array>
 #include <iostream>
 #include <string>
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 #include "Terminal.h"
 #include "UnicodeGlyphs.h"
@@ -168,9 +166,6 @@ inline void DrawText(
 ) {
     GoToXY(x, y); cout << Color(foreground, background) << text;
 }
-=======
-=======
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 #include <vector>
 
 #include "Consts.h"
@@ -388,7 +383,3 @@ namespace Common
 
     }
 }
-<<<<<<< HEAD
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
-=======
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08

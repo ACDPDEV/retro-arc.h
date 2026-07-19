@@ -17,8 +17,6 @@
 #include <cstdlib>
 #include <clocale>
 #include <iostream>
-<<<<<<< HEAD
-<<<<<<< HEAD
 #include <array>
 
 using namespace std;
@@ -167,9 +165,6 @@ inline array<int, 2> GetConsoleSize() {
 
 inline void Sleep(int ms) {
     usleep(ms * 1000);
-=======
-=======
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 #include <string>
 #include <array>
 
@@ -342,8 +337,4 @@ namespace Common
     inline void Sleep(int ms) {
         usleep(ms * 1000);
     }
-<<<<<<< HEAD
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
-=======
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 }

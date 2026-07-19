@@ -3,8 +3,6 @@
 #pragma once
 #include <array>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 using namespace std;
 
 #include <array>
@@ -79,9 +77,6 @@ const array<int, 3> COLOR14 = {234, 234, 234};
 
 /// @brief Color 15: Blanco puro (#ffffff)
 const array<int, 3> COLOR15 = {255, 255, 255};
-=======
-=======
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 namespace Common
 {
     // Base
@@ -141,7 +136,3 @@ namespace Common
     /// @brief Color 10: Amarillo (#B91C1C)
     const std::array<int, 3> YELLOW = {255, 202, 2};
 }
-<<<<<<< HEAD
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
-=======
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08

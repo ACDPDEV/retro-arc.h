@@ -11,8 +11,6 @@
 #include <cstdlib>
 #include <unistd.h>
 #include <sys/wait.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
 using namespace std;
 
 /// @brief PID del proceso de reproducción actual (0 = ninguno activo)
@@ -86,9 +84,6 @@ inline void ResumeAudio() {
         kill(g_audioPid, SIGCONT);
     }
 }
-=======
-=======
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
 namespace Common
 {
@@ -163,9 +158,4 @@ namespace Common
             kill(g_audioPid, SIGCONT);
         }
     }
-<<<<<<< HEAD
 }
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
-=======
-}
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
