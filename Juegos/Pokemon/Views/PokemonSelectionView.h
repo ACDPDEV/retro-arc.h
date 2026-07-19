@@ -19,181 +19,308 @@
 #include "../../../Common/UnicodeGlyphs.h"
 #include "../../../Common/Utils.h"
 #include "../Database/MockData.h"
-#include "../PokemonStaticSprites/BulbasaurFront.h"
-#include "../PokemonStaticSprites/CharmanderFront.h"
-#include "../PokemonStaticSprites/ChikoritaFront.h"
-#include "../PokemonStaticSprites/EeveeFront.h"
-#include "../PokemonStaticSprites/PikachuFront.h"
-#include "../PokemonStaticSprites/PsyduckFront.h"
-#include "../PokemonStaticSprites/RockruffFront.h"
-#include "../PokemonStaticSprites/SquirtleFront.h"
+#include "../Database/Names.h"
+#include "../Database/Options.h"
+#include "../PokemonMiniSprites/BulbasaurMini.h"
+#include "../PokemonMiniSprites/CharmanderMini.h"
+#include "../PokemonMiniSprites/ChikoritaMini.h"
+#include "../PokemonMiniSprites/EeveeMini.h"
+#include "../PokemonMiniSprites/PikachuMini.h"
+#include "../PokemonMiniSprites/PsyduckMini.h"
+#include "../PokemonMiniSprites/RockruffMini.h"
+#include "../PokemonMiniSprites/SquirtleMini.h"
 
 namespace Pokemon {
 
-    /// @brief Pantalla de seleccion de Pokemon con cuadricula 4x2 y barras de vida
-    /// @details Muestra 8 Pokemon en una cuadricula interactiva. El usuario navega con flechas y confirma con ENTER.
-    /// @param selectedPokemon Referencia al indice del Pokemon seleccionado (0-7)
-    inline void PokemonSelectionView(int& selectedPokemon) {
+    /// @brief Pantalla de seleccion de Pokemon con cuadricula 2x2 y paginacion
+    /// @details Muestra 4 Pokemon por pagina en una cuadricula interactiva. El usuario navega con flechas y confirma con ENTER.
+    ///          LEFT/RIGHT en los bordes cambia de pagina. La seleccion se persiste en Pokemon::selectedCurrentPokemonId via Options.h
+    inline void PokemonSelectionView() {
         Common::DrawBackground();
+        int selectedPokemon = Pokemon::selectedCurrentPokemonId;
 
-        // Titulo "SELECCIONA" con ConcatFont (FONT9_S-FONT9_A) - 9-line font
-        const std::array<std::string, 9> title = Common::ConcatFont({
-            Common::FONT9_S, Common::FONT9_E, Common::FONT9_L, Common::FONT9_E,
-            Common::FONT9_C, Common::FONT9_C, Common::FONT9_I, Common::FONT9_O,
-            Common::FONT9_N, Common::FONT9_A
+        // Titulo "SELECCIONA" con FONT4 (4-line font, lowercase glyphs)
+        const std::array<std::string, 4> title = Common::ConcatFont({
+            Common::FONT4_s, Common::FONT4_e, Common::FONT4_l, Common::FONT4_e,
+            Common::FONT4_c, Common::FONT4_c, Common::FONT4_i, Common::FONT4_o,
+            Common::FONT4_n, Common::FONT4_a
         }, 1);
 
         // Centrar titulo horizontalmente
         const int titleX = Common::AlignedX(0, Common::WIDTH_SCREEN, Common::Length(title[0]), "center");
 
         // Renderizar titulo linea por linea con color naranja
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 4; i++) {
             Common::DrawText(
                 titleX, 2 + i, -1, -1,
                 {title[i]}, Common::ORANGE, Common::BACKGROUND
             );
         }
 
-        // Configuracion de la cuadricula
-        const int gridX = 10;
-        const int gridY = 14;
-        const int cellWidth = 40;
-        const int cellHeight = 12;
-        const int cols = 4;
+        // Configuracion de la cuadricula 2x2
+        const int gridY = 16;
+        const int cellHeight = 10;
+        const int cols = 2;
         const int rows = 2;
+        const int cellGapX = 4;
+        const int cellGapY = 2;
+        const int perPage = cols * rows; // 4 Pokemon por pagina
+        const int totalPages = (POKEMON_COUNT + perPage - 1) / perPage; // 2 paginas
+        int page = selectedPokemon / perPage;
 
-        // Array de sprites de Pokemon (ordenado por spriteIndex)
-        const std::vector<std::string>* pokemonSprites[] = {
-            &BulbasaurFront, &CharmanderFront, &SquirtleFront, &PikachuFront,
-            &PsyduckFront, &EeveeFront, &RockruffFront, &ChikoritaFront
+        // cellWidth se calcula dinamicamente segun el nombre mas ancho de la pagina
+        int cellWidth = 55;
+
+        // Array de mini sprites de Pokemon (ordenado por spriteIndex)
+        const std::vector<std::string>* pokemonMiniSprites[] = {
+            &BulbasaurMini, &CharmanderMini, &SquirtleMini, &PikachuMini,
+            &PsyduckMini, &EeveeMini, &RockruffMini, &ChikoritaMini
+        };
+
+        // Funcion para obtener el indice global de un Pokemon en la pagina actual
+        auto getPageIndex = [&](int col, int row) -> int {
+            return page * perPage + row * cols + col;
+        };
+
+        // Calcular ancho de celda adaptativo segun el nombre mas ancho de la pagina
+        auto computeCellWidth = [&]() -> int {
+            int maxWidth = 0;
+            for (int row = 0; row < rows; row++) {
+                for (int col = 0; col < cols; col++) {
+                    int idx = getPageIndex(col, row);
+                    if (idx >= POKEMON_COUNT) continue;
+                    std::vector<std::array<std::string, 4>> glyphs = Common::Font4String(MOCK_POKEMON[idx].name);
+                    std::array<std::string, 4> assembled = Common::ConcatFont(glyphs, 1);
+                    int w = Common::Length(assembled[0]);
+                    if (w > maxWidth) maxWidth = w;
+                }
+            }
+            // Ancho = nombre + area de sprite (16) + margen minimo
+            int computed = maxWidth + 24;
+            if (computed < 55) computed = 55;
+            return computed;
         };
 
         // Dibujar celda de Pokemon
-        auto drawCell = [&](int col, int row, int index, bool isSelected) {
-            const int cellX = gridX + col * cellWidth;
-            const int cellY = gridY + row * cellHeight;
+        auto drawCell = [&](int col, int row, int index, bool isSelected, int gridX) {
+            if (index >= POKEMON_COUNT) return;
+
+            const int cellX = gridX + col * (cellWidth + cellGapX);
+            const int cellY = gridY + row * (cellHeight + cellGapY);
 
             // Borde de celda: naranja si esta seleccionada, gris si no
             std::array<int, 3> borderColor = isSelected ? Common::ORANGE : Common::GRAY;
 
-            // Fondo de celda
-            Common::DrawFillRectangle(
+            // Celda con PrintPrimaryBox
+            Common::PrintPrimaryBox(
                 cellX, cellY, cellWidth, cellHeight,
-                Common::EMPTY_BLOCK,
-                Common::FOREGROUND_LIGHT, Common::SELECTION_BACKGROUND
+                {},
+                Common::COLOR_DEFAULT,
+                borderColor,
+                Common::SELECTION_BACKGROUND
             );
 
-            // Borde de celda (solo borde, no relleno)
-            // Borde superior
-            Common::DrawText(cellX, cellY, cellWidth, 1,
-                {Common::RepeatString(Common::HORIZONTAL_BORDER, cellWidth - 2)},
-                borderColor, Common::SELECTION_BACKGROUND);
-            // Borde inferior
-            Common::DrawText(cellX, cellY + cellHeight - 1, cellWidth, 1,
-                {Common::RepeatString(Common::HORIZONTAL_BORDER, cellWidth - 2)},
-                borderColor, Common::SELECTION_BACKGROUND);
-            // Borde izquierdo
-            for (int i = 1; i < cellHeight - 1; i++) {
-                Common::DrawText(cellX, cellY + i, 1, 1,
-                    {Common::VERTICAL_BORDER}, borderColor, Common::SELECTION_BACKGROUND);
-            }
-            // Borde derecho
-            for (int i = 1; i < cellHeight - 1; i++) {
-                Common::DrawText(cellX + cellWidth - 1, cellY + i, 1, 1,
-                    {Common::VERTICAL_BORDER}, borderColor, Common::SELECTION_BACKGROUND);
+            // Nombre de Pokemon con FONT4 (separator=1 para interletrado)
+            std::vector<std::array<std::string, 4>> nameGlyphs = Common::Font4String(MOCK_POKEMON[index].name);
+            std::array<std::string, 4> fontName = Common::ConcatFont(nameGlyphs, 1);
+            int nameWidth = Common::Length(fontName[0]);
+
+            // Alinear nombre a la izquierda con padding fijo
+            int nameOffsetX = 3;
+            for (int i = 0; i < 4; i++) {
+                Common::DrawText(cellX + nameOffsetX, cellY + 1 + i, -1, -1,
+                    {fontName[i]}, Common::FOREGROUND_LIGHT, Common::SELECTION_BACKGROUND);
             }
 
-            // Indicador pokeball (posicion cell_x+2, cell_y+1)
-            std::string pokeball = isSelected ? "\033[38;2;239;75;70m●\033[0m" : "\033[38;2;206;212;218m●\033[0m";
-            Common::DrawText(cellX + 2, cellY + 1, -1, -1, {pokeball}, Common::COLOR_DEFAULT, Common::COLOR_DEFAULT);
+            // Sprite de Pokemon alineado a la derecha, centrado verticalmente
+            Common::DrawSprite(cellX + cellWidth - 18, cellY + (cellHeight - 7) / 2, *pokemonMiniSprites[index]);
 
-            // Sprite de Pokemon (posicion cell_x+5, cell_y+1)
-            if (index < POKEMON_COUNT) {
-                Common::DrawSprite(cellX + 5, cellY + 1, *pokemonSprites[index]);
+            // Barra de vida y texto HP
+            int hp = MOCK_POKEMON[index].hp;
+            int maxHp = MOCK_POKEMON[index].maxHp;
+            float hpRatio = static_cast<float>(hp) / static_cast<float>(maxHp);
+
+            // Colores de barra: rojo -> amarillo -> verde claro
+            std::array<int, 3> barStart, barEnd;
+            if (hpRatio > 0.5f) {
+                barStart = Common::YELLOW;
+                barEnd = Common::LIGHT_GREEN;
+            } else if (hpRatio > 0.2f) {
+                barStart = Common::RED;
+                barEnd = Common::YELLOW;
+            } else {
+                barStart = Common::DARK_RED;
+                barEnd = Common::RED;
             }
 
-            // Nombre de Pokemon (posicion cell_x+2, cell_y+8)
-            if (index < POKEMON_COUNT) {
-                Common::DrawText(cellX + 2, cellY + 8, cellWidth - 4, 1,
-                    {MOCK_POKEMON[index].name}, Common::FOREGROUND_LIGHT, Common::SELECTION_BACKGROUND);
-            }
+            // Texto HP para calcular ancho total
+            std::string hpText = std::to_string(hp) + "/" + std::to_string(maxHp) + " HP";
+            int hpTextWidth = Common::Length(hpText);
+            int barWidth = 18;
+            int hpTotalWidth = barWidth + 1 + hpTextWidth;
 
-            // Barra de vida (posicion cell_x+2, cell_y+10, w=30, gradiente 15 pasos)
-            if (index < POKEMON_COUNT) {
-                int hp = MOCK_POKEMON[index].hp;
-                int maxHp = MOCK_POKEMON[index].maxHp;
-                float hpRatio = static_cast<float>(hp) / static_cast<float>(maxHp);
-
-                // Colores de barra: rojo -> amarillo -> verde claro
-                std::array<int, 3> barStart, barEnd;
-                if (hpRatio > 0.5f) {
-                    barStart = Common::YELLOW;
-                    barEnd = Common::LIGHT_GREEN;
-                } else if (hpRatio > 0.2f) {
-                    barStart = Common::RED;
-                    barEnd = Common::YELLOW;
-                } else {
-                    barStart = Common::DARK_RED;
-                    barEnd = Common::RED;
-                }
-
-                Common::DrawLifeBar(cellX + 2, cellY + 10, 30, barStart, barEnd, Common::SELECTION_BACKGROUND);
-            }
+            // Alinear barra + texto a la izquierda con padding fijo
+            int hpOffsetX = 3;
+            Common::DrawLifeBar(cellX + hpOffsetX, cellY + 6, barWidth, barStart, barEnd, Common::SELECTION_BACKGROUND);
+            Common::DrawText(cellX + hpOffsetX + barWidth + 1, cellY + 6, -1, -1,
+                {hpText}, Common::FOREGROUND_LIGHT, Common::SELECTION_BACKGROUND);
         };
 
-        // Dibujar todas las celdas
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
-                int index = row * cols + col;
-                bool isSelected = (index == selectedPokemon);
-                drawCell(col, row, index, isSelected);
+        // Funcion para redibujar toda la pantalla
+        auto redrawAll = [&]() {
+            Common::DrawBackground();
+
+            // Titulo
+            for (int i = 0; i < 4; i++) {
+                Common::DrawText(
+                    titleX, 2 + i, -1, -1,
+                    {title[i]}, Common::ORANGE, Common::BACKGROUND
+                );
             }
-        }
 
-        // Instrucciones de navegacion (centrado, y=44)
-        const std::string navText = "← → ↑ ↓  ENTER";
-        const int navX = Common::AlignedX(0, Common::WIDTH_SCREEN, Common::Length(navText), "center");
-        Common::DrawText(navX, 44, -1, -1, {navText}, Common::FOREGROUND_LIGHT, Common::BACKGROUND);
+            // Player name box with FONT4 — adaptive width based on name
+            // Convert playerName to FONT4 glyphs first to compute adaptive width
+            std::vector<std::array<std::string, 4>> playerNameGlyphs = Common::Font4String(Pokemon::player1Name);
+            std::array<std::string, 4> fontPlayerName = Common::ConcatFont(playerNameGlyphs, 1);
+            int playerNameWidth = Common::Length(fontPlayerName[0]);
 
-        // Barra inferior
-        Common::DrawBottomBar();
+            // Adaptive box width: name + 8 padding (4 each side), minimum 30
+            const int namePadding = 8;
+            int nameBoxWidth = playerNameWidth + namePadding;
+            if (nameBoxWidth < 30) nameBoxWidth = 30;
+            const int nameBoxHeight = 6;
+            const int nameBoxX = Common::AlignedX(0, Common::WIDTH_SCREEN, nameBoxWidth, "center");
+            const int nameBoxY = 8;
 
-        Common::GoToEnd();
+            // Draw player name box
+            Common::PrintPrimaryBox(
+                nameBoxX, nameBoxY, nameBoxWidth, nameBoxHeight,
+                {},
+                Common::FOREGROUND_DARK,
+                Common::ORANGE,
+                Common::SELECTION_BACKGROUND
+            );
+
+            // Draw name centered in box
+            int nameRenderX = Common::AlignedX(nameBoxX, nameBoxWidth, Common::Length(fontPlayerName[0]), "center");
+            for (int i = 0; i < 4; i++) {
+                Common::DrawText(nameRenderX, nameBoxY + 1 + i, -1, -1,
+                    {fontPlayerName[i]}, Common::ORANGE, Common::SELECTION_BACKGROUND);
+            }
+
+            // Calcular ancho adaptativo de celda y centrar cuadricula
+            cellWidth = computeCellWidth();
+            const int totalGridWidth = cols * cellWidth + (cols - 1) * cellGapX;
+            const int gridX = (Common::WIDTH_SCREEN - totalGridWidth) / 2;
+
+            // Celdas de Pokemon
+            for (int row = 0; row < rows; row++) {
+                for (int col = 0; col < cols; col++) {
+                    int index = getPageIndex(col, row);
+                    bool isSelected = (index == selectedPokemon);
+                    drawCell(col, row, index, isSelected, gridX);
+                }
+            }
+
+            // Indicador de pagina con FONT4 (FONT_ digitos + slash)
+            int pageNum = page + 1;
+            std::vector<std::array<std::string, 4>> pageGlyphs;
+            if (pageNum >= 10) {
+                pageGlyphs.push_back(Common::Font4Digit(pageNum / 10));
+            }
+            pageGlyphs.push_back(Common::Font4Digit(pageNum % 10));
+            pageGlyphs.push_back(Common::FONT4_slash);
+            if (totalPages >= 10) {
+                pageGlyphs.push_back(Common::Font4Digit(totalPages / 10));
+            }
+            pageGlyphs.push_back(Common::Font4Digit(totalPages % 10));
+            std::array<std::string, 4> pageFont = Common::ConcatFont(pageGlyphs, 1);
+            const int pageFontWidth = Common::Length(pageFont[0]);
+            const int pageX = (Common::WIDTH_SCREEN - pageFontWidth) / 2;
+            const int pageY = 40;
+            for (int i = 0; i < 4; i++) {
+                Common::DrawText(pageX, pageY + i, -1, -1,
+                    {pageFont[i]}, Common::GRAY, Common::BACKGROUND);
+            }
+
+            // BottomBar con entradas de navegacion
+            Common::keysHelper.clear();
+            Common::keysHelper.push_back({"← → ↑ ↓", "Navegar"});
+            Common::keysHelper.push_back({"ENTER", "Seleccionar"});
+            Common::DrawBottomBar();
+
+            Common::GoToEnd();
+        };
+
+        // Dibujar pantalla inicial
+        redrawAll();
 
         // Loop de navegacion
         while (true) {
             Common::key = Common::ReadConsoleChar();
 
-            // Navegacion con flechas
             if (Common::IsKeyArrowTop(Common::key)) {
-                // Mover arriba: de fila 1 a fila 0 (wrap)
-                selectedPokemon = (selectedPokemon - cols + POKEMON_COUNT) % POKEMON_COUNT;
+                // Mover arriba: wrap dentro de la pagina
+                int localRow = (selectedPokemon / cols) % rows;
+                if (localRow > 0) {
+                    selectedPokemon -= cols;
+                } else {
+                    selectedPokemon += cols; // wrap a fila inferior
+                }
             } else if (Common::IsKeyArrowBottom(Common::key)) {
-                // Mover abajo: de fila 0 a fila 1 (wrap)
-                selectedPokemon = (selectedPokemon + cols) % POKEMON_COUNT;
+                // Mover abajo: wrap dentro de la pagina
+                int localRow = (selectedPokemon / cols) % rows;
+                if (localRow < rows - 1) {
+                    selectedPokemon += cols;
+                } else {
+                    selectedPokemon -= cols; // wrap a fila superior
+                }
             } else if (Common::IsKeyArrowLeft(Common::key)) {
-                // Mover izquierda: wrap dentro de la fila
-                int row = selectedPokemon / cols;
-                int col = selectedPokemon % cols;
-                col = (col - 1 + cols) % cols;
-                selectedPokemon = row * cols + col;
+                int localCol = selectedPokemon % cols;
+                if (localCol > 0) {
+                    // Mover columna izquierda dentro de la pagina
+                    selectedPokemon--;
+                } else {
+                    // En borde izquierdo: cambiar a pagina anterior, col=0
+                    if (page > 0) {
+                        page--;
+                        selectedPokemon = page * perPage;
+                        redrawAll();
+                        continue;
+                    }
+                }
             } else if (Common::IsKeyArrowRight(Common::key)) {
-                // Mover derecha: wrap dentro de la fila
-                int row = selectedPokemon / cols;
-                int col = selectedPokemon % cols;
-                col = (col + 1) % cols;
-                selectedPokemon = row * cols + col;
+                int localCol = selectedPokemon % cols;
+                if (localCol < cols - 1) {
+                    // Mover columna derecha dentro de la pagina
+                    selectedPokemon++;
+                } else {
+                    // En borde derecho: cambiar a pagina siguiente, col=0
+                    if (page < totalPages - 1) {
+                        page++;
+                        selectedPokemon = page * perPage;
+                        if (selectedPokemon >= POKEMON_COUNT) {
+                            selectedPokemon = POKEMON_COUNT - 1;
+                        }
+                        redrawAll();
+                        continue;
+                    }
+                }
             } else if (Common::IsActionKey(Common::key)) {
-                // Confirmar seleccion
+                // Confirmar seleccion y persistir
+                Pokemon::selectedCurrentPokemonId = selectedPokemon;
                 break;
             }
 
-            // Redibujar cuadricula con nueva seleccion
+            // Redibujar solo las celdas (optimizado, sin redraw completo)
+            cellWidth = computeCellWidth();
+            const int totalGridWidth = cols * cellWidth + (cols - 1) * cellGapX;
+            const int gridX = (Common::WIDTH_SCREEN - totalGridWidth) / 2;
             for (int row = 0; row < rows; row++) {
                 for (int col = 0; col < cols; col++) {
-                    int index = row * cols + col;
+                    int index = getPageIndex(col, row);
                     bool isSelected = (index == selectedPokemon);
-                    drawCell(col, row, index, isSelected);
+                    drawCell(col, row, index, isSelected, gridX);
                 }
             }
 

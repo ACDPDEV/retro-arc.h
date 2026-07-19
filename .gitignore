@@ -17,5 +17,6 @@
 requirements.pdf
 .vscode
 
-// Ignorar archivos de especificación
+// Ignorar archivos de especificación SDD
 openspec
+sdd
