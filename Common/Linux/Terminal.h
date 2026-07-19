@@ -312,6 +312,12 @@ namespace Common
         GoToXY(0, 0);
     }
 
+    /// @brief Limpia una línea de la consola imprimiendo espacios en blanco
+    /// @param lineLength Número de espacios en blanco a imprimir para sobrescribir la línea
+    inline void ClearConsoleLine(int lineLength) {
+        std::cout << std::string(lineLength, ' ');
+    }
+
     /// @brief Obtiene el ancho actual del terminal en columnas
     /// @return Ancho en caracteres
     inline int GetConsoleWidth() {

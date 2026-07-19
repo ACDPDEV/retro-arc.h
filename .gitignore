@@ -16,4 +16,7 @@
 .atl
 requirements.pdf
 .vscode
+
+// Ignorar archivos de especificación
 openspec
+AGENTS.md

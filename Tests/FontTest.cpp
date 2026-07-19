@@ -6,7 +6,7 @@ using namespace std;
 
 int main() {
     for (int i = 0; i < 9; i++) {
-        cout << ConcatFont({FONT_R, FONT_E, FONT_T, FONT_R, FONT_O, FONT_A, FONT_R, FONT_C, FONT_DOT, FONT_H}, 2)[i] << endl;
+        cout << ConcatFont({FONT9_R, FONT9_E, FONT9_T, FONT9_R, FONT9_O, FONT9_A, FONT9_R, FONT9_C, FONT9_DOT, FONT9_H}, 2)[i] << endl;
     }
     for (int i = 0; i < 200; i++) {
         cout << "a";

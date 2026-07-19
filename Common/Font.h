@@ -6,7 +6,7 @@
 
 namespace Common
 {
-    const std::array<std::string, 9> FONT_A = {
+    const std::array<std::string, 9> FONT9_A = {
         "  ▄████████ ",
         "  ███    ███",
         "  ███    ███",
@@ -18,7 +18,7 @@ namespace Common
         "            ",
     };
 
-    const std::array<std::string, 9> FONT_B = {
+    const std::array<std::string, 9> FONT9_B = {
         "▀█████████▄  ",
         "   ███    ███",
         "   ███    ███",
@@ -30,7 +30,7 @@ namespace Common
         "             "
     };
 
-    const std::array<std::string, 9> FONT_C = {
+    const std::array<std::string, 9> FONT9_C = {
         " ▄████████",
         "███    ███",
         "███    █▀ ",
@@ -42,7 +42,7 @@ namespace Common
         "          "
     };
 
-    const std::array<std::string, 9> FONT_D = {
+    const std::array<std::string, 9> FONT9_D = {
         "████████▄ ",
         "███   ▀███",
         "███    ███",
@@ -54,7 +54,7 @@ namespace Common
         "          "
     };
 
-    const std::array<std::string, 9> FONT_E = {
+    const std::array<std::string, 9> FONT9_E = {
         "   ▄████████",
         "  ███    ███",
         "  ███    █▀ ",
@@ -66,7 +66,7 @@ namespace Common
         "            "
     };
 
-    const std::array<std::string, 9> FONT_F = {
+    const std::array<std::string, 9> FONT9_F = {
         "   ▄████████",
         "  ███    ███",
         "  ███    █▀ ",
@@ -78,7 +78,7 @@ namespace Common
         "            "
     };
 
-    const std::array<std::string, 9> FONT_G = {
+    const std::array<std::string, 9> FONT9_G = {
         "   ▄██████▄ ",
         "  ███    ███",
         "  ███    █▀ ",
@@ -90,7 +90,7 @@ namespace Common
         "            "
     };
 
-    const std::array<std::string, 9> FONT_H = {
+    const std::array<std::string, 9> FONT9_H = {
         "   ▄█    █▄   ",
         "  ███    ███  ",
         "  ███    ███  ",
@@ -102,7 +102,7 @@ namespace Common
         "              "
     };
 
-    const std::array<std::string, 9> FONT_I = {
+    const std::array<std::string, 9> FONT9_I = {
         " ▄█ ",
         "███ ",
         "███▌",
@@ -114,7 +114,7 @@ namespace Common
         "    "
     };
 
-    const std::array<std::string, 9> FONT_J = {
+    const std::array<std::string, 9> FONT9_J = {
         "     ▄█",
         "    ███",
         "    ███",
@@ -126,7 +126,7 @@ namespace Common
         "▀▀▀▀▀▀ "
     };
 
-    const std::array<std::string, 9> FONT_K = {
+    const std::array<std::string, 9> FONT9_K = {
         "   ▄█   ▄█▄",
         "  ███ ▄███▀",
         "  ███▐██▀  ",
@@ -138,7 +138,7 @@ namespace Common
         "  ▀        "
     };
 
-    const std::array<std::string, 9> FONT_L = {
+    const std::array<std::string, 9> FONT9_L = {
         " ▄█      ",
         "███      ",
         "███      ",
@@ -150,7 +150,7 @@ namespace Common
         "▀        "
     };
 
-    const std::array<std::string, 9> FONT_M = {
+    const std::array<std::string, 9> FONT9_M = {
         "   ▄▄▄▄███▄▄▄▄  ",
         " ▄██▀▀▀███▀▀▀██▄",
         " ███   ███   ███",
@@ -162,7 +162,7 @@ namespace Common
         "                "
     };
 
-    const std::array<std::string, 9> FONT_N = {
+    const std::array<std::string, 9> FONT9_N = {
         "███▄▄▄▄  ",
         "███▀▀▀██▄",
         "███   ███",
@@ -174,7 +174,7 @@ namespace Common
         "          "
     };
 
-    const std::array<std::string, 9> FONT_O = {
+    const std::array<std::string, 9> FONT9_O = {
         " ▄██████▄ ",
         "███    ███",
         "███    ███",
@@ -186,7 +186,7 @@ namespace Common
         "          "
     };
 
-    const std::array<std::string, 9> FONT_P = {
+    const std::array<std::string, 9> FONT9_P = {
         "   ▄███████▄",
         "  ███    ███",
         "  ███    ███",
@@ -198,7 +198,7 @@ namespace Common
         "            "
     };
 
-    const std::array<std::string, 9> FONT_Q = {
+    const std::array<std::string, 9> FONT9_Q = {
         "████████▄  ",
         "███    ███ ",
         "███    ███ ",
@@ -210,7 +210,7 @@ namespace Common
         "           "
     };
 
-    const std::array<std::string, 9> FONT_R = {
+    const std::array<std::string, 9> FONT9_R = {
         "   ▄████████",
         "  ███    ███",
         "  ███    ███",
@@ -222,7 +222,7 @@ namespace Common
         "  ███    ███"
     };
 
-    const std::array<std::string, 9> FONT_S = {
+    const std::array<std::string, 9> FONT9_S = {
         "   ▄████████",
         "  ███    ███",
         "  ███    █▀ ",
@@ -234,7 +234,7 @@ namespace Common
         "            "
     };
 
-    const std::array<std::string, 9> FONT_T = {
+    const std::array<std::string, 9> FONT9_T = {
         "    ███    ",
         "▀█████████▄",
         "   ▀███▀▀██",
@@ -246,7 +246,7 @@ namespace Common
         "           "
     };
 
-    const std::array<std::string, 9> FONT_U = {
+    const std::array<std::string, 9> FONT9_U = {
         "███    █▄ ",
         "███    ███",
         "███    ███",
@@ -258,7 +258,7 @@ namespace Common
         "          "
     };
 
-    const std::array<std::string, 9> FONT_V = {
+    const std::array<std::string, 9> FONT9_V = {
         " ▄█    █▄ ",
         "███    ███",
         "███    ███",
@@ -270,7 +270,7 @@ namespace Common
         "          "
     };
 
-    const std::array<std::string, 9> FONT_W = {
+    const std::array<std::string, 9> FONT9_W = {
         " ▄█     █▄ ",
         "███     ███",
         "███     ███",
@@ -282,7 +282,7 @@ namespace Common
         "           "
     };
 
-    const std::array<std::string, 9> FONT_X = {
+    const std::array<std::string, 9> FONT9_X = {
         "▀████    ▐████▀",
         "  ███▌   ████▀ ",
         "   ███  ▐███   ",
@@ -294,7 +294,7 @@ namespace Common
         "               "
     };
 
-    const std::array<std::string, 9> FONT_Y = {
+    const std::array<std::string, 9> FONT9_Y = {
         "▄██   ▄  ",
         "███   ██▄",
         "███▄▄▄███",
@@ -306,7 +306,7 @@ namespace Common
         "         "
     };
 
-    const std::array<std::string, 9> FONT_Z = {
+    const std::array<std::string, 9> FONT9_Z = {
         " ▄███████▄ ",
         "██▀     ▄██",
         "      ▄███▀",
@@ -318,7 +318,7 @@ namespace Common
         "           "
     };
 
-    const std::array<std::string, 9> FONT_BLANK = {
+    const std::array<std::string, 9> FONT9_BLANK = {
         "   ",
         "   ",
         "   ",
@@ -331,7 +331,7 @@ namespace Common
     };
 
 
-    const std::array<std::string, 9> FONT_DOT = {
+    const std::array<std::string, 9> FONT9_DOT = {
         "  ",
         "  ",
         "  ",
@@ -343,7 +343,7 @@ namespace Common
         "██"
     };
 
-    const std::array<std::string, 9> FONT_EXCLAMATION = {
+    const std::array<std::string, 9> FONT9_EXCLAMATION = {
         " ▄█ ",
         "███ ",
         "███▌",
@@ -355,182 +355,182 @@ namespace Common
         "    "
     };
 
-        const std::array<std::string, 4> FONT_a = {
+        const std::array<std::string, 4> FONT4_a = {
             "    ",
             "▀▀▀█",
             "█▀▀█",
             "▀▀▀▀"
         };
 
-        const std::array<std::string, 4> FONT_b = {
+        const std::array<std::string, 4> FONT4_b = {
             "█   ",
             "█▄▄▄",
             "█  █",
             "▀▀▀▀"
         };
 
-        const std::array<std::string, 4> FONT_c = {
+        const std::array<std::string, 4> FONT4_c = {
             "    ",
             "█▀▀█",
             "█  ▄",
             "▀▀▀▀"
         };
 
-        const std::array<std::string, 4> FONT_d = {
+        const std::array<std::string, 4> FONT4_d = {
             "   █",
             "▄▄▄█",
             "█  █",
             "▀▀▀▀"
         };
 
-        const std::array<std::string, 4> FONT_e = {
+        const std::array<std::string, 4> FONT4_e = {
             "    ",
             "█▀▀█",
             "█▀▀▀",
             "▀▀▀▀"
         };
 
-        const std::array<std::string, 4> FONT_f = {
+        const std::array<std::string, 4> FONT4_f = {
             "▗▄▄▄",
             "█  ▀",
             "█▀▀ ",
             "█   "
         };
 
-        const std::array<std::string, 4> FONT_g = {
+        const std::array<std::string, 4> FONT4_g = {
             "    ",
             "▟▀▀█",
             "▀▀▀█",
             "▜▄▄▛"
         };
 
-        const std::array<std::string, 4> FONT_h = {
+        const std::array<std::string, 4> FONT4_h = {
             "█   ",
             "█▄▄▄",
             "█  █",
             "▀  ▀"
         };
 
-        const std::array<std::string, 4> FONT_i = {
+        const std::array<std::string, 4> FONT4_i = {
             "▄▄",
             "▄▄",
             "█ ",
             "▀ "
         };
 
-        const std::array<std::string, 4> FONT_j = {
+        const std::array<std::string, 4> FONT4_j = {
             "  ▄▄",
             "▄▄▄▄",
             "   █",
             "▜▄▄▛"
         };
 
-        const std::array<std::string, 4> FONT_k = {
+        const std::array<std::string, 4> FONT4_k = {
             "   ",
             "█ █",
             "█▜▄",
             "▀ ▀"
         };
 
-        const std::array<std::string, 4> FONT_l = {
+        const std::array<std::string, 4> FONT4_l = {
             "▀█ ",
             " █ ",
             " █ ",
             " ▀▀"
         };
 
-        const std::array<std::string, 4> FONT_m = {
+        const std::array<std::string, 4> FONT4_m = {
             "     ",
             "█▀█▀█",
             "█ ▀ █",
             "▀   ▀"
         };
 
-        const std::array<std::string, 4> FONT_n = {
+        const std::array<std::string, 4> FONT4_n = {
             "    ",
             "█▄▄▖",
             "█  █",
             "▀  ▀"
         };
 
-        const std::array<std::string, 4> FONT_o = {
+        const std::array<std::string, 4> FONT4_o = {
             "    ",
             "▟▀▀▙",
             "█  █",
             "▝▀▀▘"
         };
 
-        const std::array<std::string, 4> FONT_p = {
+        const std::array<std::string, 4> FONT4_p = {
             "    ",
             "█▀▀█",
             "█▄▄█",
             "█   "
         };
 
-        const std::array<std::string, 4> FONT_q = {
+        const std::array<std::string, 4> FONT4_q = {
             "    ",
             "█▀▀█",
             "█▄▄█",
             "   █"
         };
 
-        const std::array<std::string, 4> FONT_r = {
+        const std::array<std::string, 4> FONT4_r = {
             "   ",
             "█▀▙",
             "█  ",
             "▀  "
         };
 
-        const std::array<std::string, 4> FONT_s = {
+        const std::array<std::string, 4> FONT4_s = {
             "    ",
             "█▀▀▀",
             "▀▀▀█",
             "▀▀▀▀"
         };
 
-        const std::array<std::string, 4> FONT_t = {
+        const std::array<std::string, 4> FONT4_t = {
             " █ ",
             "▀█▀",
             " █ ",
             " ▀▀"
         };
 
-        const std::array<std::string, 4> FONT_u = {
+        const std::array<std::string, 4> FONT4_u = {
             "    ",
             "█  █",
             "█  █",
             "▝▀▀▘"
         };
 
-        const std::array<std::string, 4> FONT_v = {
+        const std::array<std::string, 4> FONT4_v = {
             "    ",
             "█  █",
             "▜▖▗▛",
             " ▀▀ "
         };
 
-        const std::array<std::string, 4> FONT_w = {
+        const std::array<std::string, 4> FONT4_w = {
             "     ",
             "█   █",
             "█ █ █",
             "▀▀▀▀▀"
         };
 
-        const std::array<std::string, 4> FONT_x = {
+        const std::array<std::string, 4> FONT4_x = {
             "   ",
             "▜▄▛",
             "▗█▖",
             "▀ ▀"
         };
 
-        const std::array<std::string, 4> FONT_y = {
+        const std::array<std::string, 4> FONT4_y = {
             "    ",
             "█  █",
             "▀▀▀█",
             "▜▄▄▛"
         };
 
-        const std::array<std::string, 4> FONT_z = {
+        const std::array<std::string, 4> FONT4_z = {
             "    ",
             "▀▀▀█",
             "▄▀▀ ",
@@ -607,11 +607,25 @@ namespace Common
             "▀▀▀▀"
         };
 
-        const std::array<std::string, 4> FONT_blank = {
+        const std::array<std::string, 4> FONT4_blank = {
             "  ",
             "  ",
             "  ",
             "  "
+        };
+
+        const std::array<std::string, 4> FONT4_dot = {
+            "  ",
+            "  ",
+            "  ",
+            "▀▀"
+        };
+
+        const std::array<std::string, 4> FONT4_colon = {
+            "  ",
+            "▀▀",
+            "  ",
+            "▀▀"
         };
 
 

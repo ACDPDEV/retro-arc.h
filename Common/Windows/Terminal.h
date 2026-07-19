@@ -128,8 +128,13 @@ inline bool Kbhit() {
 }
 
 /// @brief Obtiene el carácter presionado
-/// @return Carácter presionado
-inline char Getch() {
+/// @return El byte leído, en el rango 0-255 (nunca negativo)
+/// @details Devuelve int (no char) para evitar sign-extension: en la mayoría de plataformas
+///          char es signed, y bytes >= 128 (comunes en el primer byte de secuencias UTF-8,
+///          ej. 0xC3 para ñ/á/é...) se leerían como negativos si se devolvieran como char,
+///          rompiendo las comparaciones bit a bit (key & 0b11100000) en el código que
+///          decodifica UTF-8 a partir de este valor.
+inline int Getch() {
     return _getch();
 }
 
@@ -143,17 +148,7 @@ inline void Sleep(int ms) {
  */
 inline void ClearConsoleLine(int lineLength)
 {
-    std::string blankSpace = "";
-    for(int i = 0; i <= lineLength; i++)
-    {
-        std::string blankSpace = "";
-        for(int i = 0; i <= lineLength; i++)
-        {
-            blankSpace += " ";
-        }
-        std::cout << blankSpace;
-    }
-    std::cout << blankSpace;
+    std::cout << std::string(lineLength, ' ');
 }
 
 } // namespace Common
