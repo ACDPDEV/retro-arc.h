@@ -20,6 +20,7 @@ void turnoFutbolO();
 bool preguntaFutbol();
 void victoriaFutbol();
 //++++++++++++++
+void intro();
 
 void menuPrincipal();
 
