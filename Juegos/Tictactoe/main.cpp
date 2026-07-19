@@ -1,4 +1,7 @@
 #include "game.h"
+#include "console.h"
+#include <conio.h>
+#include <stdio.h>
 #include <ctime>
 #include <cstdlib>
 #include <iostream>
@@ -10,10 +13,6 @@ char tablero[TAM][TAM];
 
 int main(){
 
-    Common::InitTerminalRawMode();
-    Common::EnableTrueColor();
-    Common::EnableUTF8();
-
     srand(time(NULL));
 	intro();
     char opcion;
@@ -23,7 +22,7 @@ int main(){
 
         menuPrincipal();
 
-        opcion = Common::Getch();
+        opcion = getch();
 
 
         if(opcion == '1'){

@@ -15,6 +15,7 @@
 #include "../../../Common/Terminal.h"
 #include "../../../Common/Theme.h"
 #include "../../../Common/Utils.h"
+#include "../Database/State.h"
 #include "../Sprites/Trainer1.h"
 #include "../Sprites/Trainer2.h"
 
@@ -42,9 +43,8 @@ namespace Pokemon {
     /// @details Muestra dos paneles apilados verticalmente: P1 con fondo crema y P2 con fondo rosa.
     ///          Cada panel contiene un sprite de entrenador y un subtitulo en FONT4 centrado debajo del sprite.
     ///          Bloquea hasta que ambos nombres sean ingresados.
-    /// @param player1Name Referencia al nombre del jugador 1 (se modifica con el input)
-    /// @param player2Name Referencia al nombre del jugador 2 (se modifica con el input)
-    inline void PlayersView(std::string& player1Name, std::string& player2Name) {
+    ///          Los nombres se almacenan directamente en Pokemon::playerNames[0] y Pokemon::playerNames[1].
+    inline void PlayersView() {
         Common::DrawBackground();
 
         // ─── Dimensiones compartidas de paneles ───
@@ -111,7 +111,7 @@ namespace Pokemon {
         const int input1Height = 1;
         const int input1X = Common::AlignedX(panelX, panelWidth, input1Weight, "center");
         const int input1Y = Common::AlignedY(panel1Y, panelHeight, input1Height, "bottom") - 5;
-        DrawStyledInput(input1X, input1Y, input1Weight, input1Height, player1Name, inputP1Bg, inputP1Txt);
+        DrawStyledInput(input1X, input1Y, input1Weight, input1Height, playerNames[0], inputP1Bg, inputP1Txt);
 
         // ─── 3. Panel Jugador 2 (fondo rosa) ───
         Common::PrintPrimaryBox(
@@ -138,16 +138,16 @@ namespace Pokemon {
         const int input2Height = 1;
         const int input2X = Common::AlignedX(panelX, panelWidth, input2Weight, "center");
         const int input2Y = Common::AlignedY(panel2Y, panelHeight, input2Height, "bottom") - 5;
-        DrawStyledInput(input2X, input2Y, input2Weight, input2Height, player2Name, inputP2Bg, inputP2Txt);
+        DrawStyledInput(input2X, input2Y, input2Weight, input2Height, playerNames[1], inputP2Bg, inputP2Txt);
 
         // ─── 6. Barra inferior ───
         Common::DrawBottomBar();
 
         // ─── 4. Input bloqueante para jugador 1 ───
-        Common::InputComponent(input1X, input1Y, input1Weight, input1Height, player1Name, "", "", "", inputP1Bg, inputP1Txt);
+        Common::InputComponent(input1X, input1Y, input1Weight, input1Height, playerNames[0], "", "", "", inputP1Bg, inputP1Txt);
 
         // ─── 5. Input bloqueante para jugador 2 ───
-        Common::InputComponent(input2X, input2Y, input2Weight, input2Height, player2Name, "", "", "", inputP2Bg, inputP2Txt);
+        Common::InputComponent(input2X, input2Y, input2Weight, input2Height, playerNames[1], "", "", "", inputP2Bg, inputP2Txt);
 
 
         // ─── 7. Posicionar cursor al final ───
