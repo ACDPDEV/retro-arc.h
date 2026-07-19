@@ -178,14 +178,22 @@ namespace Common
         std::array<int, 3> foreground,
         std::array<int, 3> background
     ) {
-        for (size_t i = 0; i < text.size() && (static_cast<int>(i) < height || height == -1); i++) {
+        int rendered = 0;
+        for (size_t i = 0; i < text.size(); i++) {
+            if (static_cast<int>(rendered) >= height && height != -1) break;
+
             if (Length(text[i]) > width && width != -1) {
                 std::vector<std::string> lines = CutString(text[i], width);
                 for (size_t j = 0; j < lines.size(); j++) {
-                    GoToXY(x, y + static_cast<int>(i) + static_cast<int>(j)); std::cout << Common::Color(foreground, background) << lines[j];
+                    if (static_cast<int>(rendered) >= height && height != -1) break;
+                    GoToXY(x, y + rendered);
+                    std::cout << Common::Color(foreground, background) << lines[j];
+                    rendered++;
                 }
             } else {
-                GoToXY(x, y + static_cast<int>(i)); std::cout << Common::Color(foreground, background) << text[i];
+                GoToXY(x, y + rendered);
+                std::cout << Common::Color(foreground, background) << text[i];
+                rendered++;
             }
         }
 
