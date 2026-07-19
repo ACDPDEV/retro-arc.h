@@ -19,8 +19,7 @@
 #include "../../../Common/UnicodeGlyphs.h"
 #include "../../../Common/Utils.h"
 #include "../Database/MockData.h"
-#include "../Database/Names.h"
-#include "../Database/Options.h"
+#include "../Database/State.h"
 #include "../PokemonMiniSprites/BulbasaurMini.h"
 #include "../PokemonMiniSprites/CharmanderMini.h"
 #include "../PokemonMiniSprites/ChikoritaMini.h"
@@ -34,10 +33,10 @@ namespace Pokemon {
 
     /// @brief Pantalla de seleccion de Pokemon con cuadricula 2x2 y paginacion
     /// @details Muestra 4 Pokemon por pagina en una cuadricula interactiva. El usuario navega con flechas y confirma con ENTER.
-    ///          LEFT/RIGHT en los bordes cambia de pagina. La seleccion se persiste en Pokemon::selectedCurrentPokemonId via Options.h
+    ///          LEFT/RIGHT en los bordes cambia de pagina. La seleccion se persiste en Pokemon::selectedCurrentPokemonId[currentSelectionPlayer] via State.h
     inline void PokemonSelectionView() {
         Common::DrawBackground();
-        int selectedPokemon = Pokemon::selectedCurrentPokemonId;
+        int selectedPokemon = Pokemon::selectedCurrentPokemonId[Pokemon::currentSelectionPlayer];
 
         // Titulo "SELECCIONA" con FONT4 (4-line font, lowercase glyphs)
         const std::array<std::string, 4> title = Common::ConcatFont({
@@ -180,7 +179,7 @@ namespace Pokemon {
 
             // Player name box with FONT4 — adaptive width based on name
             // Convert playerName to FONT4 glyphs first to compute adaptive width
-            std::vector<std::array<std::string, 4>> playerNameGlyphs = Common::Font4String(Pokemon::player1Name);
+            std::vector<std::array<std::string, 4>> playerNameGlyphs = Common::Font4String(Pokemon::playerNames[Pokemon::currentSelectionPlayer]);
             std::array<std::string, 4> fontPlayerName = Common::ConcatFont(playerNameGlyphs, 1);
             int playerNameWidth = Common::Length(fontPlayerName[0]);
 
@@ -308,7 +307,7 @@ namespace Pokemon {
                 }
             } else if (Common::IsActionKey(Common::key)) {
                 // Confirmar seleccion y persistir
-                Pokemon::selectedCurrentPokemonId = selectedPokemon;
+                Pokemon::selectedCurrentPokemonId[Pokemon::currentSelectionPlayer] = selectedPokemon;
                 break;
             }
 
