@@ -10,11 +10,15 @@ namespace PokemonGame
         public:
     
             void Execute(
-                PokemonGame::Player& affectedPlayer) override;
+                PokemonGame::Player& affectedPlayer) override
+            {
+                affectedPlayer.GetActivePokemon()->Run();
+                
+            }
 
             bool  CanExecute(PokemonGame::Player& actor)
             {
-                
+                actor.GetActivePokemon()->Run();
             }
     };
 }

@@ -30,7 +30,10 @@ namespace PokemonGame
 
             bool CanExecute(PokemonGame::Player& actor)
             {
-                if(actor.HasPokemonWithId(pokemon->GetId()))
+                bool playerCanPlay = actor.CanPlay();
+                bool playerHasPokemon = actor.HasPokemonWithId(pokemon->GetId());
+                bool pokemonIsAlive = !pokemon->IsFainted();
+                if(playerCanPlay && playerHasPokemon & pokemonIsAlive)
                     return true;
                 return false;
             }

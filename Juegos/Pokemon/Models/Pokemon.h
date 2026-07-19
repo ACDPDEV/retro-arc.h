@@ -22,6 +22,7 @@ namespace PokemonGame
             double currentHp;
             double defense;
             bool hasFocusBand = false;
+            bool isRunning = false;
             std::vector<PokemonGame::Move*> moves;
 
             void UseFocusBand()
@@ -73,6 +74,16 @@ namespace PokemonGame
             void WearFocusBand()
             {
                 hasFocusBand = true;
+            }
+
+            void Run()
+            {
+                isRunning = true;
+            }
+
+            bool IsRunning() const
+            {
+                return isRunning;
             }
     
             void ReceiveDamage(double incomingDamage)
