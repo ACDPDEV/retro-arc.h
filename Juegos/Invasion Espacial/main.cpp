@@ -16,12 +16,12 @@ int main() {
     // =========================================
     // INICIO DE SESION
     // =========================================
-    
+
     /**
-     * 
+     *
      * PANTALLA DE INICIO DE SESION
      * (EL CURSOR SE MOVERÁ EN LA LÓGICA)
-     * 
+     *
      */
 
     const int MAX_PASSWORD_LENGTH = 15;  // MODIFICAR SEGÚN VISTA    ==============================
@@ -29,12 +29,12 @@ int main() {
     const int cursorInitialCol = 5;   // MODIFICAR SEGÚN VISTA    ==============================
     std::string password = "";
     std::string passwordInView = "";
-    
+
     Common::feedbackMessage = "";
     Common::rowFeedbackMessage = cursorInitialRow + 4;   // MODIFICAR SEGÚN VISTA    ==============================
     Common::colFeedbackMessage = cursorInitialCol + 0;     // MODIFICAR SEGÚN VISTA    ==============================
 
-    
+
     int countAttempts = 0;
 
     while (countAttempts < Common::MAX_ATTEMPTS)
@@ -63,7 +63,7 @@ int main() {
                     passwordInView.pop_back();
                 }
             }
-            
+
         } while (Common::key != Common::KEY_ENTER);
 
         ++countAttempts;
@@ -89,11 +89,11 @@ int main() {
             if(countAttempts == Common::MAX_ATTEMPTS)
             {
                 /**
-                 * 
-                 * 
+                 *
+                 *
                  * TODO Pantalla de cierre de programa por contraseña errónea
-                 * 
-                 * 
+                 *
+                 *
                  */
 
                 exit(1);
@@ -106,10 +106,10 @@ int main() {
     // =========================================
 
     /**
-     * 
+     *
      * TODO
      * LA PANTALLA DE CARGA DEBE TENER UN CONTEO DE TIEMPO (CREO xD)
-     * 
+     *
      */
 
     bool isRunning = true;
@@ -120,39 +120,39 @@ int main() {
         // =========================================
         // MENU PRINCIPAL
         // =========================================
-    
+
         const std::vector<std::string> menu_options = {
-            "POKEMON", 
-            "BUSCAMINAS", 
-            "BATALLA NAVAL", 
-            "TIC-TAC-TOE", 
-            "BATALLA NAVAL", 
-            "CRÉDITOS", 
-            "SALIR", 
+            "POKEMON",
+            "BUSCAMINAS",
+            "BATALLA NAVAL",
+            "TIC-TAC-TOE",
+            "BATALLA NAVAL",
+            "CRÉDITOS",
+            "SALIR",
             "CONFIG"
         };
-    
+
         const int menu_minOpt = 0;
         const int menu_maxOpt = menu_options.size() - 1;
         int menu_option = menu_minOpt;
-    
+
         do{
             RetroArcTest::PrintMenuTest(menu_options, menu_option);
             /**
-             * 
-             * 
-             * 
-             * 
-             * TODO 
+             *
+             *
+             *
+             *
+             * TODO
              * PANTALLA DE MENU DE OPCIONES RESALTANDO LA OPCIÓN SELECCIONADA
-             * 
-             * 
-             * 
-             * 
+             *
+             *
+             *
+             *
              */
-    
+
             Common::key = Common::ReadConsoleChar();
-    
+
             if(Common::IsNavigationKey(Common::key))
             {
                 Common::SetOption(menu_option, menu_minOpt, menu_maxOpt, Common::key);
@@ -165,40 +165,40 @@ int main() {
                 Common::feedbackMessage = "Presiona las flechas y selecciona con ENTER o ESPACIO";
             }
         }while(Common::key != Common::KEY_ENTER && Common::key != Common::KEY_SPACE);
-    
+
         // SWITCH HACIA LA OPCION
         switch(menu_option)
         {
-    
+
             // POKEMON
             case 0:
                 PokemonGame::Game game;
                 game.start();
                 break;
-    
+
             // BUSCAMINAS
             case 1:
                 Minesweeper::PlayMinesweeper();
                 break;
-    
+
             // BATALLA NAVAL
             case 2:
                 break;
-    
+
             // TIC-TAC-TOE
             case 3:
                 break;
-    
+
             // SPACE INVADERS
             case 4:
                 break;
-    
+
             // =========================================
             // CRÉDITOS
             // =========================================
             case 5:
                 /**
-                 * 
+                 *
                  * TODO
                  * MOSTRAR PANTALLA DE CRÉDITOS DEBE CONTENER :
                  * MENSAJE "Presione 'Q' para regresar"
@@ -207,36 +207,36 @@ int main() {
                  * Docente
                  * Autores
                  * Año
-                 * 
-                 * 
+                 *
+                 *
                  */
 
                 do{
                     Common::key = Common::ReadConsoleChar();
                 }while(Common::key != Common::KEY_Q && Common::key != Common::KEY_Q_LOWER);
                 break;
-    
+
             // =========================================
             // SALIR
             // =========================================
             case 6:
 
                 /**
-                 * 
-                 * 
+                 *
+                 *
                  * TODO
                  * PANTALLA DE CIERRE DE PROGRAMA POR OPCIÓN "SALIR"
-                 * 
-                 * 
-                 * 
+                 *
+                 *
+                 *
                  */
                 isRunning = false;
                 break;
-    
+
             // =========================================
             // CONFIGURACIONES
             // =========================================
-            
+
             // Configurar nombre de jugador
             case 7:
 
