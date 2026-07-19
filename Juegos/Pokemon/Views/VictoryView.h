@@ -141,6 +141,79 @@ namespace Pokemon {
 
         // Animacion de confeti (bucle infinito hasta que se presione una tecla)
         while (true) {
+            // Titulo "VICTORIA" con ConcatFont (FONT9_V-FONT9_A) - 9-line font
+            const std::array<std::string, 9> title = Common::ConcatFont({
+                Common::FONT9_V, Common::FONT9_I, Common::FONT9_C, Common::FONT9_T,
+                Common::FONT9_O, Common::FONT9_R, Common::FONT9_I, Common::FONT9_A
+            }, 2);
+
+            // Gradiente: amarillo -> rojo -> amarillo para las 9 lineas del titulo
+            std::vector<std::array<int, 3>> titleGradient(9);
+            for (int i = 0; i < 9; i++) {
+                if (i < 3) {
+                    // Amarillo a rojo
+                    titleGradient[i] = {
+                        Common::YELLOW[0] + (Common::RED[0] - Common::YELLOW[0]) * i / 3,
+                        Common::YELLOW[1] + (Common::RED[1] - Common::YELLOW[1]) * i / 3,
+                        Common::YELLOW[2] + (Common::RED[2] - Common::YELLOW[2]) * i / 3
+                    };
+                } else if (i < 6) {
+                    // Rojo a amarillo
+                    int j = i - 3;
+                    titleGradient[i] = {
+                        Common::RED[0] + (Common::YELLOW[0] - Common::RED[0]) * j / 3,
+                        Common::RED[1] + (Common::YELLOW[1] - Common::RED[1]) * j / 3,
+                        Common::RED[2] + (Common::YELLOW[2] - Common::RED[2]) * j / 3
+                    };
+                } else {
+                    // Amarillo a rojo
+                    int j = i - 6;
+                    titleGradient[i] = {
+                        Common::YELLOW[0] + (Common::RED[0] - Common::YELLOW[0]) * j / 3,
+                        Common::YELLOW[1] + (Common::RED[1] - Common::YELLOW[1]) * j / 3,
+                        Common::YELLOW[2] + (Common::RED[2] - Common::YELLOW[2]) * j / 3
+                    };
+                }
+            }
+
+            // Centrar titulo horizontalmente
+            const int titleX = Common::AlignedX(0, Common::WIDTH_SCREEN, Common::Length(title[0]), "center");
+
+            // Renderizar titulo linea por linea con gradiente
+            for (int i = 0; i < 9; i++) {
+                Common::DrawText(
+                    titleX, 3 + i, -1, -1,
+                    {title[i]}, titleGradient[i], Common::BACKGROUND
+                );
+            }
+
+            // Array de sprites de Pokemon (ordenado por spriteIndex)
+            const std::vector<std::string>* pokemonSprites[] = {
+                &BulbasaurFront, &CharmanderFront, &SquirtleFront, &PikachuFront,
+                &PsyduckFront, &EeveeFront, &RockruffFront, &ChikoritaFront
+            };
+
+            // Sprite del Pokemon ganador (centrado, y=16)
+            if (pokemonIndex >= 0 && pokemonIndex < POKEMON_COUNT) {
+                const std::vector<std::string>& sprite = *pokemonSprites[pokemonIndex];
+                const int spriteWidth = Common::Length(sprite[0]);
+                const int spriteX = Common::AlignedX(0, Common::WIDTH_SCREEN, spriteWidth, "center");
+                Common::DrawSprite(spriteX, 16, sprite);
+            }
+
+            // Mensaje de victoria (centrado, y=38)
+            std::string message = "¡El " + winnerName + " ha ganado la batalla!";
+            const int messageX = Common::AlignedX(0, Common::WIDTH_SCREEN, Common::Length(message), "center");
+            Common::DrawText(messageX, 38, -1, -1, {message}, Common::FOREGROUND_LIGHT, Common::BACKGROUND);
+
+            // Contador de rondas (centrado, y=42)
+            std::string roundText = "Rondas jugadas: " + std::to_string(round);
+            const int roundX = Common::AlignedX(0, Common::WIDTH_SCREEN, Common::Length(roundText), "center");
+            Common::DrawText(roundX, 42, -1, -1, {roundText}, Common::ACCENT, Common::BACKGROUND);
+
+            // Barra inferior
+            Common::DrawBottomBar();
+
             // Verificar si hay tecla presionada
             if (Common::Kbhit()) {
                 break;

@@ -20,74 +20,136 @@
 
 namespace Pokemon {
 
-    /// @brief Pantalla de entrada de nombres para dos jugadores con sprites de entrenadores
-    /// @details Muestra dos paneles lado a lado: P1 con borde amarillo y P2 con borde rosa.
+    /// @brief Dibuja un input estilizado con colores personalizados
+    /// @param x Posición X del input
+    /// @param y Posición Y del input
+    /// @param w Ancho del input
+    /// @param h Alto del input
+    /// @param input Referencia al string de entrada
+    /// @param bgColor Color de fondo del input
+    /// @param txtColor Color del texto del input
+    inline void DrawStyledInput(
+        int x, int y, int w, int h,
+        std::string& input,
+        std::array<int, 3> bgColor,
+        std::array<int, 3> txtColor
+    ) {
+        Common::DrawFillRectangle(x, y, w, h, " ", Common::FOREGROUND_DARK, bgColor);
+        Common::TextBoxComponent(x, y, w, h, input, "", "", "", bgColor, txtColor);
+    }
+
+    /// @brief Pantalla de entrada de nombres para dos jugadores con paneles de color y sprites
+    /// @details Muestra dos paneles apilados verticalmente: P1 con fondo crema y P2 con fondo rosa.
+    ///          Cada panel contiene un sprite de entrenador y un subtitulo en FONT4 centrado debajo del sprite.
     ///          Bloquea hasta que ambos nombres sean ingresados.
     /// @param player1Name Referencia al nombre del jugador 1 (se modifica con el input)
     /// @param player2Name Referencia al nombre del jugador 2 (se modifica con el input)
     inline void NombresView(std::string& player1Name, std::string& player2Name) {
         Common::DrawBackground();
 
-        // Logo "POKEMON" con ConcatFont (FONT9_P-FONT9_N) - 9-line font
-        const std::array<std::string, 9> logo = Common::ConcatFont({
-            Common::FONT9_P, Common::FONT9_O, Common::FONT9_K,
-            Common::FONT9_E, Common::FONT9_M, Common::FONT9_O, Common::FONT9_N
-        }, 1);
+        // ─── Dimensiones compartidas de paneles ───
+        const int panelWidth = 120;
+        const int panelHeight = 20;
+        const int panelX = Common::AlignedX(0, Common::WIDTH_SCREEN, panelWidth, "center");
 
-        // Gradiente: amarillo -> rojo para las 9 lineas del logo
-        const std::vector<std::array<int, 3>> logoGradient = Common::Gradient(
-            9, Common::YELLOW, Common::RED
+        // ─── Posiciones Y de paneles ───
+        const int panel1Y = Common::RelativeY(0, 2);
+        const int panel2Y = Common::RelativeY(0, panelHeight + 4);
+
+        // ─── Colores personalizados para inputs ───
+        const std::array<int, 3> inputP1Bg = {220, 200, 130};  // Amarillo oscuro para P1
+        const std::array<int, 3> inputP1Txt = Common::FOREGROUND_DARK;    // Texto crema para P1
+        const std::array<int, 3> inputP2Bg = {220, 150, 160};  // Rosa oscuro para P2
+        const std::array<int, 3> inputP2Txt = Common::FOREGROUND_DARK;     // Texto rosa para P2
+
+        const std::vector<std::string> sub1 = Common::VectorSum({Common::ArrayToVector(Common::ConcatFont({
+            Common::FONT4_i, Common::FONT4_n, Common::FONT4_g, Common::FONT4_r,
+            Common::FONT4_e, Common::FONT4_s, Common::FONT4_e, Common::FONT4_blank,
+            Common::FONT4_n, Common::FONT4_o, Common::FONT4_m, Common::FONT4_b,
+            Common::FONT4_r, Common::FONT4_e
+        }, 1)), {""}, Common::ArrayToVector(Common::ConcatFont({
+            Common::FONT4_d, Common::FONT4_e, Common::FONT4_l, Common::FONT4_blank,
+            Common::FONT4_j, Common::FONT4_u, Common::FONT4_g, Common::FONT4_a,
+            Common::FONT4_d, Common::FONT4_o, Common::FONT4_r, Common::FONT4_blank,
+            Common::FONT_1, Common::FONT4_colon
+        }, 1))});
+
+        const std::vector<std::string> sub2 = Common::VectorSum({Common::ArrayToVector(Common::ConcatFont({
+            Common::FONT4_i, Common::FONT4_n, Common::FONT4_g, Common::FONT4_r,
+            Common::FONT4_e, Common::FONT4_s, Common::FONT4_e, Common::FONT4_blank,
+            Common::FONT4_n, Common::FONT4_o, Common::FONT4_m, Common::FONT4_b,
+            Common::FONT4_r, Common::FONT4_e
+        }, 1)), {""}, Common::ArrayToVector(Common::ConcatFont({
+            Common::FONT4_d, Common::FONT4_e, Common::FONT4_l, Common::FONT4_blank,
+            Common::FONT4_j, Common::FONT4_u, Common::FONT4_g, Common::FONT4_a,
+            Common::FONT4_d, Common::FONT4_o, Common::FONT4_r, Common::FONT4_blank,
+            Common::FONT_2, Common::FONT4_colon
+        }, 1))});
+
+        // ─── 2. Panel Jugador 1 (fondo crema) ───
+        Common::PrintPrimaryBox(
+            panelX, panel1Y, panelWidth, panelHeight,
+            {},
+            Common::FOREGROUND_DARK,
+            Common::ACCENT,
+            Common::CREAM
         );
 
-        // Centrar logo horizontalmente
-        const int logoX = Common::AlignedX(0, Common::WIDTH_SCREEN, Common::Length(logo[0]), "center");
+        // Sprite Trainer1 (y+1, 10 lineas de alto)
+        Common::DrawSprite(panelX + 3, panel1Y + 1, Trainer1);
 
-        // Renderizar logo linea por linea con gradiente
-        for (int i = 0; i < 9; i++) {
-            Common::DrawText(
-                logoX, 3 + i, -1, -1,
-                {logo[i]}, logoGradient[i], Common::BACKGROUND
-            );
-        }
+        const int sub1Width = Common::Length(sub1[0]);
+        const int sub1Height = sub1.size();
+        const int sub1X = Common::AlignedX(panelX, panelWidth, sub1Width, "center") + 4;
+        const int sub1Y = Common::AlignedY(panel1Y, panelHeight, sub1Height, "top") + 1;
+        Common::DrawText(sub1X, sub1Y, -1, -1,
+            sub1,
+            Common::ORANGE, Common::CREAM);
 
-        // Sprite Trainer1 (jugador 1) - posicion x=15, y=16
-        Common::DrawSprite(15, 16, Trainer1);
+        // Input jugador 1 (ultima linea del panel)
+        const int input1Weight = 50;
+        const int input1Height = 1;
+        const int input1X = Common::AlignedX(panelX, panelWidth, input1Weight, "center");
+        const int input1Y = Common::AlignedY(panel1Y, panelHeight, input1Height, "bottom") - 5;
+        DrawStyledInput(input1X, input1Y, input1Weight, input1Height, player1Name, inputP1Bg, inputP1Txt);
 
-        // Sprite Trainer2 (jugador 2) - posicion x=130, y=16
-        Common::DrawSprite(130, 16, Trainer2);
+        // ─── 3. Panel Jugador 2 (fondo rosa) ───
+        Common::PrintPrimaryBox(
+            panelX, panel2Y, panelWidth, panelHeight,
+            {},
+            Common::FOREGROUND_DARK,
+            Common::ACCENT,
+            Common::PINK
+        );
 
-        // Etiqueta "Jugador 1:" centrada arriba de la caja de input
-        const std::string label1 = "Jugador 1:";
-        const int label1Width = Common::Length(label1);
-        const int label1X = Common::AlignedX(30, 35, label1Width, "center");
-        Common::DrawText(label1X, 24, -1, -1, {label1}, Common::FOREGROUND_LIGHT, Common::BACKGROUND);
+        // Sprite Trainer2 (y+1, 10 lineas de alto)
+        Common::DrawSprite(panelX + 3, panel2Y + 1, Trainer2);
 
-        // Etiqueta "Jugador 2:" centrada arriba de la caja de input
-        const std::string label2 = "Jugador 2:";
-        const int label2Width = Common::Length(label2);
-        const int label2X = Common::AlignedX(135, 35, label2Width, "center");
-        Common::DrawText(label2X, 24, -1, -1, {label2}, Common::FOREGROUND_LIGHT, Common::BACKGROUND);
+        const int sub2Width = Common::Length(sub2[0]);
+        const int sub2Height = sub2.size();
+        const int sub2X = Common::AlignedX(panelX, panelWidth, sub2Width, "center") + 4;
+        const int sub2Y = Common::AlignedY(panel2Y, panelHeight, sub2Height, "top") + 1;
+        Common::DrawText(sub2X, sub2Y, -1, -1,
+            sub2,
+            Common::ORANGE, Common::PINK);
 
-        // InputComponent para jugador 1 (caja amarilla)
-        Common::InputComponent(30, 26, 35, 3, player1Name, "", "Presiona ENTER para confirmar");
+        // Input jugador 2 (ultima linea del panel)
+        const int input2Weight = 50;
+        const int input2Height = 1;
+        const int input2X = Common::AlignedX(panelX, panelWidth, input2Weight, "center");
+        const int input2Y = Common::AlignedY(panel2Y, panelHeight, input2Height, "bottom") - 5;
+        DrawStyledInput(input2X, input2Y, input2Weight, input2Height, player2Name, inputP2Bg, inputP2Txt);
 
-        // Dibujar nombre de P1 despues del input
-        Common::DrawText(30, 26, 35, 3, {player1Name}, Common::FOREGROUND_LIGHT, Common::SELECTION_BACKGROUND);
-
-        // InputComponent para jugador 2 (caja rosa)
-        Common::InputComponent(135, 26, 35, 3, player2Name, "", "Presiona ENTER para confirmar");
-
-        // Dibujar nombre de P2 despues del input
-        Common::DrawText(135, 26, 35, 3, {player2Name}, Common::FOREGROUND_LIGHT, Common::SELECTION_BACKGROUND);
-
-        // Texto de prompt centrado
-        const std::string promptText = "Presiona ENTER para continuar";
-        const int promptX = Common::AlignedX(0, Common::WIDTH_SCREEN, Common::Length(promptText), "center");
-        Common::DrawText(promptX, 40, -1, -1, {promptText}, Common::FOREGROUND_LIGHT, Common::BACKGROUND);
-
-        // Barra inferior
+        // ─── 6. Barra inferior ───
         Common::DrawBottomBar();
+        // ─── 4. Input bloqueante para jugador 1 ───
+        Common::InputComponent(input1X, input1Y, input1Weight, input1Height, player1Name, "", "", "", inputP1Bg, inputP1Txt);
 
+        // ─── 5. Input bloqueante para jugador 2 ───
+        Common::InputComponent(input2X, input2Y, input2Weight, input2Height, player2Name, "", "", "", inputP2Bg, inputP2Txt);
+
+
+        // ─── 7. Posicionar cursor al final ───
         Common::GoToEnd();
     }
 

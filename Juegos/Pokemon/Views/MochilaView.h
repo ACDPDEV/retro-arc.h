@@ -7,6 +7,7 @@
 #include "../../../Common/Aligned.h"
 #include "../../../Common/Color.h"
 #include "../../../Common/Components/BottomBar.h"
+#include "../../../Common/Components/SelectPrimaryBox.h"
 #include "../../../Common/Consts.h"
 #include "../../../Common/Font.h"
 #include "../../../Common/Graphics.h"
@@ -22,6 +23,50 @@
 #include "../Sprites/Mochila.h"
 
 namespace Pokemon {
+    inline void DescriptionBox(
+        const std::string& description
+    ) {
+        const int descriptionWidth = Common::WIDTH_SCREEN - 8;
+        const int descriptionHeight = 4;
+        const int descriptionX = Common::AlignedX(0, Common::WIDTH_SCREEN, descriptionWidth, "center");
+        const int descriptionY = Common::AlignedY(0, Common::HEIGHT_SCREEN, descriptionHeight, "bottom") - 5;
+        Common::PrintPrimaryBox(descriptionX, descriptionY, descriptionWidth, descriptionHeight, {description}, Common::FOREGROUND_DARK, Common::FOREGROUND_DARK, Common::FOREGROUND_LIGHT);
+    }
+
+    inline void SelectPrimaryBox1DWithDescription(
+        int x, int y,
+        std::vector<std::string>& options,
+        std::vector<std::string>& descriptions,
+        int& selectedOption,
+        std::array<int, 3> textColor,
+        std::array<int, 3> borderColor,
+        std::array<int, 3> fillColor,
+        std::array<int, 3> selectedColor,
+        int slotWidth,
+        int slotHeight
+    ) {
+        while (true) {
+            Common::StaticSelectPrimaryBox1D(
+                x, y,
+                options, selectedOption,
+                borderColor, fillColor, selectedColor,
+                textColor,
+                slotWidth, slotHeight
+            );
+            DescriptionBox(descriptions[selectedOption]);
+
+            Common::key = Common::ReadConsoleChar();
+
+            if (Common::key == Common::KEY_ENTER) {
+                break;
+            } else if (Common::key == Common::KEY_ARROW_TOP) {
+                selectedOption = (selectedOption - 1 + options.size()) % options.size();
+            } else if (Common::key == Common::KEY_ARROW_BOTTOM) {
+                selectedOption = (selectedOption + 1) % options.size();
+            }
+
+        }
+    }
 
     /// @brief Pantalla estatica de mochila que muestra items y sus descripciones
     /// @details Muestra el sprite de la mochila a la izquierda, la lista de items a la derecha,
@@ -29,124 +74,40 @@ namespace Pokemon {
     inline void MochilaView() {
         Common::DrawBackground();
 
-        // Titulo "MOCHILA" con ConcatFont (FONT9_M-FONT9_A) - 9-line font
-        const std::array<std::string, 9> title = Common::ConcatFont({
-            Common::FONT9_M, Common::FONT9_O, Common::FONT9_C, Common::FONT9_H,
-            Common::FONT9_I, Common::FONT9_L, Common::FONT9_A
-        }, 1);
-
-        // Centrar titulo horizontalmente
-        const int titleX = Common::AlignedX(0, Common::WIDTH_SCREEN, Common::Length(title[0]), "center");
-
-        // Renderizar titulo linea por linea con color gris
-        for (int i = 0; i < 9; i++) {
-            Common::DrawText(
-                titleX, 2 + i, -1, -1,
-                {title[i]}, Common::GRAY, Common::BACKGROUND
-            );
-        }
-
         // Sprite de la mochila (posicion x=15, y=12)
         Common::DrawSprite(15, 12, Mochila);
 
-        // Panel de items (posicion x=80, y=10, w=110, h=30)
-        const int panelX = 80;
-        const int panelY = 10;
-        const int panelWidth = 110;
-        const int panelHeight = 30;
+        const std::vector<std::string> itemsTitle = Common::ArrayToVector(Common::ConcatFont({Common::FONT4_i, Common::FONT4_t, Common::FONT4_e, Common::FONT4_m, Common::FONT4_s}, 1));
 
-        // Fondo del panel
-        Common::DrawFillRectangle(
-            panelX, panelY, panelWidth, panelHeight,
-            Common::EMPTY_BLOCK,
-            Common::FOREGROUND_LIGHT, Common::BACKGROUND
-        );
+        const int titlePanelWidth = Common::Length(Common::MaxString(itemsTitle)) + 16;
+        const int titlePanelHeight = itemsTitle.size() + 2;
+        const int titlePanelX = Common::RelativeX(0, 3);
+        const int titlePanelY = Common::RelativeY(0, 2);
 
-        // Encabezado "ITEMS"
-        Common::DrawText(panelX + 2, panelY + 1, -1, -1,
-            {"ITEMS"}, Common::FOREGROUND_LIGHT, Common::BACKGROUND);
-
-        // Lista de items
-        int lastDescriptionY = 0;
-        for (int i = 0; i < BAG_ITEM_COUNT; i++) {
-            const int itemY = panelY + 3 + i * 3;
-
-            // Icono del item (posicion x=panelX+2)
-            std::string icon = (BAG_ITEMS[i].quantity > 0) ? "\033[38;2;178;242;187m●\033[0m" : "\033[38;2;255;201;201m■\033[0m";
-            Common::DrawText(panelX + 2, itemY, -1, -1, {icon}, Common::COLOR_DEFAULT, Common::COLOR_DEFAULT);
-
-            // Nombre del item (posicion x=panelX+8)
-            Common::DrawText(panelX + 8, itemY, -1, -1,
-                {BAG_ITEMS[i].name}, Common::FOREGROUND_LIGHT, Common::BACKGROUND);
-
-            // Cantidad "x{N}" (posicion x=panelX+85, color acento)
-            std::string quantityText = "x" + std::to_string(BAG_ITEMS[i].quantity);
-            Common::DrawText(panelX + 85, itemY, -1, -1,
-                {quantityText}, Common::ACCENT, Common::BACKGROUND);
-
-            lastDescriptionY = itemY;
-        }
-
-        // Cuadro de descripcion (posicion x=80, y=40, w=110, h=5)
-        const int descBoxX = 80;
-        const int descBoxY = 40;
-        const int descBoxWidth = 110;
-        const int descBoxHeight = 5;
-
-        // Fondo del cuadro de descripcion
-        Common::DrawFillRectangle(
-            descBoxX, descBoxY, descBoxWidth, descBoxHeight,
-            Common::EMPTY_BLOCK,
-            Common::FOREGROUND_LIGHT, Common::SELECTION_BACKGROUND
-        );
-
-        // Borde del cuadro de descripcion
-        // Borde superior
-        Common::DrawText(descBoxX, descBoxY, descBoxWidth, 1,
-            {Common::RepeatString(Common::HORIZONTAL_BORDER, descBoxWidth - 2)},
-            Common::GRAY, Common::SELECTION_BACKGROUND);
-        // Borde inferior
-        Common::DrawText(descBoxX, descBoxY + descBoxHeight - 1, descBoxWidth, 1,
-            {Common::RepeatString(Common::HORIZONTAL_BORDER, descBoxWidth - 2)},
-            Common::GRAY, Common::SELECTION_BACKGROUND);
-        // Borde izquierdo
-        for (int i = 1; i < descBoxHeight - 1; i++) {
-            Common::DrawText(descBoxX, descBoxY + i, 1, 1,
-                {Common::VERTICAL_BORDER}, Common::GRAY, Common::SELECTION_BACKGROUND);
-        }
-        // Borde derecho
-        for (int i = 1; i < descBoxHeight - 1; i++) {
-            Common::DrawText(descBoxX + descBoxWidth - 1, descBoxY + i, 1, 1,
-                {Common::VERTICAL_BORDER}, Common::GRAY, Common::SELECTION_BACKGROUND);
-        }
-
-        // Texto de descripcion del ultimo item (centrado en el cuadro)
-        if (BAG_ITEM_COUNT > 0) {
-            std::string description = BAG_ITEMS[BAG_ITEM_COUNT - 1].description;
-            const int descWidth = Common::Length(description);
-            const int descX = Common::AlignedX(descBoxX, descBoxWidth, descWidth, "center");
-            const int descY = descBoxY + 2;
-            Common::DrawText(descX, descY, -1, -1,
-                {description}, Common::FOREGROUND_LIGHT, Common::SELECTION_BACKGROUND);
-        }
-
-        // Texto "Presiona ENTER" (centrado, y=46)
-        const std::string enterText = "Presiona ENTER";
-        const int enterX = Common::AlignedX(0, Common::WIDTH_SCREEN, Common::Length(enterText), "center");
-        Common::DrawText(enterX, 46, -1, -1, {enterText}, Common::FOREGROUND_LIGHT, Common::BACKGROUND);
-
-        // Barra inferior
+        Common::PrintPrimaryBox(titlePanelX, titlePanelY, titlePanelWidth, titlePanelHeight, itemsTitle, Common::FOREGROUND_DARK, Common::FOREGROUND_DARK, Common::FOREGROUND_LIGHT);
         Common::DrawBottomBar();
 
-        Common::GoToEnd();
+        std::vector<std::string> options = {
+            "Restos",
+            "Banda Focus",
+            "Poción",
+            "Poción Máxima"
+        };
 
-        // Esperar ENTER para salir (aunque es estatica, espera input para continuar)
-        while (true) {
-            Common::key = Common::ReadConsoleChar();
-            if (Common::IsActionKey(Common::key)) {
-                break;
-            }
-        }
+        int selectedOption = 0;
+        std::vector<std::string> descriptions = {
+            "Hola",
+            "Banda Focus",
+            "Poción",
+            "Poción Máxima"
+        };
+        SelectPrimaryBox1DWithDescription(100, 15, options, descriptions, selectedOption, Common::FOREGROUND_DARK, Common::ORANGE, Common::PINK, Common::ORANGE, 50, 3);
+
+
+
+        // Barra inferior
+
+        Common::GoToEnd();
     }
 
 } // namespace Pokemon
