@@ -4,6 +4,118 @@ La biblioteca `Common/` es el núcleo cross-platform (Windows/Linux) del proyect
 
 ---
 
+## Table of Contents
+
+- [1. Constantes y Estado Global](#1-constantes-y-estado-global)
+- [2. Keycodes (Platform-Specific)](#2-keycodes-platform-specific)
+- [3. Terminal Cross-Platform](#3-terminal-cross-platform)
+- [4. Color](#4-color)
+- [5. Theme](#5-theme)
+- [6. UnicodeGlyphs](#6-unicodeglyphs)
+- [7. Font (ASCII Art)](#7-font-ascii-art)
+- [8. Utils (String)](#8-utils-string)
+- [9. Aligned (Layout)](#9-aligned-layout)
+- [10. Input](#10-input)
+- [11. Graphics (TUI Drawing)](#11-graphics-tui-drawing)
+- [12. Sprites / Animation](#12-sprites--animation)
+- [13. Navigation](#13-navigation)
+- [14. Audio](#14-audio)
+- [15. Output](#15-output)
+- [16. Components UI](#16-components-ui)
+- [Quick Reference](#quick-reference)
+- [Cross-References](#cross-references)
+- [Diagrama de Dependencias](#diagrama-de-dependencias)
+
+---
+
+## Quick Reference
+
+Alphabetical index of all functions:
+
+| Function | File | Purpose |
+|----------|------|---------|
+| `AlignedX` | `Aligned.h` | Calculate X alignment (left/center/right) |
+| `AlignedY` | `Aligned.h` | Calculate Y alignment (top/center/bottom) |
+| `ArrayToVector` | `Utils.h` | Convert `array<string,9>` to `vector<string>` |
+| `CastKeyToString` | `Input.h` | Convert key bytes to printable string |
+| `Clear` | `Terminal.h` | Clear entire screen |
+| `ClearConsoleLine` | `Terminal.h` | Clear a line by printing spaces |
+| `Color` | `Color.h` | Generate ANSI RGB color sequence |
+| `ConcatFont` | `Font.h` | Concatenate ASCII art glyphs horizontally (9 or 4 lines) |
+| `CutString` | `Utils.h` | Split string into fixed-width segments |
+| `DisableTrueColor` | `Terminal.h` | Disable ANSI True Color support |
+| `DisableUTF8` | `Terminal.h` | Disable UTF-8 support |
+| `DrawAnimatedSprite` | `Sprite.h` | Animate a sequence of sprite frames |
+| `DrawBackground` | `Graphics.h` | Fill screen with base background color |
+| `DrawBottomBar` | `Components/BottomBar.h` | Draw status bar at screen bottom |
+| `DrawBox` | `Graphics.h` | Draw box with predefined border styles |
+| `DrawFillRectangle` | `Graphics.h` | Draw filled rectangle with color |
+| `DrawLifeBar` | `Components/LifeBar.h` | Draw health bar with gradient |
+| `DrawRawBox` | `Graphics.h` | Draw box with custom border characters |
+| `DrawRawHorizontalLine` | `Graphics.h` | Draw horizontal line with custom endpoints |
+| `DrawRawVerticalLine` | `Graphics.h` | Draw vertical line with custom endpoints |
+| `DrawSprite` | `Sprite.h` | Draw a static ASCII sprite |
+| `DrawText` | `Graphics.h` | Draw multiline text with color and word wrap |
+| `EnableTrueColor` | `Terminal.h` | Enable ANSI True Color (VT100) |
+| `EnableUTF8` | `Terminal.h` | Enable UTF-8 encoding support |
+| `GetConsoleHeight` | `Terminal.h` | Get terminal height in rows |
+| `GetConsoleSize` | `Terminal.h` | Get terminal size as `{width, height}` |
+| `GetConsoleWidth` | `Terminal.h` | Get terminal width in columns |
+| `Getch` | `Terminal.h` | Read one keypress without blocking |
+| `GoToEnd` | `Terminal.h` | Move cursor below the virtual canvas |
+| `GoToXY` | `Terminal.h` | Position cursor at absolute coordinates |
+| `Gradient` | `Color.h` | Generate color gradient between two RGB values |
+| `HideCursor` | `Terminal.h` | Hide the terminal cursor |
+| `InitTerminalRawMode` | `Terminal.h` | Enable raw mode for key-by-key reading |
+| `Input` | `Input.h` | Read a word from stdin |
+| `InputComponent` | `Components/InputComponent.h` | Interactive text input component |
+| `InvertString` | `Utils.h` | Reverse a string (ASCII only) |
+| `isTransparent` | `Color.h` | Check if a color is `COLOR_DEFAULT` (transparent) |
+| `IsActionKey` | `Navigation.h` | Check if key is Enter or Space |
+| `IsAlphaNumChar` | `Input.h` | Check if key is alphanumeric |
+| `IsAnsiEnabled` | `Terminal.h` | Check if True Color is supported |
+| `IsKeyArrowBottom` | `Navigation.h` | Check if key is down arrow |
+| `IsKeyArrowLeft` | `Navigation.h` | Check if key is left arrow |
+| `IsKeyArrowRight` | `Navigation.h` | Check if key is right arrow |
+| `IsKeyArrowTop` | `Navigation.h` | Check if key is up arrow |
+| `IsNavigationKey` | `Navigation.h` | Check if key is any arrow key |
+| `IsValidChar` | `Input.h` | Validate character against ranges or exact list |
+| `KillAudioProcess` | `Music.h` | Kill child audio process (Linux) |
+| `Kbhit` | `Terminal.h` | Check if a keypress is available |
+| `Length` | `Utils.h` | Get visible width of string (ignoring ANSI/UTF-8) |
+| `MaxString` | `Utils.h` | Find longest string in a vector |
+| `ParseBool` | `Input.h` | Parse string to bool (`"true"`/`"false"`/`"1"`/`"0"`) |
+| `ParseChar` | `Input.h` | Extract first character from string |
+| `ParseFloat` | `Input.h` | Parse string to float |
+| `ParseInt` | `Input.h` | Parse string to int |
+| `ParseIntStrict` | `Input.h` | Parse string to int (strict validation) |
+| `PauseAudio` | `Music.h` | Pause audio playback |
+| `PlayAudio` | `Music.h` | Play audio file |
+| `PlayAudioLoop` | `Music.h` | Play audio file in infinite loop |
+| `PrintFeedBackMessage` | `Output.h` | Print user feedback message |
+| `PrintPrimaryBox` | `Graphics.h` | Draw decorative box with centered text |
+| `ReadConsoleChar` | `Input.h` | Read validated keypress (single byte or multibyte) |
+| `RelativeX` | `Aligned.h` | Calculate relative X offset |
+| `RelativeY` | `Aligned.h` | Calculate relative Y offset |
+| `RepeatString` | `Utils.h` | Repeat string N times |
+| `ResetColor` | `Color.h` | Reset terminal colors to default |
+| `RestoreTerminalMode` | `Terminal.h` | Restore terminal to original state (Linux) |
+| `ResumeAudio` | `Music.h` | Resume paused audio |
+| `SelectComponent` | `Components/SelectComponent.h` | Interactive selection menu component |
+| `SetCursorVisible` | `Terminal.h` | Show or hide terminal cursor |
+| `SetOption` | `Navigation.h` | Update selection index with cyclic navigation |
+| `SetTerminalColor` | `Color.h` | Set entire terminal foreground/background color |
+| `ShowCursor` | `Terminal.h` | Show the terminal cursor |
+| `Sleep` | `Terminal.h` | Sleep current thread for N milliseconds |
+| `StaticSelectComponent` | `Components/SelectComponent.h` | Render-only selection menu |
+| `StopAudio` | `Music.h` | Stop and close audio |
+| `TextBoxComponent` | `Components/InputComponent.h` | Render-only text input box |
+| `TransitionComponent` | `Components/TransitionComponent.h` | Screen transition animation |
+| `TryInput` | `Input.h` | Non-blocking line input with backspace handling |
+| `Validate` | `Input.h` | Validate input string against a type |
+
+---
+
 ## 1. Constantes y Estado Global
 
 ### `Common/Consts.h`
@@ -536,6 +648,39 @@ Componentes de selección de opciones.
 | Trigger (¿Cuándo usar?) | Función | Firma | Parámetros | Devuelve | Descripción |
 |---|---|---|---|---|---|
 | Ejecutar transición visual de pantalla | `TransitionComponent` | `inline void TransitionComponent()` | Ninguno | `void` | Animación de transición: genera un degradado rojo→amarillo que se desplaza horizontalmente de izquierda a derecha con ruido aleatorio pixel a pixel. Oculta cursor, ejecuta la animación, y reposiciona cursor al final. Duración proporcional a `WIDTH_SCREEN`. |
+
+---
+
+## Cross-References
+
+Which games use which Common utilities:
+
+| Utility | Used By |
+|---------|---------|
+| `Aligned.h` | [Pokemon](docs/Pokemon.md), [MainMenu](docs/MainMenu.md) |
+| `Color.h` | [Pokemon](docs/Pokemon.md), [MainMenu](docs/MainMenu.md) |
+| `Components/BottomBar.h` | [Pokemon](docs/Pokemon.md) |
+| `Components/InputComponent.h` | [Pokemon](docs/Pokemon.md), [MainMenu](docs/MainMenu.md) |
+| `Components/LifeBar.h` | [Pokemon](docs/Pokemon.md) |
+| `Components/SelectComponent.h` | [MainMenu](docs/MainMenu.md) |
+| `Components/TransitionComponent.h` | [MainMenu](docs/MainMenu.md) |
+| `Consts.h` | [Pokemon](docs/Pokemon.md), [Buscaminas](docs/Buscaminas.md), [MainMenu](docs/MainMenu.md), [InvasionEspacial](docs/InvasionEspacial.md) |
+| `Font.h` | [Pokemon](docs/Pokemon.md), [MainMenu](docs/MainMenu.md) |
+| `Graphics.h` | [Pokemon](docs/Pokemon.md), [MainMenu](docs/MainMenu.md) |
+| `Input.h` | [Pokemon](docs/Pokemon.md), [Buscaminas](docs/Buscaminas.md), [MainMenu](docs/MainMenu.md), [InvasionEspacial](docs/InvasionEspacial.md) |
+| `Music.h` | _(Tests only — no game uses directly)_ |
+| `Navigation.h` | [Pokemon](docs/Pokemon.md), [Buscaminas](docs/Buscaminas.md), [InvasionEspacial](docs/InvasionEspacial.md) |
+| `Output.h` | [Buscaminas](docs/Buscaminas.md) |
+| `Sprite.h` | [Pokemon](docs/Pokemon.md), [MainMenu](docs/MainMenu.md) |
+| `Terminal.h` | [Pokemon](docs/Pokemon.md) |
+| `Theme.h` | [Pokemon](docs/Pokemon.md), [MainMenu](docs/MainMenu.md) |
+| `UnicodeGlyphs.h` | [Pokemon](docs/Pokemon.md) |
+| `Utils.h` | [Pokemon](docs/Pokemon.md), [MainMenu](docs/MainMenu.md) |
+| `Variables.h` | [Pokemon](docs/Pokemon.md), [Buscaminas](docs/Buscaminas.md), [InvasionEspacial](docs/InvasionEspacial.md) |
+
+> **Notes**:
+> - [BatallaNaval](docs/BatallaNaval.md) and [Tictactoe](docs/Tictactoe.md) do not use Common utilities — they have their own platform abstractions.
+> - `Music.h` is included only by test files; no game currently uses it at runtime.
 
 ---
 
