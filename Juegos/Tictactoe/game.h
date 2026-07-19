@@ -1,7 +1,10 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "console.h"
+#include "../../Common/Terminal.h"
+#include "../../Common/Color.h"
+#include "../../Common/Music.h"
+#include "../../Common/UnicodeGlyphs.h"
 const int TAM = 11;
 extern char tablero[TAM][TAM];
 

@@ -10,38 +10,38 @@ const int TOTAL_PREGUNTAS = 30;
 //MODO FUTBOL PREGUNTAS Y OPCIONES+++++++++++++++++++++++++++++++++++++++
 string preguntas[TOTAL_PREGUNTAS] = {
 
-"¿Quien gano el Mundial 2022?",
-"¿Quien gano el Mundial 2018?",
-"¿Cuantos Mundiales tiene Brasil?",
-"¿En que pais se jugo el Mundial 2014?",
-"¿Quien fue el maximo goleador del Mundial 2022?",
-"¿Que seleccion gano el Mundial 2010?",
-"¿Quien marco el gol de la final del Mundial 2010?",
-"¿Que pais organizo el Mundial 2018?",
-"¿Que seleccion gano la Copa America 2021?",
-"¿Quien gano la Eurocopa 2024?",
+"ï¿½Quien gano el Mundial 2022?",
+"ï¿½Quien gano el Mundial 2018?",
+"ï¿½Cuantos Mundiales tiene Brasil?",
+"ï¿½En que pais se jugo el Mundial 2014?",
+"ï¿½Quien fue el maximo goleador del Mundial 2022?",
+"ï¿½Que seleccion gano el Mundial 2010?",
+"ï¿½Quien marco el gol de la final del Mundial 2010?",
+"ï¿½Que pais organizo el Mundial 2018?",
+"ï¿½Que seleccion gano la Copa America 2021?",
+"ï¿½Quien gano la Eurocopa 2024?",
 
-"¿Cuantas Champions League tiene el FC Barcelona?",
-"¿Que club gano la Champions League 2024?",
-"¿Que club tiene mas Champions League?",
-"¿Quien anoto el gol de la victoria en la final de Champions 2024?",
-"¿Que equipo elimino al Barcelona en semifinales de Champions 2010?",
-"¿Quien fue el maximo goleador historico de la Champions antes de Cristiano?",
-"¿Que dorsal uso Messi en el PSG?",
-"¿Que dorsal usa Cristiano Ronaldo con Portugal?",
-"¿Quien gano el Balon de Oro 2010?",
-"¿Quien gano el Balon de Oro 2023?",
+"ï¿½Cuantas Champions League tiene el FC Barcelona?",
+"ï¿½Que club gano la Champions League 2024?",
+"ï¿½Que club tiene mas Champions League?",
+"ï¿½Quien anoto el gol de la victoria en la final de Champions 2024?",
+"ï¿½Que equipo elimino al Barcelona en semifinales de Champions 2010?",
+"ï¿½Quien fue el maximo goleador historico de la Champions antes de Cristiano?",
+"ï¿½Que dorsal uso Messi en el PSG?",
+"ï¿½Que dorsal usa Cristiano Ronaldo con Portugal?",
+"ï¿½Quien gano el Balon de Oro 2010?",
+"ï¿½Quien gano el Balon de Oro 2023?",
 
-"¿Que pais gano la primera Copa del Mundo?",
-"¿Cual es el apodo de la seleccion brasilena?",
-"¿Quien es el maximo goleador historico del Mundial?",
-"¿Que jugador levanto la Copa del Mundo para Argentina en 2022?",
-"¿Que pais gano la Eurocopa 2016?",
-"¿Que club ficho primero a Cristiano Ronaldo tras salir del Sporting?",
-"¿Quien es conocido como O Rei?",
-"¿Que seleccion elimino a Brasil en cuartos del Mundial 2022?",
-"¿Que jugador marco un triplete en la final del Mundial 2022?",
-"¿Que club gano la primera Champions League?"
+"ï¿½Que pais gano la primera Copa del Mundo?",
+"ï¿½Cual es el apodo de la seleccion brasilena?",
+"ï¿½Quien es el maximo goleador historico del Mundial?",
+"ï¿½Que jugador levanto la Copa del Mundo para Argentina en 2022?",
+"ï¿½Que pais gano la Eurocopa 2016?",
+"ï¿½Que club ficho primero a Cristiano Ronaldo tras salir del Sporting?",
+"ï¿½Quien es conocido como O Rei?",
+"ï¿½Que seleccion elimino a Brasil en cuartos del Mundial 2022?",
+"ï¿½Que jugador marco un triplete en la final del Mundial 2022?",
+"ï¿½Que club gano la primera Champions League?"
 
 };
 
@@ -97,7 +97,7 @@ string opcionB[TOTAL_PREGUNTAS] = {
 "Andres Iniesta",
 "Rusia",
 "Argentina",
-"España",
+"Espaï¿½a",
 
 "5",
 "Manchester City",
@@ -120,7 +120,7 @@ string opcionB[TOTAL_PREGUNTAS] = {
 "Manchester United",
 "Ronaldo",
 "Argentina",
-"Julian Álvarez",
+"Julian ï¿½lvarez",
 "Barcelona"
 
 };
@@ -160,7 +160,7 @@ string opcionC[TOTAL_PREGUNTAS] = {
 "Juventus",
 "Pele",
 "Francia",
-"Kylian Mbappé",
+"Kylian Mbappï¿½",
 "Benfica"
 
 };
@@ -173,14 +173,14 @@ string opcionD[TOTAL_PREGUNTAS] = {
 "Qatar",
 "Olivier Giroud",
 
-"España",
+"Espaï¿½a",
 "Xavi",
 "Francia",
 "Uruguay",
 "Italia",
 
 "7",
-"Bayern Múnich",
+"Bayern Mï¿½nich",
 "Real Madrid",
 "Dani Carvajal",
 "Manchester United",
@@ -195,7 +195,7 @@ string opcionD[TOTAL_PREGUNTAS] = {
 "Los Galos",
 "Messi",
 "Dibu Martinez",
-"España",
+"Espaï¿½a",
 
 "Al-Nassr",
 "Ronaldinho",
@@ -242,117 +242,129 @@ char respuestaCorrecta[TOTAL_PREGUNTAS] = {
 
 };
 
+// Color mapping: old 4-bit Windows console index â†’ 24-bit RGB
+inline void color(int c) {
+    switch(c) {
+        case 9:  cout << Common::Color({0,0,255}, Common::COLOR_TRANSPARENT); break;
+        case 10: cout << Common::Color({0,200,0}, Common::COLOR_TRANSPARENT); break;
+        case 12: cout << Common::Color({255,0,0}, Common::COLOR_TRANSPARENT); break;
+        case 14: cout << Common::Color({255,255,0}, Common::COLOR_TRANSPARENT); break;
+        case 15: cout << Common::Color({255,255,255}, Common::COLOR_TRANSPARENT); break;
+        default: cout << Common::Color({255,255,255}, Common::COLOR_TRANSPARENT); break;
+    }
+}
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
 void intro()
 {
-    system("cls");
+    Common::Clear();
 
-    OcultarCursor();
+    Common::HideCursor();
 
     color(9);      // Azul
 
-    gotoxy(22,3);  cout<<"¦¦¦¦¦¦¦¦+¦¦+ ¦¦¦¦¦¦+";
-    pausa(120);
+    Common::GoToXY(22,3);  cout<<"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½+ï¿½ï¿½+ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½+";
+    Common::Sleep(120);
 
-    gotoxy(22,4);  cout<<"+--¦¦+--+¦¦¦¦¦+----+";
-    pausa(120);
+    Common::GoToXY(22,4);  cout<<"+--ï¿½ï¿½+--+ï¿½ï¿½ï¿½ï¿½ï¿½+----+";
+    Common::Sleep(120);
 
-    gotoxy(22,5);  cout<<"   ¦¦¦   ¦¦¦¦¦¦";
-    pausa(120);
+    Common::GoToXY(22,5);  cout<<"   ï¿½ï¿½ï¿½   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
+    Common::Sleep(120);
 
-    gotoxy(22,6);  cout<<"   ¦¦¦   ¦¦¦¦¦¦";
-    pausa(120);
+    Common::GoToXY(22,6);  cout<<"   ï¿½ï¿½ï¿½   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
+    Common::Sleep(120);
 
-    gotoxy(22,7);  cout<<"   ¦¦¦   ¦¦¦+¦¦¦¦¦¦+";
-    pausa(120);
+    Common::GoToXY(22,7);  cout<<"   ï¿½ï¿½ï¿½   ï¿½ï¿½ï¿½+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½+";
+    Common::Sleep(120);
 
-    gotoxy(22,8);  cout<<"   +-+   +-+ +-----+";
-    pausa(250);
+    Common::GoToXY(22,8);  cout<<"   +-+   +-+ +-----+";
+    Common::Sleep(250);
 
 
 
     color(12);     // Rojo
 
-    gotoxy(22,10); cout<<"¦¦¦¦¦¦¦¦+ ¦¦¦¦¦+  ¦¦¦¦¦¦+";
-    pausa(120);
+    Common::GoToXY(22,10); cout<<"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½+ ï¿½ï¿½ï¿½ï¿½ï¿½+  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½+";
+    Common::Sleep(120);
 
-    gotoxy(22,11); cout<<"+--¦¦+--+¦¦+--¦¦+¦¦+----+";
-    pausa(120);
+    Common::GoToXY(22,11); cout<<"+--ï¿½ï¿½+--+ï¿½ï¿½+--ï¿½ï¿½+ï¿½ï¿½+----+";
+    Common::Sleep(120);
 
-    gotoxy(22,12); cout<<"   ¦¦¦   ¦¦¦¦¦¦¦¦¦¦¦";
-    pausa(120);
+    Common::GoToXY(22,12); cout<<"   ï¿½ï¿½ï¿½   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
+    Common::Sleep(120);
 
-    gotoxy(22,13); cout<<"   ¦¦¦   ¦¦+--¦¦¦¦¦¦";
-    pausa(120);
+    Common::GoToXY(22,13); cout<<"   ï¿½ï¿½ï¿½   ï¿½ï¿½+--ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
+    Common::Sleep(120);
 
-    gotoxy(22,14); cout<<"   ¦¦¦   ¦¦¦  ¦¦¦+¦¦¦¦¦¦+";
-    pausa(120);
+    Common::GoToXY(22,14); cout<<"   ï¿½ï¿½ï¿½   ï¿½ï¿½ï¿½  ï¿½ï¿½ï¿½+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½+";
+    Common::Sleep(120);
 
-    gotoxy(22,15); cout<<"   +-+   +-+  +-+ +-----+";
-    pausa(250);
+    Common::GoToXY(22,15); cout<<"   +-+   +-+  +-+ +-----+";
+    Common::Sleep(250);
 
 
 
     color(9);      // Azul
 
-    gotoxy(22,17); cout<<"¦¦¦¦¦¦¦¦+ ¦¦¦¦¦¦+ ¦¦¦¦¦¦¦+";
-    pausa(120);
+    Common::GoToXY(22,17); cout<<"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½+ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½+ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½+";
+    Common::Sleep(120);
 
-    gotoxy(22,18); cout<<"+--¦¦+--+¦¦+---¦¦+¦¦+----+";
-    pausa(120);
+    Common::GoToXY(22,18); cout<<"+--ï¿½ï¿½+--+ï¿½ï¿½+---ï¿½ï¿½+ï¿½ï¿½+----+";
+    Common::Sleep(120);
 
-    gotoxy(22,19); cout<<"   ¦¦¦   ¦¦¦   ¦¦¦¦¦¦¦¦+";
-    pausa(120);
+    Common::GoToXY(22,19); cout<<"   ï¿½ï¿½ï¿½   ï¿½ï¿½ï¿½   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½+";
+    Common::Sleep(120);
 
-    gotoxy(22,20); cout<<"   ¦¦¦   ¦¦¦   ¦¦¦¦¦+--+";
-    pausa(120);
+    Common::GoToXY(22,20); cout<<"   ï¿½ï¿½ï¿½   ï¿½ï¿½ï¿½   ï¿½ï¿½ï¿½ï¿½ï¿½+--+";
+    Common::Sleep(120);
 
-    gotoxy(22,21); cout<<"   ¦¦¦   +¦¦¦¦¦¦++¦¦¦¦¦¦¦+";
-    pausa(120);
+    Common::GoToXY(22,21); cout<<"   ï¿½ï¿½ï¿½   +ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½++ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½+";
+    Common::Sleep(120);
 
-    gotoxy(22,22); cout<<"   +-+    +-----+ +------+";
+    Common::GoToXY(22,22); cout<<"   +-+    +-----+ +------+";
     
-   gotoxy(30,24);
+   Common::GoToXY(30,24);
 color(14);
 cout << "[  JUGAR  ]";
 
-gotoxy(17,27);
+Common::GoToXY(17,27);
 color(15);
 cout << "Presione cualquier tecla para comenzar";
-getch();
+Common::Getch();
 }
 
 void menuPrincipal(){
 
-    system("cls");
+    Common::Clear();
     color(15);
 
-    gotoxy(25,2);
+    Common::GoToXY(25,2);
     cout << "========================";
 
-    gotoxy(28,3);
+    Common::GoToXY(28,3);
     cout << "TIC TAC TOE";
 
-    gotoxy(25,4);
+    Common::GoToXY(25,4);
     cout << "========================";
 
-    gotoxy(29,7);
+    Common::GoToXY(29,7);
     cout << "1. Original";
 
-    gotoxy(29,9);
+    Common::GoToXY(29,9);
     cout << "2. Modo Futbol";
 
-    gotoxy(29,11);
+    Common::GoToXY(29,11);
     cout << "3. Salir";
 
-    gotoxy(22,14);
+    Common::GoToXY(22,14);
     cout << "Seleccione una opcion: ";
 }
 bool usada[TOTAL_PREGUNTAS];
 
 int preguntasUsadas = 0;
 
-//*********PARTE 1****** (inicialización del tablero)****************
+//*********PARTE 1****** (inicializaciï¿½n del tablero)****************
 void agregar_marco(){
 	for(int i=0;i<11;i++){
 		tablero[i][3]= 186;
@@ -365,36 +377,45 @@ void agregar_marco(){
 	tablero[7][3]=206;
 	tablero[7][7]=206;
 }
-void pintarmarco(){ //Mostrar límites del escenario
+void pintarmarco(){ //Mostrar lï¿½mites del escenario
 //lineas horizontales
 for(int i=2;i<78;i++){
-	gotoxy(i,3); printf("%c", 205);
-	gotoxy(i,23); printf("%c", 205); 
+	Common::GoToXY(i,3); cout << Common::DOUBLE_HORIZONTAL_BORDER;
+	Common::GoToXY(i,23); cout << Common::DOUBLE_HORIZONTAL_BORDER; 
 }
 //Lineas verticales
 for(int v=4;v<23;v++){
-	gotoxy(2,v); printf("%c", 186);
-	gotoxy(77,v); printf("%c", 186);	  
+	Common::GoToXY(2,v); cout << Common::DOUBLE_VERTICAL_BORDER;
+	Common::GoToXY(77,v); cout << Common::DOUBLE_VERTICAL_BORDER;	  
 }	
 //esquinas
-	gotoxy(2,3); printf("%c", 201);
-	gotoxy(2,23); printf("%c", 200); 	
-	gotoxy(77,3); printf("%c", 187);
-	gotoxy(77,23); printf("%c", 188); 
+	Common::GoToXY(2,3); cout << Common::DOUBLE_TOP_LEFT_CORNER;
+	Common::GoToXY(2,23); cout << Common::DOUBLE_BOTTOM_LEFT_CORNER; 	
+	Common::GoToXY(77,3); cout << Common::DOUBLE_TOP_RIGHT_CORNER;
+	Common::GoToXY(77,23); cout << Common::DOUBLE_BOTTOM_RIGHT_CORNER; 
 	
 }
 
 void mostrar_tablero(){
 	for(int i=0;i<11;i++){
 		for(int j=0;j<11;j++){
-		gotoxy(j+18, i+3);
-		if(tablero[i][j]=='X')
-                color(12);      // Rojo
-            else if(tablero[i][j]=='O')
-                color(9);       // Azul
-            else
-                color(15);      // Blanco
-		printf("%c",tablero[i][j]);
+	Common::GoToXY(j+18, i+3);
+	if(tablero[i][j]=='X')
+		color(12);      // Rojo
+	else if(tablero[i][j]=='O')
+		color(9);       // Azul
+	else
+		color(15);      // Blanco
+
+	unsigned char ch = static_cast<unsigned char>(tablero[i][j]);
+	if(ch == 186)
+		cout << Common::DOUBLE_VERTICAL_BORDER;
+	else if(ch == 205)
+		cout << Common::DOUBLE_HORIZONTAL_BORDER;
+	else if(ch == 206)
+		cout << Common::DOUBLE_CROSS;
+	else
+		cout << static_cast<char>(ch);
 		}
 	}
 	color(15);   // Regresa al blanco
@@ -421,7 +442,7 @@ void agregarNumeros(){
     tablero[9][5]='8';
     tablero[9][9]='9';
 }
-//****************** (inicialización)****************
+//****************** (inicializaciï¿½n)****************
 void inicializarJuego(){
 
 
@@ -431,7 +452,7 @@ void inicializarJuego(){
 
     agregarNumeros();
 
-    OcultarCursor();
+    Common::HideCursor();
 
     mostrar_tablero();
 }
@@ -530,16 +551,16 @@ bool celdaVacia(char tecla){
 //*********PARTE 3***** (VALIDACIONES)****************
 bool ganar(char ficha){
 
-    if(tablero[1][1]==ficha && tablero[1][5]==ficha && tablero[1][9]==ficha ||
-       tablero[5][1]==ficha && tablero[5][5]==ficha && tablero[5][9]==ficha ||
-       tablero[9][1]==ficha && tablero[9][5]==ficha && tablero[9][9]==ficha ||
+    if((tablero[1][1]==ficha && tablero[1][5]==ficha && tablero[1][9]==ficha) ||
+       (tablero[5][1]==ficha && tablero[5][5]==ficha && tablero[5][9]==ficha) ||
+       (tablero[9][1]==ficha && tablero[9][5]==ficha && tablero[9][9]==ficha) ||
 
-       tablero[1][1]==ficha && tablero[5][1]==ficha && tablero[9][1]==ficha ||
-       tablero[1][5]==ficha && tablero[5][5]==ficha && tablero[9][5]==ficha ||
-       tablero[1][9]==ficha && tablero[5][9]==ficha && tablero[9][9]==ficha ||
+       (tablero[1][1]==ficha && tablero[5][1]==ficha && tablero[9][1]==ficha) ||
+       (tablero[1][5]==ficha && tablero[5][5]==ficha && tablero[9][5]==ficha) ||
+       (tablero[1][9]==ficha && tablero[5][9]==ficha && tablero[9][9]==ficha) ||
 
-       tablero[1][1]==ficha && tablero[5][5]==ficha && tablero[9][9]==ficha ||
-       tablero[1][9]==ficha && tablero[5][5]==ficha && tablero[9][1]==ficha)
+       (tablero[1][1]==ficha && tablero[5][5]==ficha && tablero[9][9]==ficha) ||
+       (tablero[1][9]==ficha && tablero[5][5]==ficha && tablero[9][1]==ficha))
         return true;
     else
         return false;
@@ -557,99 +578,99 @@ bool tableroLleno(){
 //*********PARTE 4**** (INTERFAZ)****************
 void mostrar_Instrucciones(){
 
-    system("cls");
+    Common::Clear();
 
     color(14);
-    gotoxy(28,2); cout<<("TIC TAC TOE");
+    Common::GoToXY(28,2); cout<<("TIC TAC TOE");
     color(15);
 
-    gotoxy(1,4);  cout<<("INSTRUCCIONES:");
-    gotoxy(1,6);  cout<<("1. El jugador X comienza la partida.");
-    gotoxy(1,7);  cout<<("2. Presione un numero del 1 al 9 para jugar.");
-    gotoxy(1,8);  cout<<("3. No puede elegir una casilla ocupada.");
-    gotoxy(1,9);  cout<<("4. Gana quien forme una linea de 3 fichas.");
+    Common::GoToXY(1,4);  cout<<("INSTRUCCIONES:");
+    Common::GoToXY(1,6);  cout<<("1. El jugador X comienza la partida.");
+    Common::GoToXY(1,7);  cout<<("2. Presione un numero del 1 al 9 para jugar.");
+    Common::GoToXY(1,8);  cout<<("3. No puede elegir una casilla ocupada.");
+    Common::GoToXY(1,9);  cout<<("4. Gana quien forme una linea de 3 fichas.");
 
-    gotoxy(1,11); cout<<("Distribucion de las casillas:");
+    Common::GoToXY(1,11); cout<<("Distribucion de las casillas:");
 
-    gotoxy(8,13); cout<<("1 | 2 | 3");
-    gotoxy(8,14); cout<<("--+---+--");
-    gotoxy(8,15); cout<<("4 | 5 | 6");
-    gotoxy(8,16); cout<<("--+---+--");
-    gotoxy(8,17); cout<<("7 | 8 | 9");
+    Common::GoToXY(8,13); cout<<("1 | 2 | 3");
+    Common::GoToXY(8,14); cout<<("--+---+--");
+    Common::GoToXY(8,15); cout<<("4 | 5 | 6");
+    Common::GoToXY(8,16); cout<<("--+---+--");
+    Common::GoToXY(8,17); cout<<("7 | 8 | 9");
 
-    gotoxy(1,20); cout<<("Presione cualquier tecla para comenzar...");
-    getch();
+    Common::GoToXY(1,20); cout<<("Presione cualquier tecla para comenzar...");
+    Common::Getch();
 
-    system("cls");
+    Common::Clear();
 }
 void mostrar_InstruccionesFutbol(){
 
-    system("cls");
+    Common::Clear();
 
     color(14);
 
-    gotoxy(28,2);
+    Common::GoToXY(28,2);
     cout<<"TIC TAC TOE FUTBOL";
 
     color(15);
 
 
-    gotoxy(1,4);
+    Common::GoToXY(1,4);
     cout<<"INSTRUCCIONES MODO FUTBOL:";
 
 
-    gotoxy(1,6);
+    Common::GoToXY(1,6);
     cout<<"1. Cada jugador debe responder una pregunta de futbol.";
 
 
-    gotoxy(1,7);
+    Common::GoToXY(1,7);
     cout<<"2. Si responde correctamente puede colocar su ficha.";
 
 
-    gotoxy(1,8);
+    Common::GoToXY(1,8);
     cout<<"3. Si responde mal pierde su turno.";
 
 
-    gotoxy(1,9);
+    Common::GoToXY(1,9);
     cout<<"4. Forma una linea de 3 fichas para ganar.";
 
 
-    gotoxy(1,11);
+    Common::GoToXY(1,11);
     cout<<"Categorias:";
 
 
-    gotoxy(5,13);
+    Common::GoToXY(5,13);
     cout<<"- Mundiales";
 
 
-    gotoxy(5,14);
+    Common::GoToXY(5,14);
     cout<<"- Champions League";
 
 
-    gotoxy(5,15);
+    Common::GoToXY(5,15);
     cout<<"- Balon de Oro";
 
 
-    gotoxy(5,16);
+    Common::GoToXY(5,16);
     cout<<"- Futbol internacional";
 
 
-    gotoxy(1,20);
+    Common::GoToXY(1,20);
     cout<<"Presione cualquier tecla para comenzar...";
 
 
-    getch();
+    Common::Getch();
 
-    system("cls");
+    Common::Clear();
 }
 void turnoX(){
 
     char tecla;
 
     do{
-        gotoxy(1,1);
+        Common::GoToXY(1,1);
         cout<<("Turno de X");
-        tecla = getch();
+        tecla = Common::Getch();
     }while(!celdaVacia(tecla));
 
     agregarFicha(tecla, 'X');
@@ -661,9 +682,9 @@ void turnoO(){
     char tecla;
 
     do{
-        gotoxy(1,1);
+        Common::GoToXY(1,1);
         cout<<("Turno de O");
-        tecla = getch();
+        tecla = Common::Getch();
     }while(!celdaVacia(tecla));
 
     agregarFicha(tecla, 'O');
@@ -672,7 +693,7 @@ void turnoO(){
 }
 void mostrarResultado(){
 
-    gotoxy(1,15);
+    Common::GoToXY(1,15);
 
     if(ganar('X')){
         color(12);
@@ -692,17 +713,17 @@ void mostrarResultado(){
 
 void victoriaFutbol(){
 
-    system("cls");
+    Common::Clear();
 
     color(14);
 
-    gotoxy(28,4);
+    Common::GoToXY(28,4);
     cout<<"==============================";
 
-    gotoxy(35,5);
+    Common::GoToXY(35,5);
     cout<<"!! VICTORIAAA !!";
 
-    gotoxy(28,6);
+    Common::GoToXY(28,6);
     cout<<"==============================";
 
 
@@ -710,7 +731,7 @@ void victoriaFutbol(){
 
         color(12);
 
-        gotoxy(35,9);
+        Common::GoToXY(35,9);
         cout<<"GANADOR: JUGADOR X";
 
     }
@@ -718,7 +739,7 @@ void victoriaFutbol(){
 
         color(9);
 
-        gotoxy(35,9);
+        Common::GoToXY(35,9);
         cout<<"GANADOR: JUGADOR O";
 
     }
@@ -726,7 +747,7 @@ void victoriaFutbol(){
 
         color(15);
 
-        gotoxy(38,9);
+        Common::GoToXY(38,9);
         cout<<"EMPATE";
 
     }
@@ -734,13 +755,13 @@ void victoriaFutbol(){
 
     color(15);
 
-    gotoxy(32,13);
+    Common::GoToXY(32,13);
     cout<<"Gracias por jugar";
 
-    gotoxy(32,15);
+    Common::GoToXY(32,15);
     cout<<"Presione una tecla...";
 
-    getch();
+    Common::Getch();
 
 }
 
@@ -770,10 +791,10 @@ void mostrarPanelQuiz(){
 
     color(14);
 
-    gotoxy(50,2);
+    Common::GoToXY(50,2);
     cout << "QUIZ FUTBOLERO";
 
-    gotoxy(50,3);
+    Common::GoToXY(50,3);
     cout << "======================";
 
     color(15);
@@ -811,27 +832,27 @@ void turnoFutbolX(){
 
     char tecla;
 
-    gotoxy(1,1);
+    Common::GoToXY(1,1);
     cout << "Turno de X";
 
     if(!preguntaFutbol()){
         return;
     }
 
-gotoxy(50,5);
+Common::GoToXY(50,5);
 color(10);
 cout<<"Respuesta correcta";
 
-gotoxy(50,7);
+Common::GoToXY(50,7);
 color(15);
 cout<<"Seleccione una casilla (1-9)";
 
 	agregar_marco();
 	mostrar_tablero();	
     do{
-        gotoxy(1,2);
+        Common::GoToXY(1,2);
         cout << "Elija una casilla: ";
-        tecla = getch();
+        tecla = Common::Getch();
     }while(!celdaVacia(tecla));
 
     agregarFicha(tecla,'X');
@@ -844,18 +865,18 @@ void turnoFutbolO(){
 
     char tecla;
 
-    gotoxy(1,1);
+    Common::GoToXY(1,1);
     cout << "Turno de O";
 
     if(!preguntaFutbol()){
         return;
 	}
 
-gotoxy(50,5);
+Common::GoToXY(50,5);
 color(10);
 cout<<"Respuesta correcta";
 
-gotoxy(50,7);
+Common::GoToXY(50,7);
 color(15);
 cout<<"Seleccione una casilla (1-9)";
 
@@ -863,9 +884,9 @@ cout<<"Seleccione una casilla (1-9)";
 	agregar_marco();
 	mostrar_tablero();
     do{
-        gotoxy(1,2);
+        Common::GoToXY(1,2);
         cout << "Elija una casilla: ";
-        tecla = getch();
+        tecla = Common::Getch();
     }while(!celdaVacia(tecla));
 
     agregarFicha(tecla,'O');
@@ -876,10 +897,10 @@ cout<<"Seleccione una casilla (1-9)";
 
 void despedida(){
 
-    gotoxy(1,18);
+    Common::GoToXY(1,18);
     color(15);
     cout<<("Presione cualquier tecla para salir...");
-    getch();
+    Common::Getch();
 
 }
 
@@ -906,33 +927,33 @@ usada[i] = true;
 preguntasUsadas++;
     color(15);
     
-    gotoxy(50,5);
+    Common::GoToXY(50,5);
 if(preguntas[i].length() <= 38){
     cout << preguntas[i];
 }
 else{
     cout << preguntas[i].substr(0,38);
-    gotoxy(50,6);
+    Common::GoToXY(50,6);
     cout << preguntas[i].substr(38);
 
 }
 
-    gotoxy(50,7);
+    Common::GoToXY(50,7);
     cout << "A) " << opcionA[i];
 
-    gotoxy(50,8);
+    Common::GoToXY(50,8);
     cout << "B) " << opcionB[i];
 
-    gotoxy(50,9);
+    Common::GoToXY(50,9);
     cout << "C) " << opcionC[i];
 
-    gotoxy(50,10);
+    Common::GoToXY(50,10);
     cout << "D) " << opcionD[i];
 
-    gotoxy(50,12);
+    Common::GoToXY(50,12);
     cout << "Respuesta: ";
 
-    char respuesta = getch();
+    char respuesta = Common::Getch();
 
     respuesta = toupper(respuesta);
 
@@ -940,24 +961,24 @@ else{
 
     if(respuesta == respuestaCorrecta[i]){
     	
-		reproducirSonido("correcto.mp3");
-        gotoxy(50,14);
+		Common::PlayAudio("correcto.mp3");
+        Common::GoToXY(50,14);
         color(10);
-        cout << "¡Correcto!";
+        cout << "ï¿½Correcto!";
 
-        getch();
+        Common::Getch();
 
         limpiarPanelQuiz();
 
         return true;
     }
     
-	reproducirSonido("incorrecto.mp3");
-    gotoxy(50,14);
+	Common::PlayAudio("incorrecto.mp3");
+    Common::GoToXY(50,14);
     color(12);
     cout << "Incorrecto. Pierdes el turno.";
 
-    getch();
+    Common::Getch();
 
     limpiarPanelQuiz();
 
@@ -970,27 +991,27 @@ void dibujarPanelQuiz(){
     color(14);
 
     // Esquinas
- 	gotoxy(48,2); printf("%c",201);
-	gotoxy(90,2); printf("%c",187);
+ 	Common::GoToXY(48,2); cout << Common::DOUBLE_TOP_LEFT_CORNER;
+	Common::GoToXY(90,2); cout << Common::DOUBLE_TOP_RIGHT_CORNER;
 
-	gotoxy(48,14); printf("%c",200);
-	gotoxy(90,14); printf("%c",188);
+	Common::GoToXY(48,14); cout << Common::DOUBLE_BOTTOM_LEFT_CORNER;
+	Common::GoToXY(90,14); cout << Common::DOUBLE_BOTTOM_RIGHT_CORNER;
 
-    // Líneas horizontales
+    // Lï¿½neas horizontales
     for(int i=49;i<90;i++){
-    gotoxy(i,2); printf("%c",205);
-    gotoxy(i,14); printf("%c",205);
+    Common::GoToXY(i,2); cout << Common::DOUBLE_HORIZONTAL_BORDER;
+    Common::GoToXY(i,14); cout << Common::DOUBLE_HORIZONTAL_BORDER;
 }
 
-    // Líneas verticales
+    // Lï¿½neas verticales
     for(int i=3;i<14;i++){
-    gotoxy(48,i); printf("%c",186);
-    gotoxy(90,i); printf("%c",186);
+    Common::GoToXY(48,i); cout << Common::DOUBLE_VERTICAL_BORDER;
+    Common::GoToXY(90,i); cout << Common::DOUBLE_VERTICAL_BORDER;
 }
 
-    // Título
+    // Tï¿½tulo
     color(15);
-    gotoxy(60,3);
+    Common::GoToXY(60,3);
 cout<<"QUIZ FUTBOLERO";
 }
 void limpiarPanelQuiz(){
@@ -999,7 +1020,7 @@ void limpiarPanelQuiz(){
 
     for(int i=4;i<14;i++){
 
-        gotoxy(49,i);
+        Common::GoToXY(49,i);
 
         for(int j=0;j<40;j++){
             cout<<" ";
@@ -1013,11 +1034,11 @@ bool jugarNuevamente(){
     char opcion;
 
 
-    gotoxy(25,20);
-    cout<<"¿Desea jugar otra vez? (S/N): ";
+    Common::GoToXY(25,20);
+    cout<<"ï¿½Desea jugar otra vez? (S/N): ";
 
 
-    opcion=getch();
+    opcion=Common::Getch();
 
     opcion=toupper(opcion);
 

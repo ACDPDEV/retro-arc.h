@@ -1,0 +1,21 @@
+# Project: TicTacToeFutbol
+# Linux Makefile
+CPP      = g++
+OBJ      = main.o game.o
+LINKOBJ  = main.o game.o
+CXXINCS  = -I../../
+CXXFLAGS = -std=c++17 $(CXXINCS) -Wall
+BIN      = TicTacToeFutbol
+LIBS     = -lpthread
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+main.o: main.cpp
+	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)
+
+game.o: game.cpp
+	$(CPP) -c game.cpp -o game.o $(CXXFLAGS)
+
+clean:
+	rm -f $(OBJ) $(BIN)
