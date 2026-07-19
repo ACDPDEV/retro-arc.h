@@ -1,5 +1,4 @@
 #include "game.h"
-#include <string>
 #include <cstdlib>
 #include <ctime>
 #include <cctype>
@@ -244,6 +243,84 @@ char respuestaCorrecta[TOTAL_PREGUNTAS] = {
 };
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
+void intro()
+{
+    system("cls");
+
+    OcultarCursor();
+
+    color(9);      // Azul
+
+    gotoxy(22,3);  cout<<"¦¦¦¦¦¦¦¦+¦¦+ ¦¦¦¦¦¦+";
+    pausa(120);
+
+    gotoxy(22,4);  cout<<"+--¦¦+--+¦¦¦¦¦+----+";
+    pausa(120);
+
+    gotoxy(22,5);  cout<<"   ¦¦¦   ¦¦¦¦¦¦";
+    pausa(120);
+
+    gotoxy(22,6);  cout<<"   ¦¦¦   ¦¦¦¦¦¦";
+    pausa(120);
+
+    gotoxy(22,7);  cout<<"   ¦¦¦   ¦¦¦+¦¦¦¦¦¦+";
+    pausa(120);
+
+    gotoxy(22,8);  cout<<"   +-+   +-+ +-----+";
+    pausa(250);
+
+
+
+    color(12);     // Rojo
+
+    gotoxy(22,10); cout<<"¦¦¦¦¦¦¦¦+ ¦¦¦¦¦+  ¦¦¦¦¦¦+";
+    pausa(120);
+
+    gotoxy(22,11); cout<<"+--¦¦+--+¦¦+--¦¦+¦¦+----+";
+    pausa(120);
+
+    gotoxy(22,12); cout<<"   ¦¦¦   ¦¦¦¦¦¦¦¦¦¦¦";
+    pausa(120);
+
+    gotoxy(22,13); cout<<"   ¦¦¦   ¦¦+--¦¦¦¦¦¦";
+    pausa(120);
+
+    gotoxy(22,14); cout<<"   ¦¦¦   ¦¦¦  ¦¦¦+¦¦¦¦¦¦+";
+    pausa(120);
+
+    gotoxy(22,15); cout<<"   +-+   +-+  +-+ +-----+";
+    pausa(250);
+
+
+
+    color(9);      // Azul
+
+    gotoxy(22,17); cout<<"¦¦¦¦¦¦¦¦+ ¦¦¦¦¦¦+ ¦¦¦¦¦¦¦+";
+    pausa(120);
+
+    gotoxy(22,18); cout<<"+--¦¦+--+¦¦+---¦¦+¦¦+----+";
+    pausa(120);
+
+    gotoxy(22,19); cout<<"   ¦¦¦   ¦¦¦   ¦¦¦¦¦¦¦¦+";
+    pausa(120);
+
+    gotoxy(22,20); cout<<"   ¦¦¦   ¦¦¦   ¦¦¦¦¦+--+";
+    pausa(120);
+
+    gotoxy(22,21); cout<<"   ¦¦¦   +¦¦¦¦¦¦++¦¦¦¦¦¦¦+";
+    pausa(120);
+
+    gotoxy(22,22); cout<<"   +-+    +-----+ +------+";
+    
+   gotoxy(30,24);
+color(14);
+cout << "[  JUGAR  ]";
+
+gotoxy(17,27);
+color(15);
+cout << "Presione cualquier tecla para comenzar";
+getch();
+}
 
 void menuPrincipal(){
 
@@ -862,7 +939,8 @@ else{
     cout << respuesta;
 
     if(respuesta == respuestaCorrecta[i]){
-
+    	
+		reproducirSonido("correcto.mp3");
         gotoxy(50,14);
         color(10);
         cout << "¡Correcto!";
@@ -873,7 +951,8 @@ else{
 
         return true;
     }
-
+    
+	reproducirSonido("incorrecto.mp3");
     gotoxy(50,14);
     color(12);
     cout << "Incorrecto. Pierdes el turno.";
