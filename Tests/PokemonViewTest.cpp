@@ -5,6 +5,7 @@
 #include "../Juegos/Pokemon/Views/VictoryView.h"
 #include "../Juegos/Pokemon/Views/HuidaView.h"
 #include "../Juegos/Pokemon/Components/TitleComponent.h"
+#include "../Juegos/Pokemon/Database/State.h"
 
 
 
@@ -16,18 +17,15 @@ int main() {
     // Pokemon::TitleComponent();
     // Pokemon::TitleView();
     // Common::Sleep(2000);
-    // std::string player1Name = "";
-    // std::string player2Name = "";
-    // Pokemon::PlayersView(player1Name, player2Name);
+    Pokemon::PlayersView();
     // Common::Sleep(2000);
     // Pokemon::MochilaView();
     // Common::Sleep(2000);
-    // int selectedPokemon = 0;
     Pokemon::PokemonSelectionView();
     // Common::Sleep(2000);
-    // Pokemon::VictoryView(player1Name, selectedPokemon, 1);
+    // Pokemon::VictoryView();
     // Common::Sleep(2000);
-    // Pokemon::HuidaView(player1Name, "Psyduck", 1);
+    // Pokemon::HuidaView();
     // Common::Sleep(2000);
 
     return 0;
