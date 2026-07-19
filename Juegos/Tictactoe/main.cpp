@@ -14,7 +14,7 @@ char tablero[TAM][TAM];
 int main(){
 
     srand(time(NULL));
-
+	intro();
     char opcion;
 
 
