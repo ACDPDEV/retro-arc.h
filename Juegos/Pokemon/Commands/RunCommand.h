@@ -1,6 +1,7 @@
 #pragma once
 #include "Command.h"
-#include "../Game/Battle.h"
+#include "../Controllers/Battle.h"
+#include "../Models/Player.h"
 
 namespace PokemonGame
 {
@@ -9,8 +10,18 @@ namespace PokemonGame
         public:
     
             void Execute(
-                PokemonGame::Battle& battle,
-                PokemonGame::Player& actor,
-                PokemonGame::Player& opponent) override;
+                PokemonGame::Player& affectedPlayer) override
+            {
+                affectedPlayer.GetActivePokemon()->Run();
+                
+            }
+
+            bool CanExecute(PokemonGame::Player& actor) override
+            {
+                bool isAlive = actor.GetActivePokemon()->IsFainted();
+                if(isAlive)
+                    return true;
+                return false;
+            }
     };
 }

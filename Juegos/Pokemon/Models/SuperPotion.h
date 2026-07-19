@@ -7,8 +7,12 @@ namespace PokemonGame
 {
     class SuperPotion : public PokemonGame::Potion
     {
-    public:
-    
-        SuperPotion();
+        public:
+        
+            SuperPotion(int id, int maxUses, int healPoints)
+                    :
+                    Potion(id, maxUses, healPoints)
+            {
+            }
     };
 }
