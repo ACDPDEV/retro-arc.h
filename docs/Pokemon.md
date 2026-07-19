@@ -80,6 +80,7 @@ Pokemon battle game with modern OOP architecture, Command Pattern, and comprehen
 | `Sprites/` | `Trainer1.h`, `Trainer2.h`, `Mochila.h` | Trainer and bag sprites |
 | `PokemonStaticSprites/` | 16 files | Static front/back sprites for 8 Pokemon |
 | `PokemonAnimatedSprites/` | 16 files | Animated front/back sprites for 8 Pokemon (10 frames each) |
+| `PokemonMiniSprites/` | 8 files | Mini ANSI truecolor sprites for PokemonSelectionView (1 per Pokemon) |
 
 ---
 
@@ -359,6 +360,12 @@ Each Pokemon has 10 animation frames (front and back):
 - `Trainer1.h`, `Trainer2.h` — Player trainer sprites
 - `Mochila.h` — Bag/backpack sprite
 - `PokeballLaunch_Left/Right.h` — 23-frame pokeball launch animation
+
+### Mini Sprites (8 Pokemon)
+Used in PokemonSelectionView for compact display:
+- BulbasaurMini, CharmanderMini, SquirtleMini, PikachuMini
+- PsyduckMini, EeveeMini, RockruffMini, ChikoritaMini
+- ANSI truecolor precomputed sprites — zero runtime cost
 
 ---
 
