@@ -13,6 +13,7 @@
 #include "../../../Common/Terminal.h"
 #include "../../../Common/Theme.h"
 #include "../../../Common/Utils.h"
+#include "../Database/State.h"
 #include "../PokemonAnimatedSprites/PsyduckFront.h"
 
 namespace Pokemon {
@@ -20,10 +21,8 @@ namespace Pokemon {
     /// @brief Pantalla de animacion de huida con Psyduck desplazandose de izquierda a derecha
     /// @details Muestra un cuadro de mensaje con el texto de huida, un sprite de Psyduck animado,
     ///          y el contador de rondas. La animacion completa antes de retornar.
-    /// @param pokemonName Nombre del Pokemon que ha huido
-    /// @param playerName Nombre del jugador al que pertenece el Pokemon
-    /// @param round Numero de rondas jugadas
-    inline void HuidaView(const std::string& pokemonName, const std::string& playerName, int round) {
+    ///          Lee los valores de los globals: currentPokemonName, playerNames[currentSelectionPlayer], currentRound.
+    inline void HuidaView() {
         Common::DrawBackground();
 
         // Cuadro de mensaje centrado (posicion center X, y=5, w=60, h=5)
@@ -60,14 +59,14 @@ namespace Pokemon {
         }
 
         // Texto de huida dentro del cuadro
-        std::string message = "¡El " + pokemonName + " de " + playerName + " ha huido!";
+        std::string message = "¡El " + currentPokemonName + " de " + playerNames[currentSelectionPlayer] + " ha huido!";
         const int messageWidth = Common::Length(message);
         const int messageX = Common::AlignedX(boxX, boxWidth, messageWidth, "center");
         const int messageY = boxY + 2;
         Common::DrawText(messageX, messageY, -1, -1, {message}, Common::FOREGROUND_LIGHT, Common::SELECTION_BACKGROUND);
 
         // Contador de rondas (posicion x=150, y=2)
-        std::string roundText = "Rondas jugadas: " + std::to_string(round);
+        std::string roundText = "Rondas jugadas: " + std::to_string(currentRound);
         Common::DrawText(150, 2, -1, -1, {roundText}, Common::FOREGROUND_LIGHT, Common::BACKGROUND);
 
         // Barra inferior
