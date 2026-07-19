@@ -1,6 +1,6 @@
 #include <iostream>
 #include "consola2.h"
-#include "figuritas.h"
+#include "figuras.h"
 
 using namespace std;
 
@@ -10,27 +10,36 @@ using namespace std;
 const int ANCHO_JUGADOR = 40;
 const int ALTO_JUGADOR = 17;
 
-const int ANCHO_METEORITO = 9;
-const int ALTO_METEORITO = 7;
+const int ANCHO_METEORITO1 = 14;
+const int ALTO_METEORITO1 = 10;
 
-const int ANCHO_OVNI1 = 19;
-const int ALTO_OVNI1 = 8;
+const int ANCHO_METEORITO2 = 19;
+const int ALTO_METEORITO2 = 11;
 
-const int ANCHO_OVNI2 = 41;
-const int ALTO_OVNI2 = 12;
+const int ANCHO_METEORITO3 = 23;
+const int ALTO_METEORITO3 = 13;
 
-const int ANCHO_JEFE = 54;
-const int ALTO_JEFE = 20;
+const int ANCHO_OVNI1 = 27;
+const int ALTO_OVNI1 = 10;
+
+const int ANCHO_OVNI2 = 44;
+const int ALTO_OVNI2 = 14;
+
+const int ANCHO_JEFE = 51;
+const int ALTO_JEFE = 19;
+
+
+const int MARGEN_PRECISION = 4;
 //=========================================================
 // COLISION BALA - METEORITO 1
 //=========================================================
 bool colisionBalaMeteorito1(int xBala, int yBala,
                             int xMeteorito, int yMeteorito)
 {
-    if(xBala >= xMeteorito &&
-       xBala <= xMeteorito + ANCHO_METEORITO &&
-       yBala >= yMeteorito &&
-       yBala <= yMeteorito + ALTO_METEORITO)
+    if(xBala >= xMeteorito - MARGEN_PRECISION &&
+       xBala <= xMeteorito + ANCHO_METEORITO1 + MARGEN_PRECISION &&
+       yBala >= yMeteorito - MARGEN_PRECISION &&
+       yBala <= yMeteorito + ALTO_METEORITO1 + MARGEN_PRECISION)
     {
         return true;
     }
@@ -43,10 +52,10 @@ bool colisionBalaMeteorito1(int xBala, int yBala,
 bool colisionBalaMeteorito2(int xBala, int yBala,
                             int xMeteorito, int yMeteorito)
 {
-    if(xBala >= xMeteorito &&
-       xBala <= xMeteorito + ANCHO_METEORITO &&
-       yBala >= yMeteorito &&
-       yBala <= yMeteorito + ALTO_METEORITO)
+    if(xBala >= xMeteorito - MARGEN_PRECISION &&
+       xBala <= xMeteorito + ANCHO_METEORITO2 + MARGEN_PRECISION &&
+       yBala >= yMeteorito - MARGEN_PRECISION &&
+       yBala <= yMeteorito + ALTO_METEORITO2 + MARGEN_PRECISION)
     {
         return true;
     }
@@ -59,10 +68,10 @@ bool colisionBalaMeteorito2(int xBala, int yBala,
 bool colisionBalaMeteorito3(int xBala, int yBala,
                             int xMeteorito, int yMeteorito)
 {
-    if(xBala >= xMeteorito &&
-       xBala <= xMeteorito + ANCHO_METEORITO &&
-       yBala >= yMeteorito &&
-       yBala <= yMeteorito + ALTO_METEORITO)
+    if(xBala >= xMeteorito - MARGEN_PRECISION &&
+       xBala <= xMeteorito + ANCHO_METEORITO3 + MARGEN_PRECISION &&
+       yBala >= yMeteorito - MARGEN_PRECISION &&
+       yBala <= yMeteorito + ALTO_METEORITO3 + MARGEN_PRECISION)
     {
         return true;
     }
@@ -75,10 +84,10 @@ bool colisionBalaMeteorito3(int xBala, int yBala,
 bool colisionBalaOvni1(int xBala, int yBala,
                        int xOvni, int yOvni)
 {
-    if(xBala >= xOvni &&
-       xBala <= xOvni + ANCHO_OVNI1 &&
-       yBala >= yOvni &&
-       yBala <= yOvni + ALTO_OVNI1)
+    if(xBala >= xOvni - MARGEN_PRECISION &&
+       xBala <= xOvni + ANCHO_OVNI1 + MARGEN_PRECISION &&
+       yBala >= yOvni - MARGEN_PRECISION &&
+       yBala <= yOvni + ALTO_OVNI1 + MARGEN_PRECISION)
     {
         return true;
     }
@@ -91,10 +100,10 @@ bool colisionBalaOvni1(int xBala, int yBala,
 bool colisionBalaOvni2(int xBala, int yBala,
                        int xOvni, int yOvni)
 {
-    if(xBala >= xOvni &&
-       xBala <= xOvni + ANCHO_OVNI2 &&
-       yBala >= yOvni &&
-       yBala <= yOvni + ALTO_OVNI2)
+    if(xBala >= xOvni - MARGEN_PRECISION &&
+       xBala <= xOvni + ANCHO_OVNI2 + MARGEN_PRECISION &&
+       yBala >= yOvni - MARGEN_PRECISION &&
+       yBala <= yOvni + ALTO_OVNI2 + MARGEN_PRECISION)
     {
         return true;
     }
@@ -107,10 +116,10 @@ bool colisionBalaOvni2(int xBala, int yBala,
 bool colisionBalaJefeFinal(int xBala, int yBala,
                            int xJefe, int yJefe)
 {
-    if(xBala >= xJefe &&
-       xBala <= xJefe + ANCHO_JEFE &&
-       yBala >= yJefe &&
-       yBala <= yJefe + ALTO_JEFE)
+    if(xBala >= xJefe - MARGEN_PRECISION &&
+       xBala <= xJefe + ANCHO_JEFE + MARGEN_PRECISION &&
+       yBala >= yJefe - MARGEN_PRECISION &&
+       yBala <= yJefe + ALTO_JEFE + MARGEN_PRECISION)
     {
         return true;
     }
@@ -124,9 +133,9 @@ bool colisionJugadorMeteorito1(int xJugador, int yJugador,
                                int xMeteorito, int yMeteorito)
 {
     if(xJugador + ANCHO_JUGADOR >= xMeteorito &&
-       xJugador <= xMeteorito + ANCHO_METEORITO &&
+       xJugador <= xMeteorito + ANCHO_METEORITO1 &&
        yJugador + ALTO_JUGADOR >= yMeteorito &&
-       yJugador <= yMeteorito + ALTO_METEORITO)
+       yJugador <= yMeteorito + ALTO_METEORITO1)
     {
         return true;
     }
@@ -140,9 +149,9 @@ bool colisionJugadorMeteorito2(int xJugador, int yJugador,
                                int xMeteorito, int yMeteorito)
 {
     if(xJugador + ANCHO_JUGADOR >= xMeteorito &&
-       xJugador <= xMeteorito + ANCHO_METEORITO &&
+       xJugador <= xMeteorito + ANCHO_METEORITO2 &&
        yJugador + ALTO_JUGADOR >= yMeteorito &&
-       yJugador <= yMeteorito + ALTO_METEORITO)
+       yJugador <= yMeteorito + ALTO_METEORITO2)
     {
         return true;
     }
@@ -156,9 +165,9 @@ bool colisionJugadorMeteorito3(int xJugador, int yJugador,
                                int xMeteorito, int yMeteorito)
 {
     if(xJugador + ANCHO_JUGADOR >= xMeteorito &&
-       xJugador <= xMeteorito + ANCHO_METEORITO &&
+       xJugador <= xMeteorito + ANCHO_METEORITO3 &&
        yJugador + ALTO_JUGADOR >= yMeteorito &&
-       yJugador <= yMeteorito + ALTO_METEORITO)
+       yJugador <= yMeteorito + ALTO_METEORITO3)
     {
         return true;
     }
