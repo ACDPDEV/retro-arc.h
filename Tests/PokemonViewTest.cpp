@@ -1,5 +1,5 @@
 #include "../Juegos/Pokemon/Views/TitleView.h"
-#include "../Juegos/Pokemon/Views/NombresView.h"
+#include "../Juegos/Pokemon/Views/PlayersView.h"
 #include "../Juegos/Pokemon/Views/MochilaView.h"
 #include "../Juegos/Pokemon/Views/PokemonSelectionView.h"
 #include "../Juegos/Pokemon/Views/VictoryView.h"
@@ -11,14 +11,16 @@
 #include "../Common/Terminal.h"
 
 int main() {
+    Common::InitTerminalRawMode();
+
     // Pokemon::TitleComponent();
     // Pokemon::TitleView();
     // Common::Sleep(2000);
-    std::string player1Name = "a";
-    std::string player2Name = "b";
-    Pokemon::NombresView(player1Name, player2Name);
+    // std::string player1Name = "";
+    // std::string player2Name = "";
+    // Pokemon::PlayersView(player1Name, player2Name);
     // Common::Sleep(2000);
-    // Pokemon::MochilaView();
+    Pokemon::MochilaView();
     // Common::Sleep(2000);
     // int selectedPokemon = 0;
     // Pokemon::PokemonSelectionView(selectedPokemon);

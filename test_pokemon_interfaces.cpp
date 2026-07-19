@@ -24,7 +24,7 @@
 #include "Juegos/Pokemon/PokemonStaticSprites/Trainer1Front.h"
 #include "Juegos/Pokemon/PokemonStaticSprites/Trainer2Front.h"
 #include "Juegos/Pokemon/PokemonStaticSprites/MochilaFront.h"
-#include "Juegos/Pokemon/Views/NombresView.h"
+#include "Juegos/Pokemon/Views/PlayersView.h"
 #include "Juegos/Pokemon/Views/PokemonSelectionView.h"
 #include "Juegos/Pokemon/Views/HuidaView.h"
 #include "Juegos/Pokemon/Views/MochilaView.h"
@@ -47,7 +47,7 @@ int main() {
     
     // Test function signatures (compile-time check)
     std::cout << "3. Function signatures:" << std::endl;
-    std::cout << "   NombresView: OK" << std::endl;
+    std::cout << "   PlayersView: OK" << std::endl;
     std::cout << "   PokemonSelectionView: OK" << std::endl;
     std::cout << "   HuidaView: OK" << std::endl;
     std::cout << "   MochilaView: OK" << std::endl;

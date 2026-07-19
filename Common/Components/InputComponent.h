@@ -18,7 +18,9 @@ namespace Common {
         std::string &input,
         std::string label = "",
         std::string message = "",
-        std::string replaceChar = ""
+        std::string replaceChar = "",
+        std::array<int, 3> bgColor = SELECTION_BACKGROUND,
+        std::array<int, 3> txtColor = FOREGROUND_LIGHT
     ) {
         const std::vector<std::string> formatedInput = CutString(input, width);
         const std::vector<std::string> formatedLabel = CutString(label, width);
@@ -53,13 +55,13 @@ namespace Common {
             labelX, labelY,
             labelWidth, labelHeight,
             {label},
-            FOREGROUND_LIGHT, BACKGROUND
+            txtColor, BACKGROUND
         );
         DrawFillRectangle(
             x, y,
             width, height,
             EMPTY_BLOCK,
-            FOREGROUND_LIGHT, SELECTION_BACKGROUND
+            txtColor, bgColor
         );
         DrawText(
             messageX, messageY,
@@ -73,7 +75,7 @@ namespace Common {
                 x, y,
                 width, height,
                 formatedInput,
-                FOREGROUND_LIGHT, SELECTION_BACKGROUND
+                txtColor, bgColor
             );
         } else {
             DrawText(
@@ -83,11 +85,11 @@ namespace Common {
                     replaceChar,
                     Length(input)
                 )},
-                FOREGROUND_LIGHT, SELECTION_BACKGROUND
+                txtColor, bgColor
             );
         }
 
-        DrawText(cursorX, cursorY, -1, -1, {QUADRANTS[5]}, FOREGROUND_LIGHT, SELECTION_BACKGROUND);
+        DrawText(cursorX, cursorY, -1, -1, {QUADRANTS[5]}, txtColor, bgColor);
     }
 
     inline void InputComponent(
@@ -96,14 +98,17 @@ namespace Common {
         std::string& input,
         std::string label = "",
         std::string message = "",
-        std::string replaceChar = ""
+        std::string replaceChar = "",
+        std::array<int, 3> bgColor = SELECTION_BACKGROUND,
+        std::array<int, 3> txtColor = FOREGROUND_LIGHT
     ) {
         while (true) {
             TextBoxComponent(
                 x, y,
                 width, height,
                 input,
-                label, message, replaceChar
+                label, message, replaceChar,
+                bgColor, txtColor
             );
 
             key = ReadConsoleChar();
@@ -117,7 +122,8 @@ namespace Common {
                         x, y,
                         width, height,
                         input,
-                        label, message, replaceChar
+                        label, message, replaceChar,
+                        bgColor, txtColor
                     );
                 }
                 continue;
@@ -126,7 +132,8 @@ namespace Common {
                 TextBoxComponent(
                     x, y, width, height,
                     input,
-                    label, message, replaceChar
+                    label, message, replaceChar,
+                    bgColor, txtColor
                 );
             }
         }

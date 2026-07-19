@@ -2,7 +2,7 @@
 
 #include "Views/TitleView.h"
 #include "Views/MenuView.h"
-#include "Views/NombresView.h"
+#include "Views/PlayersView.h"
 #include "Views/PokemonSelectionView.h"
 #include "Views/HuidaView.h"
 #include "Views/MochilaView.h"
