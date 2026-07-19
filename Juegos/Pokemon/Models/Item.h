@@ -5,8 +5,6 @@
 
 namespace PokemonGame
 {
-    class PokemonGame::Pokemon;
-    
     class Item
     {
         protected:

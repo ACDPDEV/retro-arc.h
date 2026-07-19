@@ -8,8 +8,6 @@
 
 namespace PokemonGame
 {
-    class PokemonGame::Pokemon;
-    
     class Move
     {
         private:

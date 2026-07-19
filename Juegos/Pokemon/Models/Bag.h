@@ -7,9 +7,6 @@
 
 namespace PokemonGame
 {
-    class PokemonGame::Item;
-    class PokemonGame::Pokemon;
-    
     class Bag
     {
         private:
