@@ -11,22 +11,11 @@
 #include <conio.h>
 #include <iostream>
 #include <array>
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-using namespace std;
-=======
-=======
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 #include <string>
 
 namespace Common {
 
 inline void InitTerminalRawMode();
-<<<<<<< HEAD
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
-=======
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
 /// @brief Habilita el procesamiento de terminal virtual (ANSI/VT100) para True Color
 /// @details Permite usar códigos de escape como \x1b[38;2;R;G;Bm para colores RGB reales
@@ -126,15 +115,7 @@ inline int GetConsoleHeight() {
 
 /// @brief Obtiene el tamaño actual de la consola
 /// @return array{width, height} en caracteres
-<<<<<<< HEAD
-<<<<<<< HEAD
-inline array<int, 2> GetConsoleSize() {
-=======
 inline std::array<int, 2> GetConsoleSize() {
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
-=======
-inline std::array<int, 2> GetConsoleSize() {
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
     return {GetConsoleWidth(), GetConsoleHeight()};
 }
 
@@ -153,11 +134,6 @@ inline char Getch() {
 inline void Sleep(int ms) {
     ::Sleep(static_cast<DWORD>(ms));
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
 
 /**
  * @brief Limpia una línea de la consola imprimiendo una cantidad determinada de espacios en blanco.
@@ -179,7 +155,3 @@ inline void ClearConsoleLine(int lineLength)
 }
 
 } // namespace Common
-<<<<<<< HEAD
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
-=======
->>>>>>> 09e6a97404d22f9d819996b99ce5299164c16c08
