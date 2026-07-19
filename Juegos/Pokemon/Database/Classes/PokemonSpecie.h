@@ -1,62 +1,37 @@
 #pragma once
-
 #include <string>
+#include <vector>
 #include "../../Models/Enums/PokemonType.h"
+#include "MoveData.h"
 
-namespace PokemonGame
-{
-    class PokemonSpecies
+namespace PokemonDb {
+
+    class PokemonSpecie 
     {
     private:
+        int id;
+        std::string name;
+        PokemonGame::PokemonType type;
 
-        const int id;
-        const std::string name;
-        const PokemonGame::PokemonType type;
-        const double maxHp;
-        const double defense;
+        double baseHp;
+        double defense;
+        std::vector<PokemonDb::MoveData> poolMoves;
 
     public:
 
-        PokemonSpecies(
-            const int id,
-            const std::string& name,
-            const PokemonGame::PokemonType type,
-            const double maxHp,
-            const double defense)
-            :
-            id(id),
-            name(name),
-            type(type),
-            maxHp(maxHp),
-            defense(defense)
-        {
-        }
+        PokemonSpecie() 
+            : id(0), name(""), type(PokemonGame::PokemonType::NORMAL), 
+              baseHp(50.0), defense(3.0) {}
 
-        ~PokemonSpecies() = default;
+        PokemonSpecie(int id, const std::string& name, PokemonGame::PokemonType type, 
+                      double hp, double defense, const std::vector<PokemonDb::MoveData>& moves)
+            : id(id), name(name), type(type), baseHp(hp), defense(defense), poolMoves(moves) {}
 
-        int GetId() const
-        {
-            return id;
-        }
-
-        const std::string& GetName() const
-        {
-            return name;
-        }
-
-        PokemonGame::PokemonType GetType() const
-        {
-            return type;
-        }
-
-        double GetMaxHp() const
-        {
-            return maxHp;
-        }
-
-        double GetDefense() const
-        {
-            return defense;
-        }
+        int GetId() const { return id; }
+        std::string GetName() const { return name; }
+        PokemonGame::PokemonType GetType() const { return type; }
+        double GetBaseHp() const { return baseHp; }
+        double GetDefense() const { return defense; }
+        const std::vector<PokemonDb::MoveData>& GetPoolMoves() const { return poolMoves; }
     };
 }
