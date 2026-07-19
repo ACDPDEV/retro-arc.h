@@ -64,4 +64,7 @@ namespace Common
 
     /// @brief Color rosa/salmón para paneles de jugador (#FFB6C1)
     const std::array<int, 3> PINK = {255, 182, 193};
+
+    /// @brief Azul oscuro para barras de interfaz (#0C376E)
+    const std::array<int, 3> DARK_BLUE = {12, 55, 110};
 }

@@ -139,6 +139,16 @@ namespace Common {
         return result;
     }
 
+    /// @brief Trunca una cadena a un número máximo de caracteres visibles.
+    /// @param str Cadena de entrada (puede contener ANSI escapes).
+    /// @param maxLen Número máximo de caracteres visibles.
+    /// @return Cadena truncada sin cortar secuencias ANSI.
+    inline std::string TruncateVisible(const std::string& str, int maxLen) {
+        std::vector<std::string> lines = CutString(str, maxLen);
+        if (lines.empty()) return "";
+        return lines[0];
+    }
+
     inline std::vector<std::string> ArrayToVector(std::array<std::string, 9> arr) {
         std::vector<std::string> result;
         for (int i = 0; i < arr.size(); i++) {
