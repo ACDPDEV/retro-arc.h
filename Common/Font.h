@@ -628,6 +628,108 @@ namespace Common
             "▀▀"
         };
 
+        const std::array<std::string, 4> FONT4_slash = {
+            "  ▄",
+            " ▄▀",
+            "▄▀ ",
+            "▀  "
+        };
+
+    /// @brief Convierte un string a vector de FONT4 glyphs (a-z, A-Z, espacio)
+    /// @param name String a convertir (case-insensitive, solo letras y espacios)
+    /// @return Vector de arrays FONT4, uno por caracter
+    inline std::vector<std::array<std::string, 4>> Font4String(const std::string& name) {
+        std::vector<std::array<std::string, 4>> glyphs;
+        for (size_t i = 0; i < name.size(); i++) {
+            char c = name[i];
+            if (c == ' ') {
+                glyphs.push_back(Common::FONT4_blank);
+            } else if (c >= 'A' && c <= 'Z') {
+                char lower = c + 32;
+                switch (lower) {
+                    case 'a': glyphs.push_back(Common::FONT4_a); break;
+                    case 'b': glyphs.push_back(Common::FONT4_b); break;
+                    case 'c': glyphs.push_back(Common::FONT4_c); break;
+                    case 'd': glyphs.push_back(Common::FONT4_d); break;
+                    case 'e': glyphs.push_back(Common::FONT4_e); break;
+                    case 'f': glyphs.push_back(Common::FONT4_f); break;
+                    case 'g': glyphs.push_back(Common::FONT4_g); break;
+                    case 'h': glyphs.push_back(Common::FONT4_h); break;
+                    case 'i': glyphs.push_back(Common::FONT4_i); break;
+                    case 'j': glyphs.push_back(Common::FONT4_j); break;
+                    case 'k': glyphs.push_back(Common::FONT4_k); break;
+                    case 'l': glyphs.push_back(Common::FONT4_l); break;
+                    case 'm': glyphs.push_back(Common::FONT4_m); break;
+                    case 'n': glyphs.push_back(Common::FONT4_n); break;
+                    case 'o': glyphs.push_back(Common::FONT4_o); break;
+                    case 'p': glyphs.push_back(Common::FONT4_p); break;
+                    case 'q': glyphs.push_back(Common::FONT4_q); break;
+                    case 'r': glyphs.push_back(Common::FONT4_r); break;
+                    case 's': glyphs.push_back(Common::FONT4_s); break;
+                    case 't': glyphs.push_back(Common::FONT4_t); break;
+                    case 'u': glyphs.push_back(Common::FONT4_u); break;
+                    case 'v': glyphs.push_back(Common::FONT4_v); break;
+                    case 'w': glyphs.push_back(Common::FONT4_w); break;
+                    case 'x': glyphs.push_back(Common::FONT4_x); break;
+                    case 'y': glyphs.push_back(Common::FONT4_y); break;
+                    case 'z': glyphs.push_back(Common::FONT4_z); break;
+                    default: glyphs.push_back(Common::FONT4_blank); break;
+                }
+            } else if (c >= 'a' && c <= 'z') {
+                switch (c) {
+                    case 'a': glyphs.push_back(Common::FONT4_a); break;
+                    case 'b': glyphs.push_back(Common::FONT4_b); break;
+                    case 'c': glyphs.push_back(Common::FONT4_c); break;
+                    case 'd': glyphs.push_back(Common::FONT4_d); break;
+                    case 'e': glyphs.push_back(Common::FONT4_e); break;
+                    case 'f': glyphs.push_back(Common::FONT4_f); break;
+                    case 'g': glyphs.push_back(Common::FONT4_g); break;
+                    case 'h': glyphs.push_back(Common::FONT4_h); break;
+                    case 'i': glyphs.push_back(Common::FONT4_i); break;
+                    case 'j': glyphs.push_back(Common::FONT4_j); break;
+                    case 'k': glyphs.push_back(Common::FONT4_k); break;
+                    case 'l': glyphs.push_back(Common::FONT4_l); break;
+                    case 'm': glyphs.push_back(Common::FONT4_m); break;
+                    case 'n': glyphs.push_back(Common::FONT4_n); break;
+                    case 'o': glyphs.push_back(Common::FONT4_o); break;
+                    case 'p': glyphs.push_back(Common::FONT4_p); break;
+                    case 'q': glyphs.push_back(Common::FONT4_q); break;
+                    case 'r': glyphs.push_back(Common::FONT4_r); break;
+                    case 's': glyphs.push_back(Common::FONT4_s); break;
+                    case 't': glyphs.push_back(Common::FONT4_t); break;
+                    case 'u': glyphs.push_back(Common::FONT4_u); break;
+                    case 'v': glyphs.push_back(Common::FONT4_v); break;
+                    case 'w': glyphs.push_back(Common::FONT4_w); break;
+                    case 'x': glyphs.push_back(Common::FONT4_x); break;
+                    case 'y': glyphs.push_back(Common::FONT4_y); break;
+                    case 'z': glyphs.push_back(Common::FONT4_z); break;
+                    default: glyphs.push_back(Common::FONT4_blank); break;
+                }
+            } else {
+                glyphs.push_back(Common::FONT4_blank);
+            }
+        }
+        return glyphs;
+    }
+
+    /// @brief Obtiene el glyph FONT_ de un digito (0-9)
+    /// @param d Digito (0-9). Fuera de rango retorna FONT_0
+    /// @return Array FONT4 del digito
+    inline std::array<std::string, 4> Font4Digit(int d) {
+        switch (d) {
+            case 0: return Common::FONT_0;
+            case 1: return Common::FONT_1;
+            case 2: return Common::FONT_2;
+            case 3: return Common::FONT_3;
+            case 4: return Common::FONT_4;
+            case 5: return Common::FONT_5;
+            case 6: return Common::FONT_6;
+            case 7: return Common::FONT_7;
+            case 8: return Common::FONT_8;
+            case 9: return Common::FONT_9;
+            default: return Common::FONT_0;
+        }
+    }
 
     inline std::array<std::string, 9> ConcatFont(std::vector<std::array<std::string, 9>> fontChar, int separator) {
         std::array<std::string, 9> result { "", "", "", "", "", "", "", "", "" };

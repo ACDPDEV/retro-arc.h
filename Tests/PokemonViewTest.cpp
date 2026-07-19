@@ -20,10 +20,10 @@ int main() {
     // std::string player2Name = "";
     // Pokemon::PlayersView(player1Name, player2Name);
     // Common::Sleep(2000);
-    Pokemon::MochilaView();
+    // Pokemon::MochilaView();
     // Common::Sleep(2000);
     // int selectedPokemon = 0;
-    // Pokemon::PokemonSelectionView(selectedPokemon);
+    Pokemon::PokemonSelectionView();
     // Common::Sleep(2000);
     // Pokemon::VictoryView(player1Name, selectedPokemon, 1);
     // Common::Sleep(2000);
