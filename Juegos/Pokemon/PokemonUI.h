@@ -60,6 +60,7 @@ namespace Pokemon
     /// @param Pokemon1 
     /// @param Pokemon2 
     void PermanentBattleGraphicsView(std::string Pokemon1, std::string Pokemon2){
+        void ShowPokemonSprites();
  
         // Informacion pokemon y figuras
             // Cajas principales
@@ -89,7 +90,6 @@ namespace Pokemon
 
         Common::GoToXY(Common::AlignedX(InformationBox_2X + 2 * Margin, BoxWidth - 5 * Margin, LifeWidth, "center"), InformationBox_2Y + 3 * Margin / 2);
         std::cout << Common::Color(Common::FOREGROUND_DARK, Common::COLOR_DEFAULT) << "50/50";
-
             //Ronda
     }
 
