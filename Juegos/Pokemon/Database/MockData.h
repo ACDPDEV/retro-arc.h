@@ -5,6 +5,9 @@
 
 namespace Pokemon {
 
+    /// @brief Numero total de Pokemon disponibles en el juego
+    const int POKEMON_COUNT = 8;
+
     struct MockPokemon {
         std::string name;
         int hp;
@@ -17,8 +20,6 @@ namespace Pokemon {
         std::string description;
         int quantity;
     };
-
-    const int POKEMON_COUNT = 8;
 
     const MockPokemon MOCK_POKEMON[POKEMON_COUNT] = {
         {"Bulbasaur",  45, 45, 0},
