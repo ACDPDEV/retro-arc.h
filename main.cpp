@@ -1,5 +1,6 @@
 #include "Juegos/Buscaminas/Buscaminas.h"
 #include "Juegos/Pokemon/Pokemon.h"
+#include "Juegos/Invasion Espacial/pantallas.h"
 #include "MainMenu/Database/Options.h"
 #include "MainMenu/MainMenu.h"
 
@@ -18,7 +19,7 @@ int main() {
             // Batalla Naval
             break;
         case 3:
-            // Invasion Espacial
+            InvasionEspacial::iniciarJuego();
             break;
         case 4:
             // Tictactoe
