@@ -18,7 +18,7 @@ namespace PokemonGame
         /**
          * @brief Cantidad de pokemon que puede tener cada jugador
          */
-        static inline int maxPokemon = 6;
+        static inline int maxPokemon = 1;
 
         Game()
         {
