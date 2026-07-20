@@ -11,6 +11,12 @@
 #include "Views/PresentationView.h"
 #include "Views/PasswordView.h"
 #include "Views/WrongPasswordView.h"
+#include "Views/CreditsView.h"
+
+#include "../Juegos/Pokemon/Pokemon.h"
+#include "../Juegos/Buscaminas/Buscaminas.h"
+#include "../Juegos/Invasion Espacial/juego.h"
+#include "../Juegos/Tictactoe/Tictactoe.h"
 
 namespace MainMenu {
     inline void MainMenu() {
@@ -40,9 +46,50 @@ namespace MainMenu {
 
             Common::TransitionComponent();
 
-            MainMenuView();
+                MainMenuView();
+
+                switch (MainMenu::OPTION) {
+                    case 0:
+                        Pokemon::Pokemon();
+                        break;
+                    case 1:
+                        Buscaminas::PlayMinesweeper();
+                        break;
+                    case 2:
+                        InvasionEspacial::ejecutarJuego("COMANDANTE");
+                        break;
+                    case 3:
+                        Tictactoe::PlayTicTacToe();
+                        break;
+                    case 4:
+                        MainMenu::CreditsView();
+                        return;
+                }
         } else {
             WrongPasswordView();
+        }
+    }
+    inline void MainMenuSelectView() {
+        while (true) {
+            MainMenuView();
+
+            switch (MainMenu::OPTION) {
+                case 0:
+                    Pokemon::Pokemon();
+                    break;
+                case 1:
+                    Buscaminas::PlayMinesweeper();
+                    break;
+                case 2:
+                    InvasionEspacial::ejecutarJuego("COMANDANTE");
+                    break;
+                case 3:
+                    Tictactoe::PlayTicTacToe();
+                    break;
+                case 4:
+                    MainMenu::CreditsView();
+                    return;
+            }
         }
     }
 }

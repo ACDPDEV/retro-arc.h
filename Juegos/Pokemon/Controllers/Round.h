@@ -243,7 +243,7 @@ namespace PokemonGame
                         int attackerId1 = turnOne.GetPlayer().GetActivePokemon()
                             ? turnOne.GetPlayer().GetActivePokemon()->GetId() : -1;
                         ::Pokemon::PlayAttackForPokemon(attackerId1);
-                        ::Pokemon::AttackResultView(atkName1, moveName1, defName1, damage1, eff1);
+                        ::Pokemon::AttackResultView(turnOne.GetPlayer().GetName(), atkName1, moveName1, defName1, damage1, eff1);
                         // Low health sound if defender fainted
                         if (turnTwo.GetPlayer().GetActivePokemon() && turnTwo.GetPlayer().GetActivePokemon()->IsFainted()) {
                             ::Pokemon::PlayLowHealthSound();
@@ -274,7 +274,7 @@ namespace PokemonGame
                         int attackerId2 = turnTwo.GetPlayer().GetActivePokemon()
                             ? turnTwo.GetPlayer().GetActivePokemon()->GetId() : -1;
                         ::Pokemon::PlayAttackForPokemon(attackerId2);
-                        ::Pokemon::AttackResultView(atkName2, moveName2, defName2, damage2, eff2);
+                        ::Pokemon::AttackResultView(turnTwo.GetPlayer().GetName(), atkName2, moveName2, defName2, damage2, eff2);
                         // Low health sound if defender fainted
                         if (turnOne.GetPlayer().GetActivePokemon() && turnOne.GetPlayer().GetActivePokemon()->IsFainted()) {
                             ::Pokemon::PlayLowHealthSound();

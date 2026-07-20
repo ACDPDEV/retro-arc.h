@@ -232,9 +232,9 @@ namespace Pokemon {
         // Get active pokemon name for the prompt
         std::string pokeName = playerOne.GetActivePokemon() ? playerOne.GetActivePokemon()->GetName() : "???";
 
-        // Prompt box: "Que hara {pokemon}?"
+        // Prompt box: "Turno de {player} — {pokemon}?"
         Common::PrintPrimaryBox(BattleMargin, BattleOptionsY + 1, BattleBoxWidth - BattleMargin, 2 * BattleBoxHeight,
-            {"Que hara", pokeName + "?"}, Common::FOREGROUND_DARK, Common::FOREGROUND_DARK, Common::FOREGROUND_LIGHT);
+            {"Turno de " + playerOne.GetName(), pokeName + "?"}, Common::FOREGROUND_DARK, Common::FOREGROUND_DARK, Common::FOREGROUND_LIGHT);
 
         // Menu options in 2x2 grid: [0]=FIGHT [1]=BAG [2]=SONIDO [3]=RUN
         std::vector<std::string> options = {"LUCHAR", "MOCHILA", "SONIDO", "HUIDA"};
@@ -295,7 +295,7 @@ namespace Pokemon {
 
             // Redraw prompt
             Common::PrintPrimaryBox(BattleMargin, BattleOptionsY + 1, BattleBoxWidth - BattleMargin, 2 * BattleBoxHeight,
-                {"Que hara", pokeName + "?"}, Common::FOREGROUND_DARK, Common::FOREGROUND_DARK, Common::FOREGROUND_LIGHT);
+                {"Turno de " + playerOne.GetName(), pokeName + "?"}, Common::FOREGROUND_DARK, Common::FOREGROUND_DARK, Common::FOREGROUND_LIGHT);
 
             Common::DrawBottomBar();
         }
@@ -340,10 +340,10 @@ namespace Pokemon {
             return -1;
         }
 
-        // Info box: "Ataque tipo {activePokemonType}"
+        // Info box: player name + attack type
         std::string typeStr = PokemonTypeToString(activePoke->GetType());
         Common::PrintPrimaryBox(BattleMargin, BattleOptionsY + 1, BattleBoxWidth - BattleMargin, 2 * BattleBoxHeight,
-            {"Ataque tipo", typeStr}, Common::FOREGROUND_DARK, Common::FOREGROUND_DARK, Common::FOREGROUND_LIGHT);
+            {playerOne.GetName(), "Ataque tipo " + typeStr}, Common::FOREGROUND_DARK, Common::FOREGROUND_DARK, Common::FOREGROUND_LIGHT);
 
         int selectedOption = 0;
         const int menuX = 2 * BattleMargin + BattleBoxWidth;
@@ -390,7 +390,7 @@ namespace Pokemon {
 
             // Redraw info box
             Common::PrintPrimaryBox(BattleMargin, BattleOptionsY + 1, BattleBoxWidth - BattleMargin, 2 * BattleBoxHeight,
-                {"Ataque tipo", typeStr}, Common::FOREGROUND_DARK, Common::FOREGROUND_DARK, Common::FOREGROUND_LIGHT);
+                {playerOne.GetName(), "Ataque tipo " + typeStr}, Common::FOREGROUND_DARK, Common::FOREGROUND_DARK, Common::FOREGROUND_LIGHT);
 
             Common::DrawBottomBar();
         }
@@ -407,7 +407,11 @@ namespace Pokemon {
     /// @return Item ID or -1 if cancelled or bag empty
     inline int BagMenuView(PokemonGame::Player& playerOne, PokemonGame::Player& playerTwo, bool flipPerspective = false) {
         // Draw battle background with sprites, life bars, names
-        DrawBattleBackground(playerOne, playerTwo, flipPerspective);
+        Common::DrawBackground();
+
+        // Player name indicator
+        Common::GoToXY(BattleMargin, 1);
+        std::cout << Common::Color(Common::FOREGROUND_LIGHT, Common::SELECTION_BACKGROUND) << playerOne.GetName();
 
         // Draw Mochila sprite (above the battle info boxes, not overlapping)
         Common::DrawSprite(15, 2, Mochila);
@@ -502,6 +506,10 @@ namespace Pokemon {
     /// @return Pokemon ID to switch to, or -1 if cancelled
     inline int PokemonMenuView(PokemonGame::Player& player) {
         Common::DrawBackground();
+
+        // Player name indicator
+        Common::GoToXY(BattleMargin, 1);
+        std::cout << Common::Color(Common::FOREGROUND_LIGHT, Common::SELECTION_BACKGROUND) << player.GetName();
 
         auto team = player.GetTeam();
         PokemonGame::Pokemon* activePoke = player.GetActivePokemon();
@@ -692,14 +700,16 @@ namespace Pokemon {
     // Task 2.6: AttackResultView — Attack result display
     // ============================================================
     /// @brief Displays attack result message with effectiveness
-    /// @details Shows "{attacker} ha usado {attack}!" then effectiveness message.
+    /// @details Shows "{player}: {attacker} ha usado {attack}!" then damage and effectiveness.
     ///          Brief pause before returning.
+    /// @param playerName Name of the player performing the attack
     /// @param attacker Name of the attacking Pokemon
     /// @param attackName Name of the attack used
     /// @param defender Name of the defending Pokemon
     /// @param damage Damage dealt (for display)
     /// @param effectiveness Effectiveness message (e.g., "Es muy efectivo!", "No es muy efectivo...")
     inline void AttackResultView(
+        const std::string& playerName,
         const std::string& attacker,
         const std::string& attackName,
         const std::string& defender,
@@ -708,8 +718,8 @@ namespace Pokemon {
     ) {
         Common::DrawBackground();
 
-        // Main attack message
-        std::string attackMsg = attacker + " ha usado " + attackName + "!";
+        // Main attack message with player name
+        std::string attackMsg = playerName + ": " + attacker + " ha usado " + attackName + "!";
         int msgWidth = Common::Length(attackMsg) + 8;
         if (msgWidth < 40) msgWidth = 40;
         int msgX = Common::AlignedX(0, Common::WIDTH_SCREEN, msgWidth, "center");
@@ -719,13 +729,13 @@ namespace Pokemon {
             {attackMsg},
             Common::FOREGROUND_LIGHT, Common::ORANGE, Common::SELECTION_BACKGROUND);
 
-        // Damage and effectiveness message
+        // Damage message — 2 rows below the centered attack text
         std::string dmgMsg = "-" + std::to_string(damage) + " PS";
         int dmgX = Common::AlignedX(0, Common::WIDTH_SCREEN, Common::Length(dmgMsg) + 4, "center");
-        Common::DrawText(dmgX, msgY + 3, -1, -1,
+        Common::DrawText(dmgX, msgY + 5, -1, -1,
             {dmgMsg}, Common::RED, Common::SELECTION_BACKGROUND);
 
-        // Effectiveness line (if not empty)
+        // Effectiveness line (if not empty) — 2 rows below damage text
         if (!effectiveness.empty()) {
             int effX = Common::AlignedX(0, Common::WIDTH_SCREEN, Common::Length(effectiveness) + 4, "center");
             std::array<int, 3> effColor = Common::FOREGROUND_LIGHT;
@@ -736,7 +746,7 @@ namespace Pokemon {
             } else if (effectiveness.find("poco") != std::string::npos) {
                 effColor = Common::DARK_RED;
             }
-            Common::DrawText(effX, msgY + 5, -1, -1,
+            Common::DrawText(effX, msgY + 7, -1, -1,
                 {effectiveness}, effColor, Common::SELECTION_BACKGROUND);
         }
 

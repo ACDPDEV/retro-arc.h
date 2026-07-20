@@ -9,9 +9,9 @@ namespace MainMenu {
     const std::vector<std::string> OPTIONS = {
         "Pokemon",
         "Buscaminas",
-        "Batalla Naval",
         "Tic Tac Toe",
-        "Invasores Espaciales",
-        "Creditos"
+        "Invasion Espacial",
+        "Creditos",
+        "Salir"
     };
 }
