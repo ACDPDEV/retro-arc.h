@@ -15,6 +15,7 @@ namespace PokemonGame
             PokemonGame::TurnController playerOneTurn;
             PokemonGame::TurnController playerTwoTurn;
             bool finished = false;
+            int countRounds = 0;
     
         public:
     
@@ -31,6 +32,7 @@ namespace PokemonGame
     
             void Start()
             {
+                ++countRounds;
                 playerOneTurn.GetPlayer().ResetForNewBattle();
                 playerTwoTurn.GetPlayer().ResetForNewBattle();
                 while (!finished)
