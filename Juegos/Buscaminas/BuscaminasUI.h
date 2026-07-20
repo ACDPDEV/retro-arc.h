@@ -63,13 +63,13 @@ namespace Buscaminas
     }
 
     // ─────────────────────────────────────────────────────────────────────────
-    // VIEW 1: MainMenu
+    // VIEW 1: Title
     // ─────────────────────────────────────────────────────────────────────────
-    /// @brief Main menu — title + 4 options in 2×2 grid
-    /// @return 0=Jugar, 1=Créditos, 2=Config, 3=Volver
-    inline int MainMenuView()
+    /// @brief Title screen — vertical menu selector with 4 options
+    /// @return 0=Jugar, 1=Instrucciones, 2=Config, 3=Volver, -1=Esc
+    inline int TitleView()
     {
-        const std::vector<std::string> options = {"JUGAR", "CRÉDITOS", "CONFIGURACIONES", "VOLVER"};
+        const std::vector<std::string> options = {"JUGAR", "INSTRUCCIONES", "CONFIGURACIONES", "VOLVER"};
         const std::vector<std::array<int, 3>> optionColors = {
             Common::ORANGE, Common::GRAY, Common::LIGHT_BLUE, Common::LIGHT_GREEN
         };
@@ -84,10 +84,11 @@ namespace Buscaminas
              Common::FONT_A, Common::FONT_S}, 2);
         const auto titleGradient = Common::Gradient(9, Common::YELLOW, Common::ORANGE);
 
-        // Grid positions
-        const int gridTotalWidth = 2 * BoxWidth + Margin;
-        const int gridX = (Common::WIDTH_SCREEN - gridTotalWidth) / 2;
-        const int gridY = 22;
+        // Vertical menu layout
+        const int boxWidth = 40;
+        const int boxX = (Common::WIDTH_SCREEN - boxWidth) / 2;
+        const int boxStartY = 14;
+        const int boxGap = BoxHeight + Margin;
 
         do {
             Common::EnableUTF8();
@@ -95,7 +96,7 @@ namespace Buscaminas
             Common::DrawBackground();
             Common::HideCursor();
 
-            // Draw title
+            // Draw font title
             for (int i = 0; i < 9; i++) {
                 Common::DrawText(
                     Common::AlignedX(0, Common::WIDTH_SCREEN, Common::Length(titleFont[i]), "center"),
@@ -105,18 +106,24 @@ namespace Buscaminas
                 );
             }
 
-            // Draw option boxes (2×2 grid)
+            // Draw subtitle
+            const std::string subtitle = "SELECCIONA UNA OPCIÓN";
+            Common::GoToXY(Common::AlignedX(0, Common::WIDTH_SCREEN, Common::Length(subtitle), "center"), 12);
+            std::cout << Common::Color(Common::YELLOW, Common::BACKGROUND) << subtitle;
+
+            // Draw option boxes (vertical list)
             for (int i = 0; i < 4; i++) {
-                int boxX = (i % 2 == 0) ? gridX : gridX + BoxWidth + Margin;
-                int boxY = (i / 2 == 0) ? gridY : gridY + BoxHeight + Margin;
-                DrawOptionBox(boxX, boxY, BoxWidth, BoxHeight, options[i], optionColors[i], i == option);
+                int y = boxStartY + i * boxGap;
+                DrawOptionBox(boxX, y, boxWidth, BoxHeight, options[i], optionColors[i], i == option);
             }
 
-            DrawBottomBarWithText("Usa flechas para navegar, Enter para seleccionar");
+            DrawBottomBarWithText("Flechas arriba/abajo para navegar, Enter para seleccionar");
 
             Common::key = Common::ReadConsoleChar();
             if (Common::IsNavigationKey(Common::key)) {
                 Common::SetOption(option, minOption, maxOption, Common::key);
+            } else if (Common::key == Common::KEY_ESCAPE) {
+                return -1;
             }
 
         } while (!Common::IsActionKey(Common::key));
@@ -431,17 +438,17 @@ namespace Buscaminas
     }
 
     // ─────────────────────────────────────────────────────────────────────────
-    // VIEW 6: Credits
+    // VIEW 6: Instructions
     // ─────────────────────────────────────────────────────────────────────────
-    /// @brief Credits screen
-    inline void CreditsView()
+    /// @brief Instructions screen
+    inline void InstructionsView()
     {
         Common::EnableUTF8();
         Common::Clear();
         Common::DrawBackground();
         Common::HideCursor();
 
-        const std::string title = "CRÉDITOS";
+        const std::string title = "INSTRUCCIONES";
         Common::GoToXY(Common::AlignedX(0, Common::WIDTH_SCREEN, Common::Length(title), "center"), HUD_Y + 4);
         std::cout << Common::Color(Common::YELLOW, Common::BACKGROUND) << title;
 

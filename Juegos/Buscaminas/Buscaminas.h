@@ -1,4 +1,4 @@
-#pragma once 
+#pragma once
 #include <iostream>
 #include <array>
 #include <vector>
@@ -18,16 +18,16 @@ namespace Minesweeper
         // ======================================================================
         // CONFIGURACIONES
         // ======================================================================
-    
+
         int rows = 10;
         int cols = 10;
         int minesQuantity = 8;
-        
+
         bool inGame = true;
-    
+
         while (inGame)
         {
-            int menuOption = Buscaminas::MainMenuView();
+            int menuOption = Buscaminas::TitleView();
 
             switch (menuOption)
             {
@@ -78,26 +78,26 @@ namespace Minesweeper
                     break;
                 }
 
-                // OPCIÓN: CRÉDITOS
+                // OPCIÓN: INSTRUCCIONES
                 case 1:
-                    Buscaminas::CreditsView();
+                    Buscaminas::InstructionsView();
                     break;
-                
+
                 // OPCIÓN: CONFIGURACIONES
                 case 2:
                     Buscaminas::ConfigView();
                     break;
-                
+
                 // OPCIÓN: VOLVER
                 case 3:
                     inGame = false;
                     break;
-                
+
                 default:
                     break;
-            }    
-    
+            }
+
         }
-        
+
     }
 }
