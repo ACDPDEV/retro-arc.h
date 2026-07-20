@@ -25,6 +25,7 @@
 #include "../PokemonStaticSprites/PsyduckFront.h"
 #include "../PokemonStaticSprites/RockruffFront.h"
 #include "../PokemonStaticSprites/SquirtleFront.h"
+#include "../Database/MockData.h"
 
 namespace Pokemon {
 
@@ -115,7 +116,7 @@ namespace Pokemon {
         Common::DrawText(messageX, 38, -1, -1, {message}, Common::FOREGROUND_LIGHT, Common::BACKGROUND);
 
         // Contador de rondas (centrado, y=42)
-        std::string roundText = "Rondas jugadas: " + std::to_string(round);
+        std::string roundText = "Rondas jugadas: " + std::to_string(currentRound);
         const int roundX = Common::AlignedX(0, Common::WIDTH_SCREEN, Common::Length(roundText), "center");
         Common::DrawText(roundX, 42, -1, -1, {roundText}, Common::ACCENT, Common::BACKGROUND);
 

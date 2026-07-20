@@ -1,13 +1,11 @@
 #pragma once
 
 #include "Command.h"
-#include "../Controllers/Battle.h"
 #include "../Models/Pokemon.h"
 #include "../Models/Player.h"
 
 namespace PokemonGame
 {
-    class PokemonGame::Pokemon;
     
     class SwitchPokemonCommand : public PokemonGame::Command
     {

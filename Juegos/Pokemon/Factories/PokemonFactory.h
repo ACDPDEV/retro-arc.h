@@ -12,7 +12,7 @@ namespace PokemonGame
     class PokemonFactory
     {
         public:
-            static std::unique_ptr<PokemonGame::Pokemon> Create(int pokemonId)
+            static std::shared_ptr<PokemonGame::Pokemon> Create(int pokemonId)
             {
                 // 1. Buscar la especie correspondiente en la base de datos estática global
                 const PokemonDb::PokemonSpecie* targetSpecie = nullptr;
@@ -33,7 +33,7 @@ namespace PokemonGame
                 }
 
                 // 2. Instanciar el objeto Pokémon usando el diseño metodológico de atributos mitigados
-                auto newPokemon = std::make_unique<PokemonGame::Pokemon>(
+                auto newPokemon = std::make_shared<PokemonGame::Pokemon>(
                     targetSpecie->GetId(),
                     targetSpecie->GetName(),
                     targetSpecie->GetType(),

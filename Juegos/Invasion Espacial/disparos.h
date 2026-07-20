@@ -1,19 +1,28 @@
-#ifndef DISPAROS_H
-#define DISPAROS_H
+/// @file disparos.h
+/// @brief Sistema de disparos del juego Invasion Espacial.
+/// @details Player bullets, enemy bullets, and boss lasers.
+///          All functions in namespace InvasionEspacial.
+#pragma once
 
 #include <iostream>
-#include <windows.h>
-#include <conio.h>
 
-#include "consola2.h"
+#include "../../Common/Input.h"
 #include "figuras.h"
 
 using namespace std;
 
+namespace InvasionEspacial {
+
 //=========================================================
 // DISPARAR JUGADOR
 //=========================================================
-void dispararJugador(int xJugador, int yJugador,
+/// @brief Activa el disparo del jugador
+/// @param xJugador Columna del jugador
+/// @param yJugador Fila del jugador
+/// @param xBala Columna de la bala (se modifica)
+/// @param yBala Fila de la bala (se modifica)
+/// @param disparando Estado del disparo (se modifica)
+inline void dispararJugador(int xJugador, int yJugador,
                      int &xBala, int &yBala,
                      bool &disparando)
 {
@@ -25,37 +34,48 @@ void dispararJugador(int xJugador, int yJugador,
         disparando = true;
     }
 }
+
 //=========================================================
 // MOVER BALA DEL JUGADOR
 //=========================================================
-void moverBalaJugador(int &x, int &y,
+/// @brief Mueve la bala del jugador hacia arriba
+/// @param x Columna de la bala (se modifica)
+/// @param y Fila de la bala (se modifica)
+/// @param disparando Estado del disparo (se modifica)
+inline void moverBalaJugador(int &x, int &y,
                       bool &disparando)
 {
     if(disparando)
     {
-        borrarBalaJugador(x,y);
+        borrarBalaJugador(x, y);
 
         y -= 2;
 
-        if(y<=0)
+        if(y <= 0)
         {
-            disparando=false;
+            disparando = false;
             return;
         }
 
-        dibujarBalaJugador(x,y);
+        dibujarBalaJugador(x, y);
     }
 }
+
 //=========================================================
 // DISPARAR OVNI 1
 //=========================================================
-void dispararOvni1(int xOvni, int yOvni,
+/// @brief Dispara bala desde OVNI 1 (con probabilidad aleatoria)
+/// @param xOvni Columna del OVNI
+/// @param yOvni Fila del OVNI
+/// @param xBala Columna de la bala (se modifica)
+/// @param yBala Fila de la bala (se modifica)
+/// @param disparando Estado del disparo (se modifica)
+inline void dispararOvni1(int xOvni, int yOvni,
                    int &xBala, int &yBala,
                    bool &disparando)
 {
     if(!disparando)
     {
-        // Dispara pocas veces
         if(rand() % 120 == 0)
         {
             xBala = xOvni + 15;
@@ -65,20 +85,24 @@ void dispararOvni1(int xOvni, int yOvni,
         }
     }
 }
+
 //=========================================================
 // MOVER BALA OVNI 1
 //=========================================================
-void moverBalaOvni1(int &x, int &y,
+/// @brief Mueve la bala del OVNI 1 hacia abajo
+/// @param x Columna de la bala (se modifica)
+/// @param y Fila de la bala (se modifica)
+/// @param disparando Estado del disparo (se modifica)
+inline void moverBalaOvni1(int &x, int &y,
                     bool &disparando)
 {
     if(disparando)
     {
         borrarBalaOvni(x, y);
 
-        // Baja a velocidad normal
         y++;
 
-        if(y >= ALTO_PANTALLA)
+        if(y >= Common::VS_HEIGHT)
         {
             disparando = false;
             return;
@@ -87,16 +111,22 @@ void moverBalaOvni1(int &x, int &y,
         dibujarBalaOvni(x, y);
     }
 }
+
 //=========================================================
 // DISPARAR OVNI 2
 //=========================================================
-void dispararOvni2(int xOvni, int yOvni,
+/// @brief Dispara bala desde OVNI 2 (mayor frecuencia)
+/// @param xOvni Columna del OVNI
+/// @param yOvni Fila del OVNI
+/// @param xBala Columna de la bala (se modifica)
+/// @param yBala Fila de la bala (se modifica)
+/// @param disparando Estado del disparo (se modifica)
+inline void dispararOvni2(int xOvni, int yOvni,
                    int &xBala, int &yBala,
                    bool &disparando)
 {
     if(!disparando)
     {
-        // Dispara con mayor frecuencia
         if(rand() % 70 == 0)
         {
             xBala = xOvni + 22;
@@ -106,20 +136,24 @@ void dispararOvni2(int xOvni, int yOvni,
         }
     }
 }
+
 //=========================================================
 // MOVER BALA OVNI 2
 //=========================================================
-void moverBalaOvni2(int &x, int &y,
+/// @brief Mueve la bala del OVNI 2 hacia abajo (rápido)
+/// @param x Columna de la bala (se modifica)
+/// @param y Fila de la bala (se modifica)
+/// @param disparando Estado del disparo (se modifica)
+inline void moverBalaOvni2(int &x, int &y,
                     bool &disparando)
 {
     if(disparando)
     {
         borrarBalaOvni(x, y);
 
-        // Baja m�s r�pido
         y += 2;
 
-        if(y >= ALTO_PANTALLA)
+        if(y >= Common::VS_HEIGHT)
         {
             disparando = false;
             return;
@@ -128,24 +162,30 @@ void moverBalaOvni2(int &x, int &y,
         dibujarBalaOvni(x, y);
     }
 }
+
 //=========================================================
 // DISPARAR JEFE FINAL
 //=========================================================
-void dispararJefeFinal(int xJefe, int yJefe,
+/// @brief Dispara doble láser desde el jefe final
+/// @param xJefe Columna del jefe
+/// @param yJefe Fila del jefe
+/// @param xLaser1 Columna del láser izquierdo (se modifica)
+/// @param yLaser1 Fila del láser izquierdo (se modifica)
+/// @param xLaser2 Columna del láser derecho (se modifica)
+/// @param yLaser2 Fila del láser derecho (se modifica)
+/// @param disparando Estado del disparo (se modifica)
+inline void dispararJefeFinal(int xJefe, int yJefe,
                        int &xLaser1, int &yLaser1,
                        int &xLaser2, int &yLaser2,
                        bool &disparando)
 {
     if(!disparando)
     {
-        // Probabilidad de disparar
         if(rand() % 50 == 0)
         {
-            // L�ser izquierdo
             xLaser1 = xJefe + 12;
             yLaser1 = yJefe + 18;
 
-            // L�ser derecho
             xLaser2 = xJefe + 48;
             yLaser2 = yJefe + 18;
 
@@ -153,10 +193,17 @@ void dispararJefeFinal(int xJefe, int yJefe,
         }
     }
 }
+
 //=========================================================
 // MOVER LASER DEL JEFE FINAL
 //=========================================================
-void moverLaserJefe(int &xLaser1, int &yLaser1,
+/// @brief Mueve ambos láseres del jefe hacia abajo
+/// @param xLaser1 Columna del láser izquierdo (se modifica)
+/// @param yLaser1 Fila del láser izquierdo (se modifica)
+/// @param xLaser2 Columna del láser derecho (se modifica)
+/// @param yLaser2 Fila del láser derecho (se modifica)
+/// @param disparando Estado del disparo (se modifica)
+inline void moverLaserJefe(int &xLaser1, int &yLaser1,
                     int &xLaser2, int &yLaser2,
                     bool &disparando)
 {
@@ -165,12 +212,10 @@ void moverLaserJefe(int &xLaser1, int &yLaser1,
         borrarLaserJefe(xLaser1, yLaser1);
         borrarLaserJefe(xLaser2, yLaser2);
 
-        // Ambos l�seres bajan
         yLaser1 += 2;
         yLaser2 += 2;
 
-        // Cuando salen de la pantalla desaparecen
-        if(yLaser1 >= ALTO_PANTALLA)
+        if(yLaser1 >= Common::VS_HEIGHT)
         {
             disparando = false;
             return;
@@ -181,4 +226,4 @@ void moverLaserJefe(int &xLaser1, int &yLaser1,
     }
 }
 
-#endif
+} // namespace InvasionEspacial

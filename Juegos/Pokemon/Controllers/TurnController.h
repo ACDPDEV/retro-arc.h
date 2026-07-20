@@ -3,12 +3,10 @@
 #include <string>
 #include <memory>
 #include <vector>
-#include "Battle.h"
 #include "../Models/Player.h"
 #include "../Models/Bag.h"
 #include "../Models/Item.h"
 #include "../Models/Pokemon.h"
-#include "../Models/Player.h"
 #include "../Enums/ChooseCommandOption.h"
 #include "../Commands/Command.h"
 #include "../Commands/AttackCommand.h"
@@ -64,6 +62,11 @@ namespace PokemonGame
                         return std::make_unique<PokemonGame::RunCommand>();
 
                         break;
+                    }
+
+                    default:
+                    {
+                        return nullptr;
                     }
                 }
             }

@@ -1,40 +1,86 @@
-#ifndef MOVIMIENTOS_H
-#define MOVIMIENTOS_H
+/// @file movimientos.h
+/// @brief Movimientos de entidades del juego Invasion Espacial.
+/// @details Player movement with arrow keys (cross-platform via Common::Getch),
+///          enemy movement patterns. All functions in namespace InvasionEspacial.
+#pragma once
 
-#include <windows.h>
-#include <conio.h>
 #include <ctime>
-#include "consola2.h"
+
+#include "../../Common/Input.h"
 #include "figuras.h"
 #include "disparos.h"
 
 using namespace std;
 
+namespace InvasionEspacial {
+
 //=========================================================
-// VELOCIDAD DE LA NAVE
+// CONSTANTES DE MOVIMIENTO
 //=========================================================
-// Cuantas columnas avanza la nave por cada pulsacion de flecha
+
+/// @brief Velocidad horizontal del jugador (columnas por pulsaci贸n)
 const int VELOCIDAD_JUGADOR = 6;
+
+//=========================================================
+// LEER TECLA DE FLECHA (cross-platform)
+//=========================================================
+
+/// @brief Decodifica c贸digo de flecha a partir del primer byte le铆do
+/// @param firstByte Primer byte le铆do con Getch()
+/// @return 75 si flecha izquierda, 77 si flecha derecha, 0 si no es flecha
+inline int GetchArrowKey(int firstByte)
+{
+    #ifdef _WIN32
+    if(firstByte == 0 || firstByte == 224)
+    {
+        return Common::Getch();
+    }
+    return 0;
+    #else
+    if(firstByte == 27)
+    {
+        if(Common::Kbhit())
+        {
+            int next = Common::Getch();
+            if(next == '[')
+            {
+                int dir = Common::Getch();
+                if(dir == 'D') return 75;
+                if(dir == 'C') return 77;
+            }
+        }
+        return 0;
+    }
+    return 0;
+    #endif
+}
 
 //=========================================================
 // MOVER JUGADOR
 //=========================================================
-void moverJugador(int &x, int y, int &xBala, int &yBala, bool &disparando)
+/// @brief Mueve el jugador seg煤n input del teclado
+/// @param x Columna del jugador (se modifica)
+/// @param y Fila del jugador
+/// @param xBala Columna de la bala (se modifica al disparar)
+/// @param yBala Fila de la bala (se modifica al disparar)
+/// @param disparando true si ya hay una bala en vuelo
+inline void moverJugador(int &x, int y, int &xBala, int &yBala, bool &disparando)
 {
     borrarJugador(x, y);
 
-    if(kbhit())
+    if(Common::Kbhit())
     {
-        int tecla = getch();
+        int tecla = Common::Getch();
 
-        // Las flechas del teclado llegan como 2 codigos seguidos:
-        // primero 0 o 224 (aviso de "tecla especial"), y despues
-        // el codigo real de la flecha (75=izquierda, 77=derecha).
-        if(tecla == 0 || tecla == 224)
+        if(tecla == ' ')
         {
-            int codigo = getch();
+            dispararJugador(x, y, xBala, yBala, disparando);
+        }
+        else
+        {
+            int flecha = GetchArrowKey(tecla);
 
-            switch(codigo)
+            switch(flecha)
             {
                 case 75: // FLECHA IZQUIERDA
                     x -= VELOCIDAD_JUGADOR;
@@ -44,23 +90,24 @@ void moverJugador(int &x, int y, int &xBala, int &yBala, bool &disparando)
 
                 case 77: // FLECHA DERECHA
                     x += VELOCIDAD_JUGADOR;
-                    if(x > ANCHO_PANTALLA - 42)
-                        x = ANCHO_PANTALLA - 42;
+                    if(x > Common::VS_WIDTH - 42)
+                        x = Common::VS_WIDTH - 42;
                     break;
             }
-        }
-        else if(tecla == ' ')
-        {
-            dispararJugador(x, y, xBala, yBala, disparando);
         }
     }
 
     dibujarJugador(x, y);
 }
+
 //=========================================================
 // MOVER METEORITO 1
 //=========================================================
-void moverMeteorito1(int &x, int &y, bool &escapo)
+/// @brief Mueve el meteorito 1 (peque帽o) hacia abajo
+/// @param x Columna (se modifica)
+/// @param y Fila (se modifica)
+/// @param escapo true si el meteorito sali贸 de la pantalla
+inline void moverMeteorito1(int &x, int &y, bool &escapo)
 {
     borrarMeteorito1(x, y);
 
@@ -69,26 +116,30 @@ void moverMeteorito1(int &x, int &y, bool &escapo)
     static int contador = 0;
     contador++;
 
-    // Cae 1 fila cada 3 frames (antes caia 1 fila CADA frame)
     if(contador >= 3)
     {
         contador = 0;
         y++;
     }
 
-    if(y > ALTO_PANTALLA)
-	{
-    escapo = true;
-    y = 0;
-    x = rand() % (ANCHO_PANTALLA - 45) + 5;
-	}
+    if(y > Common::VS_HEIGHT)
+    {
+        escapo = true;
+        y = 0;
+        x = rand() % (Common::VS_WIDTH - 45) + 5;
+    }
 
     dibujarMeteorito1(x, y);
 }
+
 //=========================================================
 // MOVER METEORITO 2
 //=========================================================
-void moverMeteorito2(int &x, int &y, bool &escapo)
+/// @brief Mueve el meteorito 2 (mediano) hacia abajo
+/// @param x Columna (se modifica)
+/// @param y Fila (se modifica)
+/// @param escapo true si el meteorito sali贸 de la pantalla
+inline void moverMeteorito2(int &x, int &y, bool &escapo)
 {
     borrarMeteorito2(x, y);
 
@@ -97,26 +148,30 @@ void moverMeteorito2(int &x, int &y, bool &escapo)
     static int contador = 0;
     contador++;
 
-    // Cae 1 fila cada 2 frames (antes caia 2 filas CADA frame)
     if(contador >= 2)
     {
         contador = 0;
         y++;
     }
 
-	if(y > ALTO_PANTALLA)
-	{
-    	escapo = true;
-    	y = 0;
-    	x = rand() % (ANCHO_PANTALLA - 45) + 5;
-	}
+    if(y > Common::VS_HEIGHT)
+    {
+        escapo = true;
+        y = 0;
+        x = rand() % (Common::VS_WIDTH - 45) + 5;
+    }
 
     dibujarMeteorito2(x, y);
 }
+
 //=========================================================
 // MOVER METEORITO 3
 //=========================================================
-void moverMeteorito3(int &x, int &y, bool &escapo)
+/// @brief Mueve el meteorito 3 (gigante) hacia abajo
+/// @param x Columna (se modifica)
+/// @param y Fila (se modifica)
+/// @param escapo true si el meteorito sali贸 de la pantalla
+inline void moverMeteorito3(int &x, int &y, bool &escapo)
 {
     borrarMeteorito3(x, y);
 
@@ -125,30 +180,33 @@ void moverMeteorito3(int &x, int &y, bool &escapo)
     static int contador = 0;
     contador++;
 
-    // Cae 1 fila cada 2 frames (antes caia 1 fila CADA frame)
     if(contador >= 2)
     {
         contador = 0;
         y++;
     }
 
-	if(y > ALTO_PANTALLA)
-	{
-   	 escapo = true;
-   	 y = 0;
-   	 x = rand() % (ANCHO_PANTALLA - 45) + 5;
-	}
+    if(y > Common::VS_HEIGHT)
+    {
+        escapo = true;
+        y = 0;
+        x = rand() % (Common::VS_WIDTH - 45) + 5;
+    }
 
     dibujarMeteorito3(x, y);
 }
+
 //=========================================================
 // MOVER OVNI 1
 //=========================================================
-void moverOvni1(int &x, int &y, int &direccion)
+/// @brief Mueve el OVNI tipo 1 (zigzag + ca铆da)
+/// @param x Columna (se modifica)
+/// @param y Fila (se modifica)
+/// @param direccion Direcci贸n horizontal (1 o -1, se modifica)
+inline void moverOvni1(int &x, int &y, int &direccion)
 {
     borrarOvni1(x, y);
 
-    // Movimiento vertical (cae 1 fila cada 2 frames, antes caia cada frame)
     static int contadorY = 0;
     contadorY++;
 
@@ -158,21 +216,18 @@ void moverOvni1(int &x, int &y, int &direccion)
         y++;
     }
 
-    // Movimiento horizontal
     x += direccion;
 
-    // Cambia de direcci髇 en los bordes
     if(x <= 2)
         direccion = 1;
 
-    if(x >= ANCHO_PANTALLA - 35)
+    if(x >= Common::VS_WIDTH - 35)
         direccion = -1;
 
-    // Vuelve a aparecer arriba
-    if(y > ALTO_PANTALLA)
+    if(y > Common::VS_HEIGHT)
     {
         y = 0;
-        x = rand() % (ANCHO_PANTALLA - 35) + 2;
+        x = rand() % (Common::VS_WIDTH - 35) + 2;
 
         if(rand() % 2 == 0)
             direccion = 1;
@@ -182,14 +237,18 @@ void moverOvni1(int &x, int &y, int &direccion)
 
     dibujarOvni1(x, y);
 }
+
 //=========================================================
 // MOVER OVNI 2
 //=========================================================
-void moverOvni2(int &x, int &y, int &direccion)
+/// @brief Mueve el OVNI tipo 2 (zigzag + ca铆da lenta)
+/// @param x Columna (se modifica)
+/// @param y Fila (se modifica)
+/// @param direccion Direcci贸n horizontal (1 o -1, se modifica)
+inline void moverOvni2(int &x, int &y, int &direccion)
 {
     borrarOvni2(x, y);
 
-    // Movimiento vertical (cae 1 fila cada 3 frames, antes caia cada frame)
     static int contadorY = 0;
     contadorY++;
 
@@ -199,21 +258,18 @@ void moverOvni2(int &x, int &y, int &direccion)
         y++;
     }
 
-    // Movimiento horizontal
     x += direccion;
 
-    // Cambia de direcci髇
     if(x <= 2)
         direccion = 1;
 
-    if(x >= ANCHO_PANTALLA - 46)
+    if(x >= Common::VS_WIDTH - 46)
         direccion = -1;
 
-    // Reinicia al salir de la pantalla
-    if(y > ALTO_PANTALLA)
+    if(y > Common::VS_HEIGHT)
     {
         y = 0;
-        x = rand() % (ANCHO_PANTALLA - 46) + 2;
+        x = rand() % (Common::VS_WIDTH - 46) + 2;
 
         if(rand() % 2 == 0)
             direccion = 1;
@@ -223,23 +279,27 @@ void moverOvni2(int &x, int &y, int &direccion)
 
     dibujarOvni2(x, y);
 }
+
 //=========================================================
 // MOVER JEFE FINAL
 //=========================================================
-void moverJefe(int &x,int &y,int &direccion)
+/// @brief Mueve el jefe final (zigzag horizontal)
+/// @param x Columna (se modifica)
+/// @param y Fila (se modifica)
+/// @param direccion Direcci贸n horizontal (1 o -1, se modifica)
+inline void moverJefe(int &x, int &y, int &direccion)
 {
     borrarJefeFinal(x, y);
 
-    // Movimiento horizontal
     x += direccion;
 
-    // Rebotar en los bordes
     if(x <= 2)
         direccion = 1;
 
-    if(x >= ANCHO_PANTALLA - 55)
+    if(x >= Common::VS_WIDTH - 55)
         direccion = -1;
 
     dibujarJefeFinal(x, y);
 }
-#endif
+
+} // namespace InvasionEspacial

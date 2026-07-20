@@ -27,4 +27,32 @@ namespace Pokemon {
     /// @brief Nombre del jugador ganador
     inline std::string winnerName = "";
 
+    // ============================================================
+    // Battle State
+    // ============================================================
+
+    /// @brief HP actual del Pokemon activo del jugador 1
+    inline double battleHp1 = 0.0;
+
+    /// @brief HP maximo del Pokemon activo del jugador 1
+    inline double battleMaxHp1 = 0.0;
+
+    /// @brief HP actual del Pokemon activo del jugador 2
+    inline double battleHp2 = 0.0;
+
+    /// @brief HP maximo del Pokemon activo del jugador 2
+    inline double battleMaxHp2 = 0.0;
+
+    /// @brief ID del Pokemon activo del jugador 1 (DB ID)
+    inline int battleActivePokemonId1 = 0;
+
+    /// @brief ID del Pokemon activo del jugador 2 (DB ID)
+    inline int battleActivePokemonId2 = 0;
+
+    /// @brief Indica si la batalla esta en curso
+    inline bool battleInProgress = false;
+
+    /// @brief Turno actual (0 = jugador 1, 1 = jugador 2)
+    inline int currentTurn = 0;
+
 } // namespace Pokemon

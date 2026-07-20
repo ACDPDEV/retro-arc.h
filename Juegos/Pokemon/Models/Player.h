@@ -17,7 +17,7 @@ namespace PokemonGame
     
             std::string name;
     
-            std::vector<std::unique_ptr<PokemonGame::Pokemon>> team;
+            std::vector<std::shared_ptr<PokemonGame::Pokemon>> team;
             
             PokemonGame::Pokemon* activePokemon = nullptr;
             
@@ -39,7 +39,7 @@ namespace PokemonGame
                 return name;
             }
 
-            std::vector<std::unique_ptr<PokemonGame::Pokemon>> GetTeam() const
+            std::vector<std::shared_ptr<PokemonGame::Pokemon>>& GetTeam()
             {
                 return team;
             }
@@ -66,13 +66,13 @@ namespace PokemonGame
              * Agrega un pokemon al equipo del jugador
              * @param pokemon Pokemon que se va a agregar al equipo
              */
-            void AddPokemon(std::unique_ptr<PokemonGame::Pokemon> pokemon)
+            void AddPokemon(std::shared_ptr<PokemonGame::Pokemon> pokemon)
             {
                 if (team.empty())
                 {
                     activePokemon = pokemon.get();
                 }
-                team.push_back(std::move(pokemon));
+                team.push_back(pokemon);
             }
 
             bool HasPokemonWithId(int pokemonId)
@@ -150,11 +150,12 @@ namespace PokemonGame
                 }
             }
 
+            /// @brief Resetea solo flags de batalla para una nueva partida
+            /// @details Solo resetea flags de batalla. NO limpia el equipo ni la mochila,
+            ///          ya que esos datos son configurados por BuildPlayers() antes de Start().
             void ResetForNewBattle()
             {
                 canUseFocusBand = true;
-                ClearTeam();
-                bag.ClearBag();
             }
     };
 }

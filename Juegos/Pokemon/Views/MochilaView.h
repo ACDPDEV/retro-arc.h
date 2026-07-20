@@ -87,20 +87,15 @@ namespace Pokemon {
         Common::PrintPrimaryBox(titlePanelX, titlePanelY, titlePanelWidth, titlePanelHeight, itemsTitle, Common::FOREGROUND_DARK, Common::FOREGROUND_DARK, Common::FOREGROUND_LIGHT);
         Common::DrawBottomBar();
 
-        std::vector<std::string> options = {
-            "Restos",
-            "Banda Focus",
-            "Poción",
-            "Poción Máxima"
-        };
+        // Read items from MockData.h BAG_ITEMS array
+        std::vector<std::string> options;
+        std::vector<std::string> descriptions;
+        for (int i = 0; i < BAG_ITEM_COUNT; i++) {
+            options.push_back(BAG_ITEMS[i].name);
+            descriptions.push_back(BAG_ITEMS[i].description);
+        }
 
         int selectedOption = 0;
-        std::vector<std::string> descriptions = {
-            "Hola",
-            "Banda Focus",
-            "Poción",
-            "Poción Máxima"
-        };
         SelectPrimaryBox1DWithDescription(100, 15, options, descriptions, selectedOption, Common::FOREGROUND_DARK, Common::ORANGE, Common::PINK, Common::ORANGE, 50, 3);
 
 

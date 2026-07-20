@@ -8,6 +8,7 @@ namespace PokemonGame
         BAG,
         POKEMON,
         RUN,
-        QUIT
+        QUIT,
+        SONIDO
     };
 }

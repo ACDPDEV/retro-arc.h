@@ -13,6 +13,11 @@ namespace PokemonGame
 {
     class Game
     {
+    private:
+
+        /// @brief Round count from the last Start() call
+        int lastRoundCount = 0;
+
     public:
 
         /**
@@ -24,76 +29,24 @@ namespace PokemonGame
         {
         }
         ~Game() = default;
-    
-        void Start()
+
+        /// @brief Starts a game with pre-built players (bridge integration)
+        /// @details Skips team building, bag filling, and menu loop.
+        ///          Players must be fully initialized before calling this.
+        /// @param playerOne First player (already initialized)
+        /// @param playerTwo Second player (already initialized)
+        void Start(PokemonGame::Player& playerOne, PokemonGame::Player& playerTwo)
         {
-            /**
-             * TODO: Asignar los valores de las variables globales y volver a asignar cualquier cambio de los objetos
-             * al terminar el programa
-             */
-            std::string playerNameOne = Common::playerName; 
-            std::string playerNameTwo = "Jugador 2";
-            bool running = true;
-            PokemonGame::Player playerOne(playerNameOne);
-            PokemonGame::Player playerTwo(playerNameTwo);
-            while (running)
-            {
+            PokemonGame::Battle battle(playerOne, playerTwo);
+            battle.Start();
+            lastRoundCount = battle.GetRoundCount();
+        }
 
-                /**
-                 * 
-                 * TODO: 
-                 * Invocar a la clase o función que contiene la lógica de vista para seleccionar la opción. 
-                 * return : Debe devolver la opción  PokemonGame::GameOption::
-                 * 
-                 * 
-                 */
-                int option = static_cast<int>(PokemonGame::GameOption::BATTLE);
-
-                switch (option)
-                {
-                    // iniciar batalla
-                    case static_cast<int>(PokemonGame::GameOption::BATTLE):
-                    {
-                        PokemonGame::Battle battle(playerOne, playerTwo);
-
-                        bool teamOneIsReady = PokemonGame::PlayerController::BuildTeam(playerOne);
-                        if(!teamOneIsReady)
-                            break;
-                        
-                        bool teamTwoIsReady = PokemonGame::PlayerController::BuildTeam(playerTwo);
-                        if(!teamTwoIsReady)
-                            break;
-                            
-                        PokemonGame::PlayerController::SetInitialActivePokemon(playerOne);
-                        PokemonGame::PlayerController::SetInitialActivePokemon(playerTwo);
-
-                        PokemonGame::PlayerController::FillBag(playerOne);
-                        PokemonGame::PlayerController::FillBag(playerTwo);
-                        
-                        battle.Start();
-                        break;
-                    }
-
-                    // Salir
-                    case static_cast<int>(PokemonGame::GameOption::QUIT):
-                    {
-                        running = false;
-                        break;
-                    }
-                    
-                    // Configuraciones (nombre, maximo de pokemones)
-                    case static_cast<int>(PokemonGame::GameOption::CONFIG):
-                    {
-                        break;
-                    }
-                }
-            }
-
-            Common::playerName = playerOne.GetName();
-            /**
-             * TODO: Implementar variable global playerNameTwo y reasignar su valor
-             */
-            Common::playerName = playerTwo.GetName();
+        /// @brief Returns the round count from the last Start() call
+        /// @return Number of rounds played
+        int GetLastRoundCount() const
+        {
+            return lastRoundCount;
         }
     };
 }

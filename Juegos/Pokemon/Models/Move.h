@@ -61,6 +61,13 @@ namespace PokemonGame
                 return !name.empty();
             }
 
+            /// @brief Returns the move's name
+            /// @return Name string
+            std::string GetName()
+            {
+                return name;
+            }
+
             PokemonGame::PokemonType GetType()
             {
                 return type;

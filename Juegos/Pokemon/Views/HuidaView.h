@@ -60,14 +60,14 @@ namespace Pokemon {
         auto line = Common::ConcatFont(glyphs, 1);
         // Convertir array<string,4> a vector<string> para PrintPrimaryBox
         std::vector<std::string> lineVec(line.begin(), line.end());
-        Common::PrintPrimaryBox(20, 44, 160, 6, lineVec,
+        Common::PrintPrimaryBox(20, 36, 160, 6, lineVec,
             Common::FOREGROUND_LIGHT, Common::GRAY, Common::SELECTION_BACKGROUND);
 
         // Animacion de sprite desplazandose de izquierda a derecha
         const int startX = 0;
         const int endX = 160;
         const int step = 8;
-        const int spriteY = 28;
+        const int spriteY = 12;
         const int frameDelay = 80; // ms por frame
 
         for (int x = startX; x <= endX; x += step) {
