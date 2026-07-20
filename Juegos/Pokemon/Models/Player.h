@@ -139,10 +139,20 @@ namespace PokemonGame
                 return true;
             }
 
+            void UpdateEndOfTheTurnTeamEffects()
+            {
+                for (const auto& pokemonPtr : team)
+                {
+                    if (pokemonPtr != nullptr)
+                    {
+                        pokemonPtr.get()->UpdateEndOfTheTurnEffects();
+                    }
+                }
+            }
+
             void ResetForNewBattle()
             {
                 canUseFocusBand = true;
-                activePokemon = nullptr;
                 ClearTeam();
                 bag.ClearBag();
             }

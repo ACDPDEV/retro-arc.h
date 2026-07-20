@@ -19,8 +19,28 @@ namespace PokemonGame
                 turnsLeft(maxTurns)
             {}
 
-            
-
             ~Effect() = default;
+
+            PokemonGame::EffectName GetName() const 
+            { 
+                return name; 
+            }
+
+            int GetTurnsLeft() const 
+            { 
+                return turnsLeft; 
+            }
+
+            void DecreaseTurn() 
+            {
+                if (turnsLeft > 0) {
+                    turnsLeft--;
+                }
+            }
+            
+            bool IsExpired() const 
+            {
+                return turnsLeft <= 0;
+            }
     };
 }
