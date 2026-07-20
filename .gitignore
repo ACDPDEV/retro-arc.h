@@ -16,8 +16,21 @@ test_*
 
 # Don't ignore Juegos source files
 !Juegos/
+!Juegos/**/
 !Juegos/**/*.h
 !Juegos/**/*.cpp
+
+# Don't ignore Common source files
+!Common/
+!Common/**/
+!Common/**/*.h
+!Common/**/*.cpp
+
+# Don't ignore Tests source files
+!Tests/
+!Tests/**/
+!Tests/**/*.cpp
+!Tests/**/*.h
 
 # Ignore specific directories
 openspec/
