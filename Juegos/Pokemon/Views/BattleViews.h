@@ -223,8 +223,8 @@ namespace Pokemon {
     /// @param playerTwo Opponent player's data (reads active Pokemon name)
     /// @return Selected ChooseCommandOption (FIGHT, BAG, SONIDO, or RUN)
     inline PokemonGame::ChooseCommandOption BattleMenuView(PokemonGame::Player& playerOne, PokemonGame::Player& playerTwo, bool flipPerspective = false) {
-        // Start battle background music
-        StartBattleMusic();
+        // Battle music is started once per battle in Battle::Start(), not per menu draw
+        // (see Controllers/Battle.h) — do not call StartBattleMusic() here.
 
         // Draw battle background with sprites, life bars, and names
         DrawBattleBackground(playerOne, playerTwo, flipPerspective);

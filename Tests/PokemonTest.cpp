@@ -2,6 +2,7 @@
 
 
 int main() {
+    Common::InitTerminalRawMode();
     Pokemon::Pokemon();
     return 0;
 }

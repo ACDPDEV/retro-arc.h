@@ -28,8 +28,9 @@ namespace PokemonGame
     
             void Execute(
                 PokemonGame::Player& defender) override
-            {                
+            {
                 PokemonGame::Pokemon* defenderPokemon = defender.GetActivePokemon();
+                if (!defenderPokemon) return;
 
                 double damageEffectiveness = GetEffectiveness(move->GetType(), defenderPokemon->GetType());
                 

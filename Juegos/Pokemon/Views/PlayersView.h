@@ -18,6 +18,7 @@
 #include "../Database/State.h"
 #include "../Sprites/Trainer1.h"
 #include "../Sprites/Trainer2.h"
+#include "../Sound/PokemonSound.h"
 
 namespace Pokemon {
 
@@ -45,6 +46,8 @@ namespace Pokemon {
     ///          Bloquea hasta que ambos nombres sean ingresados.
     ///          Los nombres se almacenan directamente en Pokemon::playerNames[0] y Pokemon::playerNames[1].
     inline void PlayersView() {
+        PlayNameMusic();
+
         Common::DrawBackground();
 
         // ─── Dimensiones compartidas de paneles ───
@@ -146,12 +149,17 @@ namespace Pokemon {
         // ─── 4. Input bloqueante para jugador 1 ───
         Common::InputComponent(input1X, input1Y, input1Weight, input1Height, playerNames[0], "", "", "", inputP1Bg, inputP1Txt);
 
+        // Drenar cualquier tecla sobrante (p.ej. ENTER arrastrado) antes de abrir el campo de P2
+        Common::DrainInput();
+
         // ─── 5. Input bloqueante para jugador 2 ───
         Common::InputComponent(input2X, input2Y, input2Weight, input2Height, playerNames[1], "", "", "", inputP2Bg, inputP2Txt);
 
 
         // ─── 7. Posicionar cursor al final ───
         Common::GoToEnd();
+
+        StopNameMusic();
     }
 
 } // namespace Pokemon

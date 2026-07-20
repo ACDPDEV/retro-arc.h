@@ -18,6 +18,7 @@
 #include "../Components/MenuOptions.h"
 #include "../PokemonStaticSprites/CharmanderFront.h"
 #include "../PokemonStaticSprites/PikachuFront.h"
+#include "../Sound/PokemonSound.h"
 
 namespace Pokemon {
 
@@ -25,6 +26,8 @@ namespace Pokemon {
     /// @return Indice de la opcion seleccionada por el usuario (0=Jugar, 1=Instrucciones, 2=Configuraciones, 3=Volver)
     inline int TitleView() {
         OPTION = 0;
+
+        PlayOpeningMusic();
 
         Common::DrawBackground();
 
@@ -68,10 +71,15 @@ namespace Pokemon {
             {1, 1}, 1
         );
 
+        // Confirmar seleccion de opcion del menu principal (REQ-5.3)
+        PlayButtonPressSound();
+
         // Barra inferior
         Common::DrawBottomBar();
 
         Common::GoToEnd();
+
+        StopOpeningMusic();
 
         return OPTION;
     }

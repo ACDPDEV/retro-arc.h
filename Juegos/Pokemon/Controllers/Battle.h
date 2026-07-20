@@ -33,7 +33,6 @@ namespace PokemonGame
     
             void Start()
             {
-                ++countRounds;
                 playerOneTurn.GetPlayer().ResetForNewBattle();
                 playerTwoTurn.GetPlayer().ResetForNewBattle();
 
@@ -41,11 +40,14 @@ namespace PokemonGame
                 ::Pokemon::battleInProgress = true;
                 ::Pokemon::currentRound = countRounds;
 
+                // Start battle music once for the whole battle (not per-turn)
+                ::Pokemon::StartBattleMusic();
+
                 while (!finished)
                 {
                     PokemonGame::Round round(playerOneTurn, playerTwoTurn);
 
-                    round.Play();
+                    round.Play(countRounds);
 
                     ++countRounds;
                     ::Pokemon::currentRound = countRounds;
@@ -77,22 +79,11 @@ namespace PokemonGame
                 }
             }
             
-            /// @brief Checks if the battle is over
-            /// @return true if one player has lost (all Pokemon fainted or ran)
-            bool IsFinished()
-            {
-                return playerOneTurn.HasLost() || playerTwoTurn.HasLost();
-            }
-
             /// @brief Returns the number of rounds played
             /// @return Round count
             int GetRoundCount() const
             {
                 return countRounds;
             }
-    
-            void NextRound();
-    
-            void Finish();
     };
 }

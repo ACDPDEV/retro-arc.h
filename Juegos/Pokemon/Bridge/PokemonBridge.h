@@ -3,6 +3,7 @@
 #include <string>
 #include <utility>
 #include "../Database/State.h"
+#include "../Database/PokemonDatabase.h"
 #include "../Models/Player.h"
 #include "../Factories/PokemonFactory.h"
 #include "../Controllers/PlayerController.h"
@@ -10,21 +11,8 @@
 
 namespace Pokemon {
 
-    /// @brief Hardcoded mock-index to DB-ID mapping
-    /// @details mockToDbId[mockIndex] = dbSpeciesId
-    /// Mock indices: 0=Bulbasaur, 1=Charmander, 2=Squirtle, 3=Pikachu,
-    ///              4=Psyduck, 5=Eevee, 6=Rockruff, 7=Chikorita
-    const int mockToDbId[8] = {5, 8, 6, 2, 1, 7, 4, 3};
-
-    /// @brief Returns the DB species ID for a given mock index
-    /// @param mockIndex Index in the MOCK_POKEMON array (0-7)
-    /// @return DB species ID, or -1 if out of range
-    inline int MockToDbId(int mockIndex) {
-        if (mockIndex < 0 || mockIndex >= 8) {
-            return -1;
-        }
-        return mockToDbId[mockIndex];
-    }
+    // mockToDbId / MockToDbId moved to Database/PokemonDatabase.h (REQ-4.5) so
+    // MockData.h can also derive from it without duplicating the mapping.
 
     /// @brief Creates Player objects initialized from State.h globals
     /// @details Reads playerNames and selectedCurrentPokemonId from Pokemon:: namespace,
@@ -82,19 +70,20 @@ namespace Pokemon {
 
     /// @brief Creates a Game object initialized from State.h globals
     /// @details Reads playerNames and selectedCurrentPokemonId from Pokemon:: namespace,
-    ///          converts mock indices to DB IDs, creates Player objects with Pokemon,
-    ///          and returns an initialized Game. Note: Game::Start(Player&, Player&)
-    ///          overload is required for full integration; this creates the Game shell.
-    /// @return PokemonGame::Game with default configuration
+    ///          converts mock indices to DB IDs, creates Player objects with Pokemon, and
+    ///          runs the battle synchronously via Game::Start(Player&, Player&) before
+    ///          returning. The returned Game already reflects a completed battle — there is
+    ///          no deferred/async variant, since Game has no argument-less Start() to resume
+    ///          later.
+    /// @return PokemonGame::Game with the battle already played out
     inline PokemonGame::Game CreateGameFromState() {
-        // Build players from globals (stored locally for future integration)
+        // Build players from globals
         auto players = BuildPlayers();
 
-        // Create and return Game object
-        // Note: Players are not yet integrated into Game because
-        // Game::Start(Player&, Player&) overload doesn't exist yet.
-        // Full integration will happen in Phase 3.
+        // Create the Game and run the battle synchronously, same as Pokemon.h's own
+        // direct-construction path.
         PokemonGame::Game game;
+        game.Start(players.first, players.second);
         return game;
     }
 

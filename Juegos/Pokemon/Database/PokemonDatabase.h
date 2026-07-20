@@ -70,3 +70,24 @@ namespace PokemonDb {
         })
     };
 }
+
+namespace Pokemon {
+
+    /// @brief Hardcoded mock-index to DB-ID mapping
+    /// @details mockToDbId[mockIndex] = dbSpeciesId
+    /// Mock indices: 0=Bulbasaur, 1=Charmander, 2=Squirtle, 3=Pikachu,
+    ///              4=Psyduck, 5=Eevee, 6=Rockruff, 7=Chikorita
+    /// @note Moved here from Bridge/PokemonBridge.h (REQ-4.5) so both the bridge and
+    ///       MockData.h can share one mapping instead of duplicating it.
+    const int mockToDbId[8] = {5, 8, 6, 2, 1, 7, 4, 3};
+
+    /// @brief Returns the DB species ID for a given mock index
+    /// @param mockIndex Index in the MOCK_POKEMON array (0-7)
+    /// @return DB species ID, or -1 if out of range
+    inline int MockToDbId(int mockIndex) {
+        if (mockIndex < 0 || mockIndex >= 8) {
+            return -1;
+        }
+        return mockToDbId[mockIndex];
+    }
+}

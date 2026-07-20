@@ -28,6 +28,7 @@
 #include "../PokemonMiniSprites/PsyduckMini.h"
 #include "../PokemonMiniSprites/RockruffMini.h"
 #include "../PokemonMiniSprites/SquirtleMini.h"
+#include "../Sound/PokemonSound.h"
 
 namespace Pokemon {
 
@@ -308,6 +309,8 @@ namespace Pokemon {
             } else if (Common::IsActionKey(Common::key)) {
                 // Confirmar seleccion y persistir
                 Pokemon::selectedCurrentPokemonId[Pokemon::currentSelectionPlayer] = selectedPokemon;
+                PlayButtonPressSound();
+                Common::DrainInput();
                 break;
             }
 

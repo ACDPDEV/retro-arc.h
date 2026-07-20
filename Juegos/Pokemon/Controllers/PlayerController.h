@@ -17,6 +17,13 @@ namespace PokemonGame
     {
         public:
 
+            /// @brief Bag item id for Potion, used both when filling the bag and when
+            ///        Round.h checks which item id was selected to play the heal SFX.
+            static constexpr int ITEM_ID_POTION = 3;
+
+            /// @brief Bag item id for Super Potion (see ITEM_ID_POTION).
+            static constexpr int ITEM_ID_SUPER_POTION = 4;
+
             static void FillBag(PokemonGame::Player& player)
             {
                 std::shared_ptr<PokemonGame::Item> focusBand = std::make_shared<PokemonGame::FocusBand>(1, 1);
@@ -25,10 +32,10 @@ namespace PokemonGame
                 std::shared_ptr<PokemonGame::Item> leftOver = std::make_shared<PokemonGame::Leftover>(2, 3);
                 player.GetBag().AddItem(leftOver);
 
-                std::shared_ptr<PokemonGame::Item> potion = std::make_shared<PokemonGame::Potion>(3, 3, 10);
+                std::shared_ptr<PokemonGame::Item> potion = std::make_shared<PokemonGame::Potion>(ITEM_ID_POTION, 3, 10);
                 player.GetBag().AddItem(potion);
 
-                std::shared_ptr<PokemonGame::Item> superPotion = std::make_shared<PokemonGame::SuperPotion>(4, 1, 30);
+                std::shared_ptr<PokemonGame::Item> superPotion = std::make_shared<PokemonGame::SuperPotion>(ITEM_ID_SUPER_POTION, 1, 30);
                 player.GetBag().AddItem(superPotion);
             }
 

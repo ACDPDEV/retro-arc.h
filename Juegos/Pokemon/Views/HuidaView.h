@@ -23,6 +23,7 @@
 #include "../PokemonAnimatedSprites/EeveeFront.h"
 #include "../PokemonAnimatedSprites/RockruffFront.h"
 #include "../PokemonAnimatedSprites/ChikoritaFront.h"
+#include "../Sound/PokemonSound.h"
 
 namespace Pokemon {
 
@@ -31,6 +32,8 @@ namespace Pokemon {
     ///          y el contador de rondas. La animacion completa antes de retornar.
     ///          Lee los valores de los globals: currentPokemonName, playerNames[currentSelectionPlayer], currentRound.
     inline void HuidaView() {
+        PlayRunEffectSound();
+
         Common::DrawBackground();
 
         // Array de sprites animados de Pokemon (ordenado por spriteIndex)

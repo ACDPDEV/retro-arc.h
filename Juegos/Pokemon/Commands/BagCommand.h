@@ -24,6 +24,8 @@ namespace PokemonGame
             void Execute(
                 PokemonGame::Player& affectedPlayer) override
             {
+                if (!affectedPlayer.GetActivePokemon()) return;
+
                 item->Use(affectedPlayer.GetActivePokemon());
                 item->RegisterUse();
             }

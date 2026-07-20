@@ -118,7 +118,7 @@ namespace PokemonGame
 
             bool CanPlay()
             {
-                return ! activePokemon->IsRunning();
+                return activePokemon && ! activePokemon->IsRunning();
             }
 
             bool IsTeamDefeated() const

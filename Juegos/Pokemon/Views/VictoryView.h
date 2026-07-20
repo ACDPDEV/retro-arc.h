@@ -26,6 +26,7 @@
 #include "../PokemonStaticSprites/RockruffFront.h"
 #include "../PokemonStaticSprites/SquirtleFront.h"
 #include "../Database/MockData.h"
+#include "../Sound/PokemonSound.h"
 
 namespace Pokemon {
 
@@ -37,6 +38,8 @@ namespace Pokemon {
     ///          ganador a partir de selectedCurrentPokemonId[winnerIndex] donde winnerIndex se obtiene
     ///          comparando winnerName con playerNames[0] y playerNames[1].
     inline void VictoryView() {
+        PlayVictorySound();
+
         Common::DrawBackground();
 
         // Determine winner index and pokemon index from globals
@@ -111,7 +114,7 @@ namespace Pokemon {
         }
 
         // Mensaje de victoria (centrado, y=38)
-        std::string message = "¡El " + winnerName + " ha ganado la batalla!";
+        std::string message = "¡El " + MOCK_POKEMON[pokemonIndex].name + " de " + winnerName + " ha ganado la batalla!";
         const int messageX = Common::AlignedX(0, Common::WIDTH_SCREEN, Common::Length(message), "center");
         Common::DrawText(messageX, 38, -1, -1, {message}, Common::FOREGROUND_LIGHT, Common::BACKGROUND);
 
@@ -215,7 +218,7 @@ namespace Pokemon {
             }
 
             // Mensaje de victoria (centrado, y=38)
-            std::string message = "¡El " + winnerName + " ha ganado la batalla!";
+            std::string message = "¡El " + MOCK_POKEMON[pokemonIndex].name + " de " + winnerName + " ha ganado la batalla!";
             const int messageX = Common::AlignedX(0, Common::WIDTH_SCREEN, Common::Length(message), "center");
             Common::DrawText(messageX, 38, -1, -1, {message}, Common::FOREGROUND_LIGHT, Common::BACKGROUND);
 

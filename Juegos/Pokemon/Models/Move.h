@@ -41,6 +41,11 @@ namespace PokemonGame
             }
 
             Move()
+                :
+                id(0),
+                type(PokemonGame::PokemonType::NORMAL),
+                baseDamage(0.0),
+                accuracy(0.0)
             {
 
             }

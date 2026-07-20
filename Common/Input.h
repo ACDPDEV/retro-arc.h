@@ -87,6 +87,16 @@ inline std::string Input() {
     return line;
 }
 
+/// @brief Descarta cualquier tecla pendiente en el buffer de entrada
+/// @details Construido sobre Kbhit()/Getch() (ya abstraídos por SO en Terminal.h),
+///          por lo que es cross-platform sin necesidad de #ifdef propio. Uso: llamar
+///          entre dos lecturas bloqueantes consecutivas para evitar que una tecla
+///          sobrante (auto-repetición, typeahead) de la primera lectura sea consumida
+///          por la segunda.
+inline void DrainInput() {
+    while (Kbhit()) Getch();
+}
+
 /// @brief Intenta leer una línea completa de forma no bloqueante
 /// @param[out] line Línea completa leída al presionar Enter
 /// @return true si se completó la línea (se presionó Enter), false si no hay entrada lista

@@ -4,7 +4,6 @@
 #include <memory>
 #include "../../../Common/Variables.h"
 #include "../Models/Player.h"
-#include "../Enums/GameOption.h"
 #include "PlayerController.h"
 #include "Battle.h"
 
