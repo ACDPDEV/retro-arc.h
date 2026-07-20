@@ -69,6 +69,12 @@ namespace PokemonGame
                     delete move;
                 }
                 moves.clear();
+
+                for (PokemonGame::Effect* effect : startOfTheRoundEffects)
+                {
+                    delete effect;
+                }
+                startOfTheRoundEffects.clear();
             }
 
             int GetId() const
@@ -114,30 +120,50 @@ namespace PokemonGame
                 }
             }
 
-            void updateEndOfTheTurnEffects() 
+            void UpdateEndOfTheTurnEffects() 
             {
-                // if (startOfTheRoundEffects.empty()) return;
+                if (startOfTheRoundEffects.empty()) return;
 
-                // int totalHealing = 0;
-                // // Iteramos al revés o con un iterador para poder eliminar los expirados
-                // for (auto it = startOfTheRoundEffects.begin(); it != startOfTheRoundEffects.end(); ) {
-                //     if (it->turnsLeft > 0) {
-                //         // 5% de la vida máxima
-                //         totalHealing += static_cast<int>(maxHp * 0.05);
-                //         it->turnsLeft--;
-                //         ++it;
-                //     } else {
-                //         it = startOfTheRoundEffects.erase(it); // Elimina si ya pasaron los 3 turnos
-                //     }
-                // }
+                double totalHealing = 0.0;
 
-                // // Aplicamos la curación total acumulada por todos los Leftovers activos
-                // currentHp = std::min(maxHp, currentHp + totalHealing);
+                for (auto it = startOfTheRoundEffects.begin(); it != startOfTheRoundEffects.end(); ) 
+                {
+                    PokemonGame::Effect* currentEffect = *it;
+
+                    // Verificamos si el efecto aún tiene turnos usando el método público
+                    if (!currentEffect->IsExpired()) 
+                    {
+                        if (currentEffect->GetName() == PokemonGame::EffectName::LEFTOVER) 
+                        {
+                            // Restos cura el 5% de la vida máxima
+                            totalHealing += (maxHp * 0.05);
+                        }
+                        
+                        // TODO: Agregar más condicionales o un switch si se añaden efectos como VENENO
+                        
+                        currentEffect->DecreaseTurn();
+                        ++it;
+                    } 
+                    else 
+                    {
+                        delete currentEffect;
+                        it = startOfTheRoundEffects.erase(it);
+                    }
+                }
+
+                // Aplicamos la curación total usando el método nativo que protege el maxHp
+                if (totalHealing > 0.0) 
+                {
+                    ReceiveHeal(totalHealing);
+                }
             }
 
             void ApplyStartOfTheRoundEffect(PokemonGame::Effect* effect)
             {
-                startOfTheRoundEffects.push_back(effect);
+                if (effect != nullptr) 
+                {
+                    startOfTheRoundEffects.push_back(effect);
+                }
             }
 
             void ReceiveHeal(double heal)

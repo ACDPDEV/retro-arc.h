@@ -106,7 +106,10 @@ namespace PokemonGame
                     return;
                 
                 if (! turnTwo.GetPlayer().CanPlay())
-                    return;                
+                    return;
+                
+                turnOne.GetPlayer().UpdateEndOfTheTurnTeamEffects();
+                turnTwo.GetPlayer().UpdateEndOfTheTurnTeamEffects();
 
                 //----------------------------------
                 // Ejecutar acciones ofensivas
