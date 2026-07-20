@@ -21,10 +21,10 @@ namespace PokemonGame
                 std::unique_ptr<PokemonGame::Item> leftOver = std::make_unique<PokemonGame::Leftover>(2, 3);
                 player.GetBag().AddItem(std::move(leftOver));
 
-                std::unique_ptr<PokemonGame::Item> potion = std::make_unique<PokemonGame::Potion>(3, 3);
+                std::unique_ptr<PokemonGame::Item> potion = std::make_unique<PokemonGame::Potion>(3, 3, 10);
                 player.GetBag().AddItem(std::move(potion));
 
-                std::unique_ptr<PokemonGame::Item> superPotion = std::make_unique<PokemonGame::SuperPotion>(4, 3);
+                std::unique_ptr<PokemonGame::Item> superPotion = std::make_unique<PokemonGame::SuperPotion>(4, 1, 30);
                 player.GetBag().AddItem(std::move(superPotion));
             }
 
