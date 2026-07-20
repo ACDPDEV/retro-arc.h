@@ -15,7 +15,7 @@
 
 namespace Common
 {
-    void DrawBottomBar()
+    inline void DrawBottomBar()
     {
         const int barWidth = WIDTH_SCREEN;
         const int barHeight = 3;
