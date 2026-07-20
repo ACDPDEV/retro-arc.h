@@ -1,1031 +1,515 @@
 #include "game.h"
+#include "Views/TictactoeUI.h"
+#include <cctype>
 #include <cstdlib>
 #include <ctime>
-#include <cctype>
 #include <iostream>
-using namespace std;
+
+namespace Tictactoe
+{
+    /// @brief Tablero global del juego
+    char tablero[TAM][TAM];
 
 const int TOTAL_PREGUNTAS = 30;
 
-//MODO FUTBOL PREGUNTAS Y OPCIONES+++++++++++++++++++++++++++++++++++++++
-string preguntas[TOTAL_PREGUNTAS] = {
-
-"øQuien gano el Mundial 2022?",
-"øQuien gano el Mundial 2018?",
-"øCuantos Mundiales tiene Brasil?",
-"øEn que pais se jugo el Mundial 2014?",
-"øQuien fue el maximo goleador del Mundial 2022?",
-"øQue seleccion gano el Mundial 2010?",
-"øQuien marco el gol de la final del Mundial 2010?",
-"øQue pais organizo el Mundial 2018?",
-"øQue seleccion gano la Copa America 2021?",
-"øQuien gano la Eurocopa 2024?",
-
-"øCuantas Champions League tiene el FC Barcelona?",
-"øQue club gano la Champions League 2024?",
-"øQue club tiene mas Champions League?",
-"øQuien anoto el gol de la victoria en la final de Champions 2024?",
-"øQue equipo elimino al Barcelona en semifinales de Champions 2010?",
-"øQuien fue el maximo goleador historico de la Champions antes de Cristiano?",
-"øQue dorsal uso Messi en el PSG?",
-"øQue dorsal usa Cristiano Ronaldo con Portugal?",
-"øQuien gano el Balon de Oro 2010?",
-"øQuien gano el Balon de Oro 2023?",
-
-"øQue pais gano la primera Copa del Mundo?",
-"øCual es el apodo de la seleccion brasilena?",
-"øQuien es el maximo goleador historico del Mundial?",
-"øQue jugador levanto la Copa del Mundo para Argentina en 2022?",
-"øQue pais gano la Eurocopa 2016?",
-"øQue club ficho primero a Cristiano Ronaldo tras salir del Sporting?",
-"øQuien es conocido como O Rei?",
-"øQue seleccion elimino a Brasil en cuartos del Mundial 2022?",
-"øQue jugador marco un triplete en la final del Mundial 2022?",
-"øQue club gano la primera Champions League?"
-
+// Preguntas y opciones del quiz de f√∫tbol
+std::string preguntas[TOTAL_PREGUNTAS] = {
+"¬øQuien gano el Mundial 2022?",
+"¬øQuien gano el Mundial 2018?",
+"¬øCuantos Mundiales tiene Brasil?",
+"¬øEn que pais se jugo el Mundial 2014?",
+"¬øQuien fue el maximo goleador del Mundial 2022?",
+"¬øQue seleccion gano el Mundial 2010?",
+"¬øQuien marco el gol de la final del Mundial 2010?",
+"¬øQue pais organizo el Mundial 2018?",
+"¬øQue seleccion gano la Copa America 2021?",
+"¬øQuien gano la Eurocopa 2024?",
+"¬øCuantas Champions League tiene el FC Barcelona?",
+"¬øQue club gano la Champions League 2024?",
+"¬øQue club tiene mas Champions League?",
+"¬øQuien anoto el gol de la victoria en la final de Champions 2024?",
+"¬øQue equipo elimino al Barcelona en semifinales de Champions 2010?",
+"¬øQuien fue el maximo goleador historico de la Champions antes de Cristiano?",
+"¬øQue dorsal uso Messi en el PSG?",
+"¬øQue dorsal usa Cristiano Ronaldo con Portugal?",
+"¬øQuien gano el Balon de Oro 2010?",
+"¬øQuien gano el Balon de Oro 2023?",
+"¬øQue pais gano la primera Copa del Mundo?",
+"¬øCual es el apodo de la seleccion brasilena?",
+"¬øQuien es el maximo goleador historico del Mundial?",
+"¬øQue jugador levanto la Copa del Mundo para Argentina en 2022?",
+"¬øQue pais gano la Eurocopa 2016?",
+"¬øQue club ficho primero a Cristiano Ronaldo tras salir del Sporting?",
+"¬øQuien es conocido como O Rei?",
+"¬øQue seleccion elimino a Brasil en cuartos del Mundial 2022?",
+"¬øQue jugador marco un triplete en la final del Mundial 2022?",
+"¬øQue club gano la primera Champions League?"
 };
 
-string opcionA[TOTAL_PREGUNTAS] = {
-
-"Francia",
-"Croacia",
-"4",
-"Sudafrica",
-"Lionel Messi",
-
-"Holanda",
-"David Villa",
-"Qatar",
-"Brasil",
-"Inglaterra",
-
-"4",
-"Borussia Dortmund",
-"Milan",
-"Vinicius Jr.",
-"Inter de Milan",
-
-"Raul",
-"10",
-"7",
-"Andres Iniesta",
-"Erling Haaland",
-
-"Argentina",
-"La Roja",
-"Ronaldo Nazario",
-"Di Maria",
-"Francia",
-
-"Real Madrid",
-"Garrincha",
-"Croacia",
-"Messi",
-"Milan"
-
+std::string opcionA[TOTAL_PREGUNTAS] = {
+"Francia", "Croacia", "4", "Sudafrica", "Lionel Messi",
+"Holanda", "David Villa", "Qatar", "Brasil", "Inglaterra",
+"4", "Borussia Dortmund", "Milan", "Vinicius Jr.", "Inter de Milan",
+"Raul", "10", "7", "Andres Iniesta", "Erling Haaland",
+"Argentina", "La Roja", "Ronaldo Nazario", "Di Maria", "Francia",
+"Real Madrid", "Garrincha", "Croacia", "Messi", "Milan"
 };
 
-string opcionB[TOTAL_PREGUNTAS] = {
-
-"Argentina",
-"Francia",
-"5",
-"Brasil",
-"Julian Alvarez",
-
-"Alemania",
-"Andres Iniesta",
-"Rusia",
-"Argentina",
-"EspaÒa",
-
-"5",
-"Manchester City",
-"Liverpool",
-"Rodrygo",
-"Chelsea",
-
-"Messi",
-"30",
-"9",
-"Xavi",
-"Lionel Messi",
-
-"Uruguay",
-"La Canarinha",
-"Miroslav Klose",
-"Messi",
-"Alemania",
-
-"Manchester United",
-"Ronaldo",
-"Argentina",
-"Julian ¡lvarez",
-"Barcelona"
-
+std::string opcionB[TOTAL_PREGUNTAS] = {
+"Argentina", "Francia", "5", "Brasil", "Julian Alvarez",
+"Alemania", "Andres Iniesta", "Rusia", "Argentina", "Espa√±a",
+"5", "Manchester City", "Liverpool", "Rodrygo", "Chelsea",
+"Messi", "30", "9", "Xavi", "Lionel Messi",
+"Uruguay", "La Canarinha", "Miroslav Klose", "Messi", "Alemania",
+"Manchester United", "Ronaldo", "Argentina", "Julian √Ålvarez", "Barcelona"
 };
 
-string opcionC[TOTAL_PREGUNTAS] = {
-
-"Brasil",
-"Belgica",
-"6",
-"Rusia",
-"Kylian Mbappe",
-
-"Brasil",
-"Fernando Torres",
-"Alemania",
-"Chile",
-"Francia",
-
-"6",
-"Real Madrid",
-"Barcelona",
-"Jude Bellingham",
-"Arsenal",
-
-"Shevchenko",
-"19",
-"10",
-"Lionel Messi",
-"Kylian Mbappe",
-
-"Brasil",
-"La Albiceleste",
-"Pele",
-"Otamendi",
-"Portugal",
-
-"Juventus",
-"Pele",
-"Francia",
-"Kylian MbappÈ",
-"Benfica"
-
+std::string opcionC[TOTAL_PREGUNTAS] = {
+"Brasil", "Belgica", "6", "Rusia", "Kylian Mbappe",
+"Brasil", "Fernando Torres", "Alemania", "Chile", "Francia",
+"6", "Real Madrid", "Barcelona", "Jude Bellingham", "Arsenal",
+"Shevchenko", "19", "10", "Lionel Messi", "Kylian Mbappe",
+"Brasil", "La Albiceleste", "Pele", "Otamendi", "Portugal",
+"Juventus", "Pele", "Francia", "Kylian Mbapp√©", "Benfica"
 };
 
-string opcionD[TOTAL_PREGUNTAS] = {
-
-"Alemania",
-"Alemania",
-"7",
-"Qatar",
-"Olivier Giroud",
-
-"EspaÒa",
-"Xavi",
-"Francia",
-"Uruguay",
-"Italia",
-
-"7",
-"Bayern M˙nich",
-"Real Madrid",
-"Dani Carvajal",
-"Manchester United",
-
-"Benzema",
-"7",
-"17",
-"Wesley Sneijder",
-"Kevin De Bruyne",
-
-"Italia",
-"Los Galos",
-"Messi",
-"Dibu Martinez",
-"EspaÒa",
-
-"Al-Nassr",
-"Ronaldinho",
-"Paises Bajos",
-"Griezmann",
-"Milan"
-
+std::string opcionD[TOTAL_PREGUNTAS] = {
+"Alemania", "Alemania", "7", "Qatar", "Olivier Giroud",
+"Espa√±a", "Xavi", "Francia", "Uruguay", "Italia",
+"7", "Bayern M√∫nich", "Real Madrid", "Dani Carvajal", "Manchester United",
+"Benzema", "7", "17", "Wesley Sneijder", "Kevin De Bruyne",
+"Italia", "Los Galos", "Messi", "Dibu Martinez", "Espa√±a",
+"Al-Nassr", "Ronaldinho", "Paises Bajos", "Griezmann", "Milan"
 };
 
 char respuestaCorrecta[TOTAL_PREGUNTAS] = {
-
-'B',
-'B',
-'B',
-'B',
-'C',
-'D',
-'B',
-'B',
-'B',
-'B',
-
-'B',
-'C',
-'D',
-'A',
-'A',
-'A',
-'B',
-'A',
-'C',
-'B',
-
-'B',
-'B',
-'B',
-'B',
-'C',
-'B',
-'C',
-'A',
-'C',
-'C'
-
+'B','B','B','B','C','D','B','B','B','B',
+'B','C','D','A','A','A','B','A','C','B',
+'B','B','B','B','C','B','C','A','C','C'
 };
 
-//++++++++++++++++++++++++++++++++++++++++++++++++++++
-void intro()
-{
-    system("cls");
-
-    OcultarCursor();
-
-    color(9);      // Azul
-
-    gotoxy(22,3);  cout<<"¶¶¶¶¶¶¶¶+¶¶+ ¶¶¶¶¶¶+";
-    pausa(120);
-
-    gotoxy(22,4);  cout<<"+--¶¶+--+¶¶¶¶¶+----+";
-    pausa(120);
-
-    gotoxy(22,5);  cout<<"   ¶¶¶   ¶¶¶¶¶¶";
-    pausa(120);
-
-    gotoxy(22,6);  cout<<"   ¶¶¶   ¶¶¶¶¶¶";
-    pausa(120);
-
-    gotoxy(22,7);  cout<<"   ¶¶¶   ¶¶¶+¶¶¶¶¶¶+";
-    pausa(120);
-
-    gotoxy(22,8);  cout<<"   +-+   +-+ +-----+";
-    pausa(250);
-
-
-
-    color(12);     // Rojo
-
-    gotoxy(22,10); cout<<"¶¶¶¶¶¶¶¶+ ¶¶¶¶¶+  ¶¶¶¶¶¶+";
-    pausa(120);
-
-    gotoxy(22,11); cout<<"+--¶¶+--+¶¶+--¶¶+¶¶+----+";
-    pausa(120);
-
-    gotoxy(22,12); cout<<"   ¶¶¶   ¶¶¶¶¶¶¶¶¶¶¶";
-    pausa(120);
-
-    gotoxy(22,13); cout<<"   ¶¶¶   ¶¶+--¶¶¶¶¶¶";
-    pausa(120);
-
-    gotoxy(22,14); cout<<"   ¶¶¶   ¶¶¶  ¶¶¶+¶¶¶¶¶¶+";
-    pausa(120);
-
-    gotoxy(22,15); cout<<"   +-+   +-+  +-+ +-----+";
-    pausa(250);
-
-
-
-    color(9);      // Azul
-
-    gotoxy(22,17); cout<<"¶¶¶¶¶¶¶¶+ ¶¶¶¶¶¶+ ¶¶¶¶¶¶¶+";
-    pausa(120);
-
-    gotoxy(22,18); cout<<"+--¶¶+--+¶¶+---¶¶+¶¶+----+";
-    pausa(120);
-
-    gotoxy(22,19); cout<<"   ¶¶¶   ¶¶¶   ¶¶¶¶¶¶¶¶+";
-    pausa(120);
-
-    gotoxy(22,20); cout<<"   ¶¶¶   ¶¶¶   ¶¶¶¶¶+--+";
-    pausa(120);
-
-    gotoxy(22,21); cout<<"   ¶¶¶   +¶¶¶¶¶¶++¶¶¶¶¶¶¶+";
-    pausa(120);
-
-    gotoxy(22,22); cout<<"   +-+    +-----+ +------+";
-    
-   gotoxy(30,24);
-color(14);
-cout << "[  JUGAR  ]";
-
-gotoxy(17,27);
-color(15);
-cout << "Presione cualquier tecla para comenzar";
-getch();
-}
-
-void menuPrincipal(){
-
-    system("cls");
-    color(15);
-
-    gotoxy(25,2);
-    cout << "========================";
-
-    gotoxy(28,3);
-    cout << "TIC TAC TOE";
-
-    gotoxy(25,4);
-    cout << "========================";
-
-    gotoxy(29,7);
-    cout << "1. Original";
-
-    gotoxy(29,9);
-    cout << "2. Modo Futbol";
-
-    gotoxy(29,11);
-    cout << "3. Salir";
-
-    gotoxy(22,14);
-    cout << "Seleccione una opcion: ";
-}
 bool usada[TOTAL_PREGUNTAS];
-
 int preguntasUsadas = 0;
 
-//*********PARTE 1****** (inicializaciÛn del tablero)****************
+// === Inicializaci√≥n del tablero ===
+
+/// @brief Agrega el marco interno del tablero (bordes CP437 en filas/columnas 4,8)
 void agregar_marco(){
-	for(int i=0;i<11;i++){
-		tablero[i][3]= 186;
-		tablero[i][7]= 186;
-		tablero[3][i]= 205;
-		tablero[7][i]= 205;
-	}
-	tablero[3][3]=206;
-	tablero[3][7]=206;
-	tablero[7][3]=206;
-	tablero[7][7]=206;
-}
-void pintarmarco(){ //Mostrar lÌmites del escenario
-//lineas horizontales
-for(int i=2;i<78;i++){
-	gotoxy(i,3); printf("%c", 205);
-	gotoxy(i,23); printf("%c", 205); 
-}
-//Lineas verticales
-for(int v=4;v<23;v++){
-	gotoxy(2,v); printf("%c", 186);
-	gotoxy(77,v); printf("%c", 186);	  
-}	
-//esquinas
-	gotoxy(2,3); printf("%c", 201);
-	gotoxy(2,23); printf("%c", 200); 	
-	gotoxy(77,3); printf("%c", 187);
-	gotoxy(77,23); printf("%c", 188); 
-	
+    for(int i = 0; i < 13; i++){
+        tablero[i][4] = 186;
+        tablero[i][8] = 186;
+        tablero[4][i] = 205;
+        tablero[8][i] = 205;
+    }
+    tablero[4][4] = 206;
+    tablero[4][8] = 206;
+    tablero[8][4] = 206;
+    tablero[8][8] = 206;
 }
 
-void mostrar_tablero(){
-	for(int i=0;i<11;i++){
-		for(int j=0;j<11;j++){
-		gotoxy(j+18, i+3);
-		if(tablero[i][j]=='X')
-                color(12);      // Rojo
-            else if(tablero[i][j]=='O')
-                color(9);       // Azul
-            else
-                color(15);      // Blanco
-		printf("%c",tablero[i][j]);
-		}
-	}
-	color(15);   // Regresa al blanco
-}
-
+/// @brief Llena el tablero con espacios en blanco
 void llenar_tablero_con_espacios(){
-	for(int i=0; i<11; i++){
-		for(int j=0; j<11; j++)
-			tablero[i][j]= 32;
-	}
+    for(int i = 0; i < 13; i++){
+        for(int j = 0; j < 13; j++)
+            tablero[i][j] = 32;
+    }
 }
 
+/// @brief Coloca las etiquetas num√©ricas (1-9) en las celdas
 void agregarNumeros(){
-
-    tablero[1][1]='1';
-    tablero[1][5]='2';
-    tablero[1][9]='3';
-
-    tablero[5][1]='4';
-    tablero[5][5]='5';
-    tablero[5][9]='6';
-
-    tablero[9][1]='7';
-    tablero[9][5]='8';
-    tablero[9][9]='9';
+    tablero[2][2]='1'; tablero[2][6]='2'; tablero[2][10]='3';
+    tablero[6][2]='4'; tablero[6][6]='5'; tablero[6][10]='6';
+    tablero[10][2]='7'; tablero[10][6]='8'; tablero[10][10]='9';
 }
-//****************** (inicializaciÛn)****************
+
+/// @brief Inicializa el tablero del juego
 void inicializarJuego(){
-
-
     llenar_tablero_con_espacios();
-
     agregar_marco();
-
     agregarNumeros();
-
-    OcultarCursor();
-
-    mostrar_tablero();
+    Common::HideCursor();
 }
 
+// === Colocaci√≥n de fichas ===
 
-
-//*********PARTE 2**** (JUGADAS)*************************************
+/// @brief Coloca una ficha en el tablero
 void agregarFicha(char pos, char ficha){
-
-    if(pos=='1')
-        tablero[1][1]=ficha;
-    else if(pos=='2')
-        tablero[1][5]=ficha;
-    else if(pos=='3')
-        tablero[1][9]=ficha;
-    else if(pos=='4')
-        tablero[5][1]=ficha;
-    else if(pos=='5')
-        tablero[5][5]=ficha;
-    else if(pos=='6')
-        tablero[5][9]=ficha;
-    else if(pos=='7')
-        tablero[9][1]=ficha;
-    else if(pos=='8')
-        tablero[9][5]=ficha;
-    else if(pos=='9')
-        tablero[9][9]=ficha;
+    if(pos=='1') tablero[2][2]=ficha;
+    else if(pos=='2') tablero[2][6]=ficha;
+    else if(pos=='3') tablero[2][10]=ficha;
+    else if(pos=='4') tablero[6][2]=ficha;
+    else if(pos=='5') tablero[6][6]=ficha;
+    else if(pos=='6') tablero[6][10]=ficha;
+    else if(pos=='7') tablero[10][2]=ficha;
+    else if(pos=='8') tablero[10][6]=ficha;
+    else if(pos=='9') tablero[10][10]=ficha;
 }
+
+/// @brief Verifica si una celda est√° vac√≠a
 bool celdaVacia(char tecla){
-
-    if(tecla=='1'){
-        if(tablero[1][1]=='1')
-            return true;
-        else
-            return false;
-    }
-
-    else if(tecla=='2'){
-        if(tablero[1][5]=='2')
-            return true;
-        else
-            return false;
-    }
-
-    else if(tecla=='3'){
-        if(tablero[1][9]=='3')
-            return true;
-        else
-            return false;
-    }
-
-    else if(tecla=='4'){
-        if(tablero[5][1]=='4')
-            return true;
-        else
-            return false;
-    }
-
-    else if(tecla=='5'){
-        if(tablero[5][5]=='5')
-            return true;
-        else
-            return false;
-    }
-
-    else if(tecla=='6'){
-        if(tablero[5][9]=='6')
-            return true;
-        else
-            return false;
-    }
-
-    else if(tecla=='7'){
-        if(tablero[9][1]=='7')
-            return true;
-        else
-            return false;
-    }
-
-    else if(tecla=='8'){
-        if(tablero[9][5]=='8')
-            return true;
-        else
-            return false;
-    }
-
-    else if(tecla=='9'){
-        if(tablero[9][9]=='9')
-            return true;
-        else
-            return false;
-    }
-
+    if(tecla=='1') return tablero[2][2]=='1';
+    if(tecla=='2') return tablero[2][6]=='2';
+    if(tecla=='3') return tablero[2][10]=='3';
+    if(tecla=='4') return tablero[6][2]=='4';
+    if(tecla=='5') return tablero[6][6]=='5';
+    if(tecla=='6') return tablero[6][10]=='6';
+    if(tecla=='7') return tablero[10][2]=='7';
+    if(tecla=='8') return tablero[10][6]=='8';
+    if(tecla=='9') return tablero[10][10]=='9';
     return false;
 }
-//*********PARTE 3***** (VALIDACIONES)****************
+
+// === Detecci√≥n de victoria ===
+
+/// @brief Verifica si la ficha dada gan√≥
 bool ganar(char ficha){
-
-    if(tablero[1][1]==ficha && tablero[1][5]==ficha && tablero[1][9]==ficha ||
-       tablero[5][1]==ficha && tablero[5][5]==ficha && tablero[5][9]==ficha ||
-       tablero[9][1]==ficha && tablero[9][5]==ficha && tablero[9][9]==ficha ||
-
-       tablero[1][1]==ficha && tablero[5][1]==ficha && tablero[9][1]==ficha ||
-       tablero[1][5]==ficha && tablero[5][5]==ficha && tablero[9][5]==ficha ||
-       tablero[1][9]==ficha && tablero[5][9]==ficha && tablero[9][9]==ficha ||
-
-       tablero[1][1]==ficha && tablero[5][5]==ficha && tablero[9][9]==ficha ||
-       tablero[1][9]==ficha && tablero[5][5]==ficha && tablero[9][1]==ficha)
+    if((tablero[2][2]==ficha && tablero[2][6]==ficha && tablero[2][10]==ficha) ||
+       (tablero[6][2]==ficha && tablero[6][6]==ficha && tablero[6][10]==ficha) ||
+       (tablero[10][2]==ficha && tablero[10][6]==ficha && tablero[10][10]==ficha) ||
+       (tablero[2][2]==ficha && tablero[6][2]==ficha && tablero[10][2]==ficha) ||
+       (tablero[2][6]==ficha && tablero[6][6]==ficha && tablero[10][6]==ficha) ||
+       (tablero[2][10]==ficha && tablero[6][10]==ficha && tablero[10][10]==ficha) ||
+       (tablero[2][2]==ficha && tablero[6][6]==ficha && tablero[10][10]==ficha) ||
+       (tablero[2][10]==ficha && tablero[6][6]==ficha && tablero[10][2]==ficha))
         return true;
-    else
-        return false;
+    return false;
 }
 
+/// @brief Verifica si el tablero est√° lleno (empate)
 bool tableroLleno(){
-	if(tablero[1][1] != '1' && tablero[1][5] != '2' && tablero[1][9] != '3' &&
-	 	tablero[5][1] != '4' && tablero[5][5] != '5' && tablero[5][9] != '6' &&			
-	 	tablero[9][1] != '7' && tablero[9][5] != '8' && tablero[9][9] != '9')
-	 return true;
-	else 
-		return false;
+    if(tablero[2][2]!='1' && tablero[2][6]!='2' && tablero[2][10]!='3' &&
+       tablero[6][2]!='4' && tablero[6][6]!='5' && tablero[6][10]!='6' &&
+       tablero[10][2]!='7' && tablero[10][6]!='8' && tablero[10][10]!='9')
+        return true;
+    return false;
 }
 
-//*********PARTE 4**** (INTERFAZ)****************
-void mostrar_Instrucciones(){
+// === Turnos ===
 
-    system("cls");
-
-    color(14);
-    gotoxy(28,2); cout<<("TIC TAC TOE");
-    color(15);
-
-    gotoxy(1,4);  cout<<("INSTRUCCIONES:");
-    gotoxy(1,6);  cout<<("1. El jugador X comienza la partida.");
-    gotoxy(1,7);  cout<<("2. Presione un numero del 1 al 9 para jugar.");
-    gotoxy(1,8);  cout<<("3. No puede elegir una casilla ocupada.");
-    gotoxy(1,9);  cout<<("4. Gana quien forme una linea de 3 fichas.");
-
-    gotoxy(1,11); cout<<("Distribucion de las casillas:");
-
-    gotoxy(8,13); cout<<("1 | 2 | 3");
-    gotoxy(8,14); cout<<("--+---+--");
-    gotoxy(8,15); cout<<("4 | 5 | 6");
-    gotoxy(8,16); cout<<("--+---+--");
-    gotoxy(8,17); cout<<("7 | 8 | 9");
-
-    gotoxy(1,20); cout<<("Presione cualquier tecla para comenzar...");
-    getch();
-
-    system("cls");
-}
-void mostrar_InstruccionesFutbol(){
-
-    system("cls");
-
-    color(14);
-
-    gotoxy(28,2);
-    cout<<"TIC TAC TOE FUTBOL";
-
-    color(15);
-
-
-    gotoxy(1,4);
-    cout<<"INSTRUCCIONES MODO FUTBOL:";
-
-
-    gotoxy(1,6);
-    cout<<"1. Cada jugador debe responder una pregunta de futbol.";
-
-
-    gotoxy(1,7);
-    cout<<"2. Si responde correctamente puede colocar su ficha.";
-
-
-    gotoxy(1,8);
-    cout<<"3. Si responde mal pierde su turno.";
-
-
-    gotoxy(1,9);
-    cout<<"4. Forma una linea de 3 fichas para ganar.";
-
-
-    gotoxy(1,11);
-    cout<<"Categorias:";
-
-
-    gotoxy(5,13);
-    cout<<"- Mundiales";
-
-
-    gotoxy(5,14);
-    cout<<"- Champions League";
-
-
-    gotoxy(5,15);
-    cout<<"- Balon de Oro";
-
-
-    gotoxy(5,16);
-    cout<<"- Futbol internacional";
-
-
-    gotoxy(1,20);
-    cout<<"Presione cualquier tecla para comenzar...";
-
-
-    getch();
-
-    system("cls");
-}
-void turnoX(){
-
-    char tecla;
-
-    do{
-        gotoxy(1,1);
-        cout<<("Turno de X");
-        tecla = getch();
-    }while(!celdaVacia(tecla));
-
-    agregarFicha(tecla, 'X');
-
-    mostrar_tablero();
-}
-void turnoO(){
-
-    char tecla;
-
-    do{
-        gotoxy(1,1);
-        cout<<("Turno de O");
-        tecla = getch();
-    }while(!celdaVacia(tecla));
-
-    agregarFicha(tecla, 'O');
-
-    mostrar_tablero();
-}
-void mostrarResultado(){
-
-    gotoxy(1,15);
-
-    if(ganar('X')){
-        color(12);
-        cout<<("Gano X");
-    }
-    else if(ganar('O')){
-        color(9);
-        cout<<("Gano O");
-    }
-    else{
-        color(15);
-        cout<<("Empate");
-    }
-
-    color(15);
+/// @brief Movimiento del cursor por teclas de flecha (sin wrap, clamped)
+inline void moverCursor(int& cursorPos, std::vector<int>& key) {
+    int row = cursorPos / 3;
+    int col = cursorPos % 3;
+    if (Common::IsKeyArrowTop(key) && row > 0) row--;
+    else if (Common::IsKeyArrowBottom(key) && row < 2) row++;
+    else if (Common::IsKeyArrowLeft(key) && col > 0) col--;
+    else if (Common::IsKeyArrowRight(key) && col < 2) col++;
+    cursorPos = row * 3 + col;
 }
 
-void victoriaFutbol(){
+/// @brief Turno del jugador X en modo original
+bool turnoX(int& cursorPos){
+    std::vector<int> key;
 
-    system("cls");
+    // Dibujar una vez al inicio del turno
+    DrawBoard(tablero, cursorPos);
+    DrawHUD('X', cursorPos, false);
+    DrawBottomBarWithText("Flechas=mover  Enter=colocar  Q=abandonar");
+    std::cout.flush();
 
-    color(14);
+    do {
+        key = Common::ReadConsoleChar();
 
-    gotoxy(28,4);
-    cout<<"==============================";
-
-    gotoxy(35,5);
-    cout<<"!! VICTORIAAA !!";
-
-    gotoxy(28,6);
-    cout<<"==============================";
-
-
-    if(ganar('X')){
-
-        color(12);
-
-        gotoxy(35,9);
-        cout<<"GANADOR: JUGADOR X";
-
-    }
-    else if(ganar('O')){
-
-        color(9);
-
-        gotoxy(35,9);
-        cout<<"GANADOR: JUGADOR O";
-
-    }
-    else{
-
-        color(15);
-
-        gotoxy(38,9);
-        cout<<"EMPATE";
-
-    }
-
-
-    color(15);
-
-    gotoxy(32,13);
-    cout<<"Gracias por jugar";
-
-    gotoxy(32,15);
-    cout<<"Presione una tecla...";
-
-    getch();
-
+        if (Common::IsNavigationKey(key)) {
+            moverCursor(cursorPos, key);
+            // Redibujar solo lo que cambi√≥
+            DrawBoard(tablero, cursorPos);
+            DrawHUD('X', cursorPos, false);
+            std::cout.flush();
+        } else if (Common::IsActionKey(key)) {
+            if (celdaVacia('1' + cursorPos)) {
+                agregarFicha('1' + cursorPos, 'X');
+                DrawBoard(tablero, cursorPos);
+                std::cout.flush();
+                return true;
+            }
+            DrawBottomBarWithText("Casilla ocupada \u2014 elige otra");
+            std::cout.flush();
+            Common::Sleep(1000);
+            DrawBottomBarWithText("Flechas=mover  Enter=colocar  Q=abandonar");
+            std::cout.flush();
+        } else if (key == Common::KEY_Q || key == Common::KEY_Q_LOWER || key == Common::KEY_ESCAPE) {
+            return false;
+        }
+    } while (true);
 }
 
-void jugarOriginal(){
-	 mostrar_Instrucciones();
-    inicializarJuego();
+/// @brief Turno del jugador O en modo original
+bool turnoO(int& cursorPos){
+    std::vector<int> key;
 
-    while(true){
+    // Dibujar una vez al inicio del turno
+    DrawBoard(tablero, cursorPos);
+    DrawHUD('O', cursorPos, false);
+    DrawBottomBarWithText("Flechas=mover  Enter=colocar  Q=abandonar");
+    std::cout.flush();
 
-        turnoX();
+    do {
+        key = Common::ReadConsoleChar();
 
-        if(ganar('X') || tableroLleno())
-            break;
-
-        turnoO();
-
-        if(ganar('O') || tableroLleno())
-            break;
-    }
-
-    mostrarResultado();
-
-    despedida();
+        if (Common::IsNavigationKey(key)) {
+            moverCursor(cursorPos, key);
+            // Redibujar solo lo que cambi√≥
+            DrawBoard(tablero, cursorPos);
+            DrawHUD('O', cursorPos, false);
+            std::cout.flush();
+        } else if (Common::IsActionKey(key)) {
+            if (celdaVacia('1' + cursorPos)) {
+                agregarFicha('1' + cursorPos, 'O');
+                DrawBoard(tablero, cursorPos);
+                std::cout.flush();
+                return true;
+            }
+            DrawBottomBarWithText("Casilla ocupada \u2014 elige otra");
+            std::cout.flush();
+            Common::Sleep(1000);
+            DrawBottomBarWithText("Flechas=mover  Enter=colocar  Q=abandonar");
+            std::cout.flush();
+        } else if (key == Common::KEY_Q || key == Common::KEY_Q_LOWER || key == Common::KEY_ESCAPE) {
+            return false;
+        }
+    } while (true);
 }
-//Modo futbol
-void mostrarPanelQuiz(){
 
-    color(14);
-
-    gotoxy(50,2);
-    cout << "QUIZ FUTBOLERO";
-
-    gotoxy(50,3);
-    cout << "======================";
-
-    color(15);
-}
-
-
-void jugarFutbol(){
-	mostrar_InstruccionesFutbol();
-    inicializarJuego();
-    preguntasUsadas = 0;
-
-	for(int i=0; i<TOTAL_PREGUNTAS; i++){
-    usada[i] = false;
-	}
-	dibujarPanelQuiz();
-    
-
-    while(true){
-
-        turnoFutbolX();
-
-        if(ganar('X') || tableroLleno())
-            break;
-
-        turnoFutbolO();
-
-        if(ganar('O') || tableroLleno())
-            break;
-    }
-
-    victoriaFutbol();
-}
-  
-void turnoFutbolX(){
-
-    char tecla;
-
-    gotoxy(1,1);
-    cout << "Turno de X";
+/// @brief Turno del jugador X en modo f√∫tbol
+bool turnoFutbolX(int& cursorPos){
+    // Dibujar tablero y panel quiz al inicio
+    DrawBoard(tablero, cursorPos);
+    DrawHUD('X', cursorPos, true);
+    DrawQuizPanel();
+    DrawBottomBarWithText("Flechas=mover  Enter=colocar  Q=abandonar");
+    std::cout.flush();
 
     if(!preguntaFutbol()){
-        return;
+        return true;
     }
 
-gotoxy(50,5);
-color(10);
-cout<<"Respuesta correcta";
+    DrawCorrectAnswer();
+    DrawSelectCellPrompt();
+    std::cout.flush();
 
-gotoxy(50,7);
-color(15);
-cout<<"Seleccione una casilla (1-9)";
+    std::vector<int> key;
 
-	agregar_marco();
-	mostrar_tablero();	
-    do{
-        gotoxy(1,2);
-        cout << "Elija una casilla: ";
-        tecla = getch();
-    }while(!celdaVacia(tecla));
+    do {
+        key = Common::ReadConsoleChar();
 
-    agregarFicha(tecla,'X');
-
-    mostrar_tablero();
-    limpiarPanelQuiz();
+        if (Common::IsNavigationKey(key)) {
+            moverCursor(cursorPos, key);
+            DrawBoard(tablero, cursorPos);
+            DrawHUD('X', cursorPos, true);
+            std::cout.flush();
+        } else if (Common::IsActionKey(key)) {
+            if (celdaVacia('1' + cursorPos)) {
+                agregarFicha('1' + cursorPos, 'X');
+                DrawBoard(tablero, cursorPos);
+                ClearQuizPanel();
+                std::cout.flush();
+                return true;
+            }
+            DrawBottomBarWithText("Casilla ocupada \u2014 elige otra");
+            std::cout.flush();
+            Common::Sleep(1000);
+            DrawBottomBarWithText("Flechas=mover  Enter=colocar  Q=abandonar");
+            std::cout.flush();
+        } else if (key == Common::KEY_Q || key == Common::KEY_Q_LOWER || key == Common::KEY_ESCAPE) {
+            return false;
+        }
+    } while (true);
 }
 
-void turnoFutbolO(){
-
-    char tecla;
-
-    gotoxy(1,1);
-    cout << "Turno de O";
+/// @brief Turno del jugador O en modo f√∫tbol
+bool turnoFutbolO(int& cursorPos){
+    // Dibujar tablero y panel quiz al inicio
+    DrawBoard(tablero, cursorPos);
+    DrawHUD('O', cursorPos, true);
+    DrawQuizPanel();
+    DrawBottomBarWithText("Flechas=mover  Enter=colocar  Q=abandonar");
+    std::cout.flush();
 
     if(!preguntaFutbol()){
-        return;
-	}
+        return true;
+    }
 
-gotoxy(50,5);
-color(10);
-cout<<"Respuesta correcta";
+    DrawCorrectAnswer();
+    DrawSelectCellPrompt();
+    std::cout.flush();
 
-gotoxy(50,7);
-color(15);
-cout<<"Seleccione una casilla (1-9)";
+    std::vector<int> key;
 
-    
-	agregar_marco();
-	mostrar_tablero();
-    do{
-        gotoxy(1,2);
-        cout << "Elija una casilla: ";
-        tecla = getch();
-    }while(!celdaVacia(tecla));
+    do {
+        key = Common::ReadConsoleChar();
 
-    agregarFicha(tecla,'O');
-
-    mostrar_tablero();
-    limpiarPanelQuiz();
+        if (Common::IsNavigationKey(key)) {
+            moverCursor(cursorPos, key);
+            DrawBoard(tablero, cursorPos);
+            DrawHUD('O', cursorPos, true);
+            std::cout.flush();
+        } else if (Common::IsActionKey(key)) {
+            if (celdaVacia('1' + cursorPos)) {
+                agregarFicha('1' + cursorPos, 'O');
+                DrawBoard(tablero, cursorPos);
+                ClearQuizPanel();
+                std::cout.flush();
+                return true;
+            }
+            DrawBottomBarWithText("Casilla ocupada \u2014 elige otra");
+            std::cout.flush();
+            Common::Sleep(1000);
+            DrawBottomBarWithText("Flechas=mover  Enter=colocar  Q=abandonar");
+            std::cout.flush();
+        } else if (key == Common::KEY_Q || key == Common::KEY_Q_LOWER || key == Common::KEY_ESCAPE) {
+            return false;
+        }
+    } while (true);
 }
 
-void despedida(){
+// === Quiz de f√∫tbol ===
 
-    gotoxy(1,18);
-    color(15);
-    cout<<("Presione cualquier tecla para salir...");
-    getch();
-
+/// @brief Limpia el panel de quiz y redibuja los bordes
+void limpiarPanelQuiz(){
+    ClearQuizPanel();
+    DrawQuizPanel();
 }
 
+/// @brief Presenta una pregunta de f√∫tbol y valida la respuesta
+/// @return true si respondi√≥ correctamente
 bool preguntaFutbol(){
-
     limpiarPanelQuiz();
 
     if(preguntasUsadas == TOTAL_PREGUNTAS){
+        for(int j = 0; j < TOTAL_PREGUNTAS; j++){
+            usada[j] = false;
+        }
+        preguntasUsadas = 0;
+    }
 
-    for(int j=0; j<TOTAL_PREGUNTAS; j++){
-        usada[j] = false;
-    	}
+    int i;
+    do{
+        i = rand() % TOTAL_PREGUNTAS;
+    } while(usada[i]);
 
-    	preguntasUsadas = 0;
-	}
+    usada[i] = true;
+    preguntasUsadas++;
 
-		int i;
+    const int quizTextX = QuizX() + 2;
+    const int quizStartY = QuizY() + 3;  // Despu√©s del t√≠tulo
+    Common::GoToXY(quizTextX, quizStartY);
+    std::cout << Common::Color(Common::FOREGROUND_LIGHT, Common::SELECTION_BACKGROUND);
+    if(preguntas[i].length() <= 38){
+        std::cout << preguntas[i];
+    } else {
+        std::cout << preguntas[i].substr(0, 38);
+        Common::GoToXY(quizTextX, quizStartY + 1);
+        std::cout << Common::Color(Common::FOREGROUND_LIGHT, Common::SELECTION_BACKGROUND);
+        std::cout << preguntas[i].substr(38);
+    }
 
-do{
-    i = rand() % TOTAL_PREGUNTAS;
-}while(usada[i]);
+    Common::GoToXY(quizTextX, quizStartY + 3);
+    std::cout << Common::Color(Common::FOREGROUND_LIGHT, Common::SELECTION_BACKGROUND) << "A) " << opcionA[i];
+    Common::GoToXY(quizTextX, quizStartY + 4);
+    std::cout << Common::Color(Common::FOREGROUND_LIGHT, Common::SELECTION_BACKGROUND) << "B) " << opcionB[i];
+    Common::GoToXY(quizTextX, quizStartY + 5);
+    std::cout << Common::Color(Common::FOREGROUND_LIGHT, Common::SELECTION_BACKGROUND) << "C) " << opcionC[i];
+    Common::GoToXY(quizTextX, quizStartY + 6);
+    std::cout << Common::Color(Common::FOREGROUND_LIGHT, Common::SELECTION_BACKGROUND) << "D) " << opcionD[i];
+    std::cout.flush();
 
-usada[i] = true;
-preguntasUsadas++;
-    color(15);
-    
-    gotoxy(50,5);
-if(preguntas[i].length() <= 38){
-    cout << preguntas[i];
-}
-else{
-    cout << preguntas[i].substr(0,38);
-    gotoxy(50,6);
-    cout << preguntas[i].substr(38);
+    Common::GoToXY(quizTextX, quizStartY + 8);
+    std::cout << Common::Color(Common::FOREGROUND_LIGHT, Common::SELECTION_BACKGROUND) << "Respuesta: ";
 
-}
-
-    gotoxy(50,7);
-    cout << "A) " << opcionA[i];
-
-    gotoxy(50,8);
-    cout << "B) " << opcionB[i];
-
-    gotoxy(50,9);
-    cout << "C) " << opcionC[i];
-
-    gotoxy(50,10);
-    cout << "D) " << opcionD[i];
-
-    gotoxy(50,12);
-    cout << "Respuesta: ";
-
-    char respuesta = getch();
-
-    respuesta = toupper(respuesta);
-
-    cout << respuesta;
+    char respuesta = Common::Getch();
+    respuesta = std::toupper(respuesta);
+    std::cout << respuesta;
+    std::cout.flush();
 
     if(respuesta == respuestaCorrecta[i]){
-    	
-		reproducirSonido("correcto.mp3");
-        gotoxy(50,14);
-        color(10);
-        cout << "°Correcto!";
-
-        getch();
-
+        Common::PlayAudio("correcto.mp3");
+        Common::GoToXY(quizTextX, quizStartY + 10);
+        std::cout << Common::Color(Common::LIGHT_GREEN, Common::SELECTION_BACKGROUND) << "\u2714 Correcto!";
+        std::cout.flush();
+        Common::Getch();
         limpiarPanelQuiz();
-
         return true;
     }
-    
-	reproducirSonido("incorrecto.mp3");
-    gotoxy(50,14);
-    color(12);
-    cout << "Incorrecto. Pierdes el turno.";
 
-    getch();
-
+    Common::PlayAudio("incorrecto.mp3");
+    Common::GoToXY(quizTextX, quizStartY + 10);
+    std::cout << Common::Color(Common::RED, Common::SELECTION_BACKGROUND) << "Incorrecto. Pierdes el turno.";
+    std::cout.flush();
+    Common::Getch();
     limpiarPanelQuiz();
-
     return false;
 }
 
+// === Orquestaci√≥n del juego ===
 
-void dibujarPanelQuiz(){
-
-    color(14);
-
-    // Esquinas
- 	gotoxy(48,2); printf("%c",201);
-	gotoxy(90,2); printf("%c",187);
-
-	gotoxy(48,14); printf("%c",200);
-	gotoxy(90,14); printf("%c",188);
-
-    // LÌneas horizontales
-    for(int i=49;i<90;i++){
-    gotoxy(i,2); printf("%c",205);
-    gotoxy(i,14); printf("%c",205);
+/// @brief Muestra el resultado de la partida
+void mostrarResultado(){
+    DrawResult();
 }
 
-    // LÌneas verticales
-    for(int i=3;i<14;i++){
-    gotoxy(48,i); printf("%c",186);
-    gotoxy(90,i); printf("%c",186);
+/// @brief Pantalla de victoria para modo f√∫tbol
+void victoriaFutbol(){
+    DrawVictoryScreen();
 }
 
-    // TÌtulo
-    color(15);
-    gotoxy(60,3);
-cout<<"QUIZ FUTBOLERO";
-}
-void limpiarPanelQuiz(){
+/// @brief Bucle completo del juego original
+void jugarOriginal(){
+    int cursorPos = 4;
+    inicializarJuego();
 
-    color(15);
-
-    for(int i=4;i<14;i++){
-
-        gotoxy(49,i);
-
-        for(int j=0;j<40;j++){
-            cout<<" ";
-        }
+    while(true){
+        if(!turnoX(cursorPos))
+            break;
+        if(ganar('X') || tableroLleno())
+            break;
+        if(!turnoO(cursorPos))
+            break;
+        if(ganar('O') || tableroLleno())
+            break;
     }
 
-    dibujarPanelQuiz();
+    if(ganar('X') || ganar('O') || tableroLleno()){
+        DrawResult();
+        Common::Sleep(1500);
+        DrawVictoryScreen();
+    }
 }
+
+/// @brief Bucle completo del modo f√∫tbol
+void jugarFutbol(){
+    int cursorPos = 4;
+    inicializarJuego();
+    preguntasUsadas = 0;
+
+    for(int i = 0; i < TOTAL_PREGUNTAS; i++){
+        usada[i] = false;
+    }
+
+    while(true){
+        if(!turnoFutbolX(cursorPos))
+            break;
+        if(ganar('X') || tableroLleno())
+            break;
+        if(!turnoFutbolO(cursorPos))
+            break;
+        if(ganar('O') || tableroLleno())
+            break;
+    }
+
+    if(ganar('X') || ganar('O') || tableroLleno()){
+        DrawResult();
+        Common::Sleep(1500);
+        DrawVictoryScreen();
+    }
+}
+
+/// @brief Prompt "¬øJugar de nuevo?"
 bool jugarNuevamente(){
-
-    char opcion;
-
-
-    gotoxy(25,20);
-    cout<<"øDesea jugar otra vez? (S/N): ";
-
-
-    opcion=getch();
-
-    opcion=toupper(opcion);
-
-
-    if(opcion=='S')
-        return true;
-
-    else
-        return false;
-
+    DrawPlayAgainPrompt();
+    char opcion = Common::Getch();
+    opcion = std::toupper(opcion);
+    return opcion == 'S';
 }
+
+} // namespace Tictactoe
