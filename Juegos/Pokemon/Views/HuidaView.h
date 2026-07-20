@@ -8,62 +8,42 @@
 #include "../../../Common/Color.h"
 #include "../../../Common/Components/BottomBar.h"
 #include "../../../Common/Consts.h"
+#include "../../../Common/Font.h"
 #include "../../../Common/Graphics.h"
 #include "../../../Common/Sprite.h"
 #include "../../../Common/Terminal.h"
 #include "../../../Common/Theme.h"
 #include "../../../Common/Utils.h"
 #include "../Database/State.h"
+#include "../PokemonAnimatedSprites/BulbasaurFront.h"
+#include "../PokemonAnimatedSprites/CharmanderFront.h"
+#include "../PokemonAnimatedSprites/SquirtleFront.h"
+#include "../PokemonAnimatedSprites/PikachuFront.h"
 #include "../PokemonAnimatedSprites/PsyduckFront.h"
+#include "../PokemonAnimatedSprites/EeveeFront.h"
+#include "../PokemonAnimatedSprites/RockruffFront.h"
+#include "../PokemonAnimatedSprites/ChikoritaFront.h"
 
 namespace Pokemon {
 
-    /// @brief Pantalla de animacion de huida con Psyduck desplazandose de izquierda a derecha
-    /// @details Muestra un cuadro de mensaje con el texto de huida, un sprite de Psyduck animado,
+    /// @brief Pantalla de animacion de huida con sprite dinamico desplazandose de izquierda a derecha
+    /// @details Muestra un sprite animado del Pokemon que huye, un cuadro de mensaje con FONT4,
     ///          y el contador de rondas. La animacion completa antes de retornar.
     ///          Lee los valores de los globals: currentPokemonName, playerNames[currentSelectionPlayer], currentRound.
     inline void HuidaView() {
         Common::DrawBackground();
 
-        // Cuadro de mensaje centrado (posicion center X, y=5, w=60, h=5)
-        const int boxWidth = 60;
-        const int boxHeight = 5;
-        const int boxX = Common::AlignedX(0, Common::WIDTH_SCREEN, boxWidth, "center");
-        const int boxY = 5;
+        // Array de sprites animados de Pokemon (ordenado por spriteIndex)
+        const std::vector<std::vector<std::string>>* pokemonAnimated[] = {
+            &BulbasaurFront_ALL, &CharmanderFront_ALL, &SquirtleFront_ALL,
+            &PikachuFront_ALL, &PsyduckFront_ALL, &EeveeFront_ALL,
+            &RockruffFront_ALL, &ChikoritaFront_ALL
+        };
 
-        // Fondo del cuadro
-        Common::DrawFillRectangle(
-            boxX, boxY, boxWidth, boxHeight,
-            Common::EMPTY_BLOCK,
-            Common::FOREGROUND_LIGHT, Common::SELECTION_BACKGROUND
-        );
-
-        // Borde del cuadro
-        // Borde superior
-        Common::DrawText(boxX, boxY, boxWidth, 1,
-            {Common::RepeatString(Common::HORIZONTAL_BORDER, boxWidth - 2)},
-            Common::GRAY, Common::SELECTION_BACKGROUND);
-        // Borde inferior
-        Common::DrawText(boxX, boxY + boxHeight - 1, boxWidth, 1,
-            {Common::RepeatString(Common::HORIZONTAL_BORDER, boxWidth - 2)},
-            Common::GRAY, Common::SELECTION_BACKGROUND);
-        // Borde izquierdo
-        for (int i = 1; i < boxHeight - 1; i++) {
-            Common::DrawText(boxX, boxY + i, 1, 1,
-                {Common::VERTICAL_BORDER}, Common::GRAY, Common::SELECTION_BACKGROUND);
-        }
-        // Borde derecho
-        for (int i = 1; i < boxHeight - 1; i++) {
-            Common::DrawText(boxX + boxWidth - 1, boxY + i, 1, 1,
-                {Common::VERTICAL_BORDER}, Common::GRAY, Common::SELECTION_BACKGROUND);
-        }
-
-        // Texto de huida dentro del cuadro
-        std::string message = "¡El " + currentPokemonName + " de " + playerNames[currentSelectionPlayer] + " ha huido!";
-        const int messageWidth = Common::Length(message);
-        const int messageX = Common::AlignedX(boxX, boxWidth, messageWidth, "center");
-        const int messageY = boxY + 2;
-        Common::DrawText(messageX, messageY, -1, -1, {message}, Common::FOREGROUND_LIGHT, Common::SELECTION_BACKGROUND);
+        // Leer indice del Pokemon actual desde el estado
+        int pokemonIdx = selectedCurrentPokemonId[currentSelectionPlayer];
+        const auto& frames = *pokemonAnimated[pokemonIdx];
+        int frameCount = frames.size();
 
         // Contador de rondas (posicion x=150, y=2)
         std::string roundText = "Rondas jugadas: " + std::to_string(currentRound);
@@ -74,14 +54,21 @@ namespace Pokemon {
 
         Common::GoToEnd();
 
-        // Animacion de Psyduck desplazandose de izquierda a derecha
-        // PsyduckFront_ALL tiene 10 frames (PsyduckFront00 a PsyduckFront09)
+        // Cuadro inferior con mensaje en FONT4 (arriba de DrawBottomBar, y ≈ 44)
+        std::string msg = "EL " + currentPokemonName + " DE " + playerNames[currentSelectionPlayer] + " HA HUIDO";
+        auto glyphs = Common::Font4String(msg);
+        auto line = Common::ConcatFont(glyphs, 1);
+        // Convertir array<string,4> a vector<string> para PrintPrimaryBox
+        std::vector<std::string> lineVec(line.begin(), line.end());
+        Common::PrintPrimaryBox(20, 44, 160, 6, lineVec,
+            Common::FOREGROUND_LIGHT, Common::GRAY, Common::SELECTION_BACKGROUND);
+
+        // Animacion de sprite desplazandose de izquierda a derecha
         const int startX = 0;
         const int endX = 160;
         const int step = 8;
         const int spriteY = 28;
         const int frameDelay = 80; // ms por frame
-        const int frameCount = PsyduckFront_ALL.size();
 
         for (int x = startX; x <= endX; x += step) {
             // Determinar frame actual (ciclico)
@@ -91,15 +78,17 @@ namespace Pokemon {
             if (x > startX) {
                 int prevX = x - step;
                 // Redibujar fondo en la posicion anterior del sprite
+                // Usar dimensiones dinamicas del sprite
+                int spriteWidth = Common::Length(frames[0][0]);
                 Common::DrawFillRectangle(
-                    prevX, spriteY, 30, 15, // ancho aproximado del sprite
+                    prevX, spriteY, spriteWidth, frames[0].size(),
                     Common::EMPTY_BLOCK,
                     Common::FOREGROUND_LIGHT, Common::BACKGROUND
                 );
             }
 
-            // Dibujar sprite de Psyduck en posicion actual
-            Common::DrawSprite(x, spriteY, PsyduckFront_ALL[frameIndex]);
+            // Dibujar sprite en posicion actual
+            Common::DrawSprite(x, spriteY, frames[frameIndex]);
 
             Common::Sleep(frameDelay);
         }

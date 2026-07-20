@@ -635,13 +635,74 @@ namespace Common
             "▀  "
         };
 
-    /// @brief Convierte un string a vector de FONT4 glyphs (a-z, A-Z, espacio)
-    /// @param name String a convertir (case-insensitive, solo letras y espacios)
+        // Spanish accented characters
+        const std::array<std::string, 4> FONT4_iexclam = {
+            "▀▄",
+            "▀▄",
+            "▄ ",
+            "▀ "
+        };
+
+        const std::array<std::string, 4> FONT4_e_acute = {
+            "▄▀▄",
+            "█▀█",
+            "█▀▀",
+            "▀▀▀"
+        };
+
+        const std::array<std::string, 4> FONT4_o_acute = {
+            "▄▀▄",
+            "▟▀▙",
+            "█  █",
+            "▝▀▀▘"
+        };
+
+        const std::array<std::string, 4> FONT4_i_acute = {
+            "▄▀▄",
+            "▄▄",
+            "█ ",
+            "▀ "
+        };
+
+        const std::array<std::string, 4> FONT4_u_acute = {
+            "▄▀▄",
+            "█  █",
+            "█  █",
+            "▝▀▀▘"
+        };
+
+        const std::array<std::string, 4> FONT4_n_tilde = {
+            "▄▀▄",
+            "█▄▄▖",
+            "█  █",
+            "▀  ▀"
+        };
+
+    /// @brief Convierte un string a vector de FONT4 glyphs (a-z, A-Z, espacio, caracteres UTF-8)
+    /// @param name String a convertir (case-insensitive, letras, espacios, y caracteres UTF-8 españoles)
     /// @return Vector de arrays FONT4, uno por caracter
     inline std::vector<std::array<std::string, 4>> Font4String(const std::string& name) {
         std::vector<std::array<std::string, 4>> glyphs;
         for (size_t i = 0; i < name.size(); i++) {
-            char c = name[i];
+            unsigned char c = static_cast<unsigned char>(name[i]);
+
+            // UTF-8 multi-byte detection
+            if (c == 0xC2 && i + 1 < name.size()) {
+                unsigned char next = static_cast<unsigned char>(name[i + 1]);
+                if (next == 0xA1) { glyphs.push_back(Common::FONT4_iexclam); i++; continue; }
+            } else if (c == 0xC3 && i + 1 < name.size()) {
+                unsigned char next = static_cast<unsigned char>(name[i + 1]);
+                switch (next) {
+                    case 0xA9: glyphs.push_back(Common::FONT4_e_acute); i++; continue;
+                    case 0xB3: glyphs.push_back(Common::FONT4_o_acute); i++; continue;
+                    case 0xAD: glyphs.push_back(Common::FONT4_i_acute); i++; continue;
+                    case 0xBA: glyphs.push_back(Common::FONT4_u_acute); i++; continue;
+                    case 0xB1: glyphs.push_back(Common::FONT4_n_tilde); i++; continue;
+                    default: glyphs.push_back(Common::FONT4_blank); break;
+                }
+            }
+
+            // ASCII characters
             if (c == ' ') {
                 glyphs.push_back(Common::FONT4_blank);
             } else if (c >= 'A' && c <= 'Z') {
