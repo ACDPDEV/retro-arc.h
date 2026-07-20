@@ -19,7 +19,7 @@ int main() {
             // Batalla Naval
             break;
         case 3:
-            InvasionEspacial::iniciarJuego();
+            InvasionEspacial::ejecutarJuego("COMANDANTE");
             break;
         case 4:
             // Tictactoe

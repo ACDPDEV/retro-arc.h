@@ -22,6 +22,11 @@ namespace PokemonGame
             {
             }
         
+            void RegisterUse() override
+            {
+                remainingUses--;
+            }
+
             void Use(PokemonGame::Pokemon* target) override
             {
                 PokemonGame::Effect* leftOver = new PokemonGame::Effect(PokemonGame::EffectName::LEFTOVER, 3);

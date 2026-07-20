@@ -20,6 +20,11 @@ namespace PokemonGame
             {
             }
         
+            void RegisterUse() override
+            {
+                remainingUses--;
+            }
+
             void Use(PokemonGame::Pokemon* target) override
             {
                 target->ReceiveHeal(healPoints);

@@ -1,112 +1,78 @@
-#ifndef PANTALLAS_H
-#define PANTALLAS_H
+/// @file pantallas.h
+/// @brief Pantallas del menú y presentación de Invasion Espacial.
+/// @details Menu screens, intro, credits, game over, victory.
+///          Uses terminal directly (not VirtualScreen) for non-game screens.
+///          All functions in namespace InvasionEspacial.
+#pragma once
 
 #include <iostream>
-#include <windows.h>
-#include <conio.h>
+#include <string>
 
-#include "consola2.h"
+#include "../../Common/Input.h"
+#include "../../Common/Terminal.h"
+#include "../../Common/Output.h"
+#include "../../Common/Music.h"
 #include "figuras.h"
 
 using namespace std;
+
+namespace InvasionEspacial {
+
 //=========================================================
-// FUNCIONES DEL JUEGO
+// FUNCIONES DEL JUEGO (declaración anticipada)
 //=========================================================
 
+/// @brief Función principal del juego (definida en juego.h)
+/// @param usuario Nombre del jugador
 void ejecutarJuego(string usuario);
+
 //=========================================================
-// PROTOTIPOS DE PANTALLAS
+// PRESENTACIÓN
 //=========================================================
-
-void presentacion();
-
-bool clave();
-void bienvenida();
-void claveIncorrecta();
-
-void menu();
-
-void instrucciones();
-void creditos();
-void despedida(string usuario);
-
-void gameOver();
-void victoria();
-//=========================================================
-// PRESENTACI�N
-//=========================================================
-
-void presentacion()
+/// @brief Pantalla de presentación con barra de carga
+inline void presentacion()
 {
-    system("cls");
+    Common::Clear();
 
-    // Fondo de estrellas
     fondoEspacialAnimado();
-
-
-    // Logo del juego
     dibujarTitulo();
 
+    std::cout << "\033[96m";
+    Common::GoToXY(62, 28);
+    std::cout << "CARGANDO SISTEMA ESPACIAL...";
 
-    color(11);
+    Common::Sleep(500);
 
-    escribirTexto(62,28,
-    "CARGANDO SISTEMA ESPACIAL...",35);
+    Common::GoToXY(65, 32);
+    std::cout << "\033[0m[                    ]";
 
-
-    Sleep(500);
-
-
-    //=====================================================
-    // BARRA DE CARGA
-    //=====================================================
-
-    gotoxy(65,32);
-    color(15);
-    cout<<"[                    ]";
-
-
-    for(int i=0;i<=20;i++)
+    for(int i = 0; i <= 20; i++)
     {
-        gotoxy(66+i,32);
+        Common::GoToXY(66 + i, 32);
+        std::cout << "\033[32m|";
 
-        color(10);
+        Common::GoToXY(70, 34);
+        std::cout << "\033[0m" << i * 5 << "%";
 
-        cout<<"|";
-
-        gotoxy(70,34);
-
-        color(15);
-
-        cout<<i*5<<"%";
-
-        Beep(800,20);
-
-        Sleep(100);
+        Common::PlayAudio("Juegos/Invasion Espacial/Sounds/beep_mid.mp3");
+        Common::Sleep(80);
     }
 
+    std::cout << "\033[32m";
+    Common::GoToXY(75, 37);
+    std::cout << "SISTEMA ONLINE";
+    Common::PlayAudio("Juegos/Invasion Espacial/Sounds/beep_high.mp3");
 
-    //=====================================================
-    // SISTEMA LISTO
-    //=====================================================
-
-    color(10);
-
-    escribirTexto(75,37,
-    "SISTEMA ONLINE",40);
-
-
-    Beep(1000,200);
-
-
-    Sleep(1000);
+    std::cout << "\033[0m";
+    Common::Sleep(1000);
 }
 
 //=========================================================
 // SEGURIDAD - CLAVE DE ACCESO
 //=========================================================
-
-bool clave()
+/// @brief Pantalla de ingreso de clave (3 intentos)
+/// @return true si la clave es correcta
+inline bool clave()
 {
     string codigo;
 
@@ -114,131 +80,104 @@ bool clave()
 
     for(int intento = 1; intento <= MAX_INTENTOS; intento++)
     {
-        system("cls");
+        Common::Clear();
 
-        color(11);
+        std::cout << "\033[96m";
+        Common::GoToXY(55, 8);
+        std::cout << "==========================================";
+        Common::GoToXY(65, 10);
+        std::cout << "CENTRO DE DEFENSA ESPACIAL";
+        Common::GoToXY(55, 12);
+        std::cout << "==========================================";
 
-        gotoxy(55,8);
-        cout<<"==========================================";
+        std::cout << "\033[0m";
+        Common::GoToXY(65, 17);
+        std::cout << "INGRESE CLAVE DE ACCESO:";
 
-        gotoxy(65,10);
-        cout<<"CENTRO DE DEFENSA ESPACIAL";
+        std::cout << "\033[33m";
+        Common::GoToXY(65, 18);
+        std::cout << "Intento " << intento << " de " << MAX_INTENTOS;
 
-        gotoxy(55,12);
-        cout<<"==========================================";
+        std::cout << "\033[0m";
+        Common::GoToXY(65, 20);
+        std::cout << "> ";
 
+        getline(cin, codigo);
 
-        color(15);
-
-        gotoxy(65,17);
-        cout<<"INGRESE CLAVE DE ACCESO:";
-
-
-        color(14);
-
-        gotoxy(65,18);
-        cout<<"Intento "<<intento<<" de "<<MAX_INTENTOS;
-
-
-        color(15);
-
-        gotoxy(65,20);
-        cout<<"> ";
-
-        getline(cin,codigo);
-
-
-        if(codigo=="1234")
+        if(codigo == "1234")
         {
             return true;
         }
 
-
         if(intento < MAX_INTENTOS)
         {
-            color(12);
+            std::cout << "\033[31m";
+            Common::GoToXY(65, 23);
+            std::cout << "CLAVE INCORRECTA. INTENTELO DE NUEVO.";
+            Common::PlayAudio("Juegos/Invasion Espacial/Sounds/beep_low.mp3");
 
-            gotoxy(65,23);
-            cout<<"CLAVE INCORRECTA. INTENTELO DE NUEVO.";
-
-            Beep(300,200);
-
-            Sleep(1400);
+            std::cout << "\033[0m";
+            Common::Sleep(1400);
         }
     }
 
     return false;
 }
+
 //=========================================================
 // SOLICITAR NOMBRE DE USUARIO
 //=========================================================
-
-string solicitarUsuario()
+/// @brief Pantalla de solicitud de nombre de usuario
+/// @return Nombre ingresado o "COMANDANTE" si está vacío
+inline string solicitarUsuario()
 {
     string usuario;
 
+    Common::Clear();
 
-    system("cls");
+    std::cout << "\033[96m";
+    Common::GoToXY(55, 8);
+    std::cout << "==========================================";
+    Common::GoToXY(65, 10);
+    std::cout << "IDENTIFICACION DEL COMANDANTE";
+    Common::GoToXY(55, 12);
+    std::cout << "==========================================";
 
+    std::cout << "\033[0m";
+    Common::GoToXY(65, 16);
+    std::cout << "Ingrese nombre de usuario:";
+    Common::GoToXY(65, 18);
+    std::cout << "> ";
 
-    color(11);
+    getline(cin, usuario);
 
-    gotoxy(55,8);
-    cout<<"==========================================";
-
-    gotoxy(65,10);
-    cout<<"IDENTIFICACION DEL COMANDANTE";
-
-    gotoxy(55,12);
-    cout<<"==========================================";
-
-
-    color(15);
-
-    gotoxy(65,16);
-    cout<<"Ingrese nombre de usuario:";
-
-
-    gotoxy(65,18);
-    cout<<"> ";
-
-    getline(cin,usuario);
-
-
-    if(usuario=="")
+    if(usuario == "")
     {
-        usuario="COMANDANTE";
+        usuario = "COMANDANTE";
     }
-
 
     return usuario;
 }
+
 //=========================================================
 // ACCESO CORRECTO
 //=========================================================
-
-void bienvenida(string usuario)
+/// @brief Pantalla de bienvenida con animación de nave
+/// @param usuario Nombre del jugador
+inline void bienvenida(string usuario)
 {
-    system("cls");
+    Common::Clear();
 
+    std::cout << "\033[32m";
+    Common::GoToXY(65, 6);
+    std::cout << "ACCESO AUTORIZADO";
 
-    color(10);
+    std::cout << "\033[96m";
+    Common::GoToXY(55, 9);
+    std::cout << "BIENVENIDO COMANDANTE " << usuario;
 
-    escribirTexto(
-        65,
-        6,
-        "ACCESO AUTORIZADO",
-        40);
-
-
-    color(11);
-
-    gotoxy(55,9);
-
-    cout<<"BIENVENIDO COMANDANTE "<<usuario;
-
-
-    // FIGURA ANIMADA: la nave llega volando hasta el centro
+    // Animación: nave llega volando
+    Common::VirtualScreenInit(screen);
 
     int xNave;
     int yNave = 15;
@@ -246,115 +185,233 @@ void bienvenida(string usuario)
     for(xNave = 20; xNave <= 80; xNave += 4)
     {
         if(xNave > 20)
-            borrarJugador(xNave - 4, yNave);
+        {
+            for(int i = 0; i < 23; i++)
+            {
+                Common::VirtualScreenSetCursor(screen, xNave - 4, yNave + i);
+                Common::VirtualScreenPrint(screen, "                                             ");
+            }
+        }
 
         dibujarJugador(xNave, yNave);
 
-        Sleep(25);
+        Common::VirtualScreenPresent(screen);
+        Common::Sleep(25);
     }
 
+    Common::VirtualScreenClear(screen);
+    Common::VirtualScreenPresent(screen);
 
-    color(15);
+    std::cout << "\033[0m";
+    Common::GoToXY(55, 40);
+    std::cout << "Preparando sistemas de combate...";
+    Common::PlayAudio("Juegos/Invasion Espacial/Sounds/beep_high.mp3");
 
-    gotoxy(55,40);
-    cout<<"Preparando sistemas de combate...";
-
-
-    Beep(1000,200);
-
-
-    Sleep(1500);
+    Common::Sleep(1500);
 }
+
 //=========================================================
 // CLAVE INCORRECTA
 //=========================================================
-
-void claveIncorrecta()
+/// @brief Pantalla de acceso denegado
+inline void claveIncorrecta()
 {
-    system("cls");
+    Common::Clear();
 
-    color(12);
+    std::cout << "\033[31m";
+    Common::GoToXY(40, 13);
+    std::cout << "+--------------------------------------------------------------+";
+    Common::GoToXY(40, 14);
+    std::cout << "|                                                                |";
+    Common::GoToXY(40, 15);
+    std::cout << "|   ACCESO DENEGADO                                             |";
+    Common::GoToXY(40, 16);
+    std::cout << "|                                                                |";
+    Common::GoToXY(40, 17);
+    std::cout << "|   Intento 3 veces ingresar con una clave incorrecta.          |";
+    Common::GoToXY(40, 18);
+    std::cout << "|   Comuniquese con el administrador.                          |";
+    Common::GoToXY(40, 19);
+    std::cout << "|                                                                |";
+    Common::GoToXY(40, 20);
+    std::cout << "+--------------------------------------------------------------+";
 
-    gotoxy(40,13);
-    cout<<"+--------------------------------------------------------------+";
-
-    gotoxy(40,14);
-    cout<<"|                                                                |";
-
-    gotoxy(40,15);
-    cout<<"|   ACCESO DENEGADO                                             |";
-
-    gotoxy(40,16);
-    cout<<"|                                                                |";
-
-    gotoxy(40,17);
-    cout<<"|   Intento 3 veces ingresar con una clave incorrecta.          |";
-
-    gotoxy(40,18);
-    cout<<"|   Comuniquese con el administrador.                          |";
-
-    gotoxy(40,19);
-    cout<<"|                                                                |";
-
-    gotoxy(40,20);
-    cout<<"+--------------------------------------------------------------+";
-
-
-    Beep(400,300);
-    Beep(250,400);
-
-    Sleep(2500);
+    std::cout << "\033[0m";
+    Common::PlayAudio("Juegos/Invasion Espacial/Sounds/beep_low.mp3");
+    Common::PlayAudio("Juegos/Invasion Espacial/Sounds/beep_vlow.mp3");
+    Common::Sleep(2500);
 }
-//=========================================================
-// MEN�
-//=========================================================
 
-void menu(string usuario)
+//=========================================================
+// INSTRUCCIONES
+//=========================================================
+/// @brief Pantalla de instrucciones del juego
+inline void instrucciones()
+{
+    Common::Clear();
+
+    std::cout << "\033[96m";
+    Common::GoToXY(55, 5);
+    std::cout << "==========================================";
+    Common::GoToXY(68, 7);
+    std::cout << "INSTRUCCIONES";
+    Common::GoToXY(55, 9);
+    std::cout << "==========================================";
+
+    std::cout << "\033[0m";
+    Common::GoToXY(60, 12);
+    std::cout << "OBJETIVO:";
+    Common::GoToXY(60, 14);
+    std::cout << "Defiende la galaxia de la invasion";
+    Common::GoToXY(60, 15);
+    std::cout << "alienigena y meteoritos.";
+    Common::GoToXY(60, 18);
+    std::cout << "CONTROLES:";
+    Common::GoToXY(60, 20);
+    std::cout << "Movimiento  :  FLECHAS IZQ/DER";
+    Common::GoToXY(60, 21);
+    std::cout << "Disparo     :  ESPACIO";
+    Common::GoToXY(60, 24);
+    std::cout << "Destruye enemigos y consigue";
+    Common::GoToXY(60, 25);
+    std::cout << "la mayor puntuacion.";
+
+    std::cout << "\033[32m";
+    Common::GoToXY(65, 30);
+    std::cout << "Presione una tecla para volver";
+
+    Common::Getch();
+}
+
+//=========================================================
+// CRÉDITOS
+//=========================================================
+/// @brief Pantalla de créditos
+inline void creditos()
+{
+    Common::Clear();
+
+    std::cout << "\033[96m";
+    Common::GoToXY(55, 7);
+    std::cout << "==========================================";
+    Common::GoToXY(70, 9);
+    std::cout << "CREDITOS";
+    Common::GoToXY(55, 11);
+    std::cout << "==========================================";
+
+    std::cout << "\033[0m";
+    Common::GoToXY(60, 15);
+    std::cout << "INVASORES ESPACIALES";
+    Common::GoToXY(60, 18);
+    std::cout << "Proyecto Final";
+    Common::GoToXY(60, 20);
+    std::cout << "Algoritmos y programacion";
+    Common::GoToXY(60, 23);
+    std::cout << "Desarrollado por: VASQUEZ CHAVEZ YAMILLET";
+    Common::GoToXY(60, 25);
+    std::cout << "Equipo de desarrollo";
+
+    std::cout << "\033[32m";
+    Common::GoToXY(65, 30);
+    std::cout << "Presione una tecla para volver";
+
+    Common::Getch();
+}
+
+//=========================================================
+// DESPEDIDA
+//=========================================================
+/// @brief Pantalla de despedida con animación de nave
+/// @param usuario Nombre del jugador
+inline void despedida(string usuario)
+{
+    Common::Clear();
+
+    std::cout << "\033[96m";
+    Common::GoToXY(55, 6);
+    std::cout << "==========================================";
+    Common::GoToXY(63, 8);
+    std::cout << "MISION FINALIZADA";
+    Common::GoToXY(55, 10);
+    std::cout << "==========================================";
+
+    std::cout << "\033[0m";
+    Common::GoToXY(50, 13);
+    std::cout << "Gracias por defender la galaxia, comandante " << usuario << ".";
+
+    // Animación: nave se aleja
+    Common::VirtualScreenInit(screen);
+
+    int xNave;
+    int yNave = 18;
+
+    for(xNave = 80; xNave >= 10; xNave -= 4)
+    {
+        if(xNave < 80)
+        {
+            for(int i = 0; i < 23; i++)
+            {
+                Common::VirtualScreenSetCursor(screen, xNave + 4, yNave + i);
+                Common::VirtualScreenPrint(screen, "                                             ");
+            }
+        }
+
+        dibujarJugador(xNave, yNave);
+
+        Common::VirtualScreenPresent(screen);
+        Common::Sleep(25);
+    }
+
+    Common::VirtualScreenClear(screen);
+    Common::VirtualScreenPresent(screen);
+
+    std::cout << "\033[32m";
+    Common::GoToXY(60, 45);
+    std::cout << "Hasta la proxima mision, " << usuario << "...";
+
+    std::cout << "\033[0m";
+    Common::PlayAudio("Juegos/Invasion Espacial/Sounds/beep_mid.mp3");
+    Common::PlayAudio("Juegos/Invasion Espacial/Sounds/beep_mid.mp3");
+    Common::PlayAudio("Juegos/Invasion Espacial/Sounds/beep_low.mp3");
+    Common::Sleep(2000);
+}
+
+//=========================================================
+// MENÚ (al final para que vea las declaraciones)
+//=========================================================
+/// @brief Menú principal del juego
+/// @param usuario Nombre del jugador
+inline void menu(string usuario)
 {
     int opcion;
 
-
     do
     {
-        system("cls");
+        Common::Clear();
 
+        std::cout << "\033[96m";
+        Common::GoToXY(55, 5);
+        std::cout << "==========================================";
+        Common::GoToXY(62, 7);
+        std::cout << "INVASORES ESPACIALES";
+        Common::GoToXY(55, 9);
+        std::cout << "==========================================";
 
-        color(11);
+        std::cout << "\033[0m";
+        Common::GoToXY(70, 13);
+        std::cout << "1. INICIAR MISION";
+        Common::GoToXY(70, 15);
+        std::cout << "2. INSTRUCCIONES";
+        Common::GoToXY(70, 17);
+        std::cout << "3. CREDITOS";
+        Common::GoToXY(70, 19);
+        std::cout << "4. SALIR";
 
-        gotoxy(55,5);
-        cout<<"==========================================";
+        std::cout << "\033[32m";
+        Common::GoToXY(65, 23);
+        std::cout << "Seleccione una opcion: ";
 
-        gotoxy(62,7);
-        cout<<"INVASORES ESPACIALES";
-
-        gotoxy(55,9);
-        cout<<"==========================================";
-
-
-        color(15);
-
-        gotoxy(70,13);
-        cout<<"1. INICIAR MISION";
-
-
-        gotoxy(70,15);
-        cout<<"2. INSTRUCCIONES";
-
-
-        gotoxy(70,17);
-        cout<<"3. CREDITOS";
-
-
-        gotoxy(70,19);
-        cout<<"4. SALIR";
-
-
-        color(10);
-
-        gotoxy(65,23);
-        cout<<"Seleccione una opcion: ";
-
-        cin>>opcion;
+        cin >> opcion;
 
         if(cin.fail())
         {
@@ -367,247 +424,39 @@ void menu(string usuario)
             cin.ignore();
         }
 
-
-
         switch(opcion)
         {
-
-			case 1:
-			
-			    color(10);
-			
-			    gotoxy(65,27);
-			    cout<<"INICIANDO MISION...";
-			
-			
-			    Sleep(1000);
-			
-			
-			    ejecutarJuego(usuario);
-			
-			
-			    break;
-
-
+            case 1:
+                std::cout << "\033[32m";
+                Common::GoToXY(65, 27);
+                std::cout << "INICIANDO MISION...";
+                Common::Sleep(1000);
+                ejecutarJuego(usuario);
+                break;
 
             case 2:
-
                 instrucciones();
-
                 break;
-
-
 
             case 3:
-
                 creditos();
-
                 break;
-
-
 
             case 4:
-
                 despedida(usuario);
-
                 break;
 
-
-
             default:
-
-                color(12);
-
-                gotoxy(65,27);
-                cout<<"OPCION INVALIDA";
-
-                Sleep(1000);
-
+                std::cout << "\033[31m";
+                Common::GoToXY(65, 27);
+                std::cout << "OPCION INVALIDA";
+                Common::Sleep(1000);
         }
 
-
-    }while(opcion!=4);
-
+    } while(opcion != 4);
 }
 
+} // namespace InvasionEspacial
 
-//=========================================================
-// OPCIONES DEL MEN�
-//=========================================================
-
-//=========================================================
-// INSTRUCCIONES
-//=========================================================
-
-void instrucciones()
-{
-    system("cls");
-
-    color(11);
-
-    gotoxy(55,5);
-    cout<<"==========================================";
-
-    gotoxy(68,7);
-    cout<<"INSTRUCCIONES";
-
-    gotoxy(55,9);
-    cout<<"==========================================";
-
-
-    color(15);
-
-
-    gotoxy(60,12);
-    cout<<"OBJETIVO:";
-
-    gotoxy(60,14);
-    cout<<"Defiende la galaxia de la invasion";
-
-    gotoxy(60,15);
-    cout<<"alienigena y meteoritos.";
-
-
-    gotoxy(60,18);
-    cout<<"CONTROLES:";
-
-
-    gotoxy(60,20);
-    cout<<"Movimiento  :  FLECHAS IZQ/DER";
-
-    gotoxy(60,21);
-    cout<<"Disparo     :  ESPACIO";
-
-
-    gotoxy(60,24);
-    cout<<"Destruye enemigos y consigue";
-
-    gotoxy(60,25);
-    cout<<"la mayor puntuacion.";
-
-
-    color(10);
-
-    gotoxy(65,30);
-    cout<<"Presione una tecla para volver";
-
-    getch();
-}
-
-
-//=========================================================
-// CREDITOS
-//=========================================================
-
-void creditos()
-{
-    system("cls");
-
-    color(11);
-
-    gotoxy(55,7);
-    cout<<"==========================================";
-
-    gotoxy(70,9);
-    cout<<"CREDITOS";
-
-    gotoxy(55,11);
-    cout<<"==========================================";
-
-
-    color(15);
-
-    gotoxy(60,15);
-    cout<<"INVASORES ESPACIALES";
-
-
-    gotoxy(60,18);
-    cout<<"Proyecto Final";
-
-    gotoxy(60,20);
-    cout<<"Algoritmos y programacion";
-
-
-    gotoxy(60,23);
-    cout<<"Desarrollado por: VASQUEZ CHAVEZ YAMILLET";
-
-
-    gotoxy(60,25);
-    cout<<"Equipo de desarrollo";
-
-
-    color(10);
-
-    gotoxy(65,30);
-    cout<<"Presione una tecla para volver";
-
-
-    getch();
-}
-
-
-//=========================================================
-// PANTALLAS DEL JUEGO
-//=========================================================
-
-
-
-//=========================================================
-// DESPEDIDA
-//=========================================================
-
-void despedida(string usuario)
-{
-    system("cls");
-
-    color(11);
-
-    gotoxy(55,6);
-    cout<<"==========================================";
-
-    gotoxy(63,8);
-    cout<<"MISION FINALIZADA";
-
-    gotoxy(55,10);
-    cout<<"==========================================";
-
-
-    color(15);
-
-    gotoxy(50,13);
-    cout<<"Gracias por defender la galaxia, comandante "<<usuario<<".";
-
-
-    // FIGURA ANIMADA: la nave se aleja del centro hasta salir de pantalla
-
-    int xNave;
-    int yNave = 18;
-
-    for(xNave = 80; xNave >= 10; xNave -= 4)
-    {
-        if(xNave < 80)
-            borrarJugador(xNave + 4, yNave);
-
-        dibujarJugador(xNave, yNave);
-
-        Sleep(25);
-    }
-
-    borrarJugador(xNave + 4, yNave);
-
-
-    color(10);
-
-    gotoxy(60,45);
-    cout<<"Hasta la proxima mision, "<<usuario<<"...";
-
-
-    Beep(700,150);
-    Beep(500,150);
-    Beep(300,300);
-
-    Sleep(2000);
-}
-
-
-#endif
+// Incluir juego.h al final para resolver la referencia a ejecutarJuego
+#include "juego.h"

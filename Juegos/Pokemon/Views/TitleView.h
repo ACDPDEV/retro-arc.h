@@ -7,6 +7,7 @@
 #include "../../../Common/Aligned.h"
 #include "../../../Common/Color.h"
 #include "../../../Common/Components/BottomBar.h"
+#include "../../../Common/Components/SelectComponent.h"
 #include "../../../Common/Consts.h"
 #include "../../../Common/Font.h"
 #include "../../../Common/Graphics.h"
@@ -14,14 +15,17 @@
 #include "../../../Common/Terminal.h"
 #include "../../../Common/Theme.h"
 #include "../../../Common/Utils.h"
+#include "../Components/MenuOptions.h"
 #include "../PokemonStaticSprites/CharmanderFront.h"
 #include "../PokemonStaticSprites/PikachuFront.h"
 
 namespace Pokemon {
 
-    /// @brief Renderiza la pantalla de titulo de Pokemon: logo, sprites y texto de prompt
-    /// @details Vista puramente visual — el llamador maneja el input despues de que retorne
-    inline void TitleView() {
+    /// @brief Renderiza la pantalla de titulo de Pokemon con logo, sprites y menu de opciones
+    /// @return Indice de la opcion seleccionada por el usuario (0=Jugar, 1=Instrucciones, 2=Configuraciones, 3=Volver)
+    inline int TitleView() {
+        OPTION = 0;
+
         Common::DrawBackground();
 
         // Logo "POKEMON" con ConcatFont (FONT9_P-FONT9_N) - 9-line font
@@ -50,31 +54,26 @@ namespace Pokemon {
         Common::DrawSprite(35, 14, CharmanderFront);
         Common::DrawSprite(125, 14, PikachuFront);
 
-        // Texto (Presione una tecla para empezar) - 4-line font
-        const std::array<std::string, 4> promptFont = Common::ConcatFont({
-            Common::FONT4_p, Common::FONT4_r, Common::FONT4_e, Common::FONT4_s,
-            Common::FONT4_i, Common::FONT4_o, Common::FONT4_n, Common::FONT4_a,
-            Common::FONT4_blank,
-            Common::FONT4_u, Common::FONT4_n, Common::FONT4_a,
-            Common::FONT4_blank,
-            Common::FONT4_t, Common::FONT4_e, Common::FONT4_c, Common::FONT4_l, Common::FONT4_a,
-            Common::FONT4_blank,
-            Common::FONT4_p, Common::FONT4_a, Common::FONT4_r, Common::FONT4_a,
-            Common::FONT4_blank,
-            Common::FONT4_e, Common::FONT4_m, Common::FONT4_p, Common::FONT4_e, Common::FONT4_z, Common::FONT4_a, Common::FONT4_r
-        }, 1);
+        // Menu de opciones con selector
+        const int selectWidth = Common::Length(Common::MaxString(OPTIONS)) + 16;
+        const int selectHeight = OPTIONS.size();
+        const int selectX = Common::AlignedX(0, Common::WIDTH_SCREEN, selectWidth, "center");
+        const int selectY = Common::AlignedY(0, Common::HEIGHT_SCREEN, selectHeight, "center");
 
-        const int promptX = Common::AlignedX(0, Common::WIDTH_SCREEN, Common::Length(promptFont[0]), "center");
-        Common::DrawText(
-            promptX, 36, -1, -1,
-            {promptFont[0], promptFont[1], promptFont[2], promptFont[3]},
-            Common::FOREGROUND_LIGHT, Common::BACKGROUND
+        Common::SelectComponent(
+            selectX, selectY,
+            Common::SELECTION_BACKGROUND, Common::ACCENT,
+            OPTIONS, OPTION,
+            {" [>>>]  ", "        "},
+            {1, 1}, 1
         );
 
         // Barra inferior
         Common::DrawBottomBar();
 
         Common::GoToEnd();
+
+        return OPTION;
     }
 
 } // namespace Pokemon

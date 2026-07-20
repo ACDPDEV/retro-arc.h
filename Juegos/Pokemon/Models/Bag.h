@@ -11,7 +11,7 @@ namespace PokemonGame
     {
         private:
     
-            std::vector<std::unique_ptr<PokemonGame::Item>> items;
+            std::vector<std::shared_ptr<PokemonGame::Item>> items;
     
         public:
     
@@ -27,9 +27,9 @@ namespace PokemonGame
                 items.clear();
             }
     
-            void AddItem(std::unique_ptr<PokemonGame::Item> item)
+            void AddItem(std::shared_ptr<PokemonGame::Item> item)
             {
-                items.push_back(std::move(item));
+                items.push_back(item);
             }
             
             PokemonGame::Item* GetItemById(int id)

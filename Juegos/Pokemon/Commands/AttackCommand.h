@@ -1,12 +1,10 @@
 #pragma once
 #include "Command.h"
-#include "../Controllers/Battle.h"
 #include "../Models/Move.h"
 #include "../Models/Player.h"
 
 namespace PokemonGame
 {
-    class PokemonGame::Move;
     
     class AttackCommand : public PokemonGame::Command
     {
@@ -48,6 +46,13 @@ namespace PokemonGame
                     return true;
                 }
                 return false;
+            }
+
+            /// @brief Returns the move used by this attack command
+            /// @return Pointer to the Move object
+            PokemonGame::Move* GetMove()
+            {
+                return move;
             }
     };
 }

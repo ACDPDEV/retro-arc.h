@@ -1,670 +1,856 @@
-#ifndef FIGURAS_H
-#define FIGURAS_H
+/// @file figuras.h
+/// @brief Figuras del juego Invasion Espacial (sprites, explosiones, HUD).
+/// @details Figuras draw functions using Common::VirtualScreen for portable
+///          cross-platform rendering. All functions wrapped in namespace InvasionEspacial.
+#pragma once
+
 //=========================================================
 // NAVE DEL JUGADOR (OFICIAL)
 //=========================================================
 #include <iostream>
-#include "consola2.h"
+#include <string>
 
-using namespace std;
+#include "../../Common/VirtualScreen.h"
+#include "../../Common/Output.h"
+#include "../../Common/Music.h"
 
-void dibujarJugador(int x, int y)
+namespace InvasionEspacial {
+
+extern Common::VirtualScreen screen;
+
+/// @brief Dibuja la nave del jugador en la posici√≥n (x, y)
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void dibujarJugador(int x, int y)
 {
-    color(11); // Celeste
+    Common::VirtualScreenSetColor(screen, 11); // Celeste
 
-    gotoxy(x, y);      imprimir("                    /|\\                    ");
-    gotoxy(x, y + 1);  imprimir("                   /===\\                   ");
-    gotoxy(x, y + 2);  imprimir("                  /=====\\                  ");
-    gotoxy(x, y + 3);  imprimir("                 /.-----.\\                 ");
-    gotoxy(x, y + 4);  imprimir("                / | :|: | \\                ");
-    gotoxy(x, y + 5);  imprimir("               /  | :|: |  \\               ");
-    gotoxy(x, y + 6);  imprimir("              / .## :|: ##. \\              ");
-    gotoxy(x, y + 7);  imprimir("             /==.## :|: ##.==\\             ");
-    gotoxy(x, y + 8);  imprimir("            /| : ## :|: ## : |\\            ");
-    gotoxy(x, y + 9);  imprimir("           / | : #\\ :|: /# : | \\           ");
-    gotoxy(x, y +10);  imprimir("          /  | :  |===|  : |  \\            ");
-    gotoxy(x, y +11);  imprimir("    .----/---| :  |   |  : |---\\----.      ");
-    gotoxy(x, y +12);  imprimir("   /    ( )  | :  |   |  : |  ( )    \\     ");
-    gotoxy(x, y +13);  imprimir("  /______    |____|___|____|    ______\\    ");
-    gotoxy(x, y +14);  imprimir(" /       |---|    |   |    |---|       \\   ");
-    gotoxy(x, y +15);  imprimir("|        |   |    |   |    |   |        |  ");
-    gotoxy(x, y +16);  imprimir("|________|---|___\\\\_=_//___|---|________|  ");
-    gotoxy(x, y +17);  imprimir(" \\______/    |   |     |   |    \\______/   ");
-    gotoxy(x, y +18);  imprimir("       .=====.   |/=====\\|   .=====.       ");
-    gotoxy(x, y +19);  imprimir("       /###\\      /#####\\      /###\\       ");
-    gotoxy(x, y +20);  imprimir("       |===|      (%%%%%)      |===|       ");
-    gotoxy(x, y +21);  imprimir("       :###:      ;%%%%%;      :###:       ");
-    gotoxy(x, y +22);  imprimir("       .##.        :#:#:        .##.       ");
+    Common::VirtualScreenSetCursor(screen, x, y);      Common::VirtualScreenPrint(screen, "                    /|\\                    ");
+    Common::VirtualScreenSetCursor(screen, x, y + 1);  Common::VirtualScreenPrint(screen, "                   /===\\                   ");
+    Common::VirtualScreenSetCursor(screen, x, y + 2);  Common::VirtualScreenPrint(screen, "                  /=====\\                  ");
+    Common::VirtualScreenSetCursor(screen, x, y + 3);  Common::VirtualScreenPrint(screen, "                 /.-----.\\                 ");
+    Common::VirtualScreenSetCursor(screen, x, y + 4);  Common::VirtualScreenPrint(screen, "                / | :|: | \\                ");
+    Common::VirtualScreenSetCursor(screen, x, y + 5);  Common::VirtualScreenPrint(screen, "               /  | :|: |  \\               ");
+    Common::VirtualScreenSetCursor(screen, x, y + 6);  Common::VirtualScreenPrint(screen, "              / .## :|: ##. \\              ");
+    Common::VirtualScreenSetCursor(screen, x, y + 7);  Common::VirtualScreenPrint(screen, "             /==.## :|: ##.==\\             ");
+    Common::VirtualScreenSetCursor(screen, x, y + 8);  Common::VirtualScreenPrint(screen, "            /| : ## :|: ## : |\\            ");
+    Common::VirtualScreenSetCursor(screen, x, y + 9);  Common::VirtualScreenPrint(screen, "           / | : #\\ :|: /# : | \\           ");
+    Common::VirtualScreenSetCursor(screen, x, y +10);  Common::VirtualScreenPrint(screen, "          /  | :  |===|  : |  \\            ");
+    Common::VirtualScreenSetCursor(screen, x, y +11);  Common::VirtualScreenPrint(screen, "    .----/---| :  |   |  : |---\\----.      ");
+    Common::VirtualScreenSetCursor(screen, x, y +12);  Common::VirtualScreenPrint(screen, "   /    ( )  | :  |   |  : |  ( )    \\     ");
+    Common::VirtualScreenSetCursor(screen, x, y +13);  Common::VirtualScreenPrint(screen, "  /______    |____|___|____|    ______\\    ");
+    Common::VirtualScreenSetCursor(screen, x, y +14);  Common::VirtualScreenPrint(screen, " /       |---|    |   |    |---|       \\   ");
+    Common::VirtualScreenSetCursor(screen, x, y +15);  Common::VirtualScreenPrint(screen, "|        |   |    |   |    |   |        |  ");
+    Common::VirtualScreenSetCursor(screen, x, y +16);  Common::VirtualScreenPrint(screen, "|________|---|___\\\\_=_//___|---|________|  ");
+    Common::VirtualScreenSetCursor(screen, x, y +17);  Common::VirtualScreenPrint(screen, " \\______/    |   |     |   |    \\______/   ");
+    Common::VirtualScreenSetCursor(screen, x, y +18);  Common::VirtualScreenPrint(screen, "       .=====.   |/=====\\|   .=====.       ");
+    Common::VirtualScreenSetCursor(screen, x, y +19);  Common::VirtualScreenPrint(screen, "       /###\\      /#####\\      /###\\       ");
+    Common::VirtualScreenSetCursor(screen, x, y +20);  Common::VirtualScreenPrint(screen, "       |===|      (%%%%%)      |===|       ");
+    Common::VirtualScreenSetCursor(screen, x, y +21);  Common::VirtualScreenPrint(screen, "       :###:      ;%%%%%;      :###:       ");
+    Common::VirtualScreenSetCursor(screen, x, y +22);  Common::VirtualScreenPrint(screen, "       .##.        :#:#:        .##.       ");
 }
+
 //=========================================================
 // BORRAR NAVE DEL JUGADOR
 //=========================================================
-void borrarJugador(int x, int y)
+/// @brief Borra la nave del jugador escribiendo espacios
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void borrarJugador(int x, int y)
 {
     for(int i = 0; i < 23; i++)
     {
-        gotoxy(x, y + i);
-        imprimir("                                             ");
+        Common::VirtualScreenSetCursor(screen, x, y + i);
+        Common::VirtualScreenPrint(screen, "                                             ");
     }
 }
-//=========================================================
-// METEORITO 1 (PEQUE—O)
-//=========================================================
-void dibujarMeteorito1(int x, int y)
-{
-    color(8); // Gris
 
-    gotoxy(x, y);     imprimir("      ^^      ");
-    gotoxy(x, y + 1); imprimir("     ^^^      ");
-    gotoxy(x, y + 2); imprimir("    .###.     ");
-    gotoxy(x, y + 3); imprimir("  .######.    ");
-    gotoxy(x, y + 4); imprimir(" ####O####    ");
-    gotoxy(x, y + 5); imprimir("###########   ");
-    gotoxy(x, y + 6); imprimir("###O#####O#   ");
-    gotoxy(x, y + 7); imprimir(" #########    ");
-    gotoxy(x, y + 8); imprimir("  .#####.     ");
-    gotoxy(x, y + 9); imprimir("    ###       ");
-    
-    color(15);
+//=========================================================
+// METEORITO 1 (PEQUE√ëO)
+//=========================================================
+/// @brief Dibuja un meteorito peque√±o
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void dibujarMeteorito1(int x, int y)
+{
+    Common::VirtualScreenSetColor(screen, 8); // Gris
+
+    Common::VirtualScreenSetCursor(screen, x, y);     Common::VirtualScreenPrint(screen, "      ^^      ");
+    Common::VirtualScreenSetCursor(screen, x, y + 1); Common::VirtualScreenPrint(screen, "     ^^^      ");
+    Common::VirtualScreenSetCursor(screen, x, y + 2); Common::VirtualScreenPrint(screen, "    .###.     ");
+    Common::VirtualScreenSetCursor(screen, x, y + 3); Common::VirtualScreenPrint(screen, "  .######.    ");
+    Common::VirtualScreenSetCursor(screen, x, y + 4); Common::VirtualScreenPrint(screen, " ####O####    ");
+    Common::VirtualScreenSetCursor(screen, x, y + 5); Common::VirtualScreenPrint(screen, "###########   ");
+    Common::VirtualScreenSetCursor(screen, x, y + 6); Common::VirtualScreenPrint(screen, "###O#####O#   ");
+    Common::VirtualScreenSetCursor(screen, x, y + 7); Common::VirtualScreenPrint(screen, " #########    ");
+    Common::VirtualScreenSetCursor(screen, x, y + 8); Common::VirtualScreenPrint(screen, "  .#####.     ");
+    Common::VirtualScreenSetCursor(screen, x, y + 9); Common::VirtualScreenPrint(screen, "    ###       ");
+
+    Common::VirtualScreenSetColor(screen, 15);
 }
 
-void borrarMeteorito1(int x, int y)
+/// @brief Borra un meteorito peque√±o
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void borrarMeteorito1(int x, int y)
 {
     for(int i = 0; i < 10; i++)
     {
-        gotoxy(x, y + i);
-        imprimir("               ");
+        Common::VirtualScreenSetCursor(screen, x, y + i);
+        Common::VirtualScreenPrint(screen, "               ");
     }
 }
+
 //=========================================================
 // METEORITO 2 (MEDIANO)
 //=========================================================
-void dibujarMeteorito2(int x, int y)
+/// @brief Dibuja un meteorito mediano
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void dibujarMeteorito2(int x, int y)
 {
-    color(8);
+    Common::VirtualScreenSetColor(screen, 8);
 
-    gotoxy(x, y);      imprimir("        ^^^        ");
-    gotoxy(x, y + 1);  imprimir("      ^^^^^^^      ");
-    gotoxy(x, y + 2);  imprimir("     .######.      ");
-    gotoxy(x, y + 3);  imprimir("  .###########.    ");
-    gotoxy(x, y + 4);  imprimir(" ####O######O###   ");
-    gotoxy(x, y + 5);  imprimir("#################  ");
-    gotoxy(x, y + 6);  imprimir("###O###########O#  ");
-    gotoxy(x, y + 7);  imprimir("#################  ");
-    gotoxy(x, y + 8);  imprimir(" ######O######     ");
-    gotoxy(x, y + 9);  imprimir("   ##########      ");
-    gotoxy(x, y +10);  imprimir("     ######        ");
-    
-    color(15);
+    Common::VirtualScreenSetCursor(screen, x, y);      Common::VirtualScreenPrint(screen, "        ^^^        ");
+    Common::VirtualScreenSetCursor(screen, x, y + 1);  Common::VirtualScreenPrint(screen, "      ^^^^^^^      ");
+    Common::VirtualScreenSetCursor(screen, x, y + 2);  Common::VirtualScreenPrint(screen, "     .######.      ");
+    Common::VirtualScreenSetCursor(screen, x, y + 3);  Common::VirtualScreenPrint(screen, "  .###########.    ");
+    Common::VirtualScreenSetCursor(screen, x, y + 4);  Common::VirtualScreenPrint(screen, " ####O######O###   ");
+    Common::VirtualScreenSetCursor(screen, x, y + 5);  Common::VirtualScreenPrint(screen, "#################  ");
+    Common::VirtualScreenSetCursor(screen, x, y + 6);  Common::VirtualScreenPrint(screen, "###O###########O#  ");
+    Common::VirtualScreenSetCursor(screen, x, y + 7);  Common::VirtualScreenPrint(screen, "#################  ");
+    Common::VirtualScreenSetCursor(screen, x, y + 8);  Common::VirtualScreenPrint(screen, " ######O######     ");
+    Common::VirtualScreenSetCursor(screen, x, y + 9);  Common::VirtualScreenPrint(screen, "   ##########      ");
+    Common::VirtualScreenSetCursor(screen, x, y +10);  Common::VirtualScreenPrint(screen, "     ######        ");
+
+    Common::VirtualScreenSetColor(screen, 15);
 }
 
-void borrarMeteorito2(int x, int y)
+/// @brief Borra un meteorito mediano
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void borrarMeteorito2(int x, int y)
 {
     for(int i = 0; i < 11; i++)
     {
-        gotoxy(x, y + i);
-        imprimir("                    ");
+        Common::VirtualScreenSetCursor(screen, x, y + i);
+        Common::VirtualScreenPrint(screen, "                    ");
     }
 }
+
 //=========================================================
 // METEORITO 3 (GIGANTE)
 //=========================================================
-void dibujarMeteorito3(int x, int y)
+/// @brief Dibuja un meteorito gigante
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void dibujarMeteorito3(int x, int y)
 {
-    color(8);
+    Common::VirtualScreenSetColor(screen, 8);
 
-    gotoxy(x, y);      imprimir("         ^^^^^         ");
-    gotoxy(x, y + 1);  imprimir("       ^^^^^^^^^       ");
-    gotoxy(x, y + 2);  imprimir("      ^^^^^^^^^^^      ");
-    gotoxy(x, y + 3);  imprimir("     .#########.       ");
-    gotoxy(x, y + 4);  imprimir("  .###############.    ");
-    gotoxy(x, y + 5);  imprimir("#####################  ");
-    gotoxy(x, y + 6);  imprimir("###O#############O###  ");
-    gotoxy(x, y + 7);  imprimir("#####################  ");
-    gotoxy(x, y + 8);  imprimir("#####O#########O#####  ");
-    gotoxy(x, y + 9);  imprimir("#####################  ");
-    gotoxy(x, y +10);  imprimir("  #################    ");
-    gotoxy(x, y +11);  imprimir("     ###########       ");
-    gotoxy(x, y +12);  imprimir("       #######         ");
-    
-    color(15);
+    Common::VirtualScreenSetCursor(screen, x, y);      Common::VirtualScreenPrint(screen, "         ^^^^^         ");
+    Common::VirtualScreenSetCursor(screen, x, y + 1);  Common::VirtualScreenPrint(screen, "       ^^^^^^^^^       ");
+    Common::VirtualScreenSetCursor(screen, x, y + 2);  Common::VirtualScreenPrint(screen, "      ^^^^^^^^^^^      ");
+    Common::VirtualScreenSetCursor(screen, x, y + 3);  Common::VirtualScreenPrint(screen, "     .#########.       ");
+    Common::VirtualScreenSetCursor(screen, x, y + 4);  Common::VirtualScreenPrint(screen, "  .###############.    ");
+    Common::VirtualScreenSetCursor(screen, x, y + 5);  Common::VirtualScreenPrint(screen, "#####################  ");
+    Common::VirtualScreenSetCursor(screen, x, y + 6);  Common::VirtualScreenPrint(screen, "###O#############O###  ");
+    Common::VirtualScreenSetCursor(screen, x, y + 7);  Common::VirtualScreenPrint(screen, "#####################  ");
+    Common::VirtualScreenSetCursor(screen, x, y + 8);  Common::VirtualScreenPrint(screen, "#####O#########O#####  ");
+    Common::VirtualScreenSetCursor(screen, x, y + 9);  Common::VirtualScreenPrint(screen, "#####################  ");
+    Common::VirtualScreenSetCursor(screen, x, y +10);  Common::VirtualScreenPrint(screen, "  #################    ");
+    Common::VirtualScreenSetCursor(screen, x, y +11);  Common::VirtualScreenPrint(screen, "     ###########       ");
+    Common::VirtualScreenSetCursor(screen, x, y +12);  Common::VirtualScreenPrint(screen, "       #######         ");
+
+    Common::VirtualScreenSetColor(screen, 15);
 }
 
-void borrarMeteorito3(int x, int y)
+/// @brief Borra un meteorito gigante
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void borrarMeteorito3(int x, int y)
 {
     for(int i = 0; i < 13; i++)
     {
-        gotoxy(x, y + i);
-        imprimir("                         ");
+        Common::VirtualScreenSetCursor(screen, x, y + i);
+        Common::VirtualScreenPrint(screen, "                         ");
     }
 }
+
 //=========================================================
 // OVNI TIPO 1 (OFICIAL)
 //=========================================================
-void dibujarOvni1(int x, int y)
+/// @brief Dibuja un OVNI tipo 1
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void dibujarOvni1(int x, int y)
 {
-    color(12);   // Rojo
+    Common::VirtualScreenSetColor(screen, 12);   // Rojo
 
-    gotoxy(x,y);   imprimir("         .------.         ");
-    gotoxy(x,y+1); imprimir("      _.'  ||  `._        ");
-    gotoxy(x,y+2); imprimir("    .'  _(_)(_)_  `.      ");
-    gotoxy(x,y+3); imprimir(" .-=================-.    ");
-    gotoxy(x,y+4); imprimir(" | (*) (*) (*) (*) |      ");
-    gotoxy(x,y+5); imprimir(" |_________________|      ");
-    gotoxy(x,y+6); imprimir("  `._ *********** _.'      ");
-    gotoxy(x,y+7); imprimir("     `-----------'        ");
-    gotoxy(x,y+8); imprimir("      / /     \\ \\        ");
-    gotoxy(x,y+9); imprimir("     V_/       \\_V       ");
-    
-    color(15);
+    Common::VirtualScreenSetCursor(screen, x, y);     Common::VirtualScreenPrint(screen, "         .------.         ");
+    Common::VirtualScreenSetCursor(screen, x, y+1);   Common::VirtualScreenPrint(screen, "      _.'  ||  `._        ");
+    Common::VirtualScreenSetCursor(screen, x, y+2);   Common::VirtualScreenPrint(screen, "    .'  _(_)(_)_  `.      ");
+    Common::VirtualScreenSetCursor(screen, x, y+3);   Common::VirtualScreenPrint(screen, " .-=================-.    ");
+    Common::VirtualScreenSetCursor(screen, x, y+4);   Common::VirtualScreenPrint(screen, " | (*) (*) (*) (*) |      ");
+    Common::VirtualScreenSetCursor(screen, x, y+5);   Common::VirtualScreenPrint(screen, " |_________________|      ");
+    Common::VirtualScreenSetCursor(screen, x, y+6);   Common::VirtualScreenPrint(screen, "  `._ *********** _.'      ");
+    Common::VirtualScreenSetCursor(screen, x, y+7);   Common::VirtualScreenPrint(screen, "     `-----------'        ");
+    Common::VirtualScreenSetCursor(screen, x, y+8);   Common::VirtualScreenPrint(screen, "      / /     \\ \\        ");
+    Common::VirtualScreenSetCursor(screen, x, y+9);   Common::VirtualScreenPrint(screen, "     V_/       \\_V       ");
+
+    Common::VirtualScreenSetColor(screen, 15);
 }
+
 //=========================================================
 // BORRAR OVNI TIPO 1
 //=========================================================
-void borrarOvni1(int x,int y)
+/// @brief Borra un OVNI tipo 1
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void borrarOvni1(int x, int y)
 {
-    for(int i=0;i<10;i++)
+    for(int i = 0; i < 10; i++)
     {
-        gotoxy(x,y+i);
-        imprimir("                            ");
+        Common::VirtualScreenSetCursor(screen, x, y+i);
+        Common::VirtualScreenPrint(screen, "                            ");
     }
 }
+
 //=========================================================
 // OVNI TIPO 2 (OFICIAL)
 //=========================================================
-void dibujarOvni2(int x,int y)
+/// @brief Dibuja un OVNI tipo 2
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void dibujarOvni2(int x, int y)
 {
-    color(12); // Rojo
+    Common::VirtualScreenSetColor(screen, 12); // Rojo
 
-    gotoxy(x,y);      imprimir("              .------------.              ");
-    gotoxy(x,y+1);    imprimir("         _.-'   /||||\\\\   `-._          ");
-    gotoxy(x,y+2);    imprimir("      .-'  _.-==========-._  `  -.       ");
-    gotoxy(x,y+3);    imprimir("    .'  .-'##############`-.     `.      ");
-    gotoxy(x,y+4);    imprimir(" __/===|  (@)  (@)  (@)  (@) |===\\\\__  ");
-    gotoxy(x,y+5);    imprimir("|======|______________________|======| ");
-    gotoxy(x,y+6);    imprimir("|===[###]====  ********  ====[###]===|    ");
-    gotoxy(x,y+7);    imprimir("|____________________________________|    ");
-    gotoxy(x,y+8);    imprimir(" \\\\_____.------------------._____/    ");
-    gotoxy(x,y+9);    imprimir("      /==/   /========\\\\   \\\\==\\\\     ");
-    gotoxy(x,y+10);   imprimir("     /__/___/__________\\\\___\\\\__\\\\    ");
-    gotoxy(x,y+11);   imprimir("      <VVV>               <VVV>          ");
-    gotoxy(x,y+12);   imprimir("       ||||                ||||         ");
-    gotoxy(x,y+13);   imprimir("       ^^ ^^              ^^ ^^         ");
-    
-    color(15);
+    Common::VirtualScreenSetCursor(screen, x, y);      Common::VirtualScreenPrint(screen, "              .------------.              ");
+    Common::VirtualScreenSetCursor(screen, x, y+1);    Common::VirtualScreenPrint(screen, "         _.-'   /||||\\\\   `-._          ");
+    Common::VirtualScreenSetCursor(screen, x, y+2);    Common::VirtualScreenPrint(screen, "      .-'  _.-==========-._  `  -.       ");
+    Common::VirtualScreenSetCursor(screen, x, y+3);    Common::VirtualScreenPrint(screen, "    .'  .-'##############`-.     `.      ");
+    Common::VirtualScreenSetCursor(screen, x, y+4);    Common::VirtualScreenPrint(screen, " __/===|  (@)  (@)  (@)  (@) |===\\\\__  ");
+    Common::VirtualScreenSetCursor(screen, x, y+5);    Common::VirtualScreenPrint(screen, "|======|______________________|======| ");
+    Common::VirtualScreenSetCursor(screen, x, y+6);    Common::VirtualScreenPrint(screen, "|===[###]====  ********  ====[###]===|    ");
+    Common::VirtualScreenSetCursor(screen, x, y+7);    Common::VirtualScreenPrint(screen, "|____________________________________|    ");
+    Common::VirtualScreenSetCursor(screen, x, y+8);    Common::VirtualScreenPrint(screen, " \\\\_____.------------------._____/    ");
+    Common::VirtualScreenSetCursor(screen, x, y+9);    Common::VirtualScreenPrint(screen, "      /==/   /========\\\\   \\\\==\\\\     ");
+    Common::VirtualScreenSetCursor(screen, x, y+10);   Common::VirtualScreenPrint(screen, "     /__/___/__________\\\\___\\\\__\\\\    ");
+    Common::VirtualScreenSetCursor(screen, x, y+11);   Common::VirtualScreenPrint(screen, "      <VVV>               <VVV>          ");
+    Common::VirtualScreenSetCursor(screen, x, y+12);   Common::VirtualScreenPrint(screen, "       ||||                ||||         ");
+    Common::VirtualScreenSetCursor(screen, x, y+13);   Common::VirtualScreenPrint(screen, "       ^^ ^^              ^^ ^^         ");
+
+    Common::VirtualScreenSetColor(screen, 15);
 }
+
 //=========================================================
 // BORRAR OVNI TIPO 2
 //=========================================================
-void borrarOvni2(int x,int y)
+/// @brief Borra un OVNI tipo 2
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void borrarOvni2(int x, int y)
 {
-    for(int i=0;i<14;i++)
+    for(int i = 0; i < 14; i++)
     {
-        gotoxy(x,y+i);
-        imprimir("                                              ");
+        Common::VirtualScreenSetCursor(screen, x, y+i);
+        Common::VirtualScreenPrint(screen, "                                              ");
     }
 }
+
 //=========================================================
 // NAVE NODRIZA (JEFE FINAL)
 //=========================================================
-void dibujarJefeFinal(int x, int y)
+/// @brief Dibuja la nave nodriza (jefe final)
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void dibujarJefeFinal(int x, int y)
 {
-    color(13);   // Magenta
+    Common::VirtualScreenSetColor(screen, 13);   // Magenta
 
-	gotoxy(x, y);     imprimir("                  .------------.                  "); 
-    gotoxy(x, y + 1); imprimir("              _.-'   /||||\\\\   `-._              ");
-    gotoxy(x, y + 2); imprimir("           .-'  _.-==========-._  `-.           "); 
-    gotoxy(x, y + 3); imprimir("         .'  .-' ################ `-.  `.       "); 
-    gotoxy(x, y + 4); imprimir("       .'  .' #################### `.  `.     "); 
-    gotoxy(x, y + 5); imprimir("     _/====|   (@)  (@)  (@)  (@)   |===\\_     "); 
-    gotoxy(x, y + 6); imprimir("    |======|________________________|======|    "); 
-    gotoxy(x, y + 7); imprimir("    |===||||||||||||||||||||||||||||||||===|    "); 
-    gotoxy(x, y + 8); imprimir("    |==[#####]===  **********  ===[#####]==|  "); 
-    gotoxy(x, y + 9); imprimir("    |______________________________________|  "); 
-    gotoxy(x, y + 10);imprimir("     \\_____   .------------------.   _____/   "); 
-    gotoxy(x, y + 11);imprimir("           \\==\\  /============\\\\  /==/        "); 
-    gotoxy(x, y + 12);imprimir("            \\==\\/______________\\\\/==/         "); 
-    gotoxy(x, y + 13);imprimir("            /__/___/________\\\\___\\\\__\\        "); 
-    gotoxy(x, y + 14);imprimir("             <VVV>              <VVV>             "); 
-    gotoxy(x, y + 15);imprimir("              ||||              ||||              "); 
-    gotoxy(x, y + 16);imprimir("              ||||              ||||              "); 
-    gotoxy(x, y + 17);imprimir("              ~~~~              ~~~~              "); 
-    gotoxy(x, y + 18);imprimir("              ^  ^              ^  ^              "); 
-    
-    color(15);
+    Common::VirtualScreenSetCursor(screen, x, y);     Common::VirtualScreenPrint(screen, "                  .------------.                  ");
+    Common::VirtualScreenSetCursor(screen, x, y + 1); Common::VirtualScreenPrint(screen, "              _.-'   /||||\\\\   `-._              ");
+    Common::VirtualScreenSetCursor(screen, x, y + 2); Common::VirtualScreenPrint(screen, "           .-'  _.-==========-._  `-.           ");
+    Common::VirtualScreenSetCursor(screen, x, y + 3); Common::VirtualScreenPrint(screen, "         .'  .-' ################ `-.  `.       ");
+    Common::VirtualScreenSetCursor(screen, x, y + 4); Common::VirtualScreenPrint(screen, "       .'  .' #################### `.  `.     ");
+    Common::VirtualScreenSetCursor(screen, x, y + 5); Common::VirtualScreenPrint(screen, "     _/====|   (@)  (@)  (@)  (@)   |===\\_     ");
+    Common::VirtualScreenSetCursor(screen, x, y + 6); Common::VirtualScreenPrint(screen, "    |======|________________________|======|    ");
+    Common::VirtualScreenSetCursor(screen, x, y + 7); Common::VirtualScreenPrint(screen, "    |===||||||||||||||||||||||||||||||||===|    ");
+    Common::VirtualScreenSetCursor(screen, x, y + 8); Common::VirtualScreenPrint(screen, "    |==[#####]===  **********  ===[#####]==|  ");
+    Common::VirtualScreenSetCursor(screen, x, y + 9); Common::VirtualScreenPrint(screen, "    |______________________________________|  ");
+    Common::VirtualScreenSetCursor(screen, x, y + 10);Common::VirtualScreenPrint(screen, "     \\_____   .------------------.   _____/   ");
+    Common::VirtualScreenSetCursor(screen, x, y + 11);Common::VirtualScreenPrint(screen, "           \\==\\  /============\\\\  /==/        ");
+    Common::VirtualScreenSetCursor(screen, x, y + 12);Common::VirtualScreenPrint(screen, "            \\==\\/______________\\\\/==/         ");
+    Common::VirtualScreenSetCursor(screen, x, y + 13);Common::VirtualScreenPrint(screen, "            /__/___/________\\\\___\\\\__\\        ");
+    Common::VirtualScreenSetCursor(screen, x, y + 14);Common::VirtualScreenPrint(screen, "             <VVV>              <VVV>             ");
+    Common::VirtualScreenSetCursor(screen, x, y + 15);Common::VirtualScreenPrint(screen, "              ||||              ||||              ");
+    Common::VirtualScreenSetCursor(screen, x, y + 16);Common::VirtualScreenPrint(screen, "              ||||              ||||              ");
+    Common::VirtualScreenSetCursor(screen, x, y + 17);Common::VirtualScreenPrint(screen, "              ~~~~              ~~~~              ");
+    Common::VirtualScreenSetCursor(screen, x, y + 18);Common::VirtualScreenPrint(screen, "              ^  ^              ^  ^              ");
+
+    Common::VirtualScreenSetColor(screen, 15);
 }
+
 //=========================================================
 // BORRAR NAVE NODRIZA
 //=========================================================
-void borrarJefeFinal(int x, int y)
+/// @brief Borra la nave nodriza
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void borrarJefeFinal(int x, int y)
 {
     for(int i = 0; i < 19; i++)
     {
-        gotoxy(x, y + i);
-        imprimir("                                                            ");
+        Common::VirtualScreenSetCursor(screen, x, y + i);
+        Common::VirtualScreenPrint(screen, "                                                            ");
     }
 }
+
 //=========================================================
 // DISPARO DEL JUGADOR
 //=========================================================
-void dibujarBalaJugador(int x,int y)
+/// @brief Dibuja la bala del jugador
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void dibujarBalaJugador(int x, int y)
 {
-    color(11); // Celeste
+    Common::VirtualScreenSetColor(screen, 11); // Celeste
 
-    gotoxy(x,y);     imprimir(" ^ ");
-    gotoxy(x,y+1);   imprimir(" | ");
-    gotoxy(x,y+2);   imprimir(" | ");
+    Common::VirtualScreenSetCursor(screen, x, y);     Common::VirtualScreenPrint(screen, " ^ ");
+    Common::VirtualScreenSetCursor(screen, x, y+1);   Common::VirtualScreenPrint(screen, " | ");
+    Common::VirtualScreenSetCursor(screen, x, y+2);   Common::VirtualScreenPrint(screen, " | ");
 }
+
 //=========================================================
 // BORRAR DISPARO DEL JUGADOR
 //=========================================================
-void borrarBalaJugador(int x,int y)
+/// @brief Borra la bala del jugador
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void borrarBalaJugador(int x, int y)
 {
-    for(int i=0;i<3;i++)
+    for(int i = 0; i < 3; i++)
     {
-        gotoxy(x,y+i);
-        imprimir("   ");
+        Common::VirtualScreenSetCursor(screen, x, y+i);
+        Common::VirtualScreenPrint(screen, "   ");
     }
 }
+
 //=========================================================
 // DISPARO DEL OVNI
 //=========================================================
-void dibujarBalaOvni(int x,int y)
+/// @brief Dibuja la bala de un OVNI
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void dibujarBalaOvni(int x, int y)
 {
-    color(12); // Rojo
+    Common::VirtualScreenSetColor(screen, 12); // Rojo
 
-    gotoxy(x,y);     imprimir(" * ");
-    gotoxy(x,y+1);   imprimir("(@)");
-    gotoxy(x,y+2);   imprimir(" * ");
+    Common::VirtualScreenSetCursor(screen, x, y);     Common::VirtualScreenPrint(screen, " * ");
+    Common::VirtualScreenSetCursor(screen, x, y+1);   Common::VirtualScreenPrint(screen, "(@)");
+    Common::VirtualScreenSetCursor(screen, x, y+2);   Common::VirtualScreenPrint(screen, " * ");
 }
+
 //=========================================================
 // BORRAR DISPARO DEL OVNI
 //=========================================================
-void borrarBalaOvni(int x,int y)
+/// @brief Borra la bala de un OVNI
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void borrarBalaOvni(int x, int y)
 {
-    for(int i=0;i<3;i++)
+    for(int i = 0; i < 3; i++)
     {
-        gotoxy(x,y+i);
-        imprimir("   ");
+        Common::VirtualScreenSetCursor(screen, x, y+i);
+        Common::VirtualScreenPrint(screen, "   ");
     }
 }
+
 //=========================================================
 // LASER DEL JEFE FINAL
 //=========================================================
-void dibujarLaserJefe(int x,int y)
+/// @brief Dibuja el l√°ser del jefe final
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void dibujarLaserJefe(int x, int y)
 {
-    color(14); // Amarillo
+    Common::VirtualScreenSetColor(screen, 14); // Amarillo
 
-    gotoxy(x,y);     imprimir("#####");
-    gotoxy(x,y+1);   imprimir("|||||");
-    gotoxy(x,y+2);   imprimir("|||||");
-    gotoxy(x,y+3);   imprimir("|||||");
-    gotoxy(x,y+4);   imprimir("#####");
+    Common::VirtualScreenSetCursor(screen, x, y);     Common::VirtualScreenPrint(screen, "#####");
+    Common::VirtualScreenSetCursor(screen, x, y+1);   Common::VirtualScreenPrint(screen, "|||||");
+    Common::VirtualScreenSetCursor(screen, x, y+2);   Common::VirtualScreenPrint(screen, "|||||");
+    Common::VirtualScreenSetCursor(screen, x, y+3);   Common::VirtualScreenPrint(screen, "|||||");
+    Common::VirtualScreenSetCursor(screen, x, y+4);   Common::VirtualScreenPrint(screen, "#####");
 }
+
 //=========================================================
 // BORRAR LASER DEL JEFE FINAL
 //=========================================================
-void borrarLaserJefe(int x,int y)
+/// @brief Borra el l√°ser del jefe final
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void borrarLaserJefe(int x, int y)
 {
-    for(int i=0;i<5;i++)
+    for(int i = 0; i < 5; i++)
     {
-        gotoxy(x,y+i);
-        imprimir("     ");
+        Common::VirtualScreenSetCursor(screen, x, y+i);
+        Common::VirtualScreenPrint(screen, "     ");
     }
 }
+
 //=========================================================
 // EXPLOSION 1
 //=========================================================
-void dibujarExplosion1(int x,int y)
+/// @brief Dibuja explosi√≥n tipo 1
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void dibujarExplosion1(int x, int y)
 {
-    color(14); // Amarillo
+    Common::VirtualScreenSetColor(screen, 14); // Amarillo
 
-    gotoxy(x,y);     imprimir("   *   ");
-    gotoxy(x,y+1);   imprimir("  ***  ");
-    gotoxy(x,y+2);   imprimir(" ***** ");
-    gotoxy(x,y+3);   imprimir("  ***  ");
-    gotoxy(x,y+4);   imprimir("   *   ");
+    Common::VirtualScreenSetCursor(screen, x, y);     Common::VirtualScreenPrint(screen, "   *   ");
+    Common::VirtualScreenSetCursor(screen, x, y+1);   Common::VirtualScreenPrint(screen, "  ***  ");
+    Common::VirtualScreenSetCursor(screen, x, y+2);   Common::VirtualScreenPrint(screen, " ***** ");
+    Common::VirtualScreenSetCursor(screen, x, y+3);   Common::VirtualScreenPrint(screen, "  ***  ");
+    Common::VirtualScreenSetCursor(screen, x, y+4);   Common::VirtualScreenPrint(screen, "   *   ");
 }
-void borrarExplosion1(int x,int y)
+
+/// @brief Borra explosi√≥n tipo 1
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void borrarExplosion1(int x, int y)
 {
-    for(int i=0;i<5;i++)
+    for(int i = 0; i < 5; i++)
     {
-        gotoxy(x,y+i);
-        imprimir("       ");
+        Common::VirtualScreenSetCursor(screen, x, y+i);
+        Common::VirtualScreenPrint(screen, "       ");
     }
 }
+
 //=========================================================
 // EXPLOSION 2
 //=========================================================
-void dibujarExplosion2(int x,int y)
+/// @brief Dibuja explosi√≥n tipo 2
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void dibujarExplosion2(int x, int y)
 {
-    color(12); // Rojo
+    Common::VirtualScreenSetColor(screen, 12); // Rojo
 
-    gotoxy(x,y);     imprimir(" * * * ");
-    gotoxy(x,y+1);   imprimir("*******");
-    gotoxy(x,y+2);   imprimir("***@***");
-    gotoxy(x,y+3);   imprimir("*******");
-    gotoxy(x,y+4);   imprimir(" * * * ");
+    Common::VirtualScreenSetCursor(screen, x, y);     Common::VirtualScreenPrint(screen, " * * * ");
+    Common::VirtualScreenSetCursor(screen, x, y+1);   Common::VirtualScreenPrint(screen, "*******");
+    Common::VirtualScreenSetCursor(screen, x, y+2);   Common::VirtualScreenPrint(screen, "***@***");
+    Common::VirtualScreenSetCursor(screen, x, y+3);   Common::VirtualScreenPrint(screen, "*******");
+    Common::VirtualScreenSetCursor(screen, x, y+4);   Common::VirtualScreenPrint(screen, " * * * ");
 }
-void borrarExplosion2(int x,int y)
+
+/// @brief Borra explosi√≥n tipo 2
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void borrarExplosion2(int x, int y)
 {
-    for(int i=0;i<5;i++)
+    for(int i = 0; i < 5; i++)
     {
-        gotoxy(x,y+i);
-        imprimir("       ");
+        Common::VirtualScreenSetCursor(screen, x, y+i);
+        Common::VirtualScreenPrint(screen, "       ");
     }
 }
+
 //=========================================================
 // EXPLOSION 3
 //=========================================================
-void dibujarExplosion3(int x,int y)
+/// @brief Dibuja explosi√≥n tipo 3
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void dibujarExplosion3(int x, int y)
 {
-    color(8); // Gris
+    Common::VirtualScreenSetColor(screen, 8); // Gris
 
-    gotoxy(x,y);     imprimir("  .*.  ");
-    gotoxy(x,y+1);   imprimir(" .*#*. ");
-    gotoxy(x,y+2);   imprimir("*#%#*");
-    gotoxy(x,y+3);   imprimir(" .*#*. ");
-    gotoxy(x,y+4);   imprimir("  .*.  ");
+    Common::VirtualScreenSetCursor(screen, x, y);     Common::VirtualScreenPrint(screen, "  .*.  ");
+    Common::VirtualScreenSetCursor(screen, x, y+1);   Common::VirtualScreenPrint(screen, " .*#*. ");
+    Common::VirtualScreenSetCursor(screen, x, y+2);   Common::VirtualScreenPrint(screen, "*#%#*");
+    Common::VirtualScreenSetCursor(screen, x, y+3);   Common::VirtualScreenPrint(screen, " .*#*. ");
+    Common::VirtualScreenSetCursor(screen, x, y+4);   Common::VirtualScreenPrint(screen, "  .*.  ");
 }
-void borrarExplosion3(int x,int y)
+
+/// @brief Borra explosi√≥n tipo 3
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void borrarExplosion3(int x, int y)
 {
-    for(int i=0;i<5;i++)
+    for(int i = 0; i < 5; i++)
     {
-        gotoxy(x,y+i);
-        imprimir("       ");
+        Common::VirtualScreenSetCursor(screen, x, y+i);
+        Common::VirtualScreenPrint(screen, "       ");
     }
 }
+
 //=========================================================
 // VIDA (CORAZON)
 //=========================================================
-void dibujarVida(int x,int y)
+/// @brief Dibuja un coraz√≥n de vida
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void dibujarVida(int x, int y)
 {
-    color(12); // Rojo
+    Common::VirtualScreenSetColor(screen, 12); // Rojo
 
-    gotoxy(x, y);     imprimir(" ##  ## ");
-    gotoxy(x, y + 1); imprimir("########");
-    gotoxy(x, y + 2); imprimir(" ###### ");
-    gotoxy(x, y + 3); imprimir("  ####  ");
-    gotoxy(x, y + 4); imprimir("   ##   ");
+    Common::VirtualScreenSetCursor(screen, x, y);     Common::VirtualScreenPrint(screen, " ##  ## ");
+    Common::VirtualScreenSetCursor(screen, x, y + 1); Common::VirtualScreenPrint(screen, "########");
+    Common::VirtualScreenSetCursor(screen, x, y + 2); Common::VirtualScreenPrint(screen, " ###### ");
+    Common::VirtualScreenSetCursor(screen, x, y + 3); Common::VirtualScreenPrint(screen, "  ####  ");
+    Common::VirtualScreenSetCursor(screen, x, y + 4); Common::VirtualScreenPrint(screen, "   ##   ");
 }
+
 //=========================================================
 // BORRAR VIDA
 //=========================================================
-void borrarVida(int x,int y)
+/// @brief Borra un coraz√≥n de vida
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void borrarVida(int x, int y)
 {
-    for(int i=0;i<5;i++)
+    for(int i = 0; i < 5; i++)
     {
-        gotoxy(x,y+i);
-        imprimir("        ");
+        Common::VirtualScreenSetCursor(screen, x, y+i);
+        Common::VirtualScreenPrint(screen, "        ");
     }
 }
+
 //=========================================================
 // VIDA ROTA (CORAZON ROTO)
 //=========================================================
-void dibujarVidaRota(int x,int y)
+/// @brief Dibuja un coraz√≥n roto
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void dibujarVidaRota(int x, int y)
 {
-    color(12); // Rojo
+    Common::VirtualScreenSetColor(screen, 12); // Rojo
 
-    gotoxy(x, y);     imprimir(" ##  ## ");
-    gotoxy(x, y + 1); imprimir("### \\ ##");
-    gotoxy(x, y + 2); imprimir(" ## \\ # ");
-    gotoxy(x, y + 3); imprimir("  #  \\  ");
-    gotoxy(x, y + 4); imprimir("   #    ");
+    Common::VirtualScreenSetCursor(screen, x, y);     Common::VirtualScreenPrint(screen, " ##  ## ");
+    Common::VirtualScreenSetCursor(screen, x, y + 1); Common::VirtualScreenPrint(screen, "### \\ ##");
+    Common::VirtualScreenSetCursor(screen, x, y + 2); Common::VirtualScreenPrint(screen, " ## \\ # ");
+    Common::VirtualScreenSetCursor(screen, x, y + 3); Common::VirtualScreenPrint(screen, "  #  \\  ");
+    Common::VirtualScreenSetCursor(screen, x, y + 4); Common::VirtualScreenPrint(screen, "   #    ");
 }
+
 //=========================================================
 // BORRAR VIDA ROTA
 //=========================================================
-void borrarVidaRota(int x,int y)
+/// @brief Borra un coraz√≥n roto
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void borrarVidaRota(int x, int y)
 {
-    for(int i=0; i<5; i++)
+    for(int i = 0; i < 5; i++)
     {
-        gotoxy(x, y+i);
-        imprimir("        ");
+        Common::VirtualScreenSetCursor(screen, x, y+i);
+        Common::VirtualScreenPrint(screen, "        ");
     }
-}	
+}
+
 //=========================================================
 // COPA DE VICTORIA (OFICIAL)
 //=========================================================
-void dibujarCopa(int x,int y)
+/// @brief Dibuja la copa de victoria
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void dibujarCopa(int x, int y)
 {
-    color(14); // Oro
+    Common::VirtualScreenSetColor(screen, 14); // Oro
 
-    gotoxy(x, y + 0);  imprimir("|||||||||||||||||||||||||||||");
-    gotoxy(x, y + 1);  imprimir("||                         ||");
+    Common::VirtualScreenSetCursor(screen, x, y + 0);  Common::VirtualScreenPrint(screen, "|||||||||||||||||||||||||||||");
+    Common::VirtualScreenSetCursor(screen, x, y + 1);  Common::VirtualScreenPrint(screen, "||                         ||");
 
-    gotoxy(x, y + 2);  imprimir(" ||                       || ");
-    gotoxy(x, y + 3);  imprimir("  ||     N U M B E R     ||  ");
-    gotoxy(x, y + 4);  imprimir("   ||        #1         ||   ");
-    gotoxy(x, y + 5);  imprimir("    ||                 ||    ");
-    gotoxy(x, y + 6);  imprimir("     ||               ||     ");
-    gotoxy(x, y + 7);  imprimir("      ||||         ||||      ");
-    gotoxy(x, y + 8);  imprimir("        |||||||||||||        ");
+    Common::VirtualScreenSetCursor(screen, x, y + 2);  Common::VirtualScreenPrint(screen, " ||                       || ");
+    Common::VirtualScreenSetCursor(screen, x, y + 3);  Common::VirtualScreenPrint(screen, "  ||     N U M B E R     ||  ");
+    Common::VirtualScreenSetCursor(screen, x, y + 4);  Common::VirtualScreenPrint(screen, "   ||        #1         ||   ");
+    Common::VirtualScreenSetCursor(screen, x, y + 5);  Common::VirtualScreenPrint(screen, "    ||                 ||    ");
+    Common::VirtualScreenSetCursor(screen, x, y + 6);  Common::VirtualScreenPrint(screen, "     ||               ||     ");
+    Common::VirtualScreenSetCursor(screen, x, y + 7);  Common::VirtualScreenPrint(screen, "      ||||         ||||      ");
+    Common::VirtualScreenSetCursor(screen, x, y + 8);  Common::VirtualScreenPrint(screen, "        |||||||||||||        ");
 
-    gotoxy(x - 4, y + 1); imprimir("_||||");
-    gotoxy(x - 5, y + 2); imprimir("||");
-    gotoxy(x - 5, y + 3); imprimir("||");
-    gotoxy(x - 5, y + 4); imprimir("||");
-    gotoxy(x - 4, y + 5); imprimir("Ø||||");
+    Common::VirtualScreenSetCursor(screen, x - 4, y + 1); Common::VirtualScreenPrint(screen, "_||||");
+    Common::VirtualScreenSetCursor(screen, x - 5, y + 2); Common::VirtualScreenPrint(screen, "||");
+    Common::VirtualScreenSetCursor(screen, x - 5, y + 3); Common::VirtualScreenPrint(screen, "||");
+    Common::VirtualScreenSetCursor(screen, x - 5, y + 4); Common::VirtualScreenPrint(screen, "||");
+    Common::VirtualScreenSetCursor(screen, x - 4, y + 5); Common::VirtualScreenPrint(screen, "||||");
 
-    gotoxy(x + 28, y + 1); imprimir("||||_");
-    gotoxy(x + 31, y + 2); imprimir("||");
-    gotoxy(x + 31, y + 3); imprimir("||");
-    gotoxy(x + 31, y + 4); imprimir("||");
-    gotoxy(x + 28, y + 5); imprimir("||||Ø");
+    Common::VirtualScreenSetCursor(screen, x + 28, y + 1); Common::VirtualScreenPrint(screen, "||||_");
+    Common::VirtualScreenSetCursor(screen, x + 31, y + 2); Common::VirtualScreenPrint(screen, "||");
+    Common::VirtualScreenSetCursor(screen, x + 31, y + 3); Common::VirtualScreenPrint(screen, "||");
+    Common::VirtualScreenSetCursor(screen, x + 31, y + 4); Common::VirtualScreenPrint(screen, "||");
+    Common::VirtualScreenSetCursor(screen, x + 28, y + 5); Common::VirtualScreenPrint(screen, "||||");
 
-    gotoxy(x, y + 9);   imprimir("           |||||             ");
-    gotoxy(x, y +10);   imprimir("           |||||             ");
-    gotoxy(x, y +11);   imprimir("           |||||             ");
-    gotoxy(x, y +12);   imprimir("           |||||             ");
-    gotoxy(x, y +13);   imprimir("          _|||||_            ");
+    Common::VirtualScreenSetCursor(screen, x, y + 9);   Common::VirtualScreenPrint(screen, "           |||||             ");
+    Common::VirtualScreenSetCursor(screen, x, y +10);   Common::VirtualScreenPrint(screen, "           |||||             ");
+    Common::VirtualScreenSetCursor(screen, x, y +11);   Common::VirtualScreenPrint(screen, "           |||||             ");
+    Common::VirtualScreenSetCursor(screen, x, y +12);   Common::VirtualScreenPrint(screen, "           |||||             ");
+    Common::VirtualScreenSetCursor(screen, x, y +13);   Common::VirtualScreenPrint(screen, "          _|||||_            ");
 
-    gotoxy(x, y +14);   imprimir("        _|||||||||_          ");
-    gotoxy(x, y +15);   imprimir("      _|||||||||||||_        ");
-    gotoxy(x, y +16);   imprimir("    |||||||||||||||||||      ");
-    gotoxy(x, y +17);   imprimir("  |||||||||||||||||||||||    ");
-    gotoxy(x, y +18);   imprimir("|||||||||||||||||||||||||||  ");
-    gotoxy(x, y +19);   imprimir("ØØØØØØØØØØØØØØØØØØØØØØØØØØØ  ");
+    Common::VirtualScreenSetCursor(screen, x, y +14);   Common::VirtualScreenPrint(screen, "        _|||||||||_          ");
+    Common::VirtualScreenSetCursor(screen, x, y +15);   Common::VirtualScreenPrint(screen, "      _|||||||||||||_        ");
+    Common::VirtualScreenSetCursor(screen, x, y +16);   Common::VirtualScreenPrint(screen, "    |||||||||||||||||||      ");
+    Common::VirtualScreenSetCursor(screen, x, y +17);   Common::VirtualScreenPrint(screen, "  |||||||||||||||||||||||    ");
+    Common::VirtualScreenSetCursor(screen, x, y +18);   Common::VirtualScreenPrint(screen, "|||||||||||||||||||||||||||  ");
+    Common::VirtualScreenSetCursor(screen, x, y +19);   Common::VirtualScreenPrint(screen, "|||||||||||||||||||||||||||  ");
 }
+
 //=========================================================
 // BORRAR COPA
 //=========================================================
-void borrarCopa(int x,int y)
+/// @brief Borra la copa de victoria
+/// @param x Columna inicial
+/// @param y Fila inicial
+inline void borrarCopa(int x, int y)
 {
     for(int i = 0; i < 20; i++)
     {
-        gotoxy(x - 5, y + i);
-        imprimir("                                          ");
+        Common::VirtualScreenSetCursor(screen, x - 5, y + i);
+        Common::VirtualScreenPrint(screen, "                                          ");
     }
 }
+
 //=========================================================
-// TITULO DEL JUEGO
+// TITULO DEL JUEGO (usa terminal directamente)
 //=========================================================
-void dibujarTitulo()
+/// @brief Dibuja el t√≠tulo del juego con efecto de escritura secuencial
+inline void dibujarTitulo()
 {
-    color(11);
+    Common::VirtualScreenSetColor(screen, 11);
 
-    gotoxy(61,4);
-    imprimir("/============================================================================\\");
-    Sleep(60);
+    Common::VirtualScreenSetCursor(screen, 61, 4);
+    Common::VirtualScreenPrint(screen, "/============================================================================\\");
+    Common::PlayAudio("Juegos/Invasion Espacial/Sounds/beep_mid.mp3");
+    Common::Sleep(60);
 
-    gotoxy(69,6);
-    imprimir(" _____ _   ___      __      _____  ____  _____  ______  _____ ");
-    Sleep(45);
+    Common::VirtualScreenSetCursor(screen, 69, 6);
+    Common::VirtualScreenPrint(screen, " _____ _   ___      __      _____  ____  _____  ______  _____ ");
+    Common::Sleep(45);
 
-    gotoxy(69,7);
-    imprimir("|_   _| \\ | \\ \\    / /\\    / ____|/ __ \\|  __ \\|  ____|/ ____|");
-    Sleep(45);
+    Common::VirtualScreenSetCursor(screen, 69, 7);
+    Common::VirtualScreenPrint(screen, "|_   _| \\ | \\ \\    / /\\    / ____|/ __ \\|  __ \\|  ____|/ ____|");
+    Common::Sleep(45);
 
-    gotoxy(69,8);
-    imprimir("  | | |  \\| |\\ \\  / /  \\  | (___ | |  | | |__) | |__  | (___  ");
-    Sleep(45);
+    Common::VirtualScreenSetCursor(screen, 69, 8);
+    Common::VirtualScreenPrint(screen, "  | | |  \\| |\\ \\  / /  \\  | (___ | |  | | |__) | |__  | (___  ");
+    Common::Sleep(45);
 
-    gotoxy(69,9);
-    imprimir("  | | | . ` | \\ \\/ / /\\ \\  \\___ \\| |  | |  _  /|  __|  \\___ \\ ");
-    Sleep(45);
+    Common::VirtualScreenSetCursor(screen, 69, 9);
+    Common::VirtualScreenPrint(screen, "  | | | . ` | \\ \\/ / /\\ \\  \\___ \\| |  | |  _  /|  __|  \\___ \\ ");
+    Common::Sleep(45);
 
-    gotoxy(69,10);
-    imprimir(" _| |_| |\\  |  \\  / ____ \\ ____) | |__| | | \\ \\| |____ ____) |");
-    Sleep(45);
+    Common::VirtualScreenSetCursor(screen, 69, 10);
+    Common::VirtualScreenPrint(screen, " _| |_| |\\  |  \\  / ____ \\ ____) | |__| | | \\ \\| |____ ____) |");
+    Common::Sleep(45);
 
-    gotoxy(69,11);
-    imprimir("|_____|_| \\_|   \\/_/    \\_\\_____/ \\____/|_|  \\_\\______|_____/ ");
-    Sleep(45);
+    Common::VirtualScreenSetCursor(screen, 69, 11);
+    Common::VirtualScreenPrint(screen, "|_____|_| \\_|   \\/_/    \\_\\_____/ \\____/|_|  \\_\\______|_____/ ");
+    Common::Sleep(45);
 
-    Beep(700,100);
+    Common::VirtualScreenSetColor(screen, 14);
+    Common::VirtualScreenSetCursor(screen, 64, 12);
+    Common::VirtualScreenPrint(screen, "-------------------------------- < * > --------------------------------");
+    Common::Sleep(60);
 
-    color(14);
-    gotoxy(64,12);
-    imprimir("-------------------------------- < * > --------------------------------");
-    Sleep(60);
+    Common::VirtualScreenSetColor(screen, 10);
 
-    color(10);
+    Common::VirtualScreenSetCursor(screen, 65, 14);
+    Common::VirtualScreenPrint(screen, " ______  _____ _____        _____ _____          _      ______  _____ ");
+    Common::Sleep(45);
 
-    gotoxy(65,14);
-    imprimir(" ______  _____ _____        _____ _____          _      ______  _____ ");
-    Sleep(45);
+    Common::VirtualScreenSetCursor(screen, 65, 15);
+    Common::VirtualScreenPrint(screen, "|  ____|/ ____|  __ \\ /\\   / ____|_   _|   /\\   | |    |  ____|/ ____|");
+    Common::Sleep(45);
 
-    gotoxy(65,15);
-    imprimir("|  ____|/ ____|  __ \\ /\\   / ____|_   _|   /\\   | |    |  ____|/ ____|");
-    Sleep(45);
+    Common::VirtualScreenSetCursor(screen, 65, 16);
+    Common::VirtualScreenPrint(screen, "| |__  | (___ | |__) /  \\ | |      | |    /  \\  | |    | |__  | (___  ");
+    Common::Sleep(45);
 
-    gotoxy(65,16);
-    imprimir("| |__  | (___ | |__) /  \\ | |      | |    /  \\  | |    | |__  | (___  ");
-    Sleep(45);
+    Common::VirtualScreenSetCursor(screen, 65, 17);
+    Common::VirtualScreenPrint(screen, "|  __|  \\___ \\|  ___/ /\\ \\| |      | |   / /\\ \\ | |    |  __|  \\___ \\ ");
+    Common::Sleep(45);
 
-    gotoxy(65,17);
-    imprimir("|  __|  \\___ \\|  ___/ /\\ \\| |      | |   / /\\ \\ | |    |  __|  \\___ \\ ");
-    Sleep(45);
+    Common::VirtualScreenSetCursor(screen, 65, 18);
+    Common::VirtualScreenPrint(screen, "| |____ ____) | |  / ____ \\ |____ _| |_ / ____ \\| |____| |____ ____) |");
+    Common::Sleep(45);
 
-    gotoxy(65,18);
-    imprimir("| |____ ____) | |  / ____ \\ |____ _| |_ / ____ \\| |____| |____ ____) |");
-    Sleep(45);
+    Common::VirtualScreenSetCursor(screen, 65, 19);
+    Common::VirtualScreenPrint(screen, "|______|_____/|_| /_/    \\_\\_____|_____/_/    \\_\\______|______|_____/ ");
+    Common::Sleep(45);
 
-    gotoxy(65,19);
-    imprimir("|______|_____/|_| /_/    \\_\\_____|_____/_/    \\_\\______|______|_____/ ");
-    Sleep(45);
-
-    color(10);
-    gotoxy(61,21);
-    imprimir("\\============================================================================/");
-    Sleep(60);
-
-    Beep(1000,250);
-
-}
-//=========================================================
-// GAME OVER
-//=========================================================
-
-void gameOver(string usuario, int puntaje)
-{
-    system("cls");
-
-    color(12);
-
-    gotoxy(65,6);
-    cout<<"/====================================================================\\";
-
-    gotoxy(69,8);
-    cout<<"  _____          __  __ ______    ______      ________ _____  ";
-
-    gotoxy(69,9);
-    cout<<" / ____|   /\\   |  \\/  |  ____|  / __ \\ \\    / /  ____|  __ \\ ";
-
-    gotoxy(69,10);
-    cout<<"| |  __   /  \\  | \\  / | |__    | |  | \\ \\  / /| |__  | |__) |";
-
-    gotoxy(69,11);
-    cout<<"| | |_ | / /\\ \\ | |\\/| |  __|   | |  | |\\ \\/ / |  __| |  _  / ";
-
-    gotoxy(69,12);
-    cout<<"| |__| |/ ____ \\| |  | | |____  | |__| | \\  /  | |____| | \\ \\ ";
-
-    gotoxy(69,13);
-    cout<<" \\_____/_/    \\_\\_|  |_|______|  \\____/   \\/   |______|_|  \\_\\";
-
-    gotoxy(65,14);
-    cout<<"\\====================================================================/";
-
-    color(15);
-
-    gotoxy(63,18);
-    cout<<"La invasion ha terminado";
-
-    gotoxy(58,20);
-    cout<<"La Tierra necesita otra oportunidad";
-
-    gotoxy(63,23);
-    cout<<"COMANDANTE: "<<usuario;
-
-    color(14);
-    gotoxy(63,25);
-    cout<<"PUNTAJE FINAL: "<<puntaje;
-
-    color(12);
-
-    Beep(400,300);
-    Beep(300,300);
-    Beep(200,400);
-
-    Sleep(2500);
+    Common::VirtualScreenSetColor(screen, 10);
+    Common::VirtualScreenSetCursor(screen, 61, 21);
+    Common::VirtualScreenPrint(screen, "\\============================================================================/");
+    Common::PlayAudio("Juegos/Invasion Espacial/Sounds/beep_high.mp3");
+    Common::Sleep(60);
 }
 
-void victoria(string usuario, int puntaje)
+//=========================================================
+// GAME OVER (usa terminal directamente)
+//=========================================================
+/// @brief Muestra la pantalla de game over
+/// @param usuario Nombre del jugador
+/// @param puntaje Puntuaci√≥n final
+inline void gameOver(std::string usuario, int puntaje)
 {
-    system("cls");
+    Common::Clear();
 
-    color(10);
+    Common::GoToXY(65, 6);
+    std::cout << "/====================================================================\\";
 
-    gotoxy(67,6);
-    cout<<"/================================================================\\";
+    Common::GoToXY(69, 8);
+    std::cout << "  _____          __  __ ______    ______      ________ _____  ";
 
-    gotoxy(71,8);
-    cout<<"__      _______ _____ _______ ____  _____  _____          ";
+    Common::GoToXY(69, 9);
+    std::cout << " / ____|   /\\   |  \\/  |  ____|  / __ \\ \\    / /  ____|  __ \\ ";
 
-    gotoxy(71,9);
-    cout<<"\\ \\    / /_   _/ ____|__   __/ __ \\|  __ \\|_   _|   /\\    ";
+    Common::GoToXY(69, 10);
+    std::cout << "| |  __   /  \\  | \\  / | |__    | |  | \\ \\  / /| |__  | |__) |";
 
-    gotoxy(71,10);
-    cout<<" \\ \\  / /  | || |       | | | |  | | |__) | | |    /  \\   ";
+    Common::GoToXY(69, 11);
+    std::cout << "| | |_ | / /\\ \\ | |\\/| |  __|   | |  | |\\ \\/ / |  __| |  _  / ";
 
-    gotoxy(71,11);
-    cout<<"  \\ \\/ /   | || |       | | | |  | |  _  /  | |   / /\\ \\  ";
+    Common::GoToXY(69, 12);
+    std::cout << "| |__| |/ ____ \\| |  | | |____  | |__| | \\  /  | |____| | \\ \\ ";
 
-    gotoxy(71,12);
-    cout<<"   \\  /   _| || |____   | | | |__| | | \\ \\ _| |_ / ____ \\ ";
+    Common::GoToXY(69, 13);
+    std::cout << " \\_____/_/    \\_\\_|  |_|______|  \\____/   \\/   |______|_|  \\_\\";
 
-    gotoxy(71,13);
-    cout<<"    \\/   |_____\\_____|  |_|  \\____/|_|  \\_\\_____/_/    \\_\\";
+    Common::GoToXY(65, 14);
+    std::cout << "\\====================================================================/";
 
-    gotoxy(67,14);
-    cout<<"\\================================================================/";
+    std::cout << "\033[0m";
 
-    color(15);
+    Common::GoToXY(63, 18);
+    std::cout << "La invasion ha terminado";
 
-    gotoxy(66,18);
-    cout<<"MISION COMPLETADA";
+    Common::GoToXY(58, 20);
+    std::cout << "La Tierra necesita otra oportunidad";
 
-    gotoxy(60,20);
-    cout<<"La galaxia esta a salvo";
+    Common::GoToXY(63, 23);
+    std::cout << "COMANDANTE: " << usuario;
 
-    gotoxy(63,23);
-    cout<<"COMANDANTE: "<<usuario;
+    std::cout << "\033[33m";
+    Common::GoToXY(63, 25);
+    std::cout << "PUNTAJE FINAL: " << puntaje;
 
-    color(14);
-    gotoxy(63,25);
-    cout<<"PUNTAJE FINAL: "<<puntaje;
-
-    color(10);
-
-    gotoxy(58,28);
-    cout<<"*** Presione una tecla para continuar ***";
-
-    Beep(700,150);
-    Beep(900,150);
-    Beep(1200,300);
-
-    getch();
+    std::cout << "\033[0m";
+    Common::PlayAudio("Juegos/Invasion Espacial/Sounds/beep_low.mp3");
+    Common::PlayAudio("Juegos/Invasion Espacial/Sounds/beep_low.mp3");
+    Common::PlayAudio("Juegos/Invasion Espacial/Sounds/beep_vlow.mp3");
+    Common::Sleep(2500);
 }
-#endif
+
+//=========================================================
+// VICTORIA (usa terminal directamente)
+//=========================================================
+/// @brief Muestra la pantalla de victoria
+/// @param usuario Nombre del jugador
+/// @param puntaje Puntuaci√≥n final
+inline void victoria(std::string usuario, int puntaje)
+{
+    Common::Clear();
+
+    std::cout << "\033[32m";
+
+    Common::GoToXY(67, 6);
+    std::cout << "/================================================================\\";
+
+    Common::GoToXY(71, 8);
+    std::cout << "__      _______ _____ _______ ____  _____  _____          ";
+
+    Common::GoToXY(71, 9);
+    std::cout << "\\ \\    / /_   _/ ____|__   __/ __ \\|  __ \\|_   _|   /\\    ";
+
+    Common::GoToXY(71, 10);
+    std::cout << " \\ \\  / /  | || |       | | | |  | | |__) | | |    /  \\   ";
+
+    Common::GoToXY(71, 11);
+    std::cout << "  \\ \\/ /   | || |       | | | |  | |  _  /  | |   / /\\ \\  ";
+
+    Common::GoToXY(71, 12);
+    std::cout << "   \\  /   _| || |____   | | | |__| | | \\ \\ _| |_ / ____ \\ ";
+
+    Common::GoToXY(71, 13);
+    std::cout << "    \\/   |_____\\_____|  |_|  \\____/|_|  \\_\\_____/_/    \\_\\";
+
+    Common::GoToXY(67, 14);
+    std::cout << "\\================================================================/";
+
+    std::cout << "\033[0m";
+
+    Common::GoToXY(66, 18);
+    std::cout << "MISION COMPLETADA";
+    Common::PlayAudio("Juegos/Invasion Espacial/Sounds/beep_mid.mp3");
+
+    Common::GoToXY(60, 20);
+    std::cout << "La galaxia esta a salvo";
+    Common::PlayAudio("Juegos/Invasion Espacial/Sounds/beep_high.mp3");
+
+    Common::GoToXY(63, 23);
+    std::cout << "COMANDANTE: " << usuario;
+
+    std::cout << "\033[33m";
+    Common::GoToXY(63, 25);
+    std::cout << "PUNTAJE FINAL: " << puntaje;
+    Common::PlayAudio("Juegos/Invasion Espacial/Sounds/beep_vhigh.mp3");
+
+    std::cout << "\033[0m";
+
+    Common::GoToXY(58, 28);
+    std::cout << "*** Presione una tecla para continuar ***";
+
+    Common::Getch();
+}
+
+//=========================================================
+// FONDO ESPACIAL ANIMADO (usa terminal directamente)
+//=========================================================
+/// @brief Dibuja fondo de estrellas animado
+inline void fondoEspacialAnimado()
+{
+    static bool creado = false;
+
+    const int CANTIDAD_ESTRELLAS = 60;
+
+    static int x[CANTIDAD_ESTRELLAS];
+    static int y[CANTIDAD_ESTRELLAS];
+    static bool brillo[CANTIDAD_ESTRELLAS];
+
+    if(!creado)
+    {
+        srand(time(NULL));
+
+        for(int i = 0; i < CANTIDAD_ESTRELLAS; i++)
+        {
+            x[i] = rand() % Common::VS_WIDTH;
+            y[i] = rand() % Common::VS_HEIGHT;
+            brillo[i] = rand() % 2;
+        }
+
+        creado = true;
+    }
+
+    for(int i = 0; i < CANTIDAD_ESTRELLAS; i++)
+    {
+        Common::GoToXY(x[i], y[i]);
+
+        if(brillo[i])
+        {
+            std::cout << "\033[97m*\033[0m";
+        }
+        else
+        {
+            std::cout << "\033[90m.\033[0m";
+        }
+
+        if(rand() % 5 == 0)
+        {
+            brillo[i] = !brillo[i];
+        }
+    }
+}
+
+} // namespace InvasionEspacial
