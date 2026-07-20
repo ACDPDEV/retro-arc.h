@@ -6,7 +6,7 @@
 #include <ctime>
 #include <cstdlib>
 
-namespace Minesweeper
+namespace Buscaminas
 {
     // ======================================================================
     // DATABASE

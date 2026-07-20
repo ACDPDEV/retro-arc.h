@@ -9,7 +9,7 @@
 #include "../../Common/Consts.h"
 #include "../../Common/Output.h"
 
-namespace Minesweeper
+namespace Buscaminas
 {
     // ======================================================================
     // LOGICA

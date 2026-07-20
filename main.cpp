@@ -12,7 +12,7 @@ int main() {
             Pokemon::Pokemon();
             break;
         case 1:
-            Minesweeper::PlayMinesweeper();
+            Buscaminas::PlayMinesweeper();
             break;
         case 2:
             // Batalla Naval

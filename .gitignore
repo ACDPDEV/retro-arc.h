@@ -12,7 +12,12 @@ test_*
 */
 
 # Don't ignore files with extensions (dotfiles, source files, etc.)
-!*.*
+!ICENSE
+
+# Don't ignore Juegos source files
+!Juegos/
+!Juegos/**/*.h
+!Juegos/**/*.cpp
 
 # Ignore specific directories
 openspec/

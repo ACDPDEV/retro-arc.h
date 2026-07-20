@@ -11,7 +11,7 @@
 #include "BuscaminasService.h"
 #include "BuscaminasUI.h"
 
-namespace Minesweeper
+namespace Buscaminas
 {
     void PlayMinesweeper()
     {
@@ -37,25 +37,25 @@ namespace Minesweeper
                     int levelOption = Buscaminas::LevelSelectView();
                     if (levelOption == -1) break; // Esc → back to main menu
 
-                    rows = Minesweeper::SetRowsByLevel(levelOption);
-                    cols = Minesweeper::SetColsByLevel(levelOption);
-                    minesQuantity = Minesweeper::SetMinesQuantity(rows, cols, levelOption);
+                    rows = Buscaminas::SetRowsByLevel(levelOption);
+                    cols = Buscaminas::SetColsByLevel(levelOption);
+                    minesQuantity = Buscaminas::SetMinesQuantity(rows, cols, levelOption);
 
                     bool playAgain = false;
                     do {
                         playAgain = false;
 
-                        int flagCount = Minesweeper::SetInitialFlagCount(minesQuantity);
+                        int flagCount = Buscaminas::SetInitialFlagCount(minesQuantity);
 
-                        std::vector<std::vector<int>> backgroundBoard = Minesweeper::CreateBackgroundBoard(rows, cols);
-                        Minesweeper::PlaceMines(backgroundBoard, minesQuantity);
-                        Minesweeper::CountAdjacentMines(backgroundBoard);
+                        std::vector<std::vector<int>> backgroundBoard = Buscaminas::CreateBackgroundBoard(rows, cols);
+                        Buscaminas::PlaceMines(backgroundBoard, minesQuantity);
+                        Buscaminas::CountAdjacentMines(backgroundBoard);
 
-                        const std::array<int, 2> initialPosition = Minesweeper::GetInitialPosition(rows, cols);
+                        const std::array<int, 2> initialPosition = Buscaminas::GetInitialPosition(rows, cols);
                         int playerRow = initialPosition[0];
                         int playerCol = initialPosition[1];
 
-                        std::vector<std::vector<int>> stateBoard = Minesweeper::CreatePageStateBoard(rows, cols);
+                        std::vector<std::vector<int>> stateBoard = Buscaminas::CreatePageStateBoard(rows, cols);
 
                         // GameBoardView handles its own input loop
                         // Returns: -1=quit, 1=won, 2=lost
@@ -78,9 +78,9 @@ namespace Minesweeper
                     break;
                 }
 
-                // OPCIÓN: CRÉDITOS
+                // OPCIÓN: INSTRUCCIONES
                 case 1:
-                    Buscaminas::CreditsView();
+                    Buscaminas::InstructionsView();
                     break;
                 
                 // OPCIÓN: CONFIGURACIONES
