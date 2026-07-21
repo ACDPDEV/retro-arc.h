@@ -1,4 +1,4 @@
-#include "Common/Linux/Terminal.h"
+#include "Common/Terminal.h"
 #include "Juegos/Buscaminas/Buscaminas.h"
 #include "Juegos/Pokemon/Pokemon.h"
 #include "Juegos/Invasion Espacial/pantallas.h"
@@ -24,10 +24,10 @@ int main() {
                 break;
             case 2:
                 // Tictactoe
-                Tictactoe::PlayTicTacToe();
+                InvasionEspacial::ejecutarJuego("COMANDANTE");
                 break;
             case 3:
-                InvasionEspacial::ejecutarJuego("COMANDANTE");
+                Tictactoe::PlayTicTacToe();
                 break;
             case 4:
                 MainMenu::CreditsView();

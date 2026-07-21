@@ -46,50 +46,9 @@ namespace MainMenu {
 
             Common::TransitionComponent();
 
-                MainMenuView();
-
-                switch (MainMenu::OPTION) {
-                    case 0:
-                        Pokemon::Pokemon();
-                        break;
-                    case 1:
-                        Buscaminas::PlayMinesweeper();
-                        break;
-                    case 2:
-                        InvasionEspacial::ejecutarJuego("COMANDANTE");
-                        break;
-                    case 3:
-                        Tictactoe::PlayTicTacToe();
-                        break;
-                    case 4:
-                        MainMenu::CreditsView();
-                        return;
-                }
+            MainMenuView();
         } else {
             WrongPasswordView();
-        }
-    }
-    inline void MainMenuSelectView() {
-        while (true) {
-            MainMenuView();
-
-            switch (MainMenu::OPTION) {
-                case 0:
-                    Pokemon::Pokemon();
-                    break;
-                case 1:
-                    Buscaminas::PlayMinesweeper();
-                    break;
-                case 2:
-                    InvasionEspacial::ejecutarJuego("COMANDANTE");
-                    break;
-                case 3:
-                    Tictactoe::PlayTicTacToe();
-                    break;
-                case 4:
-                    MainMenu::CreditsView();
-                    return;
-            }
         }
     }
 }
