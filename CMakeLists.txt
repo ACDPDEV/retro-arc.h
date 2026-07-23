@@ -14,8 +14,12 @@ add_executable(main main.cpp)
 # Include path: project root so #include "Common/Utils.h" works
 target_include_directories(main PRIVATE ${CMAKE_SOURCE_DIR})
 
-# Warnings
-target_compile_options(main PRIVATE -Wall -Wextra)
+# Warnings — platform-specific flags
+if(MSVC)
+    target_compile_options(main PRIVATE /W4)
+else()
+    target_compile_options(main PRIVATE -Wall -Wextra)
+endif()
 
 # Platform-specific linking
 if(WIN32)
@@ -31,7 +35,11 @@ enable_testing()
 # PokemonLogicTest — validates Pokemon logic (RunCommand, Move defaults, null safety, etc.)
 add_executable(test_pokemon_logic Tests/PokemonLogicTest.cpp)
 target_include_directories(test_pokemon_logic PRIVATE ${CMAKE_SOURCE_DIR})
-target_compile_options(test_pokemon_logic PRIVATE -Wall -Wextra)
+if(MSVC)
+    target_compile_options(test_pokemon_logic PRIVATE /W4)
+else()
+    target_compile_options(test_pokemon_logic PRIVATE -Wall -Wextra)
+endif()
 if(WIN32)
     target_link_libraries(test_pokemon_logic PRIVATE winmm)
 else()
