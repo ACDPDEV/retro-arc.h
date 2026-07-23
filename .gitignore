@@ -33,6 +33,12 @@ test_*
 !Tests/**/*.cpp
 !Tests/**/*.h
 
+# Don't ignore MainMenu source files
+!MainMenu/
+!MainMenu/**/
+!MainMenu/**/*.h
+!MainMenu/**/*.cpp
+
 # Don't ignore GitHub Actions workflows
 !.github/
 !.github/**/
