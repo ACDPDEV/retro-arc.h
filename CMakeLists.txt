@@ -10,8 +10,11 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Windows architecture — ensure proper target architecture is defined
 if(WIN32)
-    if(NOT CMAKE_SYSTEM_PROCESSOR)
-        set(CMAKE_SYSTEM_PROCESSOR ${CMAKE_HOST_SYSTEM_PROCESSOR})
+    # Define _AMD64_ for 64-bit builds or _X86_ for 32-bit builds
+    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+        add_definitions(-D_AMD64_)
+    else()
+        add_definitions(-D_X86_)
     endif()
 endif()
 
