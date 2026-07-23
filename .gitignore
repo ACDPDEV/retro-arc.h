@@ -33,6 +33,14 @@ test_*
 !Tests/**/*.cpp
 !Tests/**/*.h
 
+# Don't ignore GitHub Actions workflows
+!.github/
+!.github/**/
+!.github/**/*.yml
+
+# Don't ignore .clang-format
+!.clang-format
+
 # Ignore specific directories
 openspec/
 sdd/

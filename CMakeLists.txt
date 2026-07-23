@@ -39,3 +39,26 @@ else()
     target_link_libraries(test_pokemon_logic PRIVATE Threads::Threads)
 endif()
 add_test(NAME PokemonLogic COMMAND test_pokemon_logic)
+
+# --- Formatting ---
+# Find clang-format and define a 'format' target that reformats all project sources
+find_program(CLANG_FORMAT_EXECUTABLE clang-format)
+if(CLANG_FORMAT_EXECUTABLE)
+    file(GLOB_RECURSE ALL_SOURCE_FILES
+        ${CMAKE_SOURCE_DIR}/Common/*.h
+        ${CMAKE_SOURCE_DIR}/Juegos/*.h
+        ${CMAKE_SOURCE_DIR}/Juegos/*.cpp
+        ${CMAKE_SOURCE_DIR}/MainMenu/*.h
+        ${CMAKE_SOURCE_DIR}/MainMenu/*.cpp
+        ${CMAKE_SOURCE_DIR}/Tests/*.cpp
+        ${CMAKE_SOURCE_DIR}/Tests/*.h
+        ${CMAKE_SOURCE_DIR}/*.cpp
+    )
+    add_custom_target(format
+        COMMAND ${CLANG_FORMAT_EXECUTABLE} -i ${ALL_SOURCE_FILES}
+        COMMENT "Formatting all project sources with clang-format"
+        VERBATIM
+    )
+else()
+    message(WARNING "clang-format not found — 'format' target will not be available")
+endif()
