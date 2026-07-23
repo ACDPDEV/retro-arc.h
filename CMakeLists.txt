@@ -25,8 +25,17 @@ else()
     target_link_libraries(main PRIVATE Threads::Threads)
 endif()
 
-# --- Tests ---
-# TODO: add test targets here when ready
-# add_executable(test_tictactoe Tests/TictactoeTest.cpp)
-# target_include_directories(test_tictactoe PRIVATE ${CMAKE_SOURCE_DIR})
-# target_link_libraries(test_tictactoe PRIVATE Threads::Threads)
+# --- Testing ---
+enable_testing()
+
+# PokemonLogicTest — validates Pokemon logic (RunCommand, Move defaults, null safety, etc.)
+add_executable(test_pokemon_logic Tests/PokemonLogicTest.cpp)
+target_include_directories(test_pokemon_logic PRIVATE ${CMAKE_SOURCE_DIR})
+target_compile_options(test_pokemon_logic PRIVATE -Wall -Wextra)
+if(WIN32)
+    target_link_libraries(test_pokemon_logic PRIVATE winmm)
+else()
+    find_package(Threads REQUIRED)
+    target_link_libraries(test_pokemon_logic PRIVATE Threads::Threads)
+endif()
+add_test(NAME PokemonLogic COMMAND test_pokemon_logic)
