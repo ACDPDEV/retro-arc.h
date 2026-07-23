@@ -11,35 +11,36 @@
 
 // --- Infraestructura de registro interno ---
 
-/// @brief Almacena el resultado de una única aserción.
-struct TestResult {
-    std::string testName;
-    bool passed;
-};
-
-/// @brief Almacena una función de test registrada para ejecución diferida.
-struct TestFunc {
-    std::string name;
-    void (*func)();
-};
-
-/// @brief Almacenamiento global para todos los resultados de test de la unidad de traducción.
-inline std::vector<TestResult>& GetTestResults() {
-    static std::vector<TestResult> results;
-    return results;
+/// @brief Nombres de todos los resultados de test registrados.
+inline std::vector<std::string>& GetTestResultNames() {
+    static std::vector<std::string> names;
+    return names;
 }
 
-/// @brief Almacenamiento global para todas las funciones de test registradas.
-inline std::vector<TestFunc>& GetTestFuncs() {
-    static std::vector<TestFunc> funcs;
-    return funcs;
+/// @brief Resultados (pass/fail) de cada aserción registrada.
+inline std::vector<bool>& GetTestResultValues() {
+    static std::vector<bool> values;
+    return values;
+}
+
+/// @brief Nombres de todas las funciones de test registradas.
+inline std::vector<std::string>& GetTestFuncNames() {
+    static std::vector<std::string> names;
+    return names;
+}
+
+/// @brief Punteros a funciones de test registradas.
+inline std::vector<void (*)()>& GetTestFuncPointers() {
+    static std::vector<void (*)()> ptrs;
+    return ptrs;
 }
 
 /// @brief Registra el resultado de una única aserción.
 /// @param name Nombre descriptivo del test o aserción
 /// @param result true si pasó, false si falló
 inline void RecordResult(const std::string& name, bool result) {
-    GetTestResults().push_back({name, result});
+    GetTestResultNames().push_back(name);
+    GetTestResultValues().push_back(result);
 }
 
 // --- Macros públicas ---
@@ -52,7 +53,8 @@ inline void RecordResult(const std::string& name, bool result) {
     namespace {                                                                  \
         struct testName##_Registrar {                                            \
             testName##_Registrar() {                                             \
-                GetTestFuncs().push_back({#testName, testName##_Func});          \
+                GetTestFuncNames().push_back(#testName);                         \
+                GetTestFuncPointers().push_back(testName##_Func);                \
             }                                                                    \
         } testName##_instance;                                                   \
     }                                                                            \
@@ -97,20 +99,22 @@ inline void RecordResult(const std::string& name, bool result) {
 #define TEST_RUNNER()                                                            \
     int main() {                                                                 \
         /* Ejecutar todas las funciones de test registradas */                   \
-        auto& funcs = GetTestFuncs();                                            \
-        for (size_t i = 0; i < funcs.size(); ++i) {                              \
-            funcs[i].func();                                                     \
+        auto& funcNames = GetTestFuncNames();                                    \
+        auto& funcPtrs = GetTestFuncPointers();                                  \
+        for (size_t i = 0; i < funcPtrs.size(); ++i) {                           \
+            funcPtrs[i]();                                                       \
         }                                                                        \
         /* Imprimir resultados */                                                \
-        auto& results = GetTestResults();                                        \
+        auto& resultNames = GetTestResultNames();                                \
+        auto& resultValues = GetTestResultValues();                              \
         int passedCount = 0;                                                     \
         int failCount = 0;                                                       \
-        for (const auto& r : results) {                                          \
-            if (r.passed) {                                                      \
-                std::cout << "[PASS] " << r.testName << std::endl;               \
+        for (size_t i = 0; i < resultValues.size(); ++i) {                       \
+            if (resultValues[i]) {                                               \
+                std::cout << "[PASS] " << resultNames[i] << std::endl;           \
                 passedCount++;                                                   \
             } else {                                                             \
-                std::cout << "[FAIL] " << r.testName << std::endl;               \
+                std::cout << "[FAIL] " << resultNames[i] << std::endl;           \
                 failCount++;                                                     \
             }                                                                    \
         }                                                                        \
@@ -121,6 +125,6 @@ inline void RecordResult(const std::string& name, bool result) {
             std::cout << "Algunos tests fallaron." << std::endl;                 \
         }                                                                        \
         std::cout << "Tests que pasaron: " << passedCount << "/"                \
-                  << results.size() << std::endl;                                \
+                  << resultValues.size() << std::endl;                           \
         return failCount == 0 ? 0 : 1;                                           \
     }
