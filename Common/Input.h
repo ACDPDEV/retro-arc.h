@@ -127,7 +127,6 @@ inline bool TryInput(std::string& line) {
                 }
                 break;
         }
-        return false;
     }
 
     return false;
