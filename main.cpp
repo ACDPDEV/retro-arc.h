@@ -1,3 +1,8 @@
+#ifdef _WIN32
+    #define NOMINMAX
+    #include <windows.h>
+#endif
+
 #include "Common/Terminal.h"
 #include "Juegos/Buscaminas/Buscaminas.h"
 #include "Juegos/Pokemon/Pokemon.h"
