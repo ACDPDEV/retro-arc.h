@@ -1,6 +1,8 @@
 #ifndef CONSOLE_H
 #define CONSOLE_H
 
+// Evitar que Windows defina macros max/min que confliguen con std::max/std::min
+#define NOMINMAX
 #include <windows.h>
 #include <stdio.h>
 #include <conio.h>
