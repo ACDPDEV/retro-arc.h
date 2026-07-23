@@ -17,7 +17,10 @@
 
 namespace Common {
 
-inline void InitTerminalRawMode();
+/// @brief No-op en Windows: conio.h (_kbhit/_getch) funciona sin setup de modo raw
+inline void InitTerminalRawMode() {
+    // No-op on Windows: conio.h (_kbhit/_getch) works without terminal mode setup
+}
 
 /// @brief Habilita el procesamiento de terminal virtual (ANSI/VT100) para True Color
 /// @details Permite usar códigos de escape como \x1b[38;2;R;G;Bm para colores RGB reales
