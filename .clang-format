@@ -1,0 +1,79 @@
+# PROC1 Code Formatting Configuration
+# Based on LLVM with AGENTS.md overrides
+---
+Language: Cpp
+BasedOnStyle: LLVM
+
+# Indentation — AGENTS.md §5: 2-space indent
+IndentWidth: 2
+ContinuationIndentWidth: 4
+UseTab: Never
+
+# Braces — AGENTS.md §5: brace-on-next-line (Allman style)
+BreakBeforeBraces: Allman
+
+# Includes — AGENTS.md §3: sorted, grouped
+SortIncludes: CaseSensitive
+IncludeBlocks: Regroup
+IncludeCategories:
+  # Standard library headers
+  - Regex: '^<.*>'
+    Priority: 1
+  # Project headers (Common/)
+  - Regex: '^"Common/.*'
+    Priority: 2
+  # Other project headers
+  - Regex: '^".*'
+    Priority: 3
+
+# Columns — reasonable line length for readability
+ColumnLimit: 100
+
+# Alignment
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: false
+AlignConsecutiveDeclarations: false
+AlignOperands: true
+AlignTrailingComments: true
+
+# Spaces
+SpaceAfterCStyleCast: false
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeParens: ControlStatements
+SpaceInEmptyParentheses: false
+SpacesInParentheses: false
+
+# Pointer alignment — minimal pointer usage per AGENTS.md §2
+PointerAlignment: Right
+
+# Namespace formatting
+NamespaceIndentation: None
+
+# Allow short forms
+AllowShortBlocksOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+
+# Function declaration formatting — AGENTS.md §5
+BinPackArguments: true
+BinPackParameters: true
+FunctionDeclarationIndentWidth: 2
+
+# Penalty tuning
+PenaltyBreakAssignment: 2
+PenaltyBreakBeforeFirstCallParameter: 19
+PenaltyBreakComment: 300
+PenaltyBreakFirstLessLess: 120
+PenaltyBreakString: 1000
+PenaltyExcessCharacter: 1000000
+PenaltyReturnTypeOnItsOwnLine: 60
+
+# Other
+Cpp11BracedListStyle: true
+DerivePointerAlignment: false
+FixNamespaceComments: true
+MaxEmptyLinesToKeep: 1
+ReflowComments: true
+...

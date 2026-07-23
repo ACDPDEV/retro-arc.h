@@ -111,7 +111,7 @@ namespace Common
         std::string right
     ) {
         std::string line = left;
-        for (int i = 1; i < length; i++) {
+        for (int i = 1; i < length - 1; i++) {
             line += center;
         }
         line += right;
@@ -135,10 +135,10 @@ namespace Common
         std::string bottom
     ) {
         GoToXY(x, y); std::cout << top;
-        for (int i = 1; i < length; i++) {
+        for (int i = 1; i < length - 1; i++) {
             GoToXY(x, y + i); std::cout << center;
         }
-        GoToXY(x, y + length); std::cout << bottom;
+        GoToXY(x, y + length - 1); std::cout << bottom;
 
         std::cout.flush();
     }

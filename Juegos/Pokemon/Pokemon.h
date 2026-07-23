@@ -10,6 +10,7 @@
 #include "Views/HuidaView.h"
 #include "Views/VictoryView.h"
 #include "Database/State.h"
+#include "Database/SpriteLookup.h"
 #include "Bridge/PokemonBridge.h"
 #include "Controllers/Game.h"
 #include "PokemonUI.h"
