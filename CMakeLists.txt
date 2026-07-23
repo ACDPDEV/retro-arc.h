@@ -8,6 +8,13 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # Generate compile_commands.json for IDE/tooling support
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+# Windows architecture — ensure proper target architecture is defined
+if(WIN32)
+    if(NOT CMAKE_SYSTEM_PROCESSOR)
+        set(CMAKE_SYSTEM_PROCESSOR ${CMAKE_HOST_SYSTEM_PROCESSOR})
+    endif()
+endif()
+
 # Main executable — header-only project, only main.cpp needs compilation
 add_executable(main main.cpp)
 
