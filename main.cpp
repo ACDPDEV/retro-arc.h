@@ -23,7 +23,7 @@ int main() {
                 Buscaminas::PlayMinesweeper();
                 break;
             case 2:
-                // Tictactoe
+                // Invasión Espacial
                 InvasionEspacial::ejecutarJuego("COMANDANTE");
                 break;
             case 3:
