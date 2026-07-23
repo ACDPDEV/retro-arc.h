@@ -6,6 +6,8 @@
 ///          API idéntica a Linux/Terminal.h.
 #pragma once
 
+// Evitar que Windows defina macros max/min que confliguen con std::max/std::min
+#define NOMINMAX
 #include <synchapi.h>
 #include <windows.h>
 #include <conio.h>
